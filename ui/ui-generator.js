@@ -4,46 +4,57 @@ function createDataGeneratorUI(containerId) {
 
   const style = document.createElement('style');
   style.textContent = `
-    .dg-app { height: 100%; display: flex; flex-direction: column; background: #fff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; }
-    .dg-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px; text-align: center; flex-shrink: 0; }
-    .dg-header h1 { font-size: 14px; font-weight: 600; margin: 0; }
-    .dg-tabs { display: flex; background: #f9fafb; border-bottom: 1px solid #e5e7eb; overflow-x: auto; flex-shrink: 0; }
-    .dg-tab { padding: 8px 12px; border: none; background: none; cursor: pointer; font-size: 11px; font-weight: 500; color: #6b7280; border-bottom: 2px solid transparent; white-space: nowrap; }
+    .dg-app { height: 100%; display: flex; flex-direction: column; background: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; }
+    .dg-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 14px; text-align: center; flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .dg-header h1 { font-size: 15px; font-weight: 700; margin: 0; }
+    .dg-tabs { display: flex; background: white; border-bottom: 2px solid #e2e8f0; overflow-x: auto; flex-shrink: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+    .dg-tab { padding: 10px 14px; border: none; background: none; cursor: pointer; font-size: 12px; font-weight: 600; color: #64748b; border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.2s; }
+    .dg-tab:hover { color: #667eea; }
     .dg-tab.active { color: #667eea; border-bottom-color: #667eea; }
     .dg-main { flex: 1; display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
-    .dg-content { flex: 1; overflow-y: auto; min-height: 0; }
-    .dg-tab-content { display: none; padding: 12px; }
+    .dg-content { flex: 1; overflow-y: auto; min-height: 0; background: white; }
+    .dg-tab-content { display: none; padding: 14px; }
     .dg-tab-content.active { display: block; }
-    .dg-sub-tabs { display: flex; background: #f3f4f6; border-bottom: 1px solid #d1d5db; overflow-x: auto; flex-shrink: 0; }
-    .dg-sub-tab { padding: 6px 10px; border: none; background: none; cursor: pointer; font-size: 10px; font-weight: 500; color: #6b7280; border-bottom: 2px solid transparent; white-space: nowrap; }
-    .dg-sub-tab.active { color: #374151; border-bottom-color: #374151; }
-    .dg-sub-content { display: none; padding: 12px; }
-    .dg-sub-content.active { display: block; }
-    .dg-fields-wrapper { display: flex; flex-wrap: wrap; }
-    .dg-checkbox { display: inline-flex; align-items: center; gap: 4px; padding: 4px 8px; margin: 2px 4px 2px 0; cursor: pointer; font-size: 11px; width: calc(50% - 4px); box-sizing: border-box; }
-    .dg-checkbox input { margin: 0; }
-    .dg-controls { background: #f9fafb; padding: 10px; border-top: 1px solid #e5e7eb; flex-shrink: 0; }
-    .dg-count-control { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 11px; }
-    .dg-count-control input { width: 50px; padding: 4px; border: 1px solid #d1d5db; border-radius: 3px; }
-    .dg-buttons { display: flex; gap: 6px; }
-    .dg-btn { padding: 6px 12px; border: none; border-radius: 3px; cursor: pointer; font-size: 11px; font-weight: 500; }
+    .dg-fields-wrapper { display: flex; flex-wrap: wrap; gap: 8px; }
+    .dg-checkbox { display: inline-flex; align-items: center; gap: 6px; padding: 8px 10px; cursor: pointer; font-size: 12px; background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 6px; transition: all 0.2s; width: calc(50% - 4px); box-sizing: border-box; }
+    .dg-checkbox:hover { background: #e0e7ff; border-color: #667eea; }
+    .dg-checkbox input { margin: 0; cursor: pointer; }
+    .dg-controls { background: white; padding: 12px; border-top: 1px solid #e2e8f0; flex-shrink: 0; }
+    .dg-count-control { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; font-size: 12px; font-weight: 500; }
+    .dg-count-control input { width: 60px; padding: 6px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; }
+    .dg-buttons { display: flex; gap: 8px; }
+    .dg-btn { padding: 8px 14px; border: none; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: 600; transition: all 0.2s; }
     .dg-btn-primary { background: #667eea; color: white; }
-    .dg-btn-primary:hover { background: #5a67d8; }
-    .dg-btn-secondary { background: #e5e7eb; color: #374151; }
-    .dg-btn-secondary:hover { background: #d1d5db; }
-    .dg-results { max-height: 150px; overflow-y: auto; font-size: 10px; background: #f8f9fa; padding: 8px; margin-top: 8px; border-radius: 3px; }
-    .dg-record { margin-bottom: 6px; padding: 6px; border: 1px solid #e5e7eb; border-radius: 2px; }
-    .dg-field { display: flex; justify-content: space-between; gap: 8px; }
-    .dg-field-label { font-weight: 500; color: #374151; }
-    .dg-field-value { color: #6b7280; word-break: break-all; cursor: pointer; padding: 2px 4px; border-radius: 2px; }
-    .dg-field-value:hover { background: #e5e7eb; }
-    .dg-footer { font-size: 9px; color: #9ca3af; text-align: center; padding: 6px; border-top: 1px solid #e5e7eb; flex-shrink: 0; }
+    .dg-btn-primary:hover { background: #5a67d8; box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3); }
+    .dg-btn-secondary { background: #e2e8f0; color: #334155; }
+    .dg-btn-secondary:hover { background: #cbd5e1; }
+    .dg-results { max-height: 140px; overflow-y: auto; font-size: 11px; background: #f8fafc; padding: 0; margin-top: 10px; border-radius: 6px; border: 1px solid #e2e8f0; display: flex; flex-direction: column; }
+    .dg-record-tabs { display: flex; background: white; border-bottom: 1px solid #e2e8f0; overflow-x: auto; flex-shrink: 0; }
+    .dg-record-tab { padding: 8px 12px; border: none; background: none; cursor: pointer; font-size: 11px; font-weight: 600; color: #64748b; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.2s; }
+    .dg-record-tab:hover { color: #667eea; }
+    .dg-record-tab.active { color: #667eea; border-bottom-color: #667eea; }
+    .dg-record-contents { flex: 1; overflow-y: auto; padding: 8px; }
+    .dg-record-content { display: none; }
+    .dg-record-content.active { display: block; }
+    .dg-record-card { background: white; border: 1px solid #e2e8f0; border-radius: 5px; padding: 8px; }
+    .dg-record-title { font-weight: 700; color: #667eea; font-size: 11px; margin-bottom: 6px; }
+    .dg-record-field { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 4px; font-size: 10px; }
+    .dg-record-label { font-weight: 500; color: #64748b; }
+    .dg-record { margin-bottom: 10px; padding: 10px; background: white; border: 1px solid #e2e8f0; border-radius: 5px; }
+    .dg-record-header { font-weight: 700; color: #667eea; margin-bottom: 6px; font-size: 11px; }
+    .dg-category { margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid #f1f5f9; }
+    .dg-category-name { font-weight: 600; color: #475569; font-size: 10px; margin-bottom: 4px; }
+    .dg-field { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 4px; }
+    .dg-field-label { font-weight: 500; color: #64748b; font-size: 10px; }
+    .dg-field-value { color: #334155; word-break: break-all; cursor: pointer; padding: 3px 6px; border-radius: 3px; background: #f1f5f9; transition: all 0.2s; }
+    .dg-field-value:hover { background: #e0e7ff; color: #667eea; }
+    .dg-footer { font-size: 9px; color: #94a3b8; text-align: center; padding: 8px; border-top: 1px solid #e2e8f0; flex-shrink: 0; }
   `;
   document.head.appendChild(style);
 
   const categories = [
     {
-      title: '👤 Personal',
+      title: 'Personal',
       fields: [
         { id: 'firstName', label: 'First Name (EN)' },
         { id: 'firstNameAr', label: 'First Name (AR)' },
@@ -74,7 +85,7 @@ function createDataGeneratorUI(containerId) {
       ]
     },
     {
-      title: '📞 Contact',
+      title: 'Contact',
       fields: [
         { id: 'email', label: 'Email' },
         { id: 'phone', label: 'Phone' },
@@ -105,7 +116,7 @@ function createDataGeneratorUI(containerId) {
       ]
     },
     {
-      title: '💼 Work',
+      title: 'Work',
       fields: [
         { id: 'company', label: 'Company' },
         { id: 'companyId', label: 'Company ID' },
@@ -128,7 +139,7 @@ function createDataGeneratorUI(containerId) {
       ]
     },
     {
-      title: '💳 Finance',
+      title: 'Finance',
       fields: [
         { id: 'iban', label: 'IBAN' },
         { id: 'creditCard', label: 'Credit Card' },
@@ -147,7 +158,7 @@ function createDataGeneratorUI(containerId) {
       ]
     },
     {
-      title: '📅 Date & Time',
+      title: 'Date & Time',
       fields: [
         { id: 'date', label: 'Date' },
         { id: 'dateGregorian', label: 'Date Gregorian (EN)' },
@@ -170,7 +181,7 @@ function createDataGeneratorUI(containerId) {
       ]
     },
     {
-      title: '🔧 Other',
+      title: 'Other',
       fields: [
         { id: 'uuid', label: 'UUID' },
         { id: 'url', label: 'URL' },
@@ -289,26 +300,52 @@ function createDataGeneratorUI(containerId) {
     
     generatedData = [];
     for (let i = 0; i < count; i++) {
+      if (window.resetSharedData) window.resetSharedData();
       const record = {};
       checked.forEach(fieldId => {
         if (window.generators[fieldId]) {
-          record[fieldId] = window.generators[fieldId]();
+          try {
+            record[fieldId] = window.generators[fieldId]();
+          } catch (e) {
+            record[fieldId] = 'Error';
+          }
         }
       });
       generatedData.push(record);
     }
 
     const resultsDiv = document.getElementById('results');
-    resultsDiv.innerHTML = generatedData.map(record => `
-      <div class="dg-record">
+    
+    const recordTabs = generatedData.map((_, idx) => 
+      `<button class="dg-record-tab ${idx === 0 ? 'active' : ''}" data-record="${idx}">Record ${idx + 1}</button>`
+    ).join('');
+    
+    const recordContents = generatedData.map((record, idx) => `
+      <div class="dg-record-content ${idx === 0 ? 'active' : ''}" data-record-content="${idx}">
         ${Object.entries(record).map(([key, value]) => `
-          <div class="dg-field">
-            <span class="dg-field-label">${key}:</span>
+          <div class="dg-record-field">
+            <span class="dg-record-label">${key}</span>
             <span class="dg-field-value" data-value="${value}">${value}</span>
           </div>
         `).join('')}
       </div>
     `).join('');
+    
+    resultsDiv.innerHTML = `
+      <div class="dg-record-tabs">${recordTabs}</div>
+      <div class="dg-record-contents">${recordContents}</div>
+    `;
+    
+    // Record tab switching
+    document.querySelectorAll('.dg-record-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const recordIdx = tab.dataset.record;
+        document.querySelectorAll('.dg-record-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.dg-record-content').forEach(c => c.classList.remove('active'));
+        tab.classList.add('active');
+        document.querySelector(`.dg-record-content[data-record-content="${recordIdx}"]`).classList.add('active');
+      });
+    });
     
     // Add click handlers for copy
     document.querySelectorAll('.dg-field-value').forEach(el => {
