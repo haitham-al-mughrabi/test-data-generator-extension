@@ -33,9 +33,16 @@ function createDataGeneratorUI(containerId) {
     .dg-record-tab { padding: 8px 12px; border: none; background: none; cursor: pointer; font-size: 11px; font-weight: 600; color: #64748b; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.2s; }
     .dg-record-tab:hover { color: #667eea; }
     .dg-record-tab.active { color: #667eea; border-bottom-color: #667eea; }
-    .dg-record-contents { flex: 1; overflow-y: auto; padding: 8px; }
-    .dg-record-content { display: none; }
-    .dg-record-content.active { display: block; }
+    .dg-record-contents { flex: 1; overflow-y: auto; padding: 0; }
+    .dg-record-content { display: none; height: 100%; }
+    .dg-record-content.active { display: flex; flex-direction: column; }
+    .dg-category-tabs { display: flex; background: #f1f5f9; border-bottom: 1px solid #e2e8f0; overflow-x: auto; flex-shrink: 0; }
+    .dg-category-tab { padding: 6px 10px; border: none; background: none; cursor: pointer; font-size: 10px; font-weight: 600; color: #64748b; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.2s; }
+    .dg-category-tab:hover { color: #667eea; }
+    .dg-category-tab.active { color: #667eea; border-bottom-color: #667eea; }
+    .dg-category-contents { flex: 1; overflow-y: auto; padding: 8px; }
+    .dg-category-content { display: none; }
+    .dg-category-content.active { display: block; }
     .dg-record-card { background: white; border: 1px solid #e2e8f0; border-radius: 5px; padding: 8px; }
     .dg-record-title { font-weight: 700; color: #667eea; font-size: 11px; margin-bottom: 6px; }
     .dg-record-field { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 4px; font-size: 10px; }
@@ -320,16 +327,38 @@ function createDataGeneratorUI(containerId) {
       `<button class="dg-record-tab ${idx === 0 ? 'active' : ''}" data-record="${idx}">Record ${idx + 1}</button>`
     ).join('');
     
-    const recordContents = generatedData.map((record, idx) => `
-      <div class="dg-record-content ${idx === 0 ? 'active' : ''}" data-record-content="${idx}">
-        ${Object.entries(record).map(([key, value]) => `
-          <div class="dg-record-field">
-            <span class="dg-record-label">${key}</span>
-            <span class="dg-field-value" data-value="${value}">${value}</span>
-          </div>
-        `).join('')}
-      </div>
-    `).join('');
+    const recordContents = generatedData.map((record, recordIdx) => {
+      // Group by category for this record
+      const grouped = {};
+      Object.entries(record).forEach(([key, value]) => {
+        const category = categories.find(cat => cat.fields.some(f => f.id === key));
+        const catName = category ? category.title.replace(/[^a-zA-Z\s]/g, '').trim() : 'Other';
+        if (!grouped[catName]) grouped[catName] = [];
+        grouped[catName].push({ key, value });
+      });
+      
+      const catTabs = Object.keys(grouped).map((cat, idx) => 
+        `<button class="dg-category-tab ${idx === 0 ? 'active' : ''}" data-category="${recordIdx}-${cat}">${cat}</button>`
+      ).join('');
+      
+      const catContents = Object.entries(grouped).map(([cat, fields], idx) => `
+        <div class="dg-category-content ${idx === 0 ? 'active' : ''}" data-category-content="${recordIdx}-${cat}">
+          ${fields.map(({ key, value }) => `
+            <div class="dg-record-field">
+              <span class="dg-record-label">${key}</span>
+              <span class="dg-field-value" data-value="${value}">${value}</span>
+            </div>
+          `).join('')}
+        </div>
+      `).join('');
+      
+      return `
+        <div class="dg-record-content ${recordIdx === 0 ? 'active' : ''}" data-record-content="${recordIdx}">
+          <div class="dg-category-tabs">${catTabs}</div>
+          <div class="dg-category-contents">${catContents}</div>
+        </div>
+      `;
+    }).join('');
     
     resultsDiv.innerHTML = `
       <div class="dg-record-tabs">${recordTabs}</div>
@@ -344,6 +373,18 @@ function createDataGeneratorUI(containerId) {
         document.querySelectorAll('.dg-record-content').forEach(c => c.classList.remove('active'));
         tab.classList.add('active');
         document.querySelector(`.dg-record-content[data-record-content="${recordIdx}"]`).classList.add('active');
+      });
+    });
+    
+    // Category tab switching
+    document.querySelectorAll('.dg-category-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const catKey = tab.dataset.category;
+        const recordIdx = catKey.split('-')[0];
+        document.querySelectorAll(`.dg-record-content[data-record-content="${recordIdx}"] .dg-category-tab`).forEach(t => t.classList.remove('active'));
+        document.querySelectorAll(`.dg-record-content[data-record-content="${recordIdx}"] .dg-category-content`).forEach(c => c.classList.remove('active'));
+        tab.classList.add('active');
+        document.querySelector(`.dg-category-content[data-category-content="${catKey}"]`).classList.add('active');
       });
     });
     
