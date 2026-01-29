@@ -34,7 +34,8 @@ function createDataGeneratorUI(containerId) {
     .dg-record { margin-bottom: 6px; padding: 6px; border: 1px solid #e5e7eb; border-radius: 2px; }
     .dg-field { display: flex; justify-content: space-between; gap: 8px; }
     .dg-field-label { font-weight: 500; color: #374151; }
-    .dg-field-value { color: #6b7280; word-break: break-all; }
+    .dg-field-value { color: #6b7280; word-break: break-all; cursor: pointer; padding: 2px 4px; border-radius: 2px; }
+    .dg-field-value:hover { background: #e5e7eb; }
     .dg-footer { font-size: 9px; color: #9ca3af; text-align: center; padding: 6px; border-top: 1px solid #e5e7eb; flex-shrink: 0; }
   `;
   document.head.appendChild(style);
@@ -206,6 +207,10 @@ function createDataGeneratorUI(containerId) {
   const tabsHTML = categories.map((cat, idx) => `<button class="dg-tab ${idx === 0 ? 'active' : ''}" data-tab="${idx}">${cat.title}</button>`).join('');
   const contentHTML = categories.map((cat, idx) => `
     <div class="dg-tab-content ${idx === 0 ? 'active' : ''}" data-content="${idx}">
+      <div style="padding: 8px; border-bottom: 1px solid #e5e7eb; display: flex; gap: 6px;">
+        <button class="dg-btn dg-btn-secondary dg-select-all" style="flex: 1; padding: 4px;" data-tab="${idx}">Select All</button>
+        <button class="dg-btn dg-btn-secondary dg-unselect-all" style="flex: 1; padding: 4px;" data-tab="${idx}">Unselect All</button>
+      </div>
       ${cat.fields.map(field => `
         <label class="dg-checkbox">
           <input type="checkbox" value="${field.id}" checked>
@@ -248,6 +253,21 @@ function createDataGeneratorUI(containerId) {
     });
   });
 
+  // Select All / Unselect All
+  document.querySelectorAll('.dg-select-all').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tabIdx = btn.dataset.tab;
+      document.querySelectorAll(`[data-content="${tabIdx}"] .dg-checkbox input`).forEach(c => c.checked = true);
+    });
+  });
+
+  document.querySelectorAll('.dg-unselect-all').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tabIdx = btn.dataset.tab;
+      document.querySelectorAll(`[data-content="${tabIdx}"] .dg-checkbox input`).forEach(c => c.checked = false);
+    });
+  });
+
   let generatedData = [];
 
   document.getElementById('generateBtn').addEventListener('click', () => {
@@ -257,15 +277,7 @@ function createDataGeneratorUI(containerId) {
     }
 
     const count = parseInt(document.getElementById('recordCount').value) || 1;
-    const allCheckboxes = document.querySelectorAll('.dg-checkbox input');
-    console.log('Total checkboxes found:', allCheckboxes.length);
-    
-    const checked = Array.from(allCheckboxes).filter(c => {
-      console.log('Checkbox:', c.value, 'Checked:', c.checked);
-      return c.checked;
-    }).map(c => c.value);
-    
-    console.log('Selected fields:', checked);
+    const checked = Array.from(document.querySelectorAll('.dg-checkbox input')).filter(c => c.checked).map(c => c.value);
     
     if (checked.length === 0) {
       alert('Please select at least one field');
@@ -289,11 +301,23 @@ function createDataGeneratorUI(containerId) {
         ${Object.entries(record).map(([key, value]) => `
           <div class="dg-field">
             <span class="dg-field-label">${key}:</span>
-            <span class="dg-field-value">${value}</span>
+            <span class="dg-field-value" data-value="${value}">${value}</span>
           </div>
         `).join('')}
       </div>
     `).join('');
+    
+    // Add click handlers for copy
+    document.querySelectorAll('.dg-field-value').forEach(el => {
+      el.addEventListener('click', function() {
+        const value = this.getAttribute('data-value');
+        navigator.clipboard.writeText(value).then(() => {
+          const original = this.textContent;
+          this.textContent = 'Copied!';
+          setTimeout(() => this.textContent = original, 800);
+        });
+      });
+    });
   });
 
   document.getElementById('copyBtn').addEventListener('click', () => {
