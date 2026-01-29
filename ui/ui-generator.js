@@ -49,208 +49,25 @@ function createDataGeneratorUI(containerId) {
     .dg-category-contents { flex: 1; overflow-y: auto; padding: 8px; }
     .dg-category-content { display: none; }
     .dg-category-content.active { display: block; }
-    .dg-record-card { background: white; border: 1px solid #e2e8f0; border-radius: 5px; padding: 8px; }
-    .dg-record-title { font-weight: 700; color: #667eea; font-size: 11px; margin-bottom: 6px; }
     .dg-record-field { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 4px; font-size: 10px; }
     .dg-record-label { font-weight: 500; color: #64748b; }
-    .dg-record { margin-bottom: 10px; padding: 10px; background: white; border: 1px solid #e2e8f0; border-radius: 5px; }
-    .dg-record-header { font-weight: 700; color: #667eea; margin-bottom: 6px; font-size: 11px; }
-    .dg-category { margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid #f1f5f9; }
-    .dg-category-name { font-weight: 600; color: #475569; font-size: 10px; margin-bottom: 4px; }
-    .dg-field { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 4px; }
-    .dg-field-label { font-weight: 500; color: #64748b; font-size: 10px; }
     .dg-field-value { color: #334155; word-break: break-all; cursor: pointer; padding: 3px 6px; border-radius: 3px; background: #f1f5f9; transition: all 0.2s; }
     .dg-field-value:hover { background: #e0e7ff; color: #667eea; }
     .dg-footer { font-size: 9px; color: #94a3b8; text-align: center; padding: 8px; border-top: 1px solid #e2e8f0; flex-shrink: 0; }
+    #fileControls { display: none; margin-top: 10px; padding: 10px; background: #f1f5f9; border-radius: 5px; }
+    #fileControls input, #fileControls select { width: 100%; padding: 6px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 11px; box-sizing: border-box; margin-top: 4px; margin-bottom: 8px; }
+    #fileControls label { font-size: 11px; font-weight: 600; color: #334155; }
   `;
   document.head.appendChild(style);
 
   const categories = [
-    {
-      title: 'Personal',
-      fields: [
-        { id: 'firstName', label: 'First Name (EN)' },
-        { id: 'firstNameAr', label: 'First Name (AR)' },
-        { id: 'middleName', label: 'Middle Name (EN)' },
-        { id: 'middleNameAr', label: 'Middle Name (AR)' },
-        { id: 'lastName', label: 'Last Name (EN)' },
-        { id: 'lastNameAr', label: 'Last Name (AR)' },
-        { id: 'fullName', label: 'Full Name (EN)' },
-        { id: 'fullNameAr', label: 'Full Name (AR)' },
-        { id: 'fullNameWithMiddle', label: 'Full Name with Middle (EN)' },
-        { id: 'fullNameWithMiddleAr', label: 'Full Name with Middle (AR)' },
-        { id: 'gender', label: 'Gender (EN)' },
-        { id: 'genderAr', label: 'Gender (AR)' },
-        { id: 'birthdate', label: 'Birthdate' },
-        { id: 'age', label: 'Age' },
-        { id: 'nationality', label: 'Nationality (EN)' },
-        { id: 'nationalityAr', label: 'Nationality (AR)' },
-        { id: 'bloodType', label: 'Blood Type' },
-        { id: 'maritalStatus', label: 'Marital Status (EN)' },
-        { id: 'maritalStatusAr', label: 'Marital Status (AR)' },
-        { id: 'religion', label: 'Religion (EN)' },
-        { id: 'religionAr', label: 'Religion (AR)' },
-        { id: 'saudiId', label: 'Saudi ID' },
-        { id: 'passportNumber', label: 'Passport Number' },
-        { id: 'visaNumber', label: 'Visa Number' },
-        { id: 'height', label: 'Height' },
-        { id: 'weight', label: 'Weight' },
-        { id: 'education', label: 'Education (EN)' },
-        { id: 'educationAr', label: 'Education (AR)' },
-        { id: 'department', label: 'Department (EN)' },
-        { id: 'departmentAr', label: 'Department (AR)' },
-        { id: 'experience', label: 'Experience (EN)' },
-        { id: 'experienceAr', label: 'Experience (AR)' },
-        { id: 'level', label: 'Level' },
-        { id: 'medicalRecord', label: 'Medical Record' }
-      ]
-    },
-    {
-      title: 'Contact',
-      fields: [
-        { id: 'email', label: 'Email' },
-        { id: 'phone', label: 'Phone' },
-        { id: 'mobileNumber', label: 'Mobile Number' },
-        { id: 'landline', label: 'Landline' },
-        { id: 'address', label: 'Address (EN)' },
-        { id: 'addressAr', label: 'Address (AR)' },
-        { id: 'saudiAddress', label: 'Saudi Address (EN)' },
-        { id: 'saudiAddressAr', label: 'Saudi Address (AR)' },
-        { id: 'nationalAddress', label: 'National Address' },
-        { id: 'city', label: 'City (EN)' },
-        { id: 'cityAr', label: 'City (AR)' },
-        { id: 'district', label: 'District (EN)' },
-        { id: 'districtAr', label: 'District (AR)' },
-        { id: 'streetName', label: 'Street Name (EN)' },
-        { id: 'streetNameAr', label: 'Street Name (AR)' },
-        { id: 'streetNumber', label: 'Street Number' },
-        { id: 'building', label: 'Building' },
-        { id: 'floor', label: 'Floor' },
-        { id: 'room', label: 'Room' },
-        { id: 'postalCode', label: 'Postal Code' },
-        { id: 'country', label: 'Country (EN)' },
-        { id: 'countryAr', label: 'Country (AR)' },
-        { id: 'countryCode', label: 'Country Code' },
-        { id: 'coordinates', label: 'Coordinates' },
-        { id: 'latitude', label: 'Latitude' },
-        { id: 'longitude', label: 'Longitude' },
-        { id: 'domain', label: 'Domain' },
-        { id: 'username', label: 'Username' },
-        { id: 'url', label: 'URL' },
-        { id: 'subdomain', label: 'Subdomain' }
-      ]
-    },
-    {
-      title: 'Work',
-      fields: [
-        { id: 'company', label: 'Company' },
-        { id: 'companyId', label: 'Company ID' },
-        { id: 'jobTitle', label: 'Job Title (EN)' },
-        { id: 'jobTitleAr', label: 'Job Title (AR)' },
-        { id: 'department', label: 'Department (EN)' },
-        { id: 'departmentAr', label: 'Department (AR)' },
-        { id: 'experience', label: 'Experience (EN)' },
-        { id: 'experienceAr', label: 'Experience (AR)' },
-        { id: 'education', label: 'Education (EN)' },
-        { id: 'educationAr', label: 'Education (AR)' },
-        { id: 'level', label: 'Level' },
-        { id: 'salary', label: 'Salary' },
-        { id: 'studentId', label: 'Student ID' },
-        { id: 'taxId', label: 'Tax ID' },
-        { id: 'vatNumber', label: 'VAT Number' },
-        { id: 'licenseNumber', label: 'License Number' },
-        { id: 'productName', label: 'Product Name' },
-        { id: 'productCode', label: 'Product Code' },
-        { id: 'orderNumber', label: 'Order Number' },
-        { id: 'invoice', label: 'Invoice' },
-        { id: 'carModel', label: 'Car Model' },
-        { id: 'carYear', label: 'Car Year' }
-      ]
-    },
-    {
-      title: 'Finance',
-      fields: [
-        { id: 'iban', label: 'IBAN' },
-        { id: 'creditCard', label: 'Credit Card' },
-        { id: 'visaCard', label: 'Visa Card' },
-        { id: 'masterCard', label: 'Master Card' },
-        { id: 'madaCard', label: 'Mada Card' },
-        { id: 'cardExpiry', label: 'Card Expiry' },
-        { id: 'cvv', label: 'CVV' },
-        { id: 'bankName', label: 'Bank Name' },
-        { id: 'accountNumber', label: 'Account Number' },
-        { id: 'currency', label: 'Currency' },
-        { id: 'exchangeRate', label: 'Exchange Rate' },
-        { id: 'invoice', label: 'Invoice' },
-        { id: 'orderNumber', label: 'Order Number' },
-        { id: 'stockSymbol', label: 'Stock Symbol' },
-        { id: 'salary', label: 'Salary' },
-        { id: 'score', label: 'Score' },
-        { id: 'fileSize', label: 'File Size' }
-      ]
-    },
-    {
-      title: 'Date & Time',
-      fields: [
-        { id: 'date', label: 'Date' },
-        { id: 'dateGregorian', label: 'Date Gregorian (EN)' },
-        { id: 'dateGregorianAr', label: 'Date Gregorian (AR)' },
-        { id: 'dateHijri', label: 'Date Hijri (EN)' },
-        { id: 'dateHijriAr', label: 'Date Hijri (AR)' },
-        { id: 'datePast', label: 'Date Past' },
-        { id: 'dateFuture', label: 'Date Future' },
-        { id: 'datePresent', label: 'Date Present' },
-        { id: 'time', label: 'Time' },
-        { id: 'time12', label: 'Time 12H (EN)' },
-        { id: 'time12Ar', label: 'Time 12H (AR)' },
-        { id: 'datetime', label: 'DateTime (EN)' },
-        { id: 'datetimeAr', label: 'DateTime (AR)' },
-        { id: 'datetimeLocal', label: 'DateTime Local' },
-        { id: 'timestamp', label: 'Timestamp' },
-        { id: 'dayOfWeek', label: 'Day of Week' },
-        { id: 'month', label: 'Month' },
-        { id: 'timeZone', label: 'Time Zone' },
-        { id: 'birthdate', label: 'Birthdate' },
-        { id: 'cardExpiry', label: 'Card Expiry' }
-      ]
-    },
-    {
-      title: 'Other',
-      fields: [
-        { id: 'uuid', label: 'UUID' },
-        { id: 'url', label: 'URL' },
-        { id: 'domain', label: 'Domain' },
-        { id: 'subdomain', label: 'Subdomain' },
-        { id: 'email', label: 'Email' },
-        { id: 'username', label: 'Username' },
-        { id: 'password', label: 'Password' },
-        { id: 'apiKey', label: 'API Key' },
-        { id: 'ip', label: 'IP Address' },
-        { id: 'macAddress', label: 'MAC Address' },
-        { id: 'port', label: 'Port' },
-        { id: 'protocol', label: 'Protocol' },
-        { id: 'userAgent', label: 'User Agent' },
-        { id: 'color', label: 'Color' },
-        { id: 'number', label: 'Number' },
-        { id: 'boolean', label: 'Boolean' },
-        { id: 'barcode', label: 'Barcode' },
-        { id: 'serialNumber', label: 'Serial Number' },
-        { id: 'hashtag', label: 'Hashtag' },
-        { id: 'mention', label: 'Mention' },
-        { id: 'gamertag', label: 'Gamertag' },
-        { id: 'licensePlate', label: 'License Plate' },
-        { id: 'carModel', label: 'Car Model' },
-        { id: 'carYear', label: 'Car Year' },
-        { id: 'distance', label: 'Distance' },
-        { id: 'speed', label: 'Speed' },
-        { id: 'temperature', label: 'Temperature' },
-        { id: 'fileSize', label: 'File Size' },
-        { id: 'score', label: 'Score' },
-        { id: 'medicalRecord', label: 'Medical Record' },
-        { id: 'height', label: 'Height' },
-        { id: 'weight', label: 'Weight' }
-      ]
-    }
+    { title: 'Personal', fields: [{ id: 'firstName', label: 'First Name (EN)' }, { id: 'firstNameAr', label: 'First Name (AR)' }, { id: 'lastName', label: 'Last Name (EN)' }, { id: 'lastNameAr', label: 'Last Name (AR)' }, { id: 'fullName', label: 'Full Name (EN)' }, { id: 'fullNameAr', label: 'Full Name (AR)' }, { id: 'gender', label: 'Gender (EN)' }, { id: 'genderAr', label: 'Gender (AR)' }, { id: 'birthdate', label: 'Birthdate' }, { id: 'age', label: 'Age' }, { id: 'nationality', label: 'Nationality (EN)' }, { id: 'nationalityAr', label: 'Nationality (AR)' }, { id: 'bloodType', label: 'Blood Type' }, { id: 'saudiId', label: 'Saudi ID' }, { id: 'passportNumber', label: 'Passport Number' }] },
+    { title: 'Contact', fields: [{ id: 'email', label: 'Email' }, { id: 'phone', label: 'Phone' }, { id: 'address', label: 'Address (EN)' }, { id: 'addressAr', label: 'Address (AR)' }, { id: 'city', label: 'City (EN)' }, { id: 'cityAr', label: 'City (AR)' }, { id: 'postalCode', label: 'Postal Code' }, { id: 'country', label: 'Country (EN)' }, { id: 'countryAr', label: 'Country (AR)' }] },
+    { title: 'Work', fields: [{ id: 'company', label: 'Company' }, { id: 'jobTitle', label: 'Job Title (EN)' }, { id: 'jobTitleAr', label: 'Job Title (AR)' }, { id: 'salary', label: 'Salary' }, { id: 'department', label: 'Department (EN)' }, { id: 'departmentAr', label: 'Department (AR)' }] },
+    { title: 'Finance', fields: [{ id: 'iban', label: 'IBAN' }, { id: 'creditCard', label: 'Credit Card' }, { id: 'cvv', label: 'CVV' }, { id: 'bankName', label: 'Bank Name' }] },
+    { title: 'Date & Time', fields: [{ id: 'date', label: 'Date' }, { id: 'time', label: 'Time' }, { id: 'datetime', label: 'DateTime' }, { id: 'timestamp', label: 'Timestamp' }] },
+    { title: 'Other', fields: [{ id: 'uuid', label: 'UUID' }, { id: 'url', label: 'URL' }, { id: 'email', label: 'Email' }, { id: 'password', label: 'Password' }, { id: 'ip', label: 'IP Address' }, { id: 'color', label: 'Color' }] },
+    { title: 'Files', fields: [{ id: 'txt', label: 'Text File (.txt)' }, { id: 'json', label: 'JSON File (.json)' }, { id: 'csv', label: 'CSV File (.csv)' }] }
   ];
 
   const tabsHTML = categories.map((cat, idx) => `<button class="dg-tab ${idx === 0 ? 'active' : ''}" data-tab="${idx}">${cat.title}</button>`).join('');
@@ -261,12 +78,7 @@ function createDataGeneratorUI(containerId) {
         <button class="dg-btn dg-btn-secondary dg-unselect-all" data-tab="${idx}">✕ Tab</button>
       </div>
       <div class="dg-fields-wrapper">
-        ${cat.fields.map(field => `
-          <label class="dg-checkbox">
-            <input type="checkbox" value="${field.id}" checked>
-            <span>${field.label}</span>
-          </label>
-        `).join('')}
+        ${cat.fields.map(field => `<label class="dg-checkbox"><input type="checkbox" value="${field.id}"><span>${field.label}</span></label>`).join('')}
       </div>
     </div>
   `).join('');
@@ -292,6 +104,19 @@ function createDataGeneratorUI(containerId) {
             <button class="dg-btn dg-btn-primary" id="generateBtn">Generate</button>
             <button class="dg-btn dg-btn-secondary" id="copyBtn">Copy</button>
           </div>
+          <div id="fileControls">
+            <label>File Name:</label>
+            <input type="text" id="fileName" placeholder="test">
+            <label>File Type:</label>
+            <select id="fileType">
+              <option value="txt">Text (.txt)</option>
+              <option value="json">JSON (.json)</option>
+              <option value="csv">CSV (.csv)</option>
+            </select>
+            <label>Size (KB):</label>
+            <input type="number" id="fileSize" value="10" min="1" max="10000">
+            <button class="dg-btn dg-btn-primary" id="downloadBtn" style="width: 100%;">⬇ Download File</button>
+          </div>
           <div class="dg-results" id="results"></div>
         </div>
       </div>
@@ -299,7 +124,8 @@ function createDataGeneratorUI(containerId) {
     </div>
   `;
 
-  // Tab switching
+  let generatedData = [];
+
   document.querySelectorAll('.dg-tab').forEach(tab => {
     tab.addEventListener('click', () => {
       const tabIdx = tab.dataset.tab;
@@ -310,7 +136,14 @@ function createDataGeneratorUI(containerId) {
     });
   });
 
-  // Select Tab / Unselect Tab
+  document.querySelector('.dg-select-all-categories').addEventListener('click', () => {
+    document.querySelectorAll('.dg-checkbox input').forEach(c => c.checked = true);
+  });
+
+  document.querySelector('.dg-unselect-all-categories').addEventListener('click', () => {
+    document.querySelectorAll('.dg-checkbox input').forEach(c => c.checked = false);
+  });
+
   document.querySelectorAll('.dg-select-all').forEach(btn => {
     btn.addEventListener('click', () => {
       const tabIdx = btn.dataset.tab;
@@ -324,17 +157,6 @@ function createDataGeneratorUI(containerId) {
       document.querySelectorAll(`[data-content="${tabIdx}"] .dg-checkbox input`).forEach(c => c.checked = false);
     });
   });
-
-  // Select All / Unselect All Categories
-  document.querySelector('.dg-select-all-categories').addEventListener('click', () => {
-    document.querySelectorAll('.dg-checkbox input').forEach(c => c.checked = true);
-  });
-
-  document.querySelector('.dg-unselect-all-categories').addEventListener('click', () => {
-    document.querySelectorAll('.dg-checkbox input').forEach(c => c.checked = false);
-  });
-
-  let generatedData = [];
 
   document.getElementById('generateBtn').addEventListener('click', () => {
     if (!window.generators || Object.keys(window.generators).length === 0) {
@@ -354,27 +176,10 @@ function createDataGeneratorUI(containerId) {
     for (let i = 0; i < count; i++) {
       if (window.resetSharedData) window.resetSharedData();
       const record = {};
-      const arMapping = {}; // Store AR values to sync with EN
-      
       checked.forEach(fieldId => {
         if (window.generators[fieldId]) {
           try {
-            let value = window.generators[fieldId]();
-            
-            // Sync AR/EN pairs
-            if (fieldId.endsWith('Ar')) {
-              const enFieldId = fieldId.slice(0, -2); // Remove 'Ar'
-              if (arMapping[enFieldId]) {
-                // Use the same base value but get AR version
-                if (window.resetSharedData) window.resetSharedData();
-                value = window.generators[fieldId]();
-              }
-            } else if (window.generators[fieldId + 'Ar']) {
-              // Store EN value for AR sync
-              arMapping[fieldId] = value;
-            }
-            
-            record[fieldId] = value;
+            record[fieldId] = window.generators[fieldId]();
           } catch (e) {
             record[fieldId] = 'Error';
           }
@@ -384,33 +189,20 @@ function createDataGeneratorUI(containerId) {
     }
 
     const resultsDiv = document.getElementById('results');
-    
-    const recordTabs = generatedData.map((_, idx) => 
-      `<button class="dg-record-tab ${idx === 0 ? 'active' : ''}" data-record="${idx}">Record ${idx + 1}</button>`
-    ).join('');
-    
+    const recordTabs = generatedData.map((_, idx) => `<button class="dg-record-tab ${idx === 0 ? 'active' : ''}" data-record="${idx}">Record ${idx + 1}</button>`).join('');
     const recordContents = generatedData.map((record, recordIdx) => {
-      // Group by category for this record
       const grouped = {};
       Object.entries(record).forEach(([key, value]) => {
         const category = categories.find(cat => cat.fields.some(f => f.id === key));
-        const catName = category ? category.title.replace(/[^a-zA-Z\s]/g, '').trim() : 'Other';
+        const catName = category ? category.title : 'Other';
         if (!grouped[catName]) grouped[catName] = [];
         grouped[catName].push({ key, value });
       });
       
-      const catTabs = Object.keys(grouped).map((cat, idx) => 
-        `<button class="dg-category-tab ${idx === 0 ? 'active' : ''}" data-category="${recordIdx}-${cat}">${cat}</button>`
-      ).join('');
-      
+      const catTabs = Object.keys(grouped).map((cat, idx) => `<button class="dg-category-tab ${idx === 0 ? 'active' : ''}" data-category="${recordIdx}-${cat}">${cat}</button>`).join('');
       const catContents = Object.entries(grouped).map(([cat, fields], idx) => `
         <div class="dg-category-content ${idx === 0 ? 'active' : ''}" data-category-content="${recordIdx}-${cat}">
-          ${fields.map(({ key, value }) => `
-            <div class="dg-record-field">
-              <span class="dg-record-label">${key}</span>
-              <span class="dg-field-value" data-value="${value}">${value}</span>
-            </div>
-          `).join('')}
+          ${fields.map(({ key, value }) => `<div class="dg-record-field"><span class="dg-record-label">${key}</span><span class="dg-field-value" data-value="${value}">${value}</span></div>`).join('')}
         </div>
       `).join('');
       
@@ -422,12 +214,8 @@ function createDataGeneratorUI(containerId) {
       `;
     }).join('');
     
-    resultsDiv.innerHTML = `
-      <div class="dg-record-tabs">${recordTabs}</div>
-      <div class="dg-record-contents">${recordContents}</div>
-    `;
+    resultsDiv.innerHTML = `<div class="dg-record-tabs">${recordTabs}</div><div class="dg-record-contents">${recordContents}</div>`;
     
-    // Record tab switching
     document.querySelectorAll('.dg-record-tab').forEach(tab => {
       tab.addEventListener('click', () => {
         const recordIdx = tab.dataset.record;
@@ -438,7 +226,6 @@ function createDataGeneratorUI(containerId) {
       });
     });
     
-    // Category tab switching
     document.querySelectorAll('.dg-category-tab').forEach(tab => {
       tab.addEventListener('click', () => {
         const catKey = tab.dataset.category;
@@ -447,10 +234,12 @@ function createDataGeneratorUI(containerId) {
         document.querySelectorAll(`.dg-record-content[data-record-content="${recordIdx}"] .dg-category-content`).forEach(c => c.classList.remove('active'));
         tab.classList.add('active');
         document.querySelector(`.dg-category-content[data-category-content="${catKey}"]`).classList.add('active');
+        
+        const isFiles = catKey.includes('Files');
+        document.getElementById('fileControls').style.display = isFiles ? 'block' : 'none';
       });
     });
     
-    // Add click handlers for copy
     document.querySelectorAll('.dg-field-value').forEach(el => {
       el.addEventListener('click', function() {
         const value = this.getAttribute('data-value');
@@ -474,6 +263,40 @@ function createDataGeneratorUI(containerId) {
       btn.textContent = 'Copied!';
       setTimeout(() => btn.textContent = originalText, 1000);
     });
+  });
+
+  document.getElementById('downloadBtn').addEventListener('click', () => {
+    const fileName = document.getElementById('fileName').value || 'test';
+    const fileType = document.getElementById('fileType').value;
+    const fileSizeKB = parseInt(document.getElementById('fileSize').value) || 10;
+    const fileSizeBytes = fileSizeKB * 1024;
+    
+    let content = '';
+    if (fileType === 'json') {
+      content = JSON.stringify(generatedData, null, 2);
+    } else if (fileType === 'csv') {
+      if (generatedData.length > 0) {
+        const headers = Object.keys(generatedData[0]);
+        content = headers.join(',') + '\n';
+        content += generatedData.map(r => headers.map(h => r[h]).join(',')).join('\n');
+      }
+    } else {
+      content = generatedData.map(r => Object.entries(r).map(([k, v]) => `${k}: ${v}`).join('\n')).join('\n\n');
+    }
+    
+    if (content.length < fileSizeBytes) {
+      content += '\n' + 'x'.repeat(fileSizeBytes - content.length);
+    } else if (content.length > fileSizeBytes) {
+      content = content.substring(0, fileSizeBytes);
+    }
+    
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${fileName}.${fileType}`;
+    a.click();
+    URL.revokeObjectURL(url);
   });
 }
 
