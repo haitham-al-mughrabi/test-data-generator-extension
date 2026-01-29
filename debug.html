@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Debug Test</title>
+</head>
+<body>
+  <div id="test-container" style="width: 400px; height: 500px; border: 1px solid #ccc;"></div>
+  
+  <!-- Load all scripts in order -->
+  <script src="data/names-data.js"></script>
+  <script src="data/saudi-data.js"></script>
+  <script src="utils/helpers.js"></script>
+  <script src="generators/personal-generators.js"></script>
+  <script src="generators/contact-generators.js"></script>
+  <script src="generators/work-generators.js"></script>
+  <script src="generators/finance-generators.js"></script>
+  <script src="generators/datetime-generators.js"></script>
+  <script src="generators/other-generators.js"></script>
+  <script src="shared.js"></script>
+  <script src="ui/ui-generator.js"></script>
+  
+  <script>
+    console.log('Starting debug...');
+    console.log('personalGenerators:', window.personalGenerators);
+    console.log('generators:', window.generators);
+    
+    setTimeout(() => {
+      console.log('After timeout - generators:', window.generators);
+      createDataGeneratorUI('test-container');
+    }, 500);
+  </script>
+</body>
+</html>

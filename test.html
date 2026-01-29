@@ -125,15 +125,33 @@
     </div>
   </div>
 
-  <script src="shared-new.js?v=2.0"></script>
-  <script src="context-menu.js"></script>
+  <!-- Data files -->
+  <script src="data/names-data.js"></script>
+  <script src="data/saudi-data.js"></script>
+  
+  <!-- Utility files -->
+  <script src="utils/helpers.js"></script>
+  
+  <!-- Generator files -->
+  <script src="generators/personal-generators.js"></script>
+  <script src="generators/contact-generators.js"></script>
+  <script src="generators/work-generators.js"></script>
+  <script src="generators/finance-generators.js"></script>
+  <script src="generators/datetime-generators.js"></script>
+  <script src="generators/other-generators.js"></script>
+  
+  <!-- Main shared file -->
+  <script src="shared.js"></script>
+  
+  <!-- UI generator -->
+  <script src="ui/ui-generator.js"></script>
   <script>
     // Test the standalone version
-    console.log('Loading Test Data Generator v2.0 (Modular)');
+    console.log('Loading Test Data Generator');
     
-    // Wait for DataGenerator to be available
+    // Wait for createDataGeneratorUI to be available
     function waitForGenerator() {
-      if (window.DataGenerator) {
+      if (window.createDataGeneratorUI) {
         createDataGeneratorUI('standalone-generator');
       } else {
         setTimeout(waitForGenerator, 100);
