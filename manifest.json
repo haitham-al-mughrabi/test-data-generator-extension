@@ -1,0 +1,44 @@
+{
+  "manifest_version": 3,
+  "name": "Test Data Generator",
+  "version": "1.0",
+  "description": "Generate random test data for development and testing",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "contextMenus"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Test Data Generator"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "shared.js", 
+        "data/saudi-data.js",
+        "data/names-data.js",
+        "utils/helpers.js", 
+        "generators/personal-generators.js",
+        "generators/contact-generators.js",
+        "generators/work-generators.js",
+        "generators/finance-generators.js",
+        "generators/datetime-generators.js",
+        "generators/other-generators.js",
+        "ui/ui-generator.js",
+        "injected.js"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test Data Generator - Test Page</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .test-container {
+      max-width: 400px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    .form-container {
+      max-width: 600px;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+      color: #374151;
+    }
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    .form-group input:focus, .form-group textarea:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+    }
+    h2 {
+      color: #667eea;
+      margin-bottom: 20px;
+    }
+    #standalone-generator {
+      height: 600px;
+    }
+    .instruction {
+      background: #f0f4ff;
+      border: 1px solid #c7d2fe;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+      color: #3730a3;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎲 Test Data Generator</h1>
+  
+  <div class="test-container">
+    <div id="standalone-generator"></div>
+  </div>
+
+  <div class="form-container">
+    <h2>Test Form - Right-click on fields to fill with test data</h2>
+    <div class="instruction">
+      <strong>Instructions:</strong> Right-click on any input field below to see the context menu with test data options.
+    </div>
+    
+    <div class="form-group">
+      <label>First Name:</label>
+      <input type="text" placeholder="Right-click to fill with test data">
+    </div>
+    
+    <div class="form-group">
+      <label>Last Name:</label>
+      <input type="text" placeholder="Right-click to fill with test data">
+    </div>
+    
+    <div class="form-group">
+      <label>Email:</label>
+      <input type="email" placeholder="Right-click to fill with test data">
+    </div>
+    
+    <div class="form-group">
+      <label>Phone:</label>
+      <input type="tel" placeholder="Right-click to fill with test data">
+    </div>
+    
+    <div class="form-group">
+      <label>Address:</label>
+      <textarea rows="3" placeholder="Right-click to fill with test data"></textarea>
+    </div>
+    
+    <div class="form-group">
+      <label>Company:</label>
+      <input type="text" placeholder="Right-click to fill with test data">
+    </div>
+    
+    <div class="form-group">
+      <label>IBAN:</label>
+      <input type="text" placeholder="Right-click to fill with test data">
+    </div>
+    
+    <div class="form-group">
+      <label>Date:</label>
+      <input type="date" placeholder="Right-click to fill with test data">
+    </div>
+  </div>
+
+  <script src="shared-new.js?v=2.0"></script>
+  <script src="context-menu.js"></script>
+  <script>
+    // Test the standalone version
+    console.log('Loading Test Data Generator v2.0 (Modular)');
+    
+    // Wait for DataGenerator to be available
+    function waitForGenerator() {
+      if (window.DataGenerator) {
+        createDataGeneratorUI('standalone-generator');
+      } else {
+        setTimeout(waitForGenerator, 100);
+      }
+    }
+    waitForGenerator();
+  </script>
+</body>
+</html>

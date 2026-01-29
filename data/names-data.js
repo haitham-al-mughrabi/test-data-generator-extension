@@ -1,0 +1,85 @@
+// Names data for Arabic and English
+const names = {
+  firstNames: {
+    male: [
+      { en: "Mohammed", ar: "محمد" },
+      { en: "Ahmed", ar: "أحمد" },
+      { en: "Abdullah", ar: "عبدالله" },
+      { en: "Khalid", ar: "خالد" },
+      { en: "Omar", ar: "عمر" },
+      { en: "Ali", ar: "علي" },
+      { en: "Saad", ar: "سعد" },
+      { en: "Fahd", ar: "فهد" },
+      { en: "Sultan", ar: "سلطان" },
+      { en: "Nasser", ar: "ناصر" },
+      { en: "Faisal", ar: "فيصل" },
+      { en: "Turki", ar: "تركي" },
+      { en: "Saud", ar: "سعود" },
+      { en: "Bandar", ar: "بندر" },
+      { en: "Rayan", ar: "ريان" },
+      { en: "Youssef", ar: "يوسف" },
+      { en: "Ibrahim", ar: "إبراهيم" },
+      { en: "Hassan", ar: "حسن" },
+      { en: "Hussein", ar: "حسين" },
+      { en: "Saleh", ar: "صالح" },
+      { en: "Abdulaziz", ar: "عبدالعزيز" },
+      { en: "Abdulrahman", ar: "عبدالرحمن" },
+      { en: "Mansour", ar: "منصور" },
+      { en: "Majed", ar: "ماجد" },
+      { en: "Waleed", ar: "وليد" },
+    ],
+    female: [
+      { en: "Fatima", ar: "فاطمة" },
+      { en: "Aisha", ar: "عائشة" },
+      { en: "Noura", ar: "نورة" },
+      { en: "Sara", ar: "سارة" },
+      { en: "Maryam", ar: "مريم" },
+      { en: "Haya", ar: "هيا" },
+      { en: "Lama", ar: "لمى" },
+      { en: "Reem", ar: "ريم" },
+      { en: "Dana", ar: "دانة" },
+      { en: "Shahad", ar: "شهد" },
+      { en: "Joud", ar: "جود" },
+      { en: "Noor", ar: "نور" },
+      { en: "Hala", ar: "هالة" },
+      { en: "Maha", ar: "مها" },
+      { en: "Arwa", ar: "أروى" },
+      { en: "Layla", ar: "ليلى" },
+      { en: "Amira", ar: "أميرة" },
+      { en: "Salma", ar: "سلمى" },
+      { en: "Yasmin", ar: "ياسمين" },
+      { en: "Hind", ar: "هند" },
+    ],
+  },
+  lastNames: [
+    { en: "Al-Saud", ar: "آل سعود" },
+    { en: "Al-Rashid", ar: "الراشد" },
+    { en: "Al-Otaibi", ar: "العتيبي" },
+    { en: "Al-Ghamdi", ar: "الغامدي" },
+    { en: "Al-Zahrani", ar: "الزهراني" },
+    { en: "Al-Shehri", ar: "الشهري" },
+    { en: "Al-Dosari", ar: "الدوسري" },
+    { en: "Al-Qahtani", ar: "القحطاني" },
+    { en: "Al-Harbi", ar: "الحربي" },
+    { en: "Al-Mutairi", ar: "المطيري" },
+    { en: "Al-Shammari", ar: "الشمري" },
+    { en: "Al-Anazi", ar: "العنزي" },
+    { en: "Al-Tamimi", ar: "التميمي" },
+    { en: "Al-Subai", ar: "السبيعي" },
+    { en: "Al-Johani", ar: "الجهني" },
+    { en: "Al-Maliki", ar: "المالكي" },
+    { en: "Al-Sulaiman", ar: "السليمان" },
+    { en: "Al-Faisal", ar: "الفيصل" },
+    { en: "Al-Nasser", ar: "الناصر" },
+    { en: "Al-Khaled", ar: "الخالد" },
+  ],
+};
+
+const emailDomains = ["gmail.com", "yahoo.com", "hotmail.com", "outlook.com", "mail.com", "proton.me", "icloud.com", "live.com", "aol.com"];
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { names, emailDomains };
+} else if (typeof window !== 'undefined') {
+  window.names = names;
+  window.emailDomains = emailDomains;
+}
