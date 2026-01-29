@@ -13,8 +13,14 @@ function createDataGeneratorUI(containerId) {
     .dg-tab.active { color: #667eea; border-bottom-color: #667eea; }
     .dg-main { flex: 1; display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
     .dg-content { flex: 1; overflow-y: auto; min-height: 0; background: white; }
+    .dg-top-controls { display: flex; gap: 6px; padding: 8px 0; border-bottom: 1px solid #e2e8f0; flex-shrink: 0; }
+    .dg-top-controls .dg-btn { flex: 1; padding: 8px 10px; font-size: 11px; margin: 0; background: #667eea !important; color: white !important; min-width: 0; height: 32px; display: flex; align-items: center; justify-content: center; }
+    .dg-top-controls .dg-btn:hover { background: #5a67d8 !important; }
     .dg-tab-content { display: none; padding: 14px; }
     .dg-tab-content.active { display: block; }
+    .dg-tab-controls { display: flex; gap: 6px; margin-bottom: 8px; }
+    .dg-tab-controls .dg-btn { flex: 1; padding: 8px 10px; font-size: 11px; background: #cbd5e1 !important; color: #334155 !important; min-width: 0; height: 32px; display: flex; align-items: center; justify-content: center; }
+    .dg-tab-controls .dg-btn:hover { background: #94a3b8 !important; }
     .dg-fields-wrapper { display: flex; flex-wrap: wrap; gap: 8px; }
     .dg-checkbox { display: inline-flex; align-items: center; gap: 6px; padding: 8px 10px; cursor: pointer; font-size: 12px; background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 6px; transition: all 0.2s; width: calc(50% - 4px); box-sizing: border-box; }
     .dg-checkbox:hover { background: #e0e7ff; border-color: #667eea; }
@@ -226,9 +232,9 @@ function createDataGeneratorUI(containerId) {
   const tabsHTML = categories.map((cat, idx) => `<button class="dg-tab ${idx === 0 ? 'active' : ''}" data-tab="${idx}">${cat.title}</button>`).join('');
   const contentHTML = categories.map((cat, idx) => `
     <div class="dg-tab-content ${idx === 0 ? 'active' : ''}" data-content="${idx}">
-      <div style="padding: 8px; border-bottom: 1px solid #e5e7eb; display: flex; gap: 6px;">
-        <button class="dg-btn dg-btn-secondary dg-select-all" style="flex: 1; padding: 4px;" data-tab="${idx}">Select All</button>
-        <button class="dg-btn dg-btn-secondary dg-unselect-all" style="flex: 1; padding: 4px;" data-tab="${idx}">Unselect All</button>
+      <div class="dg-tab-controls">
+        <button class="dg-btn dg-btn-secondary dg-select-all" data-tab="${idx}">✓ Tab</button>
+        <button class="dg-btn dg-btn-secondary dg-unselect-all" data-tab="${idx}">✕ Tab</button>
       </div>
       <div class="dg-fields-wrapper">
         ${cat.fields.map(field => `
@@ -246,7 +252,13 @@ function createDataGeneratorUI(containerId) {
       <div class="dg-header"><h1>🎲 Test Data Generator</h1></div>
       <div class="dg-tabs">${tabsHTML}</div>
       <div class="dg-main">
-        <div class="dg-content">${contentHTML}</div>
+        <div class="dg-content">
+          <div class="dg-top-controls">
+            <button class="dg-btn dg-btn-secondary dg-select-all-categories">✓ Select All</button>
+            <button class="dg-btn dg-btn-secondary dg-unselect-all-categories">✕ Unselect All</button>
+          </div>
+          ${contentHTML}
+        </div>
         <div class="dg-controls">
           <div class="dg-count-control">
             <label>Records:</label>
@@ -274,7 +286,7 @@ function createDataGeneratorUI(containerId) {
     });
   });
 
-  // Select All / Unselect All
+  // Select Tab / Unselect Tab
   document.querySelectorAll('.dg-select-all').forEach(btn => {
     btn.addEventListener('click', () => {
       const tabIdx = btn.dataset.tab;
@@ -287,6 +299,15 @@ function createDataGeneratorUI(containerId) {
       const tabIdx = btn.dataset.tab;
       document.querySelectorAll(`[data-content="${tabIdx}"] .dg-checkbox input`).forEach(c => c.checked = false);
     });
+  });
+
+  // Select All / Unselect All Categories
+  document.querySelector('.dg-select-all-categories').addEventListener('click', () => {
+    document.querySelectorAll('.dg-checkbox input').forEach(c => c.checked = true);
+  });
+
+  document.querySelector('.dg-unselect-all-categories').addEventListener('click', () => {
+    document.querySelectorAll('.dg-checkbox input').forEach(c => c.checked = false);
   });
 
   let generatedData = [];
