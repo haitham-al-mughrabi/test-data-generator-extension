@@ -94,7 +94,15 @@ function createDataGeneratorUI(containerId) {
         { id: 'passportNumber', label: 'Passport Number' },
         { id: 'visaNumber', label: 'Visa Number' },
         { id: 'height', label: 'Height' },
-        { id: 'weight', label: 'Weight' }
+        { id: 'weight', label: 'Weight' },
+        { id: 'education', label: 'Education (EN)' },
+        { id: 'educationAr', label: 'Education (AR)' },
+        { id: 'department', label: 'Department (EN)' },
+        { id: 'departmentAr', label: 'Department (AR)' },
+        { id: 'experience', label: 'Experience (EN)' },
+        { id: 'experienceAr', label: 'Experience (AR)' },
+        { id: 'level', label: 'Level' },
+        { id: 'medicalRecord', label: 'Medical Record' }
       ]
     },
     {
@@ -125,7 +133,11 @@ function createDataGeneratorUI(containerId) {
         { id: 'countryCode', label: 'Country Code' },
         { id: 'coordinates', label: 'Coordinates' },
         { id: 'latitude', label: 'Latitude' },
-        { id: 'longitude', label: 'Longitude' }
+        { id: 'longitude', label: 'Longitude' },
+        { id: 'domain', label: 'Domain' },
+        { id: 'username', label: 'Username' },
+        { id: 'url', label: 'URL' },
+        { id: 'subdomain', label: 'Subdomain' }
       ]
     },
     {
@@ -148,7 +160,11 @@ function createDataGeneratorUI(containerId) {
         { id: 'vatNumber', label: 'VAT Number' },
         { id: 'licenseNumber', label: 'License Number' },
         { id: 'productName', label: 'Product Name' },
-        { id: 'productCode', label: 'Product Code' }
+        { id: 'productCode', label: 'Product Code' },
+        { id: 'orderNumber', label: 'Order Number' },
+        { id: 'invoice', label: 'Invoice' },
+        { id: 'carModel', label: 'Car Model' },
+        { id: 'carYear', label: 'Car Year' }
       ]
     },
     {
@@ -167,7 +183,10 @@ function createDataGeneratorUI(containerId) {
         { id: 'exchangeRate', label: 'Exchange Rate' },
         { id: 'invoice', label: 'Invoice' },
         { id: 'orderNumber', label: 'Order Number' },
-        { id: 'stockSymbol', label: 'Stock Symbol' }
+        { id: 'stockSymbol', label: 'Stock Symbol' },
+        { id: 'salary', label: 'Salary' },
+        { id: 'score', label: 'Score' },
+        { id: 'fileSize', label: 'File Size' }
       ]
     },
     {
@@ -190,7 +209,9 @@ function createDataGeneratorUI(containerId) {
         { id: 'timestamp', label: 'Timestamp' },
         { id: 'dayOfWeek', label: 'Day of Week' },
         { id: 'month', label: 'Month' },
-        { id: 'timeZone', label: 'Time Zone' }
+        { id: 'timeZone', label: 'Time Zone' },
+        { id: 'birthdate', label: 'Birthdate' },
+        { id: 'cardExpiry', label: 'Card Expiry' }
       ]
     },
     {
@@ -224,7 +245,10 @@ function createDataGeneratorUI(containerId) {
         { id: 'speed', label: 'Speed' },
         { id: 'temperature', label: 'Temperature' },
         { id: 'fileSize', label: 'File Size' },
-        { id: 'score', label: 'Score' }
+        { id: 'score', label: 'Score' },
+        { id: 'medicalRecord', label: 'Medical Record' },
+        { id: 'height', label: 'Height' },
+        { id: 'weight', label: 'Weight' }
       ]
     }
   ];
@@ -330,10 +354,27 @@ function createDataGeneratorUI(containerId) {
     for (let i = 0; i < count; i++) {
       if (window.resetSharedData) window.resetSharedData();
       const record = {};
+      const arMapping = {}; // Store AR values to sync with EN
+      
       checked.forEach(fieldId => {
         if (window.generators[fieldId]) {
           try {
-            record[fieldId] = window.generators[fieldId]();
+            let value = window.generators[fieldId]();
+            
+            // Sync AR/EN pairs
+            if (fieldId.endsWith('Ar')) {
+              const enFieldId = fieldId.slice(0, -2); // Remove 'Ar'
+              if (arMapping[enFieldId]) {
+                // Use the same base value but get AR version
+                if (window.resetSharedData) window.resetSharedData();
+                value = window.generators[fieldId]();
+              }
+            } else if (window.generators[fieldId + 'Ar']) {
+              // Store EN value for AR sync
+              arMapping[fieldId] = value;
+            }
+            
+            record[fieldId] = value;
           } catch (e) {
             record[fieldId] = 'Error';
           }
