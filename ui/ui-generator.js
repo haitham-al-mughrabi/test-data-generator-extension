@@ -19,7 +19,8 @@ function createDataGeneratorUI(containerId) {
     .dg-sub-tab.active { color: #374151; border-bottom-color: #374151; }
     .dg-sub-content { display: none; padding: 12px; }
     .dg-sub-content.active { display: block; }
-    .dg-checkbox { display: flex; align-items: center; gap: 6px; padding: 4px 8px; margin: 2px 0; cursor: pointer; font-size: 11px; }
+    .dg-fields-wrapper { display: flex; flex-wrap: wrap; }
+    .dg-checkbox { display: inline-flex; align-items: center; gap: 4px; padding: 4px 8px; margin: 2px 4px 2px 0; cursor: pointer; font-size: 11px; width: calc(50% - 4px); box-sizing: border-box; }
     .dg-checkbox input { margin: 0; }
     .dg-controls { background: #f9fafb; padding: 10px; border-top: 1px solid #e5e7eb; flex-shrink: 0; }
     .dg-count-control { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 11px; }
@@ -211,12 +212,14 @@ function createDataGeneratorUI(containerId) {
         <button class="dg-btn dg-btn-secondary dg-select-all" style="flex: 1; padding: 4px;" data-tab="${idx}">Select All</button>
         <button class="dg-btn dg-btn-secondary dg-unselect-all" style="flex: 1; padding: 4px;" data-tab="${idx}">Unselect All</button>
       </div>
-      ${cat.fields.map(field => `
-        <label class="dg-checkbox">
-          <input type="checkbox" value="${field.id}" checked>
-          <span>${field.label}</span>
-        </label>
-      `).join('')}
+      <div class="dg-fields-wrapper">
+        ${cat.fields.map(field => `
+          <label class="dg-checkbox">
+            <input type="checkbox" value="${field.id}" checked>
+            <span>${field.label}</span>
+          </label>
+        `).join('')}
+      </div>
     </div>
   `).join('');
 
