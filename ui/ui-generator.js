@@ -106,16 +106,25 @@ function createDataGeneratorUI(containerId) {
           </div>
           <div id="fileControls">
             <label>File Name:</label>
-            <input type="text" id="fileName" placeholder="test">
+            <input type="text" id="fileName" placeholder="test-file">
             <label>File Type:</label>
             <select id="fileType">
               <option value="txt">Text (.txt)</option>
               <option value="json">JSON (.json)</option>
               <option value="csv">CSV (.csv)</option>
+              <option value="xml">XML (.xml)</option>
             </select>
-            <label>Size (KB):</label>
-            <input type="number" id="fileSize" value="10" min="1" max="10000">
-            <button class="dg-btn dg-btn-primary" id="downloadBtn" style="width: 100%;">⬇ Download File</button>
+            <label>File Size:</label>
+            <div style="display: flex; gap: 6px;">
+              <input type="number" id="fileSize" value="10" min="1" style="flex: 1;">
+              <select id="fileSizeUnit" style="width: 80px;">
+                <option value="B">Bytes</option>
+                <option value="KB" selected>KB</option>
+                <option value="MB">MB</option>
+                <option value="GB">GB</option>
+              </select>
+            </div>
+            <button class="dg-btn dg-btn-primary" id="downloadBtn" style="width: 100%;">💾 Save File</button>
           </div>
           <div class="dg-results" id="results"></div>
         </div>
@@ -133,6 +142,10 @@ function createDataGeneratorUI(containerId) {
       document.querySelectorAll('.dg-tab-content').forEach(c => c.classList.remove('active'));
       tab.classList.add('active');
       document.querySelector(`[data-content="${tabIdx}"]`).classList.add('active');
+      
+      // Show file controls if Files tab is selected
+      const isFilesTab = categories[tabIdx].title === 'Files';
+      document.getElementById('fileControls').style.display = isFilesTab ? 'block' : 'none';
     });
   });
 
@@ -266,10 +279,15 @@ function createDataGeneratorUI(containerId) {
   });
 
   document.getElementById('downloadBtn').addEventListener('click', () => {
-    const fileName = document.getElementById('fileName').value || 'test';
+    const fileName = document.getElementById('fileName').value || 'test-file';
     const fileType = document.getElementById('fileType').value;
-    const fileSizeKB = parseInt(document.getElementById('fileSize').value) || 10;
-    const fileSizeBytes = fileSizeKB * 1024;
+    const fileSize = parseInt(document.getElementById('fileSize').value) || 10;
+    const fileSizeUnit = document.getElementById('fileSizeUnit').value;
+    
+    let fileSizeBytes = fileSize;
+    if (fileSizeUnit === 'KB') fileSizeBytes = fileSize * 1024;
+    else if (fileSizeUnit === 'MB') fileSizeBytes = fileSize * 1024 * 1024;
+    else if (fileSizeUnit === 'GB') fileSizeBytes = fileSize * 1024 * 1024 * 1024;
     
     let content = '';
     if (fileType === 'json') {
@@ -280,12 +298,23 @@ function createDataGeneratorUI(containerId) {
         content = headers.join(',') + '\n';
         content += generatedData.map(r => headers.map(h => r[h]).join(',')).join('\n');
       }
+    } else if (fileType === 'xml') {
+      content = '<?xml version="1.0" encoding="UTF-8"?>\n<records>\n';
+      content += generatedData.map(r => {
+        let xml = '  <record>\n';
+        Object.entries(r).forEach(([k, v]) => {
+          xml += `    <${k}>${v}</${k}>\n`;
+        });
+        xml += '  </record>\n';
+        return xml;
+      }).join('');
+      content += '</records>';
     } else {
       content = generatedData.map(r => Object.entries(r).map(([k, v]) => `${k}: ${v}`).join('\n')).join('\n\n');
     }
     
     if (content.length < fileSizeBytes) {
-      content += '\n' + 'x'.repeat(fileSizeBytes - content.length);
+      content += '\n' + 'x'.repeat(fileSizeBytes - content.length - 1);
     } else if (content.length > fileSizeBytes) {
       content = content.substring(0, fileSizeBytes);
     }
