@@ -1,3 +1,34 @@
+// Date conversion functions
+function gregorianToHijri(gregorianDate) {
+  const gYear = gregorianDate.getFullYear();
+  const gMonth = gregorianDate.getMonth() + 1;
+  const gDay = gregorianDate.getDate();
+  
+  // Approximate conversion (not astronomically accurate)
+  const totalDays = Math.floor((gYear - 622) * 365.25 + (gMonth - 1) * 30.44 + gDay);
+  const hYear = Math.floor(totalDays / 354.37) + 1;
+  const remainingDays = totalDays % 354.37;
+  const hMonth = Math.floor(remainingDays / 29.53) + 1;
+  const hDay = Math.floor(remainingDays % 29.53) + 1;
+  
+  return {
+    year: Math.max(1, hYear),
+    month: Math.min(12, Math.max(1, hMonth)),
+    day: Math.min(30, Math.max(1, hDay))
+  };
+}
+
+function hijriToGregorian(hYear, hMonth, hDay) {
+  // Approximate conversion
+  const totalHijriDays = (hYear - 1) * 354.37 + (hMonth - 1) * 29.53 + hDay;
+  const gregorianYear = Math.floor(totalHijriDays / 365.25) + 622;
+  const remainingDays = totalHijriDays % 365.25;
+  const gregorianMonth = Math.floor(remainingDays / 30.44) + 1;
+  const gregorianDay = Math.floor(remainingDays % 30.44) + 1;
+  
+  return new Date(gregorianYear, gregorianMonth - 1, gregorianDay);
+}
+
 function createDataGeneratorUI(containerId) {
   const container = document.getElementById(containerId);
   if (!container) return;
@@ -640,6 +671,30 @@ function createDataGeneratorUI(containerId) {
       { id: 'roleBasedEmail', label: 'Role-based Email' },
       { id: 'customDomainEmail', label: 'Custom Domain Email' }
     ] },
+    { title: 'Password Testing', fields: [
+      { id: 'customPassword', label: 'Custom Password' },
+      { id: 'weakPassword', label: 'Weak Password' },
+      { id: 'strongPassword', label: 'Strong Password' },
+      { id: 'numericPassword', label: 'Numeric Only' },
+      { id: 'alphabeticPassword', label: 'Alphabetic Only' },
+      { id: 'specialCharPassword', label: 'Special Chars Only' },
+      { id: 'mixedPassword', label: 'Mixed Characters' },
+      { id: 'arabicPassword', label: 'Arabic Characters' },
+      { id: 'commonPassword', label: 'Common Password' },
+      { id: 'complexPassword', label: 'Complex Password' }
+    ] },
+    { title: 'Phone Testing', fields: [
+      { id: 'customPhone', label: 'Custom Phone' },
+      { id: 'mobileNumber', label: 'Mobile (05X)' },
+      { id: 'landlineNumber', label: 'Landline (01X)' },
+      { id: 'shortMobile', label: 'Mobile (5X)' },
+      { id: 'shortLandline', label: 'Landline (1X)' },
+      { id: 'invalidPhone', label: 'Invalid Phone' },
+      { id: 'wrongLengthPhone', label: 'Wrong Length' },
+      { id: 'internationalPhone', label: 'International (+966)' },
+      { id: 'formattedPhone', label: 'Formatted Phone' },
+      { id: 'unformattedPhone', label: 'Unformatted Phone' }
+    ] },
     { title: 'Date & Time', fields: [
       { id: 'date', label: 'Date' }, 
       { id: 'time', label: 'Time' }, 
@@ -649,7 +704,9 @@ function createDataGeneratorUI(containerId) {
       { id: 'dayOfWeek', label: 'Day of Week (EN)' },
       { id: 'dayOfWeekAr', label: 'Day of Week (AR)' },
       { id: 'month', label: 'Month (EN)' },
-      { id: 'monthAr', label: 'Month (AR)' }
+      { id: 'monthAr', label: 'Month (AR)' },
+      { id: 'hijriToGregorian', label: 'Hijri → Gregorian' },
+      { id: 'gregorianToHijri', label: 'Gregorian → Hijri' }
     ] },
     { title: 'Other', fields: [
       { id: 'uuid', label: 'UUID' }, 
@@ -772,6 +829,87 @@ function createDataGeneratorUI(containerId) {
               <option value="DD-MM-YYYY">DD-MM-YYYY</option>
             </select>
           </div>
+          <div class="dg-file-control-group">
+            <label>Date Conversion:</label>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;">
+              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                <input type="checkbox" id="includeHijri"> Include Hijri
+              </label>
+              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                <input type="checkbox" id="includeGregorian" checked> Include Gregorian
+              </label>
+              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                <input type="checkbox" id="showBothDates"> Show Both
+              </label>
+            </div>
+          </div>
+          <div class="dg-file-control-group">
+            <label>Convert Specific Date:</label>
+            <div class="dg-file-size-group">
+              <input type="date" id="specificGregorianDate" placeholder="Gregorian Date">
+              <button type="button" id="convertToHijri" style="width: 80px; padding: 4px; font-size: 9px; background: #667eea; color: white; border: none; border-radius: 4px;">→ Hijri</button>
+            </div>
+          </div>
+          <div class="dg-file-control-group">
+            <label>Convert Hijri Date:</label>
+            <div style="display: flex; gap: 4px;">
+              <input type="number" id="hijriDay" placeholder="Day" min="1" max="30" style="width: 50px;">
+              <select id="hijriMonth" style="flex: 1;">
+                <option value="1">محرم</option>
+                <option value="2">صفر</option>
+                <option value="3">ربيع الأول</option>
+                <option value="4">ربيع الثاني</option>
+                <option value="5">جمادى الأولى</option>
+                <option value="6">جمادى الثانية</option>
+                <option value="7">رجب</option>
+                <option value="8">شعبان</option>
+                <option value="9">رمضان</option>
+                <option value="10">شوال</option>
+                <option value="11">ذو القعدة</option>
+                <option value="12">ذو الحجة</option>
+              </select>
+              <input type="number" id="hijriYear" placeholder="Year" min="1400" max="1500" style="width: 60px;">
+              <button type="button" id="convertToGregorian" style="width: 80px; padding: 4px; font-size: 9px; background: #667eea; color: white; border: none; border-radius: 4px;">→ Greg</button>
+            </div>
+          </div>
+          <div id="conversionResult" style="margin-top: 8px; padding: 8px; background: #f0f9ff; border-radius: 6px; font-size: 10px; display: none;"></div>
+        </div>
+      ` : ''}
+      ${cat.title === 'Phone Testing' ? `
+        <div class="dg-file-controls" id="phoneControls">
+          <div class="dg-file-control-group">
+            <label>Phone Type:</label>
+            <select id="phoneType">
+              <option value="mobile">Mobile (05X)</option>
+              <option value="landline">Landline (01X)</option>
+              <option value="short-mobile">Short Mobile (5X)</option>
+              <option value="short-landline">Short Landline (1X)</option>
+              <option value="mixed">Mixed Types</option>
+            </select>
+          </div>
+          <div class="dg-file-control-group">
+            <label>Phone Format:</label>
+            <select id="phoneFormat">
+              <option value="formatted">Formatted (+966 5X XXX XXXX)</option>
+              <option value="unformatted">Unformatted (05XXXXXXXX)</option>
+              <option value="international">International (+966)</option>
+              <option value="local">Local (05X)</option>
+            </select>
+          </div>
+          <div class="dg-file-control-group">
+            <label>Validation:</label>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;">
+              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                <input type="checkbox" id="generateValid" checked> Valid Numbers
+              </label>
+              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                <input type="checkbox" id="generateInvalid"> Invalid Numbers
+              </label>
+              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                <input type="checkbox" id="wrongLength"> Wrong Length
+              </label>
+            </div>
+          </div>
         </div>
       ` : ''}
       ${cat.title === 'Random Text' ? `
@@ -844,6 +982,48 @@ function createDataGeneratorUI(containerId) {
           </div>
         </div>
       ` : ''}
+      ${cat.title === 'Password Testing' ? `
+        <div class="dg-file-controls" id="passwordControls">
+          <div class="dg-file-control-group">
+            <label>Password Length:</label>
+            <input type="number" id="passwordLength" value="12" min="4" max="128">
+          </div>
+          <div class="dg-file-control-group">
+            <label>Character Types:</label>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;">
+              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                <input type="checkbox" id="includeUppercase" checked> Uppercase (A-Z)
+              </label>
+              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                <input type="checkbox" id="includeLowercase" checked> Lowercase (a-z)
+              </label>
+              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                <input type="checkbox" id="includeNumbers" checked> Numbers (0-9)
+              </label>
+              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                <input type="checkbox" id="includeSpecialChars"> Special (!@#$)
+              </label>
+              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                <input type="checkbox" id="includeArabicChars"> Arabic (ا-ي)
+              </label>
+            </div>
+          </div>
+          <div class="dg-file-control-group">
+            <label>Requirements:</label>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;">
+              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                <input type="checkbox" id="mustStartWith"> Must start with letter
+              </label>
+              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                <input type="checkbox" id="mustEndWith"> Must end with number
+              </label>
+              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                <input type="checkbox" id="noRepeating"> No repeating chars
+              </label>
+            </div>
+          </div>
+        </div>
+      ` : ''}
     </div>
   `).join('');
 
@@ -905,10 +1085,14 @@ function createDataGeneratorUI(containerId) {
       const isDateTimeTab = categories[tabIdx].title === 'Date & Time';
       const isRandomTextTab = categories[tabIdx].title === 'Random Text';
       const isEmailTestingTab = categories[tabIdx].title === 'Email Testing';
+      const isPasswordTestingTab = categories[tabIdx].title === 'Password Testing';
+      const isPhoneTestingTab = categories[tabIdx].title === 'Phone Testing';
       const fileControls = document.getElementById('fileControls');
       const dateTimeControls = document.getElementById('dateTimeControls');
       const randomTextControls = document.getElementById('randomTextControls');
       const emailControls = document.getElementById('emailControls');
+      const passwordControls = document.getElementById('passwordControls');
+      const phoneControls = document.getElementById('phoneControls');
       const downloadBtn = document.getElementById('downloadBtn');
       
       if (fileControls) {
@@ -922,6 +1106,12 @@ function createDataGeneratorUI(containerId) {
       }
       if (emailControls) {
         emailControls.classList.toggle('active', isEmailTestingTab);
+      }
+      if (passwordControls) {
+        passwordControls.classList.toggle('active', isPasswordTestingTab);
+      }
+      if (phoneControls) {
+        phoneControls.classList.toggle('active', isPhoneTestingTab);
       }
       if (downloadBtn) {
         downloadBtn.style.display = isFilesTab ? 'inline-block' : 'none';
@@ -1371,6 +1561,44 @@ function createDataGeneratorUI(containerId) {
       }
     });
   });
+  
+  // Add event listeners for date conversion
+  const convertToHijriBtn = document.getElementById('convertToHijri');
+  const convertToGregorianBtn = document.getElementById('convertToGregorian');
+  const conversionResult = document.getElementById('conversionResult');
+
+  if (convertToHijriBtn) {
+    convertToHijriBtn.addEventListener('click', () => {
+      const dateInput = document.getElementById('specificGregorianDate');
+      if (dateInput && dateInput.value) {
+        const gregorianDate = new Date(dateInput.value);
+        const hijri = gregorianToHijri(gregorianDate);
+        const hijriMonths = ['محرم', 'صفر', 'ربيع الأول', 'ربيع الثاني', 'جمادى الأولى', 'جمادى الثانية', 'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة'];
+        const result = `${dateInput.value} → ${hijri.day} ${hijriMonths[hijri.month - 1]} ${hijri.year}هـ`;
+        conversionResult.textContent = result;
+        conversionResult.style.display = 'block';
+      }
+    });
+  }
+
+  if (convertToGregorianBtn) {
+    convertToGregorianBtn.addEventListener('click', () => {
+      const dayInput = document.getElementById('hijriDay');
+      const monthSelect = document.getElementById('hijriMonth');
+      const yearInput = document.getElementById('hijriYear');
+      
+      if (dayInput.value && monthSelect.value && yearInput.value) {
+        const hDay = parseInt(dayInput.value);
+        const hMonth = parseInt(monthSelect.value);
+        const hYear = parseInt(yearInput.value);
+        const gregorianDate = hijriToGregorian(hYear, hMonth, hDay);
+        const hijriMonths = ['محرم', 'صفر', 'ربيع الأول', 'ربيع الثاني', 'جمادى الأولى', 'جمادى الثانية', 'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة'];
+        const result = `${hDay} ${hijriMonths[hMonth - 1]} ${hYear}هـ → ${gregorianDate.getFullYear()}-${(gregorianDate.getMonth() + 1).toString().padStart(2, '0')}-${gregorianDate.getDate().toString().padStart(2, '0')}`;
+        conversionResult.textContent = result;
+        conversionResult.style.display = 'block';
+      }
+    });
+  }
 }
 
 if (typeof module !== 'undefined' && module.exports) {

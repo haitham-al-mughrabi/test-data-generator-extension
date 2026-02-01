@@ -29,6 +29,18 @@ function getCustomTimeRange() {
   };
 }
 
+function getDateSettings() {
+  const includeHijri = document.getElementById('includeHijri');
+  const includeGregorian = document.getElementById('includeGregorian');
+  const showBothDates = document.getElementById('showBothDates');
+  
+  return {
+    includeHijri: includeHijri?.checked ?? false,
+    includeGregorian: includeGregorian?.checked ?? true,
+    showBothDates: showBothDates?.checked ?? false
+  };
+}
+
 function formatCustomDate(date) {
   const format = document.getElementById('dateFormat');
   const formatValue = format ? format.value : 'YYYY-MM-DD';
@@ -45,11 +57,62 @@ function formatCustomDate(date) {
   }
 }
 
+// Simple Hijri conversion (approximation)
+function gregorianToHijri(gregorianDate) {
+  const gYear = gregorianDate.getFullYear();
+  const gMonth = gregorianDate.getMonth() + 1;
+  const gDay = gregorianDate.getDate();
+  
+  // Approximate conversion (not astronomically accurate)
+  const totalDays = Math.floor((gYear - 622) * 365.25 + (gMonth - 1) * 30.44 + gDay);
+  const hYear = Math.floor(totalDays / 354.37) + 1;
+  const remainingDays = totalDays % 354.37;
+  const hMonth = Math.floor(remainingDays / 29.53) + 1;
+  const hDay = Math.floor(remainingDays % 29.53) + 1;
+  
+  return {
+    year: Math.max(1, hYear),
+    month: Math.min(12, Math.max(1, hMonth)),
+    day: Math.min(30, Math.max(1, hDay))
+  };
+}
+
+function hijriToGregorian(hYear, hMonth, hDay) {
+  // Approximate conversion
+  const totalHijriDays = (hYear - 1) * 354.37 + (hMonth - 1) * 29.53 + hDay;
+  const gregorianYear = Math.floor(totalHijriDays / 365.25) + 622;
+  const remainingDays = totalHijriDays % 365.25;
+  const gregorianMonth = Math.floor(remainingDays / 30.44) + 1;
+  const gregorianDay = Math.floor(remainingDays % 30.44) + 1;
+  
+  return new Date(gregorianYear, gregorianMonth - 1, gregorianDay);
+}
+
+function formatDateWithSettings(date) {
+  const settings = getDateSettings();
+  const gregorianFormatted = formatCustomDate(date);
+  
+  if (settings.showBothDates) {
+    const hijri = gregorianToHijri(date);
+    const hijriMonths = ['محرم', 'صفر', 'ربيع الأول', 'ربيع الثاني', 'جمادى الأولى', 'جمادى الثانية', 'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة'];
+    const hijriFormatted = `${hijri.day} ${hijriMonths[hijri.month - 1]} ${hijri.year}هـ`;
+    return `${gregorianFormatted} (${hijriFormatted})`;
+  }
+  
+  if (settings.includeHijri && !settings.includeGregorian) {
+    const hijri = gregorianToHijri(date);
+    const hijriMonths = ['محرم', 'صفر', 'ربيع الأول', 'ربيع الثاني', 'جمادى الأولى', 'جمادى الثانية', 'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة'];
+    return `${hijri.day} ${hijriMonths[hijri.month - 1]} ${hijri.year}هـ`;
+  }
+  
+  return gregorianFormatted;
+}
+
 const dateTimeGenerators = {
   date: () => {
     const range = getCustomDateRange();
     const date = randomDate(range.start, range.end);
-    return formatCustomDate(date);
+    return formatDateWithSettings(date);
   },
 
   // Enhanced Date & Time Generators
@@ -127,7 +190,26 @@ const dateTimeGenerators = {
     const randomMinutes = randomNum(startMinutes, endMinutes);
     const hour = Math.floor(randomMinutes / 60).toString().padStart(2, '0');
     const minute = (randomMinutes % 60).toString().padStart(2, '0');
-    return `${formatCustomDate(date)} ${hour}:${minute}`;
+    return `${formatDateWithSettings(date)} ${hour}:${minute}`;
+  },
+
+  hijriToGregorian: () => {
+    // Generate random Hijri date and convert to Gregorian
+    const hYear = randomNum(1440, 1450);
+    const hMonth = randomNum(1, 12);
+    const hDay = randomNum(1, 29);
+    const gregorianDate = hijriToGregorian(hYear, hMonth, hDay);
+    const hijriMonths = ['محرم', 'صفر', 'ربيع الأول', 'ربيع الثاني', 'جمادى الأولى', 'جمادى الثانية', 'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة'];
+    return `${hDay} ${hijriMonths[hMonth - 1]} ${hYear}هـ → ${formatCustomDate(gregorianDate)}`;
+  },
+
+  gregorianToHijri: () => {
+    // Generate random Gregorian date and convert to Hijri
+    const range = getCustomDateRange();
+    const gregorianDate = randomDate(range.start, range.end);
+    const hijri = gregorianToHijri(gregorianDate);
+    const hijriMonths = ['محرم', 'صفر', 'ربيع الأول', 'ربيع الثاني', 'جمادى الأولى', 'جمادى الثانية', 'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة'];
+    return `${formatCustomDate(gregorianDate)} → ${hijri.day} ${hijriMonths[hijri.month - 1]} ${hijri.year}هـ`;
   },
 
   time12: () => {
