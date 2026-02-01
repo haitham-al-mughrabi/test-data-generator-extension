@@ -12,6 +12,7 @@ function initGenerators() {
   if (window.educationGenerators) Object.assign(window.generators, window.educationGenerators);
   if (window.healthcareGenerators) Object.assign(window.generators, window.healthcareGenerators);
   if (window.vehicleGenerators) Object.assign(window.generators, window.vehicleGenerators);
+  if (window.saudiGovernmentGenerators) Object.assign(window.generators, window.saudiGovernmentGenerators);
 }
 
 // Initialize immediately

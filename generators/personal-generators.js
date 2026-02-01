@@ -252,6 +252,14 @@ const personalGenerators = {
   educationAr: () => {
     if (!sharedPersonalData) generateSharedPersonalData();
     return sharedPersonalData.education.ar;
+  },
+
+  iqamaNumber: () => {
+    let iqama = '2';
+    for (let i = 0; i < 9; i++) {
+      iqama += randomNum(0, 9);
+    }
+    return iqama;
   }
 };
 

@@ -191,7 +191,51 @@ const contactGenerators = {
   timezone: () => randomChoice(['Asia/Riyadh', 'Asia/Kuwait', 'Asia/Bahrain', 'Asia/Qatar']),
   building: () => `Building ${randomChoice(['A', 'B', 'C', 'D'])}`,
   floor: () => `Floor ${randomNum(1, 50)}`,
-  room: () => `Room ${randomNum(100, 999)}`
+  room: () => `Room ${randomNum(100, 999)}`,
+
+  mobileNumber: () => {
+    const prefixes = ['050', '053', '054', '055', '056', '058', '059'];
+    const prefix = randomChoice(prefixes);
+    let number = '';
+    for (let i = 0; i < 7; i++) {
+      number += randomNum(0, 9);
+    }
+    return `+966 ${prefix.substring(1)} ${number.substring(0, 3)} ${number.substring(3)}`;
+  },
+
+  landlineNumber: () => {
+    const areaCodes = ['011', '012', '013', '014', '016', '017'];
+    const areaCode = randomChoice(areaCodes);
+    let number = '';
+    for (let i = 0; i < 7; i++) {
+      number += randomNum(0, 9);
+    }
+    return `+966 ${areaCode.substring(1)} ${number.substring(0, 3)} ${number.substring(3)}`;
+  },
+
+  whatsappNumber: () => {
+    const prefixes = ['050', '053', '054', '055', '056', '058', '059'];
+    const prefix = randomChoice(prefixes);
+    let number = '';
+    for (let i = 0; i < 7; i++) {
+      number += randomNum(0, 9);
+    }
+    return `+966 ${prefix.substring(1)} ${number.substring(0, 3)} ${number.substring(3)}`;
+  },
+
+  street: () => {
+    if (!sharedLocationData) generateSharedLocationData();
+    return sharedLocationData.streetName.en;
+  },
+
+  streetAr: () => {
+    if (!sharedLocationData) generateSharedLocationData();
+    return sharedLocationData.streetName.ar;
+  },
+
+  buildingNumber: () => randomNum(1, 9999).toString(),
+  unitNumber: () => randomNum(1, 999).toString(),
+  additionalNumber: () => randomNum(1000, 9999).toString()
 };
 
 if (typeof module !== 'undefined' && module.exports) {

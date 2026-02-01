@@ -27,6 +27,7 @@ function createDataGeneratorUI(containerId) {
     .dg-checkbox input { margin: 0; cursor: pointer; }
     .dg-controls { background: white; border-top: 1px solid #e2e8f0; flex-shrink: 0; transition: all 0.3s ease; }
     .dg-controls.collapsed .dg-controls-content { display: none; }
+    .dg-controls.collapsed .dg-results { display: none; }
     .dg-controls-header { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-bottom: 1px solid #f1f5f9; cursor: pointer; user-select: none; }
     .dg-controls-header:hover { background: #f8fafc; }
     .dg-controls-header span { font-size: 12px; font-weight: 600; color: #64748b; }
@@ -89,6 +90,7 @@ function createDataGeneratorUI(containerId) {
       { id: 'nationalityAr', label: 'Nationality (AR)' }, 
       { id: 'bloodType', label: 'Blood Type' }, 
       { id: 'saudiId', label: 'Saudi ID' }, 
+      { id: 'iqamaNumber', label: 'Iqama Number' },
       { id: 'passportNumber', label: 'Passport Number' },
       { id: 'maritalStatus', label: 'Marital Status (EN)' },
       { id: 'maritalStatusAr', label: 'Marital Status (AR)' },
@@ -97,18 +99,42 @@ function createDataGeneratorUI(containerId) {
     ] },
     { title: 'Contact', fields: [
       { id: 'email', label: 'Email' }, 
-      { id: 'phone', label: 'Phone' }, 
+      { id: 'mobileNumber', label: 'Mobile Number' },
+      { id: 'landlineNumber', label: 'Landline Number' },
+      { id: 'whatsappNumber', label: 'WhatsApp Number' },
       { id: 'address', label: 'Address (EN)' }, 
       { id: 'addressAr', label: 'Address (AR)' }, 
+      { id: 'nationalAddress', label: 'National Address' },
       { id: 'city', label: 'City (EN)' }, 
       { id: 'cityAr', label: 'City (AR)' }, 
-      { id: 'postalCode', label: 'Postal Code' }, 
-      { id: 'country', label: 'Country (EN)' }, 
-      { id: 'countryAr', label: 'Country (AR)' },
       { id: 'district', label: 'District (EN)' },
       { id: 'districtAr', label: 'District (AR)' },
-      { id: 'building', label: 'Building Number' },
-      { id: 'unit', label: 'Unit Number' }
+      { id: 'street', label: 'Street (EN)' },
+      { id: 'streetAr', label: 'Street (AR)' },
+      { id: 'buildingNumber', label: 'Building Number' },
+      { id: 'unitNumber', label: 'Unit Number' },
+      { id: 'postalCode', label: 'Postal Code' }, 
+      { id: 'additionalNumber', label: 'Additional Number' },
+      { id: 'country', label: 'Country (EN)' }, 
+      { id: 'countryAr', label: 'Country (AR)' }
+    ] },
+    { title: 'Saudi Government', fields: [
+      { id: 'commercialRegister', label: 'Commercial Register' },
+      { id: 'taxNumber', label: 'Tax Number (VAT)' },
+      { id: 'municipalLicense', label: 'Municipal License' },
+      { id: 'chamberMembership', label: 'Chamber Membership' },
+      { id: 'socialInsurance', label: 'Social Insurance (GOSI)' },
+      { id: 'laborOfficeNumber', label: 'Labor Office Number' },
+      { id: 'zakat', label: 'Zakat Number' },
+      { id: 'customsCode', label: 'Customs Code' },
+      { id: 'saudiPost', label: 'Saudi Post Box' },
+      { id: 'absherId', label: 'Absher ID' },
+      { id: 'nafathId', label: 'Nafath ID' },
+      { id: 'elmId', label: 'Elm ID' },
+      { id: 'region', label: 'Region (EN)' },
+      { id: 'regionAr', label: 'Region (AR)' },
+      { id: 'province', label: 'Province (EN)' },
+      { id: 'provinceAr', label: 'Province (AR)' }
     ] },
     { title: 'Work', fields: [
       { id: 'company', label: 'Company' }, 
