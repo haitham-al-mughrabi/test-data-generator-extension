@@ -28,6 +28,7 @@ function initGenerators() {
   if (window.agricultureGenerators) Object.assign(window.generators, window.agricultureGenerators);
   if (window.logisticsShippingGenerators) Object.assign(window.generators, window.logisticsShippingGenerators);
   if (window.energyUtilitiesGenerators) Object.assign(window.generators, window.energyUtilitiesGenerators);
+  if (window.randomTextGenerators) Object.assign(window.generators, window.randomTextGenerators);
 }
 
 // Initialize immediately

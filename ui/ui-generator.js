@@ -91,6 +91,7 @@ function createDataGeneratorUI(containerId) {
       { id: 'bloodType', label: 'Blood Type' }, 
       { id: 'saudiId', label: 'Saudi ID' }, 
       { id: 'iqamaNumber', label: 'Iqama Number' },
+      { id: 'borderNumber', label: 'Border Number' },
       { id: 'passportNumber', label: 'Passport Number' },
       { id: 'maritalStatus', label: 'Marital Status (EN)' },
       { id: 'maritalStatusAr', label: 'Marital Status (AR)' },
@@ -440,6 +441,21 @@ function createDataGeneratorUI(containerId) {
       { id: 'serviceType', label: 'Service Type (EN)' },
       { id: 'serviceTypeAr', label: 'Service Type (AR)' }
     ] },
+    { title: 'Random Text', fields: [
+      { id: 'randomText', label: 'Random Text' },
+      { id: 'randomDigits', label: 'Random Digits' },
+      { id: 'randomEnglish', label: 'Random English' },
+      { id: 'randomArabic', label: 'Random Arabic' },
+      { id: 'randomSpecial', label: 'Random Special Chars' },
+      { id: 'randomMixed', label: 'Random Mixed' },
+      { id: 'randomArabicNumbers', label: 'Arabic Numbers ١٢٣' },
+      { id: 'randomIndianNumbers', label: 'Indian Numbers ۱۲۳' },
+      { id: 'randomChinese', label: 'Random Chinese' },
+      { id: 'randomJapanese', label: 'Random Japanese' },
+      { id: 'randomRussian', label: 'Random Russian' },
+      { id: 'randomEmoji', label: 'Random Emoji' },
+      { id: 'randomInvalidChars', label: 'Invalid/Control Chars' }
+    ] },
     { title: 'Date & Time', fields: [
       { id: 'date', label: 'Date' }, 
       { id: 'time', label: 'Time' }, 
@@ -574,6 +590,34 @@ function createDataGeneratorUI(containerId) {
           </div>
         </div>
       ` : ''}
+      ${cat.title === 'Random Text' ? `
+        <div class="dg-file-controls" id="randomTextControls">
+          <div class="dg-file-control-group">
+            <label>Text Length:</label>
+            <input type="number" id="textLength" value="50" min="1" max="10000">
+          </div>
+          <div class="dg-file-control-group">
+            <label>Character Types:</label>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px;">
+              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                <input type="checkbox" id="includeDigits" checked> Digits (0-9)
+              </label>
+              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                <input type="checkbox" id="includeEnglish" checked> English (A-z)
+              </label>
+              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                <input type="checkbox" id="includeArabic"> Arabic (ا-ي)
+              </label>
+              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                <input type="checkbox" id="includeSpecial"> Special (!@#$)
+              </label>
+              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                <input type="checkbox" id="includeSpace"> Spaces
+              </label>
+            </div>
+          </div>
+        </div>
+      ` : ''}
     </div>
   `).join('');
 
@@ -625,8 +669,10 @@ function createDataGeneratorUI(containerId) {
       // Show/hide file controls and download button based on Files tab
       const isFilesTab = categories[tabIdx].title === 'Files';
       const isDateTimeTab = categories[tabIdx].title === 'Date & Time';
+      const isRandomTextTab = categories[tabIdx].title === 'Random Text';
       const fileControls = document.getElementById('fileControls');
       const dateTimeControls = document.getElementById('dateTimeControls');
+      const randomTextControls = document.getElementById('randomTextControls');
       const downloadBtn = document.getElementById('downloadBtn');
       
       if (fileControls) {
@@ -634,6 +680,9 @@ function createDataGeneratorUI(containerId) {
       }
       if (dateTimeControls) {
         dateTimeControls.classList.toggle('active', isDateTimeTab);
+      }
+      if (randomTextControls) {
+        randomTextControls.classList.toggle('active', isRandomTextTab);
       }
       if (downloadBtn) {
         downloadBtn.style.display = isFilesTab ? 'inline-block' : 'none';

@@ -223,8 +223,8 @@ const personalGenerators = {
   },
 
   saudiId: () => {
-    let id = '';
-    for (let i = 0; i < 10; i++) {
+    let id = '1';
+    for (let i = 0; i < 9; i++) {
       id += randomNum(0, 9);
     }
     return id;
@@ -260,6 +260,15 @@ const personalGenerators = {
       iqama += randomNum(0, 9);
     }
     return iqama;
+  },
+
+  borderNumber: () => {
+    // Border number is 10-digit unique ID for expatriates entering Saudi Arabia
+    let border = '';
+    for (let i = 0; i < 10; i++) {
+      border += randomNum(0, 9);
+    }
+    return border;
   }
 };
 
