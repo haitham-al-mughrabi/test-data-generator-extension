@@ -15,11 +15,42 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
       z-index: 10000;
       display: none;
-      min-width: 200px;
+      min-width: 250px;
       max-height: 400px;
-      overflow-y: auto;
+      overflow: hidden;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
     `;
+    
+    // Add search input
+    const searchContainer = document.createElement('div');
+    searchContainer.style.cssText = `
+      padding: 8px;
+      border-bottom: 1px solid #e2e8f0;
+      background: #f8fafc;
+    `;
+    
+    const searchInput = document.createElement('input');
+    searchInput.type = 'text';
+    searchInput.placeholder = '🔍 Search generators...';
+    searchInput.style.cssText = `
+      width: 100%;
+      padding: 6px 8px;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      font-size: 12px;
+      outline: none;
+      box-sizing: border-box;
+    `;
+    searchContainer.appendChild(searchInput);
+    menu.appendChild(searchContainer);
+    
+    // Create scrollable content area
+    const contentArea = document.createElement('div');
+    contentArea.style.cssText = `
+      max-height: 350px;
+      overflow-y: auto;
+    `;
+    menu.appendChild(contentArea);
     
     // Add standard input actions first
     const standardActions = [
@@ -32,6 +63,7 @@
 
     standardActions.forEach(item => {
       const itemDiv = document.createElement('div');
+      itemDiv.className = 'menu-item standard-action';
       itemDiv.style.cssText = `
         padding: 8px 12px;
         cursor: pointer;
@@ -51,20 +83,22 @@
         executeStandardAction(item.action);
         hideContextMenu();
       });
-      menu.appendChild(itemDiv);
+      contentArea.appendChild(itemDiv);
     });
 
     // Add separator
     const separator = document.createElement('div');
+    separator.className = 'menu-separator';
     separator.style.cssText = `
       height: 1px;
       background: #e2e8f0;
       margin: 4px 0;
     `;
-    menu.appendChild(separator);
+    contentArea.appendChild(separator);
 
     // Add "Generate Data" header
     const generateHeader = document.createElement('div');
+    generateHeader.className = 'menu-header';
     generateHeader.style.cssText = `
       padding: 8px 12px;
       background: #f8fafc;
@@ -76,7 +110,7 @@
       letter-spacing: 0.5px;
     `;
     generateHeader.textContent = '🎲 Generate Data';
-    menu.appendChild(generateHeader);
+    contentArea.appendChild(generateHeader);
     
     // Common data categories
     const categories = [
@@ -384,6 +418,7 @@
 
     categories.forEach(category => {
       const categoryDiv = document.createElement('div');
+      categoryDiv.className = 'menu-category';
       categoryDiv.style.cssText = `
         padding: 6px 12px;
         background: #f8fafc;
@@ -395,10 +430,13 @@
         letter-spacing: 0.5px;
       `;
       categoryDiv.textContent = category.title;
-      menu.appendChild(categoryDiv);
+      contentArea.appendChild(categoryDiv);
 
       category.items.forEach(item => {
         const itemDiv = document.createElement('div');
+        itemDiv.className = 'menu-item generator-item';
+        itemDiv.dataset.searchText = `${category.title} ${item.label}`.toLowerCase();
+        itemDiv.dataset.generator = item.generator;
         itemDiv.style.cssText = `
           padding: 8px 12px;
           cursor: pointer;
@@ -418,9 +456,58 @@
           fillInput(item.generator);
           hideContextMenu();
         });
-        menu.appendChild(itemDiv);
+        contentArea.appendChild(itemDiv);
       });
     });
+
+    // Add search functionality
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      const generatorItems = contentArea.querySelectorAll('.generator-item');
+      const categories = contentArea.querySelectorAll('.menu-category');
+      
+      if (!query) {
+        // Show all items
+        generatorItems.forEach(item => item.style.display = 'block');
+        categories.forEach(cat => cat.style.display = 'block');
+      } else {
+        // Filter items
+        let visibleCategories = new Set();
+        
+        generatorItems.forEach(item => {
+          const searchText = item.dataset.searchText;
+          if (searchText.includes(query)) {
+            item.style.display = 'block';
+            // Find which category this item belongs to
+            const categoryElement = item.previousElementSibling?.className === 'menu-category' ? 
+              item.previousElementSibling : 
+              findPreviousCategory(item);
+            if (categoryElement) {
+              visibleCategories.add(categoryElement);
+            }
+          } else {
+            item.style.display = 'none';
+          }
+        });
+        
+        // Show/hide categories based on visible items
+        categories.forEach(cat => {
+          cat.style.display = visibleCategories.has(cat) ? 'block' : 'none';
+        });
+      }
+    });
+    
+    // Helper function to find previous category
+    function findPreviousCategory(element) {
+      let prev = element.previousElementSibling;
+      while (prev) {
+        if (prev.className === 'menu-category') {
+          return prev;
+        }
+        prev = prev.previousElementSibling;
+      }
+      return null;
+    }
 
     document.body.appendChild(menu);
     return menu;
