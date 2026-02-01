@@ -809,11 +809,6 @@
       targetInput.dispatchEvent(new Event('input', { bubbles: true }));
       targetInput.dispatchEvent(new Event('change', { bubbles: true }));
       
-      // Visual feedback
-      targetInput.style.background = '#dcfce7';
-      setTimeout(() => {
-        targetInput.style.background = '';
-      }, 1000);
     } catch (error) {
       console.error('Error filling input:', error);
     }
