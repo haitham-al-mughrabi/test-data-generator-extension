@@ -29,6 +29,11 @@ function initGenerators() {
   if (window.logisticsShippingGenerators) Object.assign(window.generators, window.logisticsShippingGenerators);
   if (window.energyUtilitiesGenerators) Object.assign(window.generators, window.energyUtilitiesGenerators);
   if (window.randomTextGenerators) Object.assign(window.generators, window.randomTextGenerators);
+  if (window.bankingFinanceGenerators) Object.assign(window.generators, window.bankingFinanceGenerators);
+  if (window.insuranceGenerators) Object.assign(window.generators, window.insuranceGenerators);
+  if (window.manufacturingGenerators) Object.assign(window.generators, window.manufacturingGenerators);
+  if (window.telecommunicationsGenerators) Object.assign(window.generators, window.telecommunicationsGenerators);
+  if (window.constructionGenerators) Object.assign(window.generators, window.constructionGenerators);
 }
 
 // Initialize immediately
