@@ -13,6 +13,11 @@ function initGenerators() {
   if (window.healthcareGenerators) Object.assign(window.generators, window.healthcareGenerators);
   if (window.vehicleGenerators) Object.assign(window.generators, window.vehicleGenerators);
   if (window.saudiGovernmentGenerators) Object.assign(window.generators, window.saudiGovernmentGenerators);
+  if (window.ecommerceGenerators) Object.assign(window.generators, window.ecommerceGenerators);
+  if (window.socialMediaGenerators) Object.assign(window.generators, window.socialMediaGenerators);
+  if (window.technologyGenerators) Object.assign(window.generators, window.technologyGenerators);
+  if (window.gamingGenerators) Object.assign(window.generators, window.gamingGenerators);
+  if (window.travelGenerators) Object.assign(window.generators, window.travelGenerators);
 }
 
 // Initialize immediately
