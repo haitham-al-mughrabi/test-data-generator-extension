@@ -124,8 +124,17 @@
         { label: 'Age', generator: 'age' },
         { label: 'Gender (EN)', generator: 'gender' },
         { label: 'Gender (AR)', generator: 'genderAr' },
+        { label: 'Birthdate', generator: 'birthdate' },
+        { label: 'Nationality (EN)', generator: 'nationality' },
+        { label: 'Nationality (AR)', generator: 'nationalityAr' },
+        { label: 'Blood Type', generator: 'bloodType' },
+        { label: 'Marital Status (EN)', generator: 'maritalStatus' },
+        { label: 'Marital Status (AR)', generator: 'maritalStatusAr' },
+        { label: 'Religion (EN)', generator: 'religion' },
+        { label: 'Religion (AR)', generator: 'religionAr' },
         { label: 'Saudi ID', generator: 'saudiId' },
         { label: 'Iqama Number', generator: 'iqamaNumber' },
+        { label: 'Border Number', generator: 'borderNumber' },
         { label: 'Passport Number', generator: 'passportNumber' }
       ]},
       { title: 'Contact', items: [
@@ -135,10 +144,37 @@
         { label: 'WhatsApp Number', generator: 'whatsappNumber' },
         { label: 'Address (EN)', generator: 'address' },
         { label: 'Address (AR)', generator: 'addressAr' },
+        { label: 'National Address', generator: 'nationalAddress' },
         { label: 'City (EN)', generator: 'city' },
         { label: 'City (AR)', generator: 'cityAr' },
+        { label: 'District (EN)', generator: 'district' },
+        { label: 'District (AR)', generator: 'districtAr' },
+        { label: 'Street (EN)', generator: 'street' },
+        { label: 'Street (AR)', generator: 'streetAr' },
+        { label: 'Building Number', generator: 'buildingNumber' },
+        { label: 'Unit Number', generator: 'unitNumber' },
         { label: 'Postal Code', generator: 'postalCode' },
-        { label: 'National Address', generator: 'nationalAddress' }
+        { label: 'Additional Number', generator: 'additionalNumber' },
+        { label: 'Country (EN)', generator: 'country' },
+        { label: 'Country (AR)', generator: 'countryAr' }
+      ]},
+      { title: 'Saudi Government', items: [
+        { label: 'Commercial Register', generator: 'commercialRegister' },
+        { label: 'Tax Number (VAT)', generator: 'taxNumber' },
+        { label: 'Municipal License', generator: 'municipalLicense' },
+        { label: 'Chamber Membership', generator: 'chamberMembership' },
+        { label: 'Social Insurance (GOSI)', generator: 'socialInsurance' },
+        { label: 'Labor Office Number', generator: 'laborOfficeNumber' },
+        { label: 'Zakat Number', generator: 'zakat' },
+        { label: 'Customs Code', generator: 'customsCode' },
+        { label: 'Saudi Post Box', generator: 'saudiPost' },
+        { label: 'Absher ID', generator: 'absherId' },
+        { label: 'Nafath ID', generator: 'nafathId' },
+        { label: 'Elm ID', generator: 'elmId' },
+        { label: 'Region (EN)', generator: 'region' },
+        { label: 'Region (AR)', generator: 'regionAr' },
+        { label: 'Province (EN)', generator: 'province' },
+        { label: 'Province (AR)', generator: 'provinceAr' }
       ]},
       { title: 'Business', items: [
         { label: 'Company', generator: 'company' },
@@ -149,24 +185,22 @@
         { label: 'Employee ID', generator: 'employeeId' },
         { label: 'Salary', generator: 'salary' },
         { label: 'Department (EN)', generator: 'department' },
-        { label: 'Department (AR)', generator: 'departmentAr' }
+        { label: 'Department (AR)', generator: 'departmentAr' },
+        { label: 'Work Experience', generator: 'workExperience' },
+        { label: 'Work Location (EN)', generator: 'workLocation' },
+        { label: 'Work Location (AR)', generator: 'workLocationAr' }
       ]},
       { title: 'Finance', items: [
         { label: 'IBAN', generator: 'iban' },
+        { label: 'Credit Card', generator: 'creditCard' },
+        { label: 'CVV', generator: 'cvv' },
         { label: 'Bank Name (EN)', generator: 'bankName' },
         { label: 'Bank Name (AR)', generator: 'bankNameAr' },
         { label: 'Account Number', generator: 'accountNumber' },
-        { label: 'Credit Card', generator: 'creditCard' },
-        { label: 'CVV', generator: 'cvv' },
+        { label: 'SWIFT Code', generator: 'swiftCode' },
+        { label: 'Currency (EN)', generator: 'currency' },
+        { label: 'Currency (AR)', generator: 'currencyAr' },
         { label: 'Transaction ID', generator: 'transactionId' }
-      ]},
-      { title: 'Government', items: [
-        { label: 'Commercial Register', generator: 'commercialRegister' },
-        { label: 'Tax Number (VAT)', generator: 'taxNumber' },
-        { label: 'Municipal License', generator: 'municipalLicense' },
-        { label: 'Social Insurance', generator: 'socialInsurance' },
-        { label: 'Zakat Number', generator: 'zakat' },
-        { label: 'Customs Code', generator: 'customsCode' }
       ]},
       { title: 'Random Values', items: [
         { label: 'Custom Random', generator: 'customRandom' },
@@ -185,16 +219,59 @@
         { label: 'Timestamp', generator: 'timestamp' },
         { label: 'Hijri Date', generator: 'hijriDate' },
         { label: 'Day of Week (EN)', generator: 'dayOfWeek' },
-        { label: 'Day of Week (AR)', generator: 'dayOfWeekAr' }
+        { label: 'Day of Week (AR)', generator: 'dayOfWeekAr' },
+        { label: 'Month (EN)', generator: 'month' },
+        { label: 'Month (AR)', generator: 'monthAr' },
+        { label: 'Hijri → Gregorian', generator: 'hijriToGregorian' },
+        { label: 'Gregorian → Hijri', generator: 'gregorianToHijri' }
       ]},
-      { title: 'Testing', items: [
+      { title: 'Files', items: [
+        { label: 'TXT File', generator: 'txt' },
+        { label: 'JSON File', generator: 'json' },
+        { label: 'CSV File', generator: 'csv' },
+        { label: 'XML File', generator: 'xml' },
+        { label: 'HTML File', generator: 'html' },
+        { label: 'PDF File', generator: 'pdf' },
+        { label: 'DOC File', generator: 'doc' },
+        { label: 'XLSX File', generator: 'xlsx' },
+        { label: 'JPG File', generator: 'jpg' },
+        { label: 'PNG File', generator: 'png' }
+      ]},
+      { title: 'Email Testing', items: [
         { label: 'Valid Email', generator: 'validEmail' },
         { label: 'Invalid Email', generator: 'invalidEmail' },
+        { label: 'Disposable Email', generator: 'disposableEmail' },
+        { label: 'Corporate Email', generator: 'corporateEmail' },
+        { label: 'Personal Email', generator: 'personalEmail' },
+        { label: 'Long Email', generator: 'longEmail' },
+        { label: 'Short Email', generator: 'shortEmail' },
+        { label: 'Special Char Email', generator: 'specialCharEmail' },
+        { label: 'Unicode Email', generator: 'unicodeEmail' },
+        { label: 'Custom Email', generator: 'customEmail' }
+      ]},
+      { title: 'Phone Testing', items: [
+        { label: 'Custom Phone', generator: 'customPhone' },
+        { label: 'Mobile (05X)', generator: 'mobileNumber' },
+        { label: 'Landline (01X)', generator: 'landlineNumber' },
+        { label: 'Short Mobile (5X)', generator: 'shortMobile' },
+        { label: 'Short Landline (1X)', generator: 'shortLandline' },
+        { label: 'Invalid Phone', generator: 'invalidPhone' },
+        { label: 'Wrong Length', generator: 'wrongLengthPhone' },
+        { label: 'International (+966)', generator: 'internationalPhone' },
+        { label: 'Formatted Phone', generator: 'formattedPhone' },
+        { label: 'Unformatted Phone', generator: 'unformattedPhone' }
+      ]},
+      { title: 'Password Testing', items: [
+        { label: 'Custom Password', generator: 'customPassword' },
         { label: 'Strong Password', generator: 'strongPassword' },
         { label: 'Weak Password', generator: 'weakPassword' },
-        { label: 'UUID', generator: 'uuid' },
-        { label: 'Hash', generator: 'hash' },
-        { label: 'Token', generator: 'token' }
+        { label: 'Numeric Password', generator: 'numericPassword' },
+        { label: 'Alpha Password', generator: 'alphaPassword' },
+        { label: 'Special Char Password', generator: 'specialCharPassword' },
+        { label: 'Long Password', generator: 'longPassword' },
+        { label: 'Short Password', generator: 'shortPassword' },
+        { label: 'Common Password', generator: 'commonPassword' },
+        { label: 'Unicode Password', generator: 'unicodePassword' }
       ]},
       { title: 'Other', items: [
         { label: 'Boolean', generator: 'boolean' },
@@ -206,8 +283,16 @@
         { label: 'User Agent', generator: 'userAgent' }
       ]},
       { title: 'Healthcare', items: [
-        { label: 'Medical Record Number', generator: 'medicalRecordNumber' },
+        { label: 'Medical Record', generator: 'medicalRecord' },
         { label: 'Insurance Number', generator: 'insuranceNumber' },
+        { label: 'Doctor Name (EN)', generator: 'doctorName' },
+        { label: 'Doctor Name (AR)', generator: 'doctorNameAr' },
+        { label: 'Hospital (EN)', generator: 'hospital' },
+        { label: 'Hospital (AR)', generator: 'hospitalAr' },
+        { label: 'Diagnosis (EN)', generator: 'diagnosis' },
+        { label: 'Diagnosis (AR)', generator: 'diagnosisAr' },
+        { label: 'Medication (EN)', generator: 'medication' },
+        { label: 'Medication (AR)', generator: 'medicationAr' },
         { label: 'Emergency Contact', generator: 'emergencyContact' },
         { label: 'Allergies', generator: 'allergies' },
         { label: 'Blood Pressure', generator: 'bloodPressure' },
@@ -215,11 +300,15 @@
       ]},
       { title: 'Vehicle', items: [
         { label: 'License Plate', generator: 'licensePlate' },
-        { label: 'VIN Number', generator: 'vinNumber' },
-        { label: 'Car Make', generator: 'carMake' },
-        { label: 'Car Model', generator: 'carModel' },
+        { label: 'Car Model (EN)', generator: 'carModel' },
+        { label: 'Car Model (AR)', generator: 'carModelAr' },
+        { label: 'Car Brand (EN)', generator: 'carBrand' },
+        { label: 'Car Brand (AR)', generator: 'carBrandAr' },
         { label: 'Car Year', generator: 'carYear' },
-        { label: 'Car Color', generator: 'carColor' }
+        { label: 'Car Color (EN)', generator: 'carColor' },
+        { label: 'Car Color (AR)', generator: 'carColorAr' },
+        { label: 'VIN Number', generator: 'vin' },
+        { label: 'Engine Number', generator: 'engineNumber' }
       ]},
       { title: 'E-commerce', items: [
         { label: 'Product Name', generator: 'productName' },
