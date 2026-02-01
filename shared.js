@@ -38,6 +38,7 @@ function initGenerators() {
   if (window.edgeCasesGenerators) Object.assign(window.generators, window.edgeCasesGenerators);
   if (window.performanceTestingGenerators) Object.assign(window.generators, window.performanceTestingGenerators);
   if (window.securityTestingGenerators) Object.assign(window.generators, window.securityTestingGenerators);
+  if (window.emailTestingGenerators) Object.assign(window.generators, window.emailTestingGenerators);
 }
 
 // Initialize immediately

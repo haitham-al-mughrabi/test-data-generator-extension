@@ -612,6 +612,22 @@ function createDataGeneratorUI(containerId) {
       { id: 'securityScan', label: 'Security Scan Result' },
       { id: 'penetrationTest', label: 'Penetration Test' }
     ] },
+    { title: 'Email Testing', fields: [
+      { id: 'validEmail', label: 'Valid Email' },
+      { id: 'invalidEmail', label: 'Invalid Email' },
+      { id: 'businessEmail', label: 'Business Email' },
+      { id: 'personalEmail', label: 'Personal Email' },
+      { id: 'tempEmail', label: 'Temporary Email' },
+      { id: 'subdomainEmail', label: 'Subdomain Email' },
+      { id: 'internationalEmail', label: 'International Email' },
+      { id: 'longEmail', label: 'Long Email' },
+      { id: 'shortEmail', label: 'Short Email' },
+      { id: 'specialCharEmail', label: 'Special Char Email' },
+      { id: 'numericEmail', label: 'Numeric Email' },
+      { id: 'disposableEmail', label: 'Disposable Email' },
+      { id: 'roleBasedEmail', label: 'Role-based Email' },
+      { id: 'customDomainEmail', label: 'Custom Domain Email' }
+    ] },
     { title: 'Date & Time', fields: [
       { id: 'date', label: 'Date' }, 
       { id: 'time', label: 'Time' }, 
@@ -774,6 +790,48 @@ function createDataGeneratorUI(containerId) {
           </div>
         </div>
       ` : ''}
+      ${cat.title === 'Email Testing' ? `
+        <div class="dg-file-controls" id="emailControls">
+          <div class="dg-file-control-group">
+            <label>Email Domain:</label>
+            <select id="emailDomain">
+              <option value="random">Random Domain</option>
+              <option value="gmail.com">gmail.com</option>
+              <option value="yahoo.com">yahoo.com</option>
+              <option value="hotmail.com">hotmail.com</option>
+              <option value="outlook.com">outlook.com</option>
+              <option value="company.com">company.com</option>
+              <option value="test.com">test.com</option>
+              <option value="example.com">example.com</option>
+              <option value="custom">Custom Domain</option>
+            </select>
+          </div>
+          <div class="dg-file-control-group" id="customDomainGroup" style="display: none;">
+            <label>Custom Domain:</label>
+            <input type="text" id="customDomain" placeholder="mydomain.com">
+          </div>
+          <div class="dg-file-control-group">
+            <label>Email Format:</label>
+            <select id="emailFormat">
+              <option value="standard">Standard (name@domain.com)</option>
+              <option value="subdomain">Subdomain (name@sub.domain.com)</option>
+              <option value="plus">Plus Addressing (name+tag@domain.com)</option>
+              <option value="dot">Dot Notation (first.last@domain.com)</option>
+              <option value="underscore">Underscore (first_last@domain.com)</option>
+              <option value="hyphen">Hyphen (first-last@domain.com)</option>
+            </select>
+          </div>
+          <div class="dg-file-control-group">
+            <label>Email Length:</label>
+            <select id="emailLength">
+              <option value="short">Short (5-10 chars)</option>
+              <option value="medium" selected>Medium (10-20 chars)</option>
+              <option value="long">Long (20-40 chars)</option>
+              <option value="very-long">Very Long (40+ chars)</option>
+            </select>
+          </div>
+        </div>
+      ` : ''}
     </div>
   `).join('');
 
@@ -826,9 +884,11 @@ function createDataGeneratorUI(containerId) {
       const isFilesTab = categories[tabIdx].title === 'Files';
       const isDateTimeTab = categories[tabIdx].title === 'Date & Time';
       const isRandomTextTab = categories[tabIdx].title === 'Random Text';
+      const isEmailTestingTab = categories[tabIdx].title === 'Email Testing';
       const fileControls = document.getElementById('fileControls');
       const dateTimeControls = document.getElementById('dateTimeControls');
       const randomTextControls = document.getElementById('randomTextControls');
+      const emailControls = document.getElementById('emailControls');
       const downloadBtn = document.getElementById('downloadBtn');
       
       if (fileControls) {
@@ -839,6 +899,9 @@ function createDataGeneratorUI(containerId) {
       }
       if (randomTextControls) {
         randomTextControls.classList.toggle('active', isRandomTextTab);
+      }
+      if (emailControls) {
+        emailControls.classList.toggle('active', isEmailTestingTab);
       }
       if (downloadBtn) {
         downloadBtn.style.display = isFilesTab ? 'inline-block' : 'none';
@@ -866,6 +929,16 @@ function createDataGeneratorUI(containerId) {
       const tabIdx = btn.dataset.tab;
       document.querySelectorAll(`[data-content="${tabIdx}"] .dg-checkbox input`).forEach(c => c.checked = false);
     });
+  });
+
+  // Handle custom domain toggle
+  document.addEventListener('change', function(e) {
+    if (e.target && e.target.id === 'emailDomain') {
+      const customDomainGroup = document.getElementById('customDomainGroup');
+      if (customDomainGroup) {
+        customDomainGroup.style.display = e.target.value === 'custom' ? 'block' : 'none';
+      }
+    }
   });
 
   document.getElementById('controlsHeader').addEventListener('click', () => {
