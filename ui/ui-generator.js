@@ -1213,35 +1213,50 @@ function createDataGeneratorUI(containerId) {
       const isDateTimeTab = categoryTitle === 'Date & Time';
       const isRandomTextTab = categoryTitle === 'Random Text';
       const isEmailTestingTab = categoryTitle === 'Email Testing';
+      const isPasswordTestingTab = categoryTitle === 'Password Testing';
+      const isPhoneTestingTab = categoryTitle === 'Phone Testing';
       
       const fileControls = document.getElementById('fileControls');
       const dateTimeControls = document.getElementById('dateTimeControls');
       const randomTextControls = document.getElementById('randomTextControls');
       const emailControls = document.getElementById('emailControls');
+      const passwordControls = document.getElementById('passwordControls');
+      const phoneControls = document.getElementById('phoneControls');
       const downloadBtn = document.getElementById('downloadBtn');
       
       if (fileControls) fileControls.classList.toggle('active', isFilesTab);
       if (dateTimeControls) dateTimeControls.classList.toggle('active', isDateTimeTab);
       if (randomTextControls) randomTextControls.classList.toggle('active', isRandomTextTab);
       if (emailControls) emailControls.classList.toggle('active', isEmailTestingTab);
+      if (passwordControls) passwordControls.classList.toggle('active', isPasswordTestingTab);
+      if (phoneControls) phoneControls.classList.toggle('active', isPhoneTestingTab);
       if (downloadBtn) downloadBtn.style.display = isFilesTab ? 'inline-block' : 'none';
     }
 
-    // Highlight and check the specific field
-    const fieldCheckbox = document.querySelector(`input[value="${fieldId}"]`);
-    if (fieldCheckbox) {
-      fieldCheckbox.checked = true;
-      fieldCheckbox.closest('.dg-checkbox').style.background = '#e0e7ff';
-      fieldCheckbox.closest('.dg-checkbox').style.borderColor = '#667eea';
-      
-      // Scroll to the field
-      fieldCheckbox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      
-      // Remove highlight after 2 seconds
-      setTimeout(() => {
-        fieldCheckbox.closest('.dg-checkbox').style.background = '';
-        fieldCheckbox.closest('.dg-checkbox').style.borderColor = '';
-      }, 2000);
+    // Only highlight and check field if it's a specific field search, not category search
+    const searchQuery = searchInput.value.toLowerCase().trim();
+    const categoryTitle = categories[categoryIndex].title.toLowerCase();
+    
+    // If search query matches category name, don't select any field
+    if (searchQuery === categoryTitle || categoryTitle.includes(searchQuery)) {
+      // Just navigate to tab, don't select any field
+    } else {
+      // Highlight and check the specific field
+      const fieldCheckbox = document.querySelector(`input[value="${fieldId}"]`);
+      if (fieldCheckbox) {
+        fieldCheckbox.checked = true;
+        fieldCheckbox.closest('.dg-checkbox').style.background = '#e0e7ff';
+        fieldCheckbox.closest('.dg-checkbox').style.borderColor = '#667eea';
+        
+        // Scroll to the field
+        fieldCheckbox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        // Remove highlight after 2 seconds
+        setTimeout(() => {
+          fieldCheckbox.closest('.dg-checkbox').style.background = '';
+          fieldCheckbox.closest('.dg-checkbox').style.borderColor = '';
+        }, 2000);
+      }
     }
 
     // Clear search
