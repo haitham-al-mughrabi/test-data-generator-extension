@@ -280,7 +280,28 @@
         { label: 'URL', generator: 'url' },
         { label: 'IP Address', generator: 'ipAddress' },
         { label: 'MAC Address', generator: 'macAddress' },
-        { label: 'User Agent', generator: 'userAgent' }
+        { label: 'User Agent', generator: 'userAgent' },
+        { label: 'UUID', generator: 'uuid' },
+        { label: 'GUID', generator: 'guid' },
+        { label: 'Hash', generator: 'hash' },
+        { label: 'Token', generator: 'token' },
+        { label: 'Device ID', generator: 'deviceId' },
+        { label: 'Session ID', generator: 'sessionId' },
+        { label: 'API Key', generator: 'apiKey' }
+      ]},
+      { title: 'Saudi Services', items: [
+        { label: 'Hajj ID', generator: 'hajjId' },
+        { label: 'Umrah ID', generator: 'umrahId' },
+        { label: 'Work Permit', generator: 'workPermit' },
+        { label: 'Residency ID', generator: 'residencyId' },
+        { label: 'Driving License', generator: 'drivingLicense' },
+        { label: 'Vehicle Registration', generator: 'vehicleRegistration' },
+        { label: 'Istmara', generator: 'istmara' },
+        { label: 'Traffic Violation', generator: 'trafficViolation' },
+        { label: 'Health Card', generator: 'healthCard' },
+        { label: 'Medical Record', generator: 'medicalRecord' },
+        { label: 'Vaccination Certificate', generator: 'vaccinationCertificate' },
+        { label: 'COVID Certificate', generator: 'covidCertificate' }
       ]},
       { title: 'Healthcare', items: [
         { label: 'Medical Record', generator: 'medicalRecord' },
@@ -607,17 +628,34 @@
     if (!targetInput) return;
 
     try {
+      targetInput.focus();
+      
       switch(action) {
         case 'cut':
           if (targetInput.selectionStart !== targetInput.selectionEnd) {
-            document.execCommand('cut');
+            const selectedText = targetInput.value.substring(targetInput.selectionStart, targetInput.selectionEnd);
+            navigator.clipboard.writeText(selectedText).then(() => {
+              const start = targetInput.selectionStart;
+              const end = targetInput.selectionEnd;
+              const value = targetInput.value;
+              targetInput.value = value.substring(0, start) + value.substring(end);
+              targetInput.setSelectionRange(start, start);
+              targetInput.dispatchEvent(new Event('input', { bubbles: true }));
+            }).catch(() => {
+              document.execCommand('cut');
+            });
           }
           break;
+          
         case 'copy':
           if (targetInput.selectionStart !== targetInput.selectionEnd) {
-            document.execCommand('copy');
+            const selectedText = targetInput.value.substring(targetInput.selectionStart, targetInput.selectionEnd);
+            navigator.clipboard.writeText(selectedText).catch(() => {
+              document.execCommand('copy');
+            });
           }
           break;
+          
         case 'paste':
           navigator.clipboard.readText().then(text => {
             const start = targetInput.selectionStart;
@@ -626,10 +664,12 @@
             targetInput.value = value.substring(0, start) + text + value.substring(end);
             targetInput.setSelectionRange(start + text.length, start + text.length);
             targetInput.dispatchEvent(new Event('input', { bubbles: true }));
+            targetInput.dispatchEvent(new Event('change', { bubbles: true }));
           }).catch(() => {
             document.execCommand('paste');
           });
           break;
+          
         case 'delete':
           if (targetInput.selectionStart !== targetInput.selectionEnd) {
             const start = targetInput.selectionStart;
@@ -638,8 +678,10 @@
             targetInput.value = value.substring(0, start) + value.substring(end);
             targetInput.setSelectionRange(start, start);
             targetInput.dispatchEvent(new Event('input', { bubbles: true }));
+            targetInput.dispatchEvent(new Event('change', { bubbles: true }));
           }
           break;
+          
         case 'selectAll':
           targetInput.select();
           break;
@@ -750,7 +792,18 @@
     }
 
     try {
-      targetInput.value = value;
+      // Insert at cursor position without removing existing content
+      const start = targetInput.selectionStart || 0;
+      const end = targetInput.selectionEnd || 0;
+      const currentValue = targetInput.value || '';
+      
+      // Insert the new value at cursor position
+      const newValue = currentValue.substring(0, start) + value + currentValue.substring(end);
+      targetInput.value = newValue;
+      
+      // Set cursor position after inserted text
+      const newCursorPos = start + value.length;
+      targetInput.setSelectionRange(newCursorPos, newCursorPos);
       
       // Trigger input events
       targetInput.dispatchEvent(new Event('input', { bubbles: true }));
