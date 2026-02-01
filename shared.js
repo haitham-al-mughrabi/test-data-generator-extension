@@ -34,6 +34,10 @@ function initGenerators() {
   if (window.manufacturingGenerators) Object.assign(window.generators, window.manufacturingGenerators);
   if (window.telecommunicationsGenerators) Object.assign(window.generators, window.telecommunicationsGenerators);
   if (window.constructionGenerators) Object.assign(window.generators, window.constructionGenerators);
+  if (window.testingQAGenerators) Object.assign(window.generators, window.testingQAGenerators);
+  if (window.edgeCasesGenerators) Object.assign(window.generators, window.edgeCasesGenerators);
+  if (window.performanceTestingGenerators) Object.assign(window.generators, window.performanceTestingGenerators);
+  if (window.securityTestingGenerators) Object.assign(window.generators, window.securityTestingGenerators);
 }
 
 // Initialize immediately
