@@ -860,10 +860,59 @@
           try {
             value = window.generators[generatorName]();
           } catch (error) {
-            value = 'Test Data';
+            // If generator fails, create a simple fallback
+            switch(generatorName) {
+              case 'boolean': value = Math.random() > 0.5 ? 'true' : 'false'; break;
+              case 'number': value = Math.floor(Math.random() * 1000); break;
+              case 'color': value = '#' + Math.floor(Math.random()*16777215).toString(16); break;
+              case 'url': value = 'https://example.com'; break;
+              case 'ipAddress': value = `${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}`; break;
+              case 'macAddress': value = Array.from({length: 6}, () => Math.floor(Math.random()*256).toString(16).padStart(2, '0')).join(':'); break;
+              case 'userAgent': value = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'; break;
+              case 'hash': value = Math.random().toString(36).substring(2, 15); break;
+              case 'token': value = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15); break;
+              default: value = `Generated ${generatorName.replace(/([A-Z])/g, ' $1').toLowerCase()}`;
+            }
           }
         } else {
-          value = 'Test Data';
+          // Create meaningful fallbacks for missing generators
+          switch(generatorName) {
+            case 'boolean': value = Math.random() > 0.5 ? 'true' : 'false'; break;
+            case 'number': value = Math.floor(Math.random() * 1000); break;
+            case 'color': value = '#' + Math.floor(Math.random()*16777215).toString(16); break;
+            case 'url': value = 'https://example.com'; break;
+            case 'ipAddress': value = `${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}`; break;
+            case 'macAddress': value = Array.from({length: 6}, () => Math.floor(Math.random()*256).toString(16).padStart(2, '0')).join(':'); break;
+            case 'userAgent': value = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'; break;
+            case 'hash': value = Math.random().toString(36).substring(2, 15); break;
+            case 'token': value = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15); break;
+            case 'guid': 
+            case 'uuid': value = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+              const r = Math.random() * 16 | 0;
+              const v = c == 'x' ? r : (r & 0x3 | 0x8);
+              return v.toString(16);
+            }); break;
+            // Saudi Services
+            case 'hajjId': value = 'H' + Math.floor(Math.random() * 9000000 + 1000000); break;
+            case 'umrahId': value = 'U' + Math.floor(Math.random() * 9000000 + 1000000); break;
+            case 'workPermit': value = 'WP' + Math.floor(Math.random() * 90000000 + 10000000); break;
+            case 'residencyId': value = 'R' + Math.floor(Math.random() * 9000000 + 1000000); break;
+            case 'drivingLicense': value = Math.floor(Math.random() * 9000000000 + 1000000000); break;
+            case 'vehicleRegistration': value = 'VR' + Math.floor(Math.random() * 9000000 + 1000000); break;
+            case 'istmara': value = 'IS' + Math.floor(Math.random() * 9000000 + 1000000); break;
+            case 'trafficViolation': value = 'TV' + Math.floor(Math.random() * 900000 + 100000); break;
+            case 'healthCard': value = 'HC' + Math.floor(Math.random() * 9000000 + 1000000); break;
+            case 'vaccinationCertificate': value = 'VC' + Math.floor(Math.random() * 9000000 + 1000000); break;
+            case 'covidCertificate': value = 'COVID' + Math.floor(Math.random() * 900000 + 100000); break;
+            // Banking
+            case 'checkNumber': value = Math.floor(Math.random() * 90000 + 10000); break;
+            case 'loanNumber': value = 'LN' + Math.floor(Math.random() * 90000000 + 10000000); break;
+            case 'creditScore': value = Math.floor(Math.random() * 400 + 300); break;
+            case 'interestRate': value = (Math.random() * 10 + 1).toFixed(2) + '%'; break;
+            case 'exchangeRate': value = (Math.random() * 2 + 3).toFixed(4); break;
+            case 'investmentAmount': value = Math.floor(Math.random() * 900000 + 100000) + ' SAR'; break;
+            default: value = `Sample ${generatorName.replace(/([A-Z])/g, ' $1').toLowerCase()}`;
+          }
         }
     }
 
