@@ -1,9 +1,14 @@
 // Email Testing generators
 function getEmailSettings() {
-  const domain = document.getElementById('emailDomain')?.value || 'random';
-  const customDomain = document.getElementById('customDomain')?.value || 'example.com';
-  const format = document.getElementById('emailFormat')?.value || 'standard';
-  const length = document.getElementById('emailLength')?.value || 'medium';
+  const domainSelect = document.getElementById('emailDomain');
+  const customDomainInput = document.getElementById('customDomain');
+  const formatSelect = document.getElementById('emailFormat');
+  const lengthSelect = document.getElementById('emailLength');
+  
+  const domain = domainSelect?.value || 'random';
+  const customDomain = customDomainInput?.value?.trim() || 'example.com';
+  const format = formatSelect?.value || 'standard';
+  const length = lengthSelect?.value || 'medium';
   
   return { domain, customDomain, format, length };
 }
@@ -36,10 +41,15 @@ function generateEmailName(length) {
 }
 
 function getDomainName(domainSetting, customDomain) {
-  if (domainSetting === 'custom') return customDomain;
+  if (domainSetting === 'custom' && customDomain && customDomain !== 'example.com') {
+    return customDomain;
+  }
   if (domainSetting === 'random') {
     const domains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'test.com', 'example.com'];
     return randomChoice(domains);
+  }
+  if (domainSetting === 'custom') {
+    return customDomain || 'example.com';
   }
   return domainSetting;
 }
@@ -72,7 +82,15 @@ function generateCustomEmail() {
 }
 
 const emailTestingGenerators = {
-  validEmail: () => generateCustomEmail(),
+  validEmail: () => {
+    const settings = getEmailSettings();
+    // If custom domain is selected, use it for valid emails too
+    if (settings.domain === 'custom' && settings.customDomain && settings.customDomain.trim()) {
+      const name = generateEmailName(settings.length);
+      return `${name}@${settings.customDomain.trim()}`;
+    }
+    return generateCustomEmail();
+  },
 
   invalidEmail: () => {
     const invalidFormats = [
@@ -194,6 +212,10 @@ const emailTestingGenerators = {
     const settings = getEmailSettings();
     const customDomain = settings.customDomain || 'mydomain.com';
     const name = generateEmailName(settings.length);
+    
+    // Debug: Log the settings to console
+    console.log('Email settings:', settings);
+    
     return `${name}@${customDomain}`;
   }
 };

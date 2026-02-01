@@ -6,7 +6,19 @@ function createDataGeneratorUI(containerId) {
   style.textContent = `
     .dg-app { height: 100%; display: flex; flex-direction: column; background: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; }
     .dg-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 14px; text-align: center; flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-    .dg-header h1 { font-size: 15px; font-weight: 700; margin: 0; }
+    .dg-header h1 { font-size: 15px; font-weight: 700; margin: 0 0 8px 0; }
+    .dg-search { position: relative; max-width: 300px; margin: 0 auto; }
+    .dg-search input { width: 100%; padding: 6px 30px 6px 10px; border: none; border-radius: 15px; font-size: 12px; background: rgba(255,255,255,0.9); }
+    .dg-search input:focus { outline: none; background: white; }
+    .dg-search-icon { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); color: #666; font-size: 12px; }
+    .dg-search-clear { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #666; cursor: pointer; font-size: 14px; display: none; }
+    .dg-search-results { position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1px solid #e2e8f0; border-radius: 6px; max-height: 200px; overflow-y: auto; z-index: 1000; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .dg-search-result { padding: 8px 12px; cursor: pointer; font-size: 11px; border-bottom: 1px solid #f1f5f9; }
+    .dg-search-result:hover { background: #f8fafc; }
+    .dg-search-result:last-child { border-bottom: none; }
+    .dg-search-category { font-weight: 600; color: #667eea; }
+    .dg-search-field { color: #334155; margin-left: 8px; }
+    .dg-search-highlight { background: #fef3c7; padding: 1px 2px; border-radius: 2px; }
     .dg-tabs { display: flex; background: white; border-bottom: 2px solid #e2e8f0; overflow-x: auto; flex-shrink: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
     .dg-tab { padding: 10px 14px; border: none; background: none; cursor: pointer; font-size: 12px; font-weight: 600; color: #64748b; border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.2s; }
     .dg-tab:hover { color: #667eea; }
@@ -837,7 +849,15 @@ function createDataGeneratorUI(containerId) {
 
   container.innerHTML = `
     <div class="dg-app">
-      <div class="dg-header"><h1>🎲 Test Data Generator</h1></div>
+      <div class="dg-header">
+        <h1>🎲 Test Data Generator</h1>
+        <div class="dg-search">
+          <input type="text" id="searchInput" placeholder="Search fields..." autocomplete="off">
+          <span class="dg-search-icon" id="searchIcon">🔍</span>
+          <button class="dg-search-clear" id="searchClear">✕</button>
+          <div class="dg-search-results" id="searchResults"></div>
+        </div>
+      </div>
       <div class="dg-tabs">${tabsHTML}</div>
       <div class="dg-main">
         <div class="dg-content">
@@ -931,12 +951,178 @@ function createDataGeneratorUI(containerId) {
     });
   });
 
+  // Search functionality
+  const searchInput = document.getElementById('searchInput');
+  const searchResults = document.getElementById('searchResults');
+  const searchClear = document.getElementById('searchClear');
+  const searchIcon = document.getElementById('searchIcon');
+
+  function createSearchIndex() {
+    const searchIndex = [];
+    categories.forEach((category, categoryIndex) => {
+      category.fields.forEach(field => {
+        searchIndex.push({
+          categoryIndex,
+          categoryTitle: category.title,
+          fieldId: field.id,
+          fieldLabel: field.label,
+          searchText: `${category.title} ${field.label} ${field.id}`.toLowerCase()
+        });
+      });
+    });
+    return searchIndex;
+  }
+
+  const searchIndex = createSearchIndex();
+
+  function highlightText(text, query) {
+    if (!query) return text;
+    const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+    return text.replace(regex, '<span class="dg-search-highlight">$1</span>');
+  }
+
+  function performSearch(query) {
+    if (!query || query.length < 2) {
+      searchResults.style.display = 'none';
+      return;
+    }
+
+    const results = searchIndex.filter(item => 
+      item.searchText.includes(query.toLowerCase())
+    ).slice(0, 10);
+
+    if (results.length === 0) {
+      searchResults.innerHTML = '<div class="dg-search-result">No results found</div>';
+    } else {
+      searchResults.innerHTML = results.map(result => `
+        <div class="dg-search-result" data-category="${result.categoryIndex}" data-field="${result.fieldId}">
+          <div class="dg-search-category">${highlightText(result.categoryTitle, query)}</div>
+          <div class="dg-search-field">${highlightText(result.fieldLabel, query)}</div>
+        </div>
+      `).join('');
+    }
+
+    searchResults.style.display = 'block';
+  }
+
+  function selectSearchResult(categoryIndex, fieldId) {
+    // Switch to the category tab
+    document.querySelectorAll('.dg-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.dg-tab-content').forEach(c => c.classList.remove('active'));
+    
+    const targetTab = document.querySelector(`[data-tab="${categoryIndex}"]`);
+    const targetContent = document.querySelector(`[data-content="${categoryIndex}"]`);
+    
+    if (targetTab && targetContent) {
+      targetTab.classList.add('active');
+      targetContent.classList.add('active');
+      
+      // Show/hide controls based on category
+      const categoryTitle = categories[categoryIndex].title;
+      const isFilesTab = categoryTitle === 'Files';
+      const isDateTimeTab = categoryTitle === 'Date & Time';
+      const isRandomTextTab = categoryTitle === 'Random Text';
+      const isEmailTestingTab = categoryTitle === 'Email Testing';
+      
+      const fileControls = document.getElementById('fileControls');
+      const dateTimeControls = document.getElementById('dateTimeControls');
+      const randomTextControls = document.getElementById('randomTextControls');
+      const emailControls = document.getElementById('emailControls');
+      const downloadBtn = document.getElementById('downloadBtn');
+      
+      if (fileControls) fileControls.classList.toggle('active', isFilesTab);
+      if (dateTimeControls) dateTimeControls.classList.toggle('active', isDateTimeTab);
+      if (randomTextControls) randomTextControls.classList.toggle('active', isRandomTextTab);
+      if (emailControls) emailControls.classList.toggle('active', isEmailTestingTab);
+      if (downloadBtn) downloadBtn.style.display = isFilesTab ? 'inline-block' : 'none';
+    }
+
+    // Highlight and check the specific field
+    const fieldCheckbox = document.querySelector(`input[value="${fieldId}"]`);
+    if (fieldCheckbox) {
+      fieldCheckbox.checked = true;
+      fieldCheckbox.closest('.dg-checkbox').style.background = '#e0e7ff';
+      fieldCheckbox.closest('.dg-checkbox').style.borderColor = '#667eea';
+      
+      // Scroll to the field
+      fieldCheckbox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      
+      // Remove highlight after 2 seconds
+      setTimeout(() => {
+        fieldCheckbox.closest('.dg-checkbox').style.background = '';
+        fieldCheckbox.closest('.dg-checkbox').style.borderColor = '';
+      }, 2000);
+    }
+
+    // Clear search
+    searchInput.value = '';
+    searchResults.style.display = 'none';
+    searchClear.style.display = 'none';
+    searchIcon.style.display = 'block';
+  }
+
+  searchInput.addEventListener('input', (e) => {
+    const query = e.target.value.trim();
+    performSearch(query);
+    
+    if (query) {
+      searchClear.style.display = 'block';
+      searchIcon.style.display = 'none';
+    } else {
+      searchClear.style.display = 'none';
+      searchIcon.style.display = 'block';
+    }
+  });
+
+  searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      searchInput.value = '';
+      searchResults.style.display = 'none';
+      searchClear.style.display = 'none';
+      searchIcon.style.display = 'block';
+      searchInput.blur();
+    }
+  });
+
+  searchClear.addEventListener('click', () => {
+    searchInput.value = '';
+    searchResults.style.display = 'none';
+    searchClear.style.display = 'none';
+    searchIcon.style.display = 'block';
+    searchInput.focus();
+  });
+
+  searchResults.addEventListener('click', (e) => {
+    const resultItem = e.target.closest('.dg-search-result');
+    if (resultItem) {
+      const categoryIndex = parseInt(resultItem.dataset.category);
+      const fieldId = resultItem.dataset.field;
+      selectSearchResult(categoryIndex, fieldId);
+    }
+  });
+
+  // Hide search results when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.dg-search')) {
+      searchResults.style.display = 'none';
+    }
+  });
+
   // Handle custom domain toggle
   document.addEventListener('change', function(e) {
     if (e.target && e.target.id === 'emailDomain') {
       const customDomainGroup = document.getElementById('customDomainGroup');
       if (customDomainGroup) {
-        customDomainGroup.style.display = e.target.value === 'custom' ? 'block' : 'none';
+        if (e.target.value === 'custom') {
+          customDomainGroup.style.display = 'block';
+          // Focus on custom domain input
+          const customDomainInput = document.getElementById('customDomain');
+          if (customDomainInput) {
+            setTimeout(() => customDomainInput.focus(), 100);
+          }
+        } else {
+          customDomainGroup.style.display = 'none';
+        }
       }
     }
   });
