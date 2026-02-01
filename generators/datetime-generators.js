@@ -107,7 +107,18 @@ const dateTimeGenerators = {
   timestamp: () => new Date().toISOString(),
   timeZone: () => randomChoice(['UTC+3', 'UTC+2', 'UTC+1', 'UTC+0', 'UTC-5']),
   dayOfWeek: () => randomChoice(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']),
-  month: () => randomChoice(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'])
+  month: () => randomChoice(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']),
+
+  hijriDate: () => {
+    const hijriMonths = ['محرم', 'صفر', 'ربيع الأول', 'ربيع الثاني', 'جمادى الأولى', 'جمادى الثانية', 'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة'];
+    const day = randomNum(1, 29);
+    const month = randomChoice(hijriMonths);
+    const year = randomNum(1440, 1450);
+    return `${day} ${month} ${year}هـ`;
+  },
+
+  dayOfWeekAr: () => randomChoice(['الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت', 'الأحد']),
+  monthAr: () => randomChoice(['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'])
 };
 
 if (typeof module !== 'undefined' && module.exports) {

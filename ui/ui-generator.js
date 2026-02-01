@@ -67,24 +67,176 @@ function createDataGeneratorUI(containerId) {
   document.head.appendChild(style);
 
   const categories = [
-    { title: 'Personal', fields: [{ id: 'firstName', label: 'First Name (EN)' }, { id: 'firstNameAr', label: 'First Name (AR)' }, { id: 'lastName', label: 'Last Name (EN)' }, { id: 'lastNameAr', label: 'Last Name (AR)' }, { id: 'fullName', label: 'Full Name (EN)' }, { id: 'fullNameAr', label: 'Full Name (AR)' }, { id: 'gender', label: 'Gender (EN)' }, { id: 'genderAr', label: 'Gender (AR)' }, { id: 'birthdate', label: 'Birthdate' }, { id: 'age', label: 'Age' }, { id: 'nationality', label: 'Nationality (EN)' }, { id: 'nationalityAr', label: 'Nationality (AR)' }, { id: 'bloodType', label: 'Blood Type' }, { id: 'saudiId', label: 'Saudi ID' }, { id: 'passportNumber', label: 'Passport Number' }] },
-    { title: 'Contact', fields: [{ id: 'email', label: 'Email' }, { id: 'phone', label: 'Phone' }, { id: 'address', label: 'Address (EN)' }, { id: 'addressAr', label: 'Address (AR)' }, { id: 'city', label: 'City (EN)' }, { id: 'cityAr', label: 'City (AR)' }, { id: 'postalCode', label: 'Postal Code' }, { id: 'country', label: 'Country (EN)' }, { id: 'countryAr', label: 'Country (AR)' }] },
-    { title: 'Work', fields: [{ id: 'company', label: 'Company' }, { id: 'jobTitle', label: 'Job Title (EN)' }, { id: 'jobTitleAr', label: 'Job Title (AR)' }, { id: 'salary', label: 'Salary' }, { id: 'department', label: 'Department (EN)' }, { id: 'departmentAr', label: 'Department (AR)' }] },
-    { title: 'Finance', fields: [{ id: 'iban', label: 'IBAN' }, { id: 'creditCard', label: 'Credit Card' }, { id: 'cvv', label: 'CVV' }, { id: 'bankName', label: 'Bank Name' }] },
-    { title: 'Date & Time', fields: [{ id: 'date', label: 'Date' }, { id: 'time', label: 'Time' }, { id: 'datetime', label: 'DateTime' }, { id: 'timestamp', label: 'Timestamp' }] },
-    { title: 'Other', fields: [{ id: 'uuid', label: 'UUID' }, { id: 'url', label: 'URL' }, { id: 'email', label: 'Email' }, { id: 'password', label: 'Password' }, { id: 'ip', label: 'IP Address' }, { id: 'color', label: 'Color' }] },
+    { title: 'Personal', fields: [
+      { id: 'firstName', label: 'First Name (EN)' }, 
+      { id: 'firstNameAr', label: 'First Name (AR)' }, 
+      { id: 'lastName', label: 'Last Name (EN)' }, 
+      { id: 'lastNameAr', label: 'Last Name (AR)' }, 
+      { id: 'fullName', label: 'Full Name (EN)' }, 
+      { id: 'fullNameAr', label: 'Full Name (AR)' }, 
+      { id: 'gender', label: 'Gender (EN)' }, 
+      { id: 'genderAr', label: 'Gender (AR)' }, 
+      { id: 'birthdate', label: 'Birthdate' }, 
+      { id: 'age', label: 'Age' }, 
+      { id: 'nationality', label: 'Nationality (EN)' }, 
+      { id: 'nationalityAr', label: 'Nationality (AR)' }, 
+      { id: 'bloodType', label: 'Blood Type' }, 
+      { id: 'saudiId', label: 'Saudi ID' }, 
+      { id: 'passportNumber', label: 'Passport Number' },
+      { id: 'maritalStatus', label: 'Marital Status (EN)' },
+      { id: 'maritalStatusAr', label: 'Marital Status (AR)' },
+      { id: 'religion', label: 'Religion (EN)' },
+      { id: 'religionAr', label: 'Religion (AR)' }
+    ] },
+    { title: 'Contact', fields: [
+      { id: 'email', label: 'Email' }, 
+      { id: 'phone', label: 'Phone' }, 
+      { id: 'address', label: 'Address (EN)' }, 
+      { id: 'addressAr', label: 'Address (AR)' }, 
+      { id: 'city', label: 'City (EN)' }, 
+      { id: 'cityAr', label: 'City (AR)' }, 
+      { id: 'postalCode', label: 'Postal Code' }, 
+      { id: 'country', label: 'Country (EN)' }, 
+      { id: 'countryAr', label: 'Country (AR)' },
+      { id: 'district', label: 'District (EN)' },
+      { id: 'districtAr', label: 'District (AR)' },
+      { id: 'building', label: 'Building Number' },
+      { id: 'unit', label: 'Unit Number' }
+    ] },
+    { title: 'Work', fields: [
+      { id: 'company', label: 'Company' }, 
+      { id: 'jobTitle', label: 'Job Title (EN)' }, 
+      { id: 'jobTitleAr', label: 'Job Title (AR)' }, 
+      { id: 'salary', label: 'Salary' }, 
+      { id: 'department', label: 'Department (EN)' }, 
+      { id: 'departmentAr', label: 'Department (AR)' },
+      { id: 'workEmail', label: 'Work Email' },
+      { id: 'workPhone', label: 'Work Phone' },
+      { id: 'employeeId', label: 'Employee ID' },
+      { id: 'workExperience', label: 'Experience (Years)' },
+      { id: 'workLocation', label: 'Work Location (EN)' },
+      { id: 'workLocationAr', label: 'Work Location (AR)' }
+    ] },
+    { title: 'Education', fields: [
+      { id: 'university', label: 'University (EN)' },
+      { id: 'universityAr', label: 'University (AR)' },
+      { id: 'degree', label: 'Degree (EN)' },
+      { id: 'degreeAr', label: 'Degree (AR)' },
+      { id: 'major', label: 'Major (EN)' },
+      { id: 'majorAr', label: 'Major (AR)' },
+      { id: 'graduationYear', label: 'Graduation Year' },
+      { id: 'gpa', label: 'GPA' },
+      { id: 'studentId', label: 'Student ID' }
+    ] },
+    { title: 'Finance', fields: [
+      { id: 'iban', label: 'IBAN' }, 
+      { id: 'creditCard', label: 'Credit Card' }, 
+      { id: 'cvv', label: 'CVV' }, 
+      { id: 'bankName', label: 'Bank Name (EN)' },
+      { id: 'bankNameAr', label: 'Bank Name (AR)' },
+      { id: 'accountNumber', label: 'Account Number' },
+      { id: 'swiftCode', label: 'SWIFT Code' },
+      { id: 'currency', label: 'Currency (EN)' },
+      { id: 'currencyAr', label: 'Currency (AR)' }
+    ] },
+    { title: 'Healthcare', fields: [
+      { id: 'medicalRecord', label: 'Medical Record' },
+      { id: 'insuranceNumber', label: 'Insurance Number' },
+      { id: 'doctorName', label: 'Doctor Name (EN)' },
+      { id: 'doctorNameAr', label: 'Doctor Name (AR)' },
+      { id: 'hospital', label: 'Hospital (EN)' },
+      { id: 'hospitalAr', label: 'Hospital (AR)' },
+      { id: 'diagnosis', label: 'Diagnosis (EN)' },
+      { id: 'diagnosisAr', label: 'Diagnosis (AR)' },
+      { id: 'medication', label: 'Medication (EN)' },
+      { id: 'medicationAr', label: 'Medication (AR)' }
+    ] },
+    { title: 'Vehicle', fields: [
+      { id: 'licensePlate', label: 'License Plate' },
+      { id: 'carModel', label: 'Car Model (EN)' },
+      { id: 'carModelAr', label: 'Car Model (AR)' },
+      { id: 'carBrand', label: 'Car Brand (EN)' },
+      { id: 'carBrandAr', label: 'Car Brand (AR)' },
+      { id: 'carYear', label: 'Car Year' },
+      { id: 'carColor', label: 'Car Color (EN)' },
+      { id: 'carColorAr', label: 'Car Color (AR)' },
+      { id: 'vin', label: 'VIN Number' },
+      { id: 'engineNumber', label: 'Engine Number' }
+    ] },
+    { title: 'Date & Time', fields: [
+      { id: 'date', label: 'Date' }, 
+      { id: 'time', label: 'Time' }, 
+      { id: 'datetime', label: 'DateTime' }, 
+      { id: 'timestamp', label: 'Timestamp' },
+      { id: 'hijriDate', label: 'Hijri Date' },
+      { id: 'dayOfWeek', label: 'Day of Week (EN)' },
+      { id: 'dayOfWeekAr', label: 'Day of Week (AR)' },
+      { id: 'month', label: 'Month (EN)' },
+      { id: 'monthAr', label: 'Month (AR)' }
+    ] },
+    { title: 'Other', fields: [
+      { id: 'uuid', label: 'UUID' }, 
+      { id: 'url', label: 'URL' }, 
+      { id: 'password', label: 'Password' }, 
+      { id: 'ip', label: 'IP Address' }, 
+      { id: 'color', label: 'Color' },
+      { id: 'macAddress', label: 'MAC Address' },
+      { id: 'userAgent', label: 'User Agent' },
+      { id: 'apiKey', label: 'API Key' }
+    ] },
     { title: 'Files', fields: [
       { id: 'txt', label: 'Text File (.txt)' }, 
       { id: 'json', label: 'JSON File (.json)' }, 
       { id: 'csv', label: 'CSV File (.csv)' },
       { id: 'xml', label: 'XML File (.xml)' },
       { id: 'html', label: 'HTML File (.html)' },
+      { id: 'css', label: 'CSS File (.css)' },
+      { id: 'js', label: 'JavaScript (.js)' },
+      { id: 'py', label: 'Python File (.py)' },
+      { id: 'java', label: 'Java File (.java)' },
+      { id: 'cpp', label: 'C++ File (.cpp)' },
       { id: 'pdf', label: 'PDF File (.pdf)' },
       { id: 'doc', label: 'Word File (.doc)' },
+      { id: 'docx', label: 'Word File (.docx)' },
       { id: 'xlsx', label: 'Excel File (.xlsx)' },
+      { id: 'xls', label: 'Excel File (.xls)' },
+      { id: 'ppt', label: 'PowerPoint (.ppt)' },
+      { id: 'pptx', label: 'PowerPoint (.pptx)' },
       { id: 'jpg', label: 'JPEG Image (.jpg)' },
       { id: 'png', label: 'PNG Image (.png)' },
-      { id: 'zip', label: 'ZIP Archive (.zip)' }
+      { id: 'gif', label: 'GIF Image (.gif)' },
+      { id: 'svg', label: 'SVG Image (.svg)' },
+      { id: 'bmp', label: 'BMP Image (.bmp)' },
+      { id: 'webp', label: 'WebP Image (.webp)' },
+      { id: 'ico', label: 'Icon File (.ico)' },
+      { id: 'zip', label: 'ZIP Archive (.zip)' },
+      { id: 'rar', label: 'RAR Archive (.rar)' },
+      { id: '7z', label: '7-Zip Archive (.7z)' },
+      { id: 'tar', label: 'TAR Archive (.tar)' },
+      { id: 'mp3', label: 'MP3 Audio (.mp3)' },
+      { id: 'wav', label: 'WAV Audio (.wav)' },
+      { id: 'flac', label: 'FLAC Audio (.flac)' },
+      { id: 'mp4', label: 'MP4 Video (.mp4)' },
+      { id: 'avi', label: 'AVI Video (.avi)' },
+      { id: 'mkv', label: 'MKV Video (.mkv)' },
+      { id: 'mov', label: 'MOV Video (.mov)' },
+      { id: 'wmv', label: 'WMV Video (.wmv)' },
+      { id: 'sql', label: 'SQL File (.sql)' },
+      { id: 'db', label: 'Database (.db)' },
+      { id: 'log', label: 'Log File (.log)' },
+      { id: 'ini', label: 'Config File (.ini)' },
+      { id: 'cfg', label: 'Config File (.cfg)' },
+      { id: 'conf', label: 'Config File (.conf)' },
+      { id: 'yaml', label: 'YAML File (.yaml)' },
+      { id: 'yml', label: 'YAML File (.yml)' },
+      { id: 'toml', label: 'TOML File (.toml)' },
+      { id: 'md', label: 'Markdown (.md)' },
+      { id: 'rtf', label: 'Rich Text (.rtf)' },
+      { id: 'eps', label: 'EPS File (.eps)' },
+      { id: 'ai', label: 'Adobe Illustrator (.ai)' },
+      { id: 'psd', label: 'Photoshop (.psd)' },
+      { id: 'sketch', label: 'Sketch File (.sketch)' },
+      { id: 'fig', label: 'Figma File (.fig)' }
     ] }
   ];
 
@@ -365,7 +517,31 @@ function createDataGeneratorUI(containerId) {
       } else if (fileType === 'html') {
         content = '<!DOCTYPE html><html><head><title>Test HTML</title></head><body><h1>Test HTML File</h1><p>Generated: ' + new Date().toISOString() + '</p></body></html>';
         mimeType = 'text/html';
-      } else if (['jpg', 'png'].includes(fileType)) {
+      } else if (fileType === 'css') {
+        content = 'body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }\n.container { max-width: 1200px; margin: 0 auto; }';
+        mimeType = 'text/css';
+      } else if (fileType === 'js') {
+        content = 'console.log("Test JavaScript file generated on ' + new Date().toISOString() + '");\nfunction testFunction() {\n  return "Hello World";\n}';
+        mimeType = 'application/javascript';
+      } else if (fileType === 'py') {
+        content = '#!/usr/bin/env python3\n# Test Python file\nprint("Generated on ' + new Date().toISOString() + '")\n\ndef hello_world():\n    return "Hello World"';
+        mimeType = 'text/x-python';
+      } else if (fileType === 'java') {
+        content = 'public class TestFile {\n    public static void main(String[] args) {\n        System.out.println("Generated on ' + new Date().toISOString() + '");\n    }\n}';
+        mimeType = 'text/x-java-source';
+      } else if (fileType === 'cpp') {
+        content = '#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << "Generated on ' + new Date().toISOString() + '" << endl;\n    return 0;\n}';
+        mimeType = 'text/x-c++src';
+      } else if (fileType === 'sql') {
+        content = '-- Test SQL file\n-- Generated on ' + new Date().toISOString() + '\nCREATE TABLE users (\n    id INT PRIMARY KEY,\n    name VARCHAR(100),\n    email VARCHAR(100)\n);';
+        mimeType = 'application/sql';
+      } else if (['yaml', 'yml'].includes(fileType)) {
+        content = 'name: Test YAML\nversion: 1.0\ngenerated: ' + new Date().toISOString() + '\nconfig:\n  debug: true\n  port: 8080';
+        mimeType = 'application/x-yaml';
+      } else if (fileType === 'md') {
+        content = '# Test Markdown File\n\nGenerated on ' + new Date().toISOString() + '\n\n## Features\n- Item 1\n- Item 2\n\n**Bold text** and *italic text*';
+        mimeType = 'text/markdown';
+      } else if (['jpg', 'png', 'gif', 'bmp', 'webp'].includes(fileType)) {
         const canvas = document.createElement('canvas');
         canvas.width = 800;
         canvas.height = 600;
@@ -377,12 +553,18 @@ function createDataGeneratorUI(containerId) {
         ctx.fillText('Test Image - ' + new Date().toISOString(), 50, 300);
         content = canvas.toDataURL('image/' + (fileType === 'jpg' ? 'jpeg' : fileType));
         mimeType = 'image/' + (fileType === 'jpg' ? 'jpeg' : fileType);
+      } else if (fileType === 'svg') {
+        content = `<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+          <rect width="800" height="600" fill="#${Math.floor(Math.random()*16777215).toString(16)}"/>
+          <text x="50" y="300" font-size="30" fill="white">Test SVG - ${new Date().toISOString()}</text>
+        </svg>`;
+        mimeType = 'image/svg+xml';
       } else {
         content = `This is a test ${fileType.toUpperCase()} file generated on ${new Date().toISOString()}\n\nFile Type: ${fileType}\nSize: ${fileSize} ${fileSizeUnit}`;
       }
       
       // Handle image data URLs differently
-      if (['jpg', 'png'].includes(fileType)) {
+      if (['jpg', 'png', 'gif', 'bmp', 'webp'].includes(fileType)) {
         const a = document.createElement('a');
         a.href = content;
         a.download = `${fileName}.${fileType}`;

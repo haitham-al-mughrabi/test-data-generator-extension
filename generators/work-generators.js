@@ -82,7 +82,38 @@ const workGenerators = {
     return code;
   },
   serialNumber: () => `SN${randomNum(100000000, 999999999)}`,
-  productName: () => randomChoice(['Smartphone Pro', 'Laptop Elite', 'Tablet Max', 'Watch Smart', 'Headphones Premium'])
+  productName: () => randomChoice(['Smartphone Pro', 'Laptop Elite', 'Tablet Max', 'Watch Smart', 'Headphones Premium']),
+
+  workEmail: () => {
+    const firstName = randomChoice(names.firstNames.male.concat(names.firstNames.female)).en.toLowerCase();
+    const lastName = randomChoice(names.lastNames).en.toLowerCase();
+    const companies = ['aramco', 'sabic', 'stc', 'alrajhi', 'samba', 'ncb'];
+    const company = randomChoice(companies);
+    return `${firstName}.${lastName}@${company}.com`;
+  },
+
+  workPhone: () => {
+    const areaCodes = ['011', '012', '013', '014', '016', '017'];
+    const areaCode = randomChoice(areaCodes);
+    let number = '';
+    for (let i = 0; i < 7; i++) {
+      number += randomNum(0, 9);
+    }
+    return `+966 ${areaCode.substring(1)} ${number.substring(0, 3)} ${number.substring(3)}`;
+  },
+
+  employeeId: () => `EMP${randomNum(10000, 99999)}`,
+  workExperience: () => randomNum(1, 25),
+  
+  workLocation: () => {
+    const locations = ['Riyadh', 'Jeddah', 'Dammam', 'Khobar', 'Mecca', 'Medina', 'Tabuk', 'Abha'];
+    return randomChoice(locations);
+  },
+
+  workLocationAr: () => {
+    const locations = ['الرياض', 'جدة', 'الدمام', 'الخبر', 'مكة المكرمة', 'المدينة المنورة', 'تبوك', 'أبها'];
+    return randomChoice(locations);
+  }
 };
 
 if (typeof module !== 'undefined' && module.exports) {

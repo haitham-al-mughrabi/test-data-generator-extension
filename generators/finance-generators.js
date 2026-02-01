@@ -56,7 +56,22 @@ const financeGenerators = {
 
   currency: () => randomChoice(['SAR', 'USD', 'EUR', 'GBP', 'AED', 'KWD', 'QAR', 'BHD']),
   exchangeRate: () => (randomNum(100, 500) / 100).toFixed(4),
-  stockSymbol: () => randomChoice(['SABIC', 'STC', 'RAJHI', 'NCB', 'SAMBA', 'ARAMCO'])
+  stockSymbol: () => randomChoice(['SABIC', 'STC', 'RAJHI', 'NCB', 'SAMBA', 'ARAMCO']),
+
+  bankNameAr: () => {
+    const bankPairs = [
+      'مصرف الراجحي', 'البنك الأهلي التجاري', 'بنك الرياض', 'مجموعة سامبا المالية',
+      'البنك السعودي الفرنسي', 'البنك العربي الوطني', 'البنك السعودي للاستثمار', 'بنك الإنماء'
+    ];
+    return randomChoice(bankPairs);
+  },
+
+  swiftCode: () => `RIBL${randomChoice(['SA', 'RY'])}${randomNum(10, 99)}`,
+  
+  currencyAr: () => {
+    const currencies = ['ريال سعودي', 'دولار أمريكي', 'يورو', 'جنيه إسترليني', 'درهم إماراتي'];
+    return randomChoice(currencies);
+  }
 };
 
 if (typeof module !== 'undefined' && module.exports) {
