@@ -59,13 +59,25 @@ document.addEventListener('contextmenu', (e) => {
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === 'fillField' && lastClickedElement) {
     try {
-      // Wait for DataGenerator to be available
+      // Wait for generators to be available
       const checkAndFill = () => {
-        if (window.DataGenerator && window.DataGenerator[message.dataType]) {
-          const value = window.DataGenerator[message.dataType]();
+        if (window.generators && window.generators[message.dataType]) {
+          const value = window.generators[message.dataType]();
           
           if (lastClickedElement.tagName === 'INPUT' || lastClickedElement.tagName === 'TEXTAREA') {
-            lastClickedElement.value = value;
+            // Insert at cursor position without removing existing content
+            const start = lastClickedElement.selectionStart || 0;
+            const end = lastClickedElement.selectionEnd || 0;
+            const currentValue = lastClickedElement.value || '';
+            
+            // Insert the new value at cursor position
+            const newValue = currentValue.substring(0, start) + value + currentValue.substring(end);
+            lastClickedElement.value = newValue;
+            
+            // Set cursor position after inserted text
+            const newCursorPos = start + value.length;
+            lastClickedElement.setSelectionRange(newCursorPos, newCursorPos);
+            
             lastClickedElement.dispatchEvent(new Event('input', { bubbles: true }));
             lastClickedElement.dispatchEvent(new Event('change', { bubbles: true }));
           } else if (lastClickedElement.contentEditable === 'true') {
@@ -73,7 +85,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           }
           lastClickedElement = null;
         } else {
-          // Retry after a short delay if DataGenerator isn't ready
+          // Retry after a short delay if generators aren't ready
           setTimeout(checkAndFill, 100);
         }
       };
