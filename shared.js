@@ -18,6 +18,16 @@ function initGenerators() {
   if (window.technologyGenerators) Object.assign(window.generators, window.technologyGenerators);
   if (window.gamingGenerators) Object.assign(window.generators, window.gamingGenerators);
   if (window.travelGenerators) Object.assign(window.generators, window.travelGenerators);
+  if (window.foodRestaurantGenerators) Object.assign(window.generators, window.foodRestaurantGenerators);
+  if (window.sportsFitnessGenerators) Object.assign(window.generators, window.sportsFitnessGenerators);
+  if (window.realEstateGenerators) Object.assign(window.generators, window.realEstateGenerators);
+  if (window.entertainmentGenerators) Object.assign(window.generators, window.entertainmentGenerators);
+  if (window.scienceResearchGenerators) Object.assign(window.generators, window.scienceResearchGenerators);
+  if (window.legalLawGenerators) Object.assign(window.generators, window.legalLawGenerators);
+  if (window.fashionBeautyGenerators) Object.assign(window.generators, window.fashionBeautyGenerators);
+  if (window.agricultureGenerators) Object.assign(window.generators, window.agricultureGenerators);
+  if (window.logisticsShippingGenerators) Object.assign(window.generators, window.logisticsShippingGenerators);
+  if (window.energyUtilitiesGenerators) Object.assign(window.generators, window.energyUtilitiesGenerators);
 }
 
 // Initialize immediately
