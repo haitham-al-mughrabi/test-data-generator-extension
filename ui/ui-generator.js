@@ -25,7 +25,14 @@ function createDataGeneratorUI(containerId) {
     .dg-checkbox { display: inline-flex; align-items: center; gap: 6px; padding: 8px 10px; cursor: pointer; font-size: 12px; background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 6px; transition: all 0.2s; width: calc(50% - 4px); box-sizing: border-box; }
     .dg-checkbox:hover { background: #e0e7ff; border-color: #667eea; }
     .dg-checkbox input { margin: 0; cursor: pointer; }
-    .dg-controls { background: white; padding: 12px; border-top: 1px solid #e2e8f0; flex-shrink: 0; }
+    .dg-controls { background: white; border-top: 1px solid #e2e8f0; flex-shrink: 0; transition: all 0.3s ease; }
+    .dg-controls.collapsed .dg-controls-content { display: none; }
+    .dg-controls-header { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-bottom: 1px solid #f1f5f9; cursor: pointer; user-select: none; }
+    .dg-controls-header:hover { background: #f8fafc; }
+    .dg-controls-header span { font-size: 12px; font-weight: 600; color: #64748b; }
+    .dg-controls-toggle { font-size: 14px; transition: transform 0.3s ease; }
+    .dg-controls.collapsed .dg-controls-toggle { transform: rotate(180deg); }
+    .dg-controls-content { padding: 12px; }
     .dg-count-control { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; font-size: 12px; font-weight: 500; }
     .dg-count-control input { width: 60px; padding: 6px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; }
     .dg-buttons { display: flex; gap: 8px; }
@@ -286,14 +293,20 @@ function createDataGeneratorUI(containerId) {
           ${contentHTML}
         </div>
         <div class="dg-controls">
-          <div class="dg-count-control">
-            <label>Records:</label>
-            <input type="number" id="recordCount" value="1" min="1" max="100">
+          <div class="dg-controls-header" id="controlsHeader">
+            <span>Controls</span>
+            <div class="dg-controls-toggle">▲</div>
           </div>
-          <div class="dg-buttons">
-            <button class="dg-btn dg-btn-primary" id="generateBtn">Generate</button>
-            <button class="dg-btn dg-btn-secondary" id="copyBtn">Copy</button>
-            <button class="dg-btn dg-btn-secondary" id="downloadBtn" style="display: none;">💾 Save File</button>
+          <div class="dg-controls-content">
+            <div class="dg-count-control">
+              <label>Records:</label>
+              <input type="number" id="recordCount" value="1" min="1" max="100">
+            </div>
+            <div class="dg-buttons">
+              <button class="dg-btn dg-btn-primary" id="generateBtn">Generate</button>
+              <button class="dg-btn dg-btn-secondary" id="copyBtn">Copy</button>
+              <button class="dg-btn dg-btn-secondary" id="downloadBtn" style="display: none;">💾 Save File</button>
+            </div>
           </div>
           <div class="dg-results" id="results"></div>
         </div>
@@ -346,6 +359,11 @@ function createDataGeneratorUI(containerId) {
       const tabIdx = btn.dataset.tab;
       document.querySelectorAll(`[data-content="${tabIdx}"] .dg-checkbox input`).forEach(c => c.checked = false);
     });
+  });
+
+  document.getElementById('controlsHeader').addEventListener('click', () => {
+    const controls = document.querySelector('.dg-controls');
+    controls.classList.toggle('collapsed');
   });
 
   document.getElementById('generateBtn').addEventListener('click', () => {
