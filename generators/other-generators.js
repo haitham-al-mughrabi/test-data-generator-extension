@@ -196,7 +196,20 @@ const otherGenerators = {
   },
   
   carModel: () => randomChoice(['Toyota Camry', 'Honda Accord', 'Nissan Altima', 'Hyundai Sonata', 'BMW 3 Series']),
-  carYear: () => randomNum(2015, 2024)
+  carYear: () => randomNum(2015, 2024),
+
+  // File generators
+  txt: () => ({ type: 'txt', name: `document_${randomNum(1000, 9999)}.txt`, size: `${randomNum(1, 100)}KB` }),
+  json: () => ({ type: 'json', name: `data_${randomNum(1000, 9999)}.json`, size: `${randomNum(1, 50)}KB` }),
+  csv: () => ({ type: 'csv', name: `export_${randomNum(1000, 9999)}.csv`, size: `${randomNum(5, 200)}KB` }),
+  xml: () => ({ type: 'xml', name: `config_${randomNum(1000, 9999)}.xml`, size: `${randomNum(2, 80)}KB` }),
+  html: () => ({ type: 'html', name: `page_${randomNum(1000, 9999)}.html`, size: `${randomNum(10, 500)}KB` }),
+  pdf: () => ({ type: 'pdf', name: `report_${randomNum(1000, 9999)}.pdf`, size: `${randomNum(100, 5000)}KB` }),
+  doc: () => ({ type: 'doc', name: `document_${randomNum(1000, 9999)}.doc`, size: `${randomNum(50, 2000)}KB` }),
+  xlsx: () => ({ type: 'xlsx', name: `spreadsheet_${randomNum(1000, 9999)}.xlsx`, size: `${randomNum(20, 1000)}KB` }),
+  jpg: () => ({ type: 'jpg', name: `image_${randomNum(1000, 9999)}.jpg`, size: `${randomNum(200, 8000)}KB` }),
+  png: () => ({ type: 'png', name: `screenshot_${randomNum(1000, 9999)}.png`, size: `${randomNum(100, 5000)}KB` }),
+  zip: () => ({ type: 'zip', name: `archive_${randomNum(1000, 9999)}.zip`, size: `${randomNum(500, 50000)}KB` })
 };
 
 if (typeof module !== 'undefined' && module.exports) {

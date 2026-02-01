@@ -54,9 +54,15 @@ function createDataGeneratorUI(containerId) {
     .dg-field-value { color: #334155; word-break: break-all; cursor: pointer; padding: 3px 6px; border-radius: 3px; background: #f1f5f9; transition: all 0.2s; }
     .dg-field-value:hover { background: #e0e7ff; color: #667eea; }
     .dg-footer { font-size: 9px; color: #94a3b8; text-align: center; padding: 8px; border-top: 1px solid #e2e8f0; flex-shrink: 0; }
-    #fileControls { display: none; margin-top: 10px; padding: 10px; background: #f1f5f9; border-radius: 5px; }
-    #fileControls input, #fileControls select { width: 100%; padding: 6px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 11px; box-sizing: border-box; margin-top: 4px; margin-bottom: 8px; }
-    #fileControls label { font-size: 11px; font-weight: 600; color: #334155; }
+    .dg-file-controls { display: none; margin-top: 10px; padding: 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; }
+    .dg-file-controls.active { display: block; }
+    .dg-file-control-group { margin-bottom: 10px; }
+    .dg-file-control-group:last-child { margin-bottom: 0; }
+    .dg-file-control-group label { display: block; font-size: 11px; font-weight: 600; color: #334155; margin-bottom: 4px; }
+    .dg-file-control-group input, .dg-file-control-group select { width: 100%; padding: 6px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 11px; box-sizing: border-box; }
+    .dg-file-size-group { display: flex; gap: 6px; }
+    .dg-file-size-group input { flex: 1; }
+    .dg-file-size-group select { width: 80px; flex-shrink: 0; }
   `;
   document.head.appendChild(style);
 
@@ -67,7 +73,19 @@ function createDataGeneratorUI(containerId) {
     { title: 'Finance', fields: [{ id: 'iban', label: 'IBAN' }, { id: 'creditCard', label: 'Credit Card' }, { id: 'cvv', label: 'CVV' }, { id: 'bankName', label: 'Bank Name' }] },
     { title: 'Date & Time', fields: [{ id: 'date', label: 'Date' }, { id: 'time', label: 'Time' }, { id: 'datetime', label: 'DateTime' }, { id: 'timestamp', label: 'Timestamp' }] },
     { title: 'Other', fields: [{ id: 'uuid', label: 'UUID' }, { id: 'url', label: 'URL' }, { id: 'email', label: 'Email' }, { id: 'password', label: 'Password' }, { id: 'ip', label: 'IP Address' }, { id: 'color', label: 'Color' }] },
-    { title: 'Files', fields: [{ id: 'txt', label: 'Text File (.txt)' }, { id: 'json', label: 'JSON File (.json)' }, { id: 'csv', label: 'CSV File (.csv)' }] }
+    { title: 'Files', fields: [
+      { id: 'txt', label: 'Text File (.txt)' }, 
+      { id: 'json', label: 'JSON File (.json)' }, 
+      { id: 'csv', label: 'CSV File (.csv)' },
+      { id: 'xml', label: 'XML File (.xml)' },
+      { id: 'html', label: 'HTML File (.html)' },
+      { id: 'pdf', label: 'PDF File (.pdf)' },
+      { id: 'doc', label: 'Word File (.doc)' },
+      { id: 'xlsx', label: 'Excel File (.xlsx)' },
+      { id: 'jpg', label: 'JPEG Image (.jpg)' },
+      { id: 'png', label: 'PNG Image (.png)' },
+      { id: 'zip', label: 'ZIP Archive (.zip)' }
+    ] }
   ];
 
   const tabsHTML = categories.map((cat, idx) => `<button class="dg-tab ${idx === 0 ? 'active' : ''}" data-tab="${idx}">${cat.title}</button>`).join('');
@@ -80,6 +98,26 @@ function createDataGeneratorUI(containerId) {
       <div class="dg-fields-wrapper">
         ${cat.fields.map(field => `<label class="dg-checkbox"><input type="checkbox" value="${field.id}"><span>${field.label}</span></label>`).join('')}
       </div>
+      ${cat.title === 'Files' ? `
+        <div class="dg-file-controls" id="fileControls">
+          <div class="dg-file-control-group">
+            <label>File Name:</label>
+            <input type="text" id="fileName" placeholder="test-file" value="test-file">
+          </div>
+          <div class="dg-file-control-group">
+            <label>File Size:</label>
+            <div class="dg-file-size-group">
+              <input type="number" id="fileSize" value="10" min="1">
+              <select id="fileSizeUnit">
+                <option value="B">Bytes</option>
+                <option value="KB" selected>KB</option>
+                <option value="MB">MB</option>
+                <option value="GB">GB</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      ` : ''}
     </div>
   `).join('');
 
@@ -103,28 +141,7 @@ function createDataGeneratorUI(containerId) {
           <div class="dg-buttons">
             <button class="dg-btn dg-btn-primary" id="generateBtn">Generate</button>
             <button class="dg-btn dg-btn-secondary" id="copyBtn">Copy</button>
-          </div>
-          <div id="fileControls">
-            <label>File Name:</label>
-            <input type="text" id="fileName" placeholder="test-file">
-            <label>File Type:</label>
-            <select id="fileType">
-              <option value="txt">Text (.txt)</option>
-              <option value="json">JSON (.json)</option>
-              <option value="csv">CSV (.csv)</option>
-              <option value="xml">XML (.xml)</option>
-            </select>
-            <label>File Size:</label>
-            <div style="display: flex; gap: 6px;">
-              <input type="number" id="fileSize" value="10" min="1" style="flex: 1;">
-              <select id="fileSizeUnit" style="width: 80px;">
-                <option value="B">Bytes</option>
-                <option value="KB" selected>KB</option>
-                <option value="MB">MB</option>
-                <option value="GB">GB</option>
-              </select>
-            </div>
-            <button class="dg-btn dg-btn-primary" id="downloadBtn" style="width: 100%;">💾 Save File</button>
+            <button class="dg-btn dg-btn-secondary" id="downloadBtn" style="display: none;">💾 Save File</button>
           </div>
           <div class="dg-results" id="results"></div>
         </div>
@@ -143,9 +160,17 @@ function createDataGeneratorUI(containerId) {
       tab.classList.add('active');
       document.querySelector(`[data-content="${tabIdx}"]`).classList.add('active');
       
-      // Show file controls if Files tab is selected
+      // Show/hide file controls and download button based on Files tab
       const isFilesTab = categories[tabIdx].title === 'Files';
-      document.getElementById('fileControls').style.display = isFilesTab ? 'block' : 'none';
+      const fileControls = document.getElementById('fileControls');
+      const downloadBtn = document.getElementById('downloadBtn');
+      
+      if (fileControls) {
+        fileControls.classList.toggle('active', isFilesTab);
+      }
+      if (downloadBtn) {
+        downloadBtn.style.display = isFilesTab ? 'inline-block' : 'none';
+      }
     });
   });
 
@@ -184,21 +209,44 @@ function createDataGeneratorUI(containerId) {
       alert('Please select at least one field');
       return;
     }
+
+    // Check if any file types are selected
+    const fileTypes = ['txt', 'json', 'csv', 'xml', 'html', 'pdf', 'doc', 'xlsx', 'jpg', 'png', 'zip'];
+    const selectedFileTypes = checked.filter(field => fileTypes.includes(field));
     
-    generatedData = [];
-    for (let i = 0; i < count; i++) {
-      if (window.resetSharedData) window.resetSharedData();
-      const record = {};
-      checked.forEach(fieldId => {
-        if (window.generators[fieldId]) {
-          try {
-            record[fieldId] = window.generators[fieldId]();
-          } catch (e) {
-            record[fieldId] = 'Error';
-          }
-        }
+    if (selectedFileTypes.length > 0) {
+      // Handle file generation
+      const fileName = document.getElementById('fileName').value || 'test-file';
+      const fileSize = parseInt(document.getElementById('fileSize').value) || 10;
+      const fileSizeUnit = document.getElementById('fileSizeUnit').value;
+      
+      generatedData = [];
+      selectedFileTypes.forEach(fileType => {
+        const record = {
+          fileName: `${fileName}.${fileType}`,
+          fileType: fileType,
+          fileSize: `${fileSize} ${fileSizeUnit}`,
+          generated: new Date().toISOString()
+        };
+        generatedData.push(record);
       });
-      generatedData.push(record);
+    } else {
+      // Handle regular data generation
+      generatedData = [];
+      for (let i = 0; i < count; i++) {
+        if (window.resetSharedData) window.resetSharedData();
+        const record = {};
+        checked.forEach(fieldId => {
+          if (window.generators[fieldId]) {
+            try {
+              record[fieldId] = window.generators[fieldId]();
+            } catch (e) {
+              record[fieldId] = 'Error';
+            }
+          }
+        });
+        generatedData.push(record);
+      }
     }
 
     const resultsDiv = document.getElementById('results');
@@ -247,9 +295,6 @@ function createDataGeneratorUI(containerId) {
         document.querySelectorAll(`.dg-record-content[data-record-content="${recordIdx}"] .dg-category-content`).forEach(c => c.classList.remove('active'));
         tab.classList.add('active');
         document.querySelector(`.dg-category-content[data-category-content="${catKey}"]`).classList.add('active');
-        
-        const isFiles = catKey.includes('Files');
-        document.getElementById('fileControls').style.display = isFiles ? 'block' : 'none';
       });
     });
     
@@ -279,8 +324,19 @@ function createDataGeneratorUI(containerId) {
   });
 
   document.getElementById('downloadBtn').addEventListener('click', () => {
+    if (generatedData.length === 0) {
+      alert('Generate files first');
+      return;
+    }
+
+    // Check if we have file data
+    const hasFileData = generatedData.some(record => record.fileType);
+    if (!hasFileData) {
+      alert('No files generated. Please select file types and generate first.');
+      return;
+    }
+
     const fileName = document.getElementById('fileName').value || 'test-file';
-    const fileType = document.getElementById('fileType').value;
     const fileSize = parseInt(document.getElementById('fileSize').value) || 10;
     const fileSizeUnit = document.getElementById('fileSizeUnit').value;
     
@@ -289,43 +345,65 @@ function createDataGeneratorUI(containerId) {
     else if (fileSizeUnit === 'MB') fileSizeBytes = fileSize * 1024 * 1024;
     else if (fileSizeUnit === 'GB') fileSizeBytes = fileSize * 1024 * 1024 * 1024;
     
-    let content = '';
-    if (fileType === 'json') {
-      content = JSON.stringify(generatedData, null, 2);
-    } else if (fileType === 'csv') {
-      if (generatedData.length > 0) {
-        const headers = Object.keys(generatedData[0]);
-        content = headers.join(',') + '\n';
-        content += generatedData.map(r => headers.map(h => r[h]).join(',')).join('\n');
+    // Download each generated file
+    generatedData.forEach(record => {
+      if (!record.fileType) return;
+      
+      const fileType = record.fileType;
+      let content = '';
+      let mimeType = 'text/plain';
+      
+      if (fileType === 'json') {
+        content = JSON.stringify({ message: 'Test JSON file', generated: new Date().toISOString() }, null, 2);
+        mimeType = 'application/json';
+      } else if (fileType === 'csv') {
+        content = 'Name,Email,Phone\nJohn Doe,john@example.com,+1234567890\nJane Smith,jane@example.com,+0987654321';
+        mimeType = 'text/csv';
+      } else if (fileType === 'xml') {
+        content = '<?xml version="1.0" encoding="UTF-8"?>\n<data>\n  <message>Test XML file</message>\n  <generated>' + new Date().toISOString() + '</generated>\n</data>';
+        mimeType = 'application/xml';
+      } else if (fileType === 'html') {
+        content = '<!DOCTYPE html><html><head><title>Test HTML</title></head><body><h1>Test HTML File</h1><p>Generated: ' + new Date().toISOString() + '</p></body></html>';
+        mimeType = 'text/html';
+      } else if (['jpg', 'png'].includes(fileType)) {
+        const canvas = document.createElement('canvas');
+        canvas.width = 800;
+        canvas.height = 600;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#' + Math.floor(Math.random()*16777215).toString(16);
+        ctx.fillRect(0, 0, 800, 600);
+        ctx.fillStyle = '#fff';
+        ctx.font = '30px Arial';
+        ctx.fillText('Test Image - ' + new Date().toISOString(), 50, 300);
+        content = canvas.toDataURL('image/' + (fileType === 'jpg' ? 'jpeg' : fileType));
+        mimeType = 'image/' + (fileType === 'jpg' ? 'jpeg' : fileType);
+      } else {
+        content = `This is a test ${fileType.toUpperCase()} file generated on ${new Date().toISOString()}\n\nFile Type: ${fileType}\nSize: ${fileSize} ${fileSizeUnit}`;
       }
-    } else if (fileType === 'xml') {
-      content = '<?xml version="1.0" encoding="UTF-8"?>\n<records>\n';
-      content += generatedData.map(r => {
-        let xml = '  <record>\n';
-        Object.entries(r).forEach(([k, v]) => {
-          xml += `    <${k}>${v}</${k}>\n`;
-        });
-        xml += '  </record>\n';
-        return xml;
-      }).join('');
-      content += '</records>';
-    } else {
-      content = generatedData.map(r => Object.entries(r).map(([k, v]) => `${k}: ${v}`).join('\n')).join('\n\n');
-    }
-    
-    if (content.length < fileSizeBytes) {
-      content += '\n' + 'x'.repeat(fileSizeBytes - content.length - 1);
-    } else if (content.length > fileSizeBytes) {
-      content = content.substring(0, fileSizeBytes);
-    }
-    
-    const blob = new Blob([content], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${fileName}.${fileType}`;
-    a.click();
-    URL.revokeObjectURL(url);
+      
+      // Handle image data URLs differently
+      if (['jpg', 'png'].includes(fileType)) {
+        const a = document.createElement('a');
+        a.href = content;
+        a.download = `${fileName}.${fileType}`;
+        a.click();
+      } else {
+        // Pad to exact size for non-image files
+        if (content.length < fileSizeBytes) {
+          content += '\n' + 'x'.repeat(fileSizeBytes - content.length - 1);
+        } else if (content.length > fileSizeBytes) {
+          content = content.substring(0, fileSizeBytes);
+        }
+        
+        const blob = new Blob([content], { type: mimeType });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${fileName}.${fileType}`;
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+    });
   });
 }
 
