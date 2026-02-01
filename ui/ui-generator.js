@@ -3,18 +3,20 @@ function gregorianToHijri(gregorianDate) {
   const gYear = gregorianDate.getFullYear();
   const gMonth = gregorianDate.getMonth() + 1;
   const gDay = gregorianDate.getDate();
-  
+
   // Approximate conversion (not astronomically accurate)
-  const totalDays = Math.floor((gYear - 622) * 365.25 + (gMonth - 1) * 30.44 + gDay);
+  const totalDays = Math.floor(
+    (gYear - 622) * 365.25 + (gMonth - 1) * 30.44 + gDay,
+  );
   const hYear = Math.floor(totalDays / 354.37) + 1;
   const remainingDays = totalDays % 354.37;
   const hMonth = Math.floor(remainingDays / 29.53) + 1;
   const hDay = Math.floor(remainingDays % 29.53) + 1;
-  
+
   return {
     year: Math.max(1, hYear),
     month: Math.min(12, Math.max(1, hMonth)),
-    day: Math.min(30, Math.max(1, hDay))
+    day: Math.min(30, Math.max(1, hDay)),
   };
 }
 
@@ -25,7 +27,7 @@ function hijriToGregorian(hYear, hMonth, hDay) {
   const remainingDays = totalHijriDays % 365.25;
   const gregorianMonth = Math.floor(remainingDays / 30.44) + 1;
   const gregorianDay = Math.floor(remainingDays % 30.44) + 1;
-  
+
   return new Date(gregorianYear, gregorianMonth - 1, gregorianDay);
 }
 
@@ -33,7 +35,7 @@ function createDataGeneratorUI(containerId) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
-  const style = document.createElement('style');
+  const style = document.createElement("style");
   style.textContent = `
     .dg-app { height: 100%; display: flex; flex-direction: column; background: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; }
     .dg-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 14px; text-align: center; flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
@@ -118,673 +120,814 @@ function createDataGeneratorUI(containerId) {
   document.head.appendChild(style);
 
   const categories = [
-    { title: 'Personal', fields: [
-      { id: 'firstName', label: 'First Name (EN)' }, 
-      { id: 'firstNameAr', label: 'First Name (AR)' }, 
-      { id: 'lastName', label: 'Last Name (EN)' }, 
-      { id: 'lastNameAr', label: 'Last Name (AR)' }, 
-      { id: 'fullName', label: 'Full Name (EN)' }, 
-      { id: 'fullNameAr', label: 'Full Name (AR)' }, 
-      { id: 'gender', label: 'Gender (EN)' }, 
-      { id: 'genderAr', label: 'Gender (AR)' }, 
-      { id: 'birthdate', label: 'Birthdate' }, 
-      { id: 'age', label: 'Age' }, 
-      { id: 'nationality', label: 'Nationality (EN)' }, 
-      { id: 'nationalityAr', label: 'Nationality (AR)' }, 
-      { id: 'bloodType', label: 'Blood Type' }, 
-      { id: 'saudiId', label: 'Saudi ID' }, 
-      { id: 'iqamaNumber', label: 'Iqama Number' },
-      { id: 'borderNumber', label: 'Border Number' },
-      { id: 'passportNumber', label: 'Passport Number' },
-      { id: 'maritalStatus', label: 'Marital Status (EN)' },
-      { id: 'maritalStatusAr', label: 'Marital Status (AR)' },
-      { id: 'religion', label: 'Religion (EN)' },
-      { id: 'religionAr', label: 'Religion (AR)' }
-    ] },
-    { title: 'Contact', fields: [
-      { id: 'email', label: 'Email' }, 
-      { id: 'mobileNumber', label: 'Mobile Number' },
-      { id: 'landlineNumber', label: 'Landline Number' },
-      { id: 'whatsappNumber', label: 'WhatsApp Number' },
-      { id: 'address', label: 'Address (EN)' }, 
-      { id: 'addressAr', label: 'Address (AR)' }, 
-      { id: 'nationalAddress', label: 'National Address' },
-      { id: 'city', label: 'City (EN)' }, 
-      { id: 'cityAr', label: 'City (AR)' }, 
-      { id: 'district', label: 'District (EN)' },
-      { id: 'districtAr', label: 'District (AR)' },
-      { id: 'street', label: 'Street (EN)' },
-      { id: 'streetAr', label: 'Street (AR)' },
-      { id: 'buildingNumber', label: 'Building Number' },
-      { id: 'unitNumber', label: 'Unit Number' },
-      { id: 'postalCode', label: 'Postal Code' }, 
-      { id: 'additionalNumber', label: 'Additional Number' },
-      { id: 'country', label: 'Country (EN)' }, 
-      { id: 'countryAr', label: 'Country (AR)' }
-    ] },
-    { title: 'Saudi Government', fields: [
-      { id: 'commercialRegister', label: 'Commercial Register' },
-      { id: 'taxNumber', label: 'Tax Number (VAT)' },
-      { id: 'municipalLicense', label: 'Municipal License' },
-      { id: 'chamberMembership', label: 'Chamber Membership' },
-      { id: 'socialInsurance', label: 'Social Insurance (GOSI)' },
-      { id: 'laborOfficeNumber', label: 'Labor Office Number' },
-      { id: 'zakat', label: 'Zakat Number' },
-      { id: 'customsCode', label: 'Customs Code' },
-      { id: 'saudiPost', label: 'Saudi Post Box' },
-      { id: 'absherId', label: 'Absher ID' },
-      { id: 'nafathId', label: 'Nafath ID' },
-      { id: 'elmId', label: 'Elm ID' },
-      { id: 'region', label: 'Region (EN)' },
-      { id: 'regionAr', label: 'Region (AR)' },
-      { id: 'province', label: 'Province (EN)' },
-      { id: 'provinceAr', label: 'Province (AR)' }
-    ] },
-    { title: 'Work', fields: [
-      { id: 'company', label: 'Company' }, 
-      { id: 'jobTitle', label: 'Job Title (EN)' }, 
-      { id: 'jobTitleAr', label: 'Job Title (AR)' }, 
-      { id: 'salary', label: 'Salary' }, 
-      { id: 'department', label: 'Department (EN)' }, 
-      { id: 'departmentAr', label: 'Department (AR)' },
-      { id: 'workEmail', label: 'Work Email' },
-      { id: 'workPhone', label: 'Work Phone' },
-      { id: 'employeeId', label: 'Employee ID' },
-      { id: 'workExperience', label: 'Experience (Years)' },
-      { id: 'workLocation', label: 'Work Location (EN)' },
-      { id: 'workLocationAr', label: 'Work Location (AR)' }
-    ] },
-    { title: 'Education', fields: [
-      { id: 'university', label: 'University (EN)' },
-      { id: 'universityAr', label: 'University (AR)' },
-      { id: 'degree', label: 'Degree (EN)' },
-      { id: 'degreeAr', label: 'Degree (AR)' },
-      { id: 'major', label: 'Major (EN)' },
-      { id: 'majorAr', label: 'Major (AR)' },
-      { id: 'graduationYear', label: 'Graduation Year' },
-      { id: 'gpa', label: 'GPA' },
-      { id: 'studentId', label: 'Student ID' }
-    ] },
-    { title: 'Finance', fields: [
-      { id: 'iban', label: 'IBAN' }, 
-      { id: 'creditCard', label: 'Credit Card' }, 
-      { id: 'cvv', label: 'CVV' }, 
-      { id: 'bankName', label: 'Bank Name (EN)' },
-      { id: 'bankNameAr', label: 'Bank Name (AR)' },
-      { id: 'accountNumber', label: 'Account Number' },
-      { id: 'swiftCode', label: 'SWIFT Code' },
-      { id: 'currency', label: 'Currency (EN)' },
-      { id: 'currencyAr', label: 'Currency (AR)' }
-    ] },
-    { title: 'Healthcare', fields: [
-      { id: 'medicalRecord', label: 'Medical Record' },
-      { id: 'insuranceNumber', label: 'Insurance Number' },
-      { id: 'doctorName', label: 'Doctor Name (EN)' },
-      { id: 'doctorNameAr', label: 'Doctor Name (AR)' },
-      { id: 'hospital', label: 'Hospital (EN)' },
-      { id: 'hospitalAr', label: 'Hospital (AR)' },
-      { id: 'diagnosis', label: 'Diagnosis (EN)' },
-      { id: 'diagnosisAr', label: 'Diagnosis (AR)' },
-      { id: 'medication', label: 'Medication (EN)' },
-      { id: 'medicationAr', label: 'Medication (AR)' }
-    ] },
-    { title: 'Vehicle', fields: [
-      { id: 'licensePlate', label: 'License Plate' },
-      { id: 'carModel', label: 'Car Model (EN)' },
-      { id: 'carModelAr', label: 'Car Model (AR)' },
-      { id: 'carBrand', label: 'Car Brand (EN)' },
-      { id: 'carBrandAr', label: 'Car Brand (AR)' },
-      { id: 'carYear', label: 'Car Year' },
-      { id: 'carColor', label: 'Car Color (EN)' },
-      { id: 'carColorAr', label: 'Car Color (AR)' },
-      { id: 'vin', label: 'VIN Number' },
-      { id: 'engineNumber', label: 'Engine Number' }
-    ] },
-    { title: 'E-commerce', fields: [
-      { id: 'productName', label: 'Product Name (EN)' },
-      { id: 'productNameAr', label: 'Product Name (AR)' },
-      { id: 'productSku', label: 'Product SKU' },
-      { id: 'productPrice', label: 'Product Price' },
-      { id: 'productCategory', label: 'Category (EN)' },
-      { id: 'productCategoryAr', label: 'Category (AR)' },
-      { id: 'productBrand', label: 'Brand (EN)' },
-      { id: 'productBrandAr', label: 'Brand (AR)' },
-      { id: 'productDescription', label: 'Description (EN)' },
-      { id: 'productDescriptionAr', label: 'Description (AR)' },
-      { id: 'orderNumber', label: 'Order Number' },
-      { id: 'trackingNumber', label: 'Tracking Number' },
-      { id: 'couponCode', label: 'Coupon Code' },
-      { id: 'reviewRating', label: 'Review Rating' }
-    ] },
-    { title: 'Social Media', fields: [
-      { id: 'username', label: 'Username' },
-      { id: 'displayName', label: 'Display Name (EN)' },
-      { id: 'displayNameAr', label: 'Display Name (AR)' },
-      { id: 'bio', label: 'Bio (EN)' },
-      { id: 'bioAr', label: 'Bio (AR)' },
-      { id: 'hashtag', label: 'Hashtag' },
-      { id: 'mention', label: 'Mention' },
-      { id: 'followers', label: 'Followers Count' },
-      { id: 'following', label: 'Following Count' },
-      { id: 'posts', label: 'Posts Count' },
-      { id: 'socialHandle', label: 'Social Handle' }
-    ] },
-    { title: 'Technology', fields: [
-      { id: 'ipAddress', label: 'IP Address' },
-      { id: 'macAddress', label: 'MAC Address' },
-      { id: 'userAgent', label: 'User Agent' },
-      { id: 'apiKey', label: 'API Key' },
-      { id: 'deviceId', label: 'Device ID' },
-      { id: 'sessionId', label: 'Session ID' },
-      { id: 'serverName', label: 'Server Name' },
-      { id: 'databaseName', label: 'Database Name' },
-      { id: 'appVersion', label: 'App Version' },
-      { id: 'osVersion', label: 'OS Version' },
-      { id: 'browserName', label: 'Browser Name' },
-      { id: 'deviceType', label: 'Device Type (EN)' },
-      { id: 'deviceTypeAr', label: 'Device Type (AR)' }
-    ] },
-    { title: 'Gaming', fields: [
-      { id: 'gamertag', label: 'Gamertag' },
-      { id: 'playerLevel', label: 'Player Level' },
-      { id: 'playerScore', label: 'Player Score' },
-      { id: 'gameTitle', label: 'Game Title (EN)' },
-      { id: 'gameTitleAr', label: 'Game Title (AR)' },
-      { id: 'achievement', label: 'Achievement (EN)' },
-      { id: 'achievementAr', label: 'Achievement (AR)' },
-      { id: 'guild', label: 'Guild Name (EN)' },
-      { id: 'guildAr', label: 'Guild Name (AR)' },
-      { id: 'character', label: 'Character Name (EN)' },
-      { id: 'characterAr', label: 'Character Name (AR)' }
-    ] },
-    { title: 'Travel', fields: [
-      { id: 'flightNumber', label: 'Flight Number' },
-      { id: 'airline', label: 'Airline (EN)' },
-      { id: 'airlineAr', label: 'Airline (AR)' },
-      { id: 'airport', label: 'Airport (EN)' },
-      { id: 'airportAr', label: 'Airport (AR)' },
-      { id: 'hotelName', label: 'Hotel Name (EN)' },
-      { id: 'hotelNameAr', label: 'Hotel Name (AR)' },
-      { id: 'bookingReference', label: 'Booking Reference' },
-      { id: 'seatNumber', label: 'Seat Number' },
-      { id: 'gateNumber', label: 'Gate Number' },
-      { id: 'terminal', label: 'Terminal' },
-      { id: 'destination', label: 'Destination (EN)' },
-      { id: 'destinationAr', label: 'Destination (AR)' }
-    ] },
-    { title: 'Food & Restaurant', fields: [
-      { id: 'dishName', label: 'Dish Name (EN)' },
-      { id: 'dishNameAr', label: 'Dish Name (AR)' },
-      { id: 'restaurantName', label: 'Restaurant Name (EN)' },
-      { id: 'restaurantNameAr', label: 'Restaurant Name (AR)' },
-      { id: 'cuisine', label: 'Cuisine Type (EN)' },
-      { id: 'cuisineAr', label: 'Cuisine Type (AR)' },
-      { id: 'menuPrice', label: 'Menu Price' },
-      { id: 'ingredient', label: 'Ingredient (EN)' },
-      { id: 'ingredientAr', label: 'Ingredient (AR)' },
-      { id: 'tableNumber', label: 'Table Number' },
-      { id: 'orderNumber', label: 'Order Number' },
-      { id: 'deliveryTime', label: 'Delivery Time' },
-      { id: 'chefName', label: 'Chef Name (EN)' },
-      { id: 'chefNameAr', label: 'Chef Name (AR)' }
-    ] },
-    { title: 'Sports & Fitness', fields: [
-      { id: 'sportName', label: 'Sport Name (EN)' },
-      { id: 'sportNameAr', label: 'Sport Name (AR)' },
-      { id: 'teamName', label: 'Team Name (EN)' },
-      { id: 'teamNameAr', label: 'Team Name (AR)' },
-      { id: 'playerName', label: 'Player Name (EN)' },
-      { id: 'playerNameAr', label: 'Player Name (AR)' },
-      { id: 'coachName', label: 'Coach Name (EN)' },
-      { id: 'coachNameAr', label: 'Coach Name (AR)' },
-      { id: 'stadiumName', label: 'Stadium Name (EN)' },
-      { id: 'stadiumNameAr', label: 'Stadium Name (AR)' },
-      { id: 'matchScore', label: 'Match Score' },
-      { id: 'workoutType', label: 'Workout Type (EN)' },
-      { id: 'workoutTypeAr', label: 'Workout Type (AR)' },
-      { id: 'fitnessGoal', label: 'Fitness Goal (EN)' },
-      { id: 'fitnessGoalAr', label: 'Fitness Goal (AR)' }
-    ] },
-    { title: 'Real Estate', fields: [
-      { id: 'propertyType', label: 'Property Type (EN)' },
-      { id: 'propertyTypeAr', label: 'Property Type (AR)' },
-      { id: 'propertyPrice', label: 'Property Price' },
-      { id: 'propertySize', label: 'Property Size' },
-      { id: 'bedrooms', label: 'Bedrooms' },
-      { id: 'bathrooms', label: 'Bathrooms' },
-      { id: 'propertyAge', label: 'Property Age' },
-      { id: 'neighborhood', label: 'Neighborhood (EN)' },
-      { id: 'neighborhoodAr', label: 'Neighborhood (AR)' },
-      { id: 'agentName', label: 'Agent Name (EN)' },
-      { id: 'agentNameAr', label: 'Agent Name (AR)' },
-      { id: 'propertyId', label: 'Property ID' },
-      { id: 'listingDate', label: 'Listing Date' },
-      { id: 'amenities', label: 'Amenities (EN)' },
-      { id: 'amenitiesAr', label: 'Amenities (AR)' }
-    ] },
-    { title: 'Entertainment', fields: [
-      { id: 'movieTitle', label: 'Movie Title (EN)' },
-      { id: 'movieTitleAr', label: 'Movie Title (AR)' },
-      { id: 'actorName', label: 'Actor Name (EN)' },
-      { id: 'actorNameAr', label: 'Actor Name (AR)' },
-      { id: 'directorName', label: 'Director Name (EN)' },
-      { id: 'directorNameAr', label: 'Director Name (AR)' },
-      { id: 'genre', label: 'Genre (EN)' },
-      { id: 'genreAr', label: 'Genre (AR)' },
-      { id: 'releaseYear', label: 'Release Year' },
-      { id: 'rating', label: 'Rating' },
-      { id: 'duration', label: 'Duration' },
-      { id: 'cinemaName', label: 'Cinema Name (EN)' },
-      { id: 'cinemaNameAr', label: 'Cinema Name (AR)' },
-      { id: 'showTime', label: 'Show Time' },
-      { id: 'ticketPrice', label: 'Ticket Price' }
-    ] },
-    { title: 'Science & Research', fields: [
-      { id: 'researchTitle', label: 'Research Title (EN)' },
-      { id: 'researchTitleAr', label: 'Research Title (AR)' },
-      { id: 'scientistName', label: 'Scientist Name (EN)' },
-      { id: 'scientistNameAr', label: 'Scientist Name (AR)' },
-      { id: 'labName', label: 'Lab Name (EN)' },
-      { id: 'labNameAr', label: 'Lab Name (AR)' },
-      { id: 'researchField', label: 'Research Field (EN)' },
-      { id: 'researchFieldAr', label: 'Research Field (AR)' },
-      { id: 'publicationDate', label: 'Publication Date' },
-      { id: 'journalName', label: 'Journal Name (EN)' },
-      { id: 'journalNameAr', label: 'Journal Name (AR)' },
-      { id: 'experimentId', label: 'Experiment ID' },
-      { id: 'hypothesis', label: 'Hypothesis (EN)' },
-      { id: 'hypothesisAr', label: 'Hypothesis (AR)' },
-      { id: 'methodology', label: 'Methodology (EN)' },
-      { id: 'methodologyAr', label: 'Methodology (AR)' }
-    ] },
-    { title: 'Legal & Law', fields: [
-      { id: 'lawFirm', label: 'Law Firm (EN)' },
-      { id: 'lawFirmAr', label: 'Law Firm (AR)' },
-      { id: 'lawyerName', label: 'Lawyer Name (EN)' },
-      { id: 'lawyerNameAr', label: 'Lawyer Name (AR)' },
-      { id: 'caseNumber', label: 'Case Number' },
-      { id: 'caseType', label: 'Case Type (EN)' },
-      { id: 'caseTypeAr', label: 'Case Type (AR)' },
-      { id: 'courtName', label: 'Court Name (EN)' },
-      { id: 'courtNameAr', label: 'Court Name (AR)' },
-      { id: 'judgeName', label: 'Judge Name (EN)' },
-      { id: 'judgeNameAr', label: 'Judge Name (AR)' },
-      { id: 'licenseNumber', label: 'License Number' },
-      { id: 'contractId', label: 'Contract ID' },
-      { id: 'legalStatus', label: 'Legal Status (EN)' },
-      { id: 'legalStatusAr', label: 'Legal Status (AR)' }
-    ] },
-    { title: 'Fashion & Beauty', fields: [
-      { id: 'brandName', label: 'Brand Name (EN)' },
-      { id: 'brandNameAr', label: 'Brand Name (AR)' },
-      { id: 'productColor', label: 'Product Color (EN)' },
-      { id: 'productColorAr', label: 'Product Color (AR)' },
-      { id: 'size', label: 'Size' },
-      { id: 'material', label: 'Material (EN)' },
-      { id: 'materialAr', label: 'Material (AR)' },
-      { id: 'season', label: 'Season (EN)' },
-      { id: 'seasonAr', label: 'Season (AR)' },
-      { id: 'designer', label: 'Designer (EN)' },
-      { id: 'designerAr', label: 'Designer (AR)' },
-      { id: 'collection', label: 'Collection (EN)' },
-      { id: 'collectionAr', label: 'Collection (AR)' },
-      { id: 'styleCode', label: 'Style Code' },
-      { id: 'retailPrice', label: 'Retail Price' }
-    ] },
-    { title: 'Agriculture', fields: [
-      { id: 'cropName', label: 'Crop Name (EN)' },
-      { id: 'cropNameAr', label: 'Crop Name (AR)' },
-      { id: 'farmName', label: 'Farm Name (EN)' },
-      { id: 'farmNameAr', label: 'Farm Name (AR)' },
-      { id: 'farmerName', label: 'Farmer Name (EN)' },
-      { id: 'farmerNameAr', label: 'Farmer Name (AR)' },
-      { id: 'plantingDate', label: 'Planting Date' },
-      { id: 'harvestDate', label: 'Harvest Date' },
-      { id: 'farmSize', label: 'Farm Size' },
-      { id: 'soilType', label: 'Soil Type (EN)' },
-      { id: 'soilTypeAr', label: 'Soil Type (AR)' },
-      { id: 'irrigationType', label: 'Irrigation Type (EN)' },
-      { id: 'irrigationTypeAr', label: 'Irrigation Type (AR)' },
-      { id: 'yieldAmount', label: 'Yield Amount' },
-      { id: 'pesticide', label: 'Pesticide (EN)' },
-      { id: 'pesticideAr', label: 'Pesticide (AR)' }
-    ] },
-    { title: 'Logistics & Shipping', fields: [
-      { id: 'shipmentId', label: 'Shipment ID' },
-      { id: 'carrierName', label: 'Carrier Name (EN)' },
-      { id: 'carrierNameAr', label: 'Carrier Name (AR)' },
-      { id: 'trackingCode', label: 'Tracking Code' },
-      { id: 'origin', label: 'Origin (EN)' },
-      { id: 'originAr', label: 'Origin (AR)' },
-      { id: 'destination', label: 'Destination (EN)' },
-      { id: 'destinationAr', label: 'Destination (AR)' },
-      { id: 'shipmentWeight', label: 'Shipment Weight' },
-      { id: 'shipmentDimensions', label: 'Dimensions' },
-      { id: 'deliveryStatus', label: 'Delivery Status (EN)' },
-      { id: 'deliveryStatusAr', label: 'Delivery Status (AR)' },
-      { id: 'shippingCost', label: 'Shipping Cost' },
-      { id: 'estimatedDelivery', label: 'Estimated Delivery' },
-      { id: 'warehouseLocation', label: 'Warehouse Location (EN)' },
-      { id: 'warehouseLocationAr', label: 'Warehouse Location (AR)' }
-    ] },
-    { title: 'Energy & Utilities', fields: [
-      { id: 'meterNumber', label: 'Meter Number' },
-      { id: 'utilityCompany', label: 'Utility Company (EN)' },
-      { id: 'utilityCompanyAr', label: 'Utility Company (AR)' },
-      { id: 'energyType', label: 'Energy Type (EN)' },
-      { id: 'energyTypeAr', label: 'Energy Type (AR)' },
-      { id: 'consumption', label: 'Consumption' },
-      { id: 'billAmount', label: 'Bill Amount' },
-      { id: 'billingPeriod', label: 'Billing Period' },
-      { id: 'powerPlant', label: 'Power Plant (EN)' },
-      { id: 'powerPlantAr', label: 'Power Plant (AR)' },
-      { id: 'gridConnection', label: 'Grid Connection' },
-      { id: 'voltage', label: 'Voltage' },
-      { id: 'frequency', label: 'Frequency' },
-      { id: 'serviceType', label: 'Service Type (EN)' },
-      { id: 'serviceTypeAr', label: 'Service Type (AR)' }
-    ] },
-    { title: 'Random Text', fields: [
-      { id: 'randomText', label: 'Random Text' },
-      { id: 'randomDigits', label: 'Random Digits' },
-      { id: 'randomEnglish', label: 'Random English' },
-      { id: 'randomArabic', label: 'Random Arabic' },
-      { id: 'randomSpecial', label: 'Random Special Chars' },
-      { id: 'randomMixed', label: 'Random Mixed' },
-      { id: 'randomArabicNumbers', label: 'Arabic Numbers ١٢٣' },
-      { id: 'randomIndianNumbers', label: 'Indian Numbers ۱۲۳' },
-      { id: 'randomChinese', label: 'Random Chinese' },
-      { id: 'randomJapanese', label: 'Random Japanese' },
-      { id: 'randomRussian', label: 'Random Russian' },
-      { id: 'randomEmoji', label: 'Random Emoji' },
-      { id: 'randomInvalidChars', label: 'Invalid/Control Chars' }
-    ] },
-    { title: 'Banking & Finance', fields: [
-      { id: 'bankBranch', label: 'Bank Branch (EN)' },
-      { id: 'bankBranchAr', label: 'Bank Branch (AR)' },
-      { id: 'routingNumber', label: 'Routing Number' },
-      { id: 'sortCode', label: 'Sort Code' },
-      { id: 'bic', label: 'BIC/SWIFT Code' },
-      { id: 'accountType', label: 'Account Type (EN)' },
-      { id: 'accountTypeAr', label: 'Account Type (AR)' },
-      { id: 'transactionId', label: 'Transaction ID' },
-      { id: 'checkNumber', label: 'Check Number' },
-      { id: 'loanNumber', label: 'Loan Number' },
-      { id: 'creditScore', label: 'Credit Score' },
-      { id: 'interestRate', label: 'Interest Rate' },
-      { id: 'exchangeRate', label: 'Exchange Rate' },
-      { id: 'investmentAmount', label: 'Investment Amount' }
-    ] },
-    { title: 'Insurance', fields: [
-      { id: 'policyNumber', label: 'Policy Number' },
-      { id: 'insuranceCompany', label: 'Insurance Company (EN)' },
-      { id: 'insuranceCompanyAr', label: 'Insurance Company (AR)' },
-      { id: 'policyType', label: 'Policy Type (EN)' },
-      { id: 'policyTypeAr', label: 'Policy Type (AR)' },
-      { id: 'premiumAmount', label: 'Premium Amount' },
-      { id: 'coverageAmount', label: 'Coverage Amount' },
-      { id: 'deductible', label: 'Deductible' },
-      { id: 'claimNumber', label: 'Claim Number' },
-      { id: 'agentName', label: 'Agent Name (EN)' },
-      { id: 'agentNameAr', label: 'Agent Name (AR)' },
-      { id: 'policyStartDate', label: 'Policy Start Date' },
-      { id: 'policyEndDate', label: 'Policy End Date' },
-      { id: 'beneficiary', label: 'Beneficiary (EN)' },
-      { id: 'beneficiaryAr', label: 'Beneficiary (AR)' }
-    ] },
-    { title: 'Manufacturing', fields: [
-      { id: 'factoryName', label: 'Factory Name (EN)' },
-      { id: 'factoryNameAr', label: 'Factory Name (AR)' },
-      { id: 'productionLine', label: 'Production Line' },
-      { id: 'batchNumber', label: 'Batch Number' },
-      { id: 'lotNumber', label: 'Lot Number' },
-      { id: 'qualityGrade', label: 'Quality Grade' },
-      { id: 'manufacturingDate', label: 'Manufacturing Date' },
-      { id: 'expiryDate', label: 'Expiry Date' },
-      { id: 'machineId', label: 'Machine ID' },
-      { id: 'operatorName', label: 'Operator Name (EN)' },
-      { id: 'operatorNameAr', label: 'Operator Name (AR)' },
-      { id: 'shiftNumber', label: 'Shift Number' },
-      { id: 'productionQuantity', label: 'Production Quantity' },
-      { id: 'defectRate', label: 'Defect Rate' },
-      { id: 'rawMaterial', label: 'Raw Material (EN)' },
-      { id: 'rawMaterialAr', label: 'Raw Material (AR)' }
-    ] },
-    { title: 'Telecommunications', fields: [
-      { id: 'phoneProvider', label: 'Phone Provider (EN)' },
-      { id: 'phoneProviderAr', label: 'Phone Provider (AR)' },
-      { id: 'planType', label: 'Plan Type (EN)' },
-      { id: 'planTypeAr', label: 'Plan Type (AR)' },
-      { id: 'dataAllowance', label: 'Data Allowance' },
-      { id: 'callMinutes', label: 'Call Minutes' },
-      { id: 'smsCount', label: 'SMS Count' },
-      { id: 'networkType', label: 'Network Type' },
-      { id: 'signalStrength', label: 'Signal Strength' },
-      { id: 'towerLocation', label: 'Tower Location (EN)' },
-      { id: 'towerLocationAr', label: 'Tower Location (AR)' },
-      { id: 'imei', label: 'IMEI Number' },
-      { id: 'simCard', label: 'SIM Card Number' },
-      { id: 'roamingStatus', label: 'Roaming Status (EN)' },
-      { id: 'roamingStatusAr', label: 'Roaming Status (AR)' }
-    ] },
-    { title: 'Construction', fields: [
-      { id: 'projectName', label: 'Project Name (EN)' },
-      { id: 'projectNameAr', label: 'Project Name (AR)' },
-      { id: 'contractorName', label: 'Contractor Name (EN)' },
-      { id: 'contractorNameAr', label: 'Contractor Name (AR)' },
-      { id: 'projectManager', label: 'Project Manager (EN)' },
-      { id: 'projectManagerAr', label: 'Project Manager (AR)' },
-      { id: 'buildingPermit', label: 'Building Permit' },
-      { id: 'projectBudget', label: 'Project Budget' },
-      { id: 'completionDate', label: 'Completion Date' },
-      { id: 'floorArea', label: 'Floor Area' },
-      { id: 'buildingHeight', label: 'Building Height' },
-      { id: 'constructionType', label: 'Construction Type (EN)' },
-      { id: 'constructionTypeAr', label: 'Construction Type (AR)' },
-      { id: 'materialType', label: 'Material Type (EN)' },
-      { id: 'materialTypeAr', label: 'Material Type (AR)' },
-      { id: 'safetyRating', label: 'Safety Rating' }
-    ] },
-    { title: 'Testing & QA', fields: [
-      { id: 'testCaseId', label: 'Test Case ID' },
-      { id: 'testSuite', label: 'Test Suite' },
-      { id: 'testScenario', label: 'Test Scenario' },
-      { id: 'testStatus', label: 'Test Status' },
-      { id: 'bugId', label: 'Bug ID' },
-      { id: 'severity', label: 'Severity Level' },
-      { id: 'priority', label: 'Priority Level' },
-      { id: 'testEnvironment', label: 'Test Environment' },
-      { id: 'browserVersion', label: 'Browser Version' },
-      { id: 'operatingSystem', label: 'Operating System' },
-      { id: 'testData', label: 'Test Data Set' },
-      { id: 'expectedResult', label: 'Expected Result' },
-      { id: 'actualResult', label: 'Actual Result' },
-      { id: 'testExecutor', label: 'Test Executor' },
-      { id: 'executionTime', label: 'Execution Time' },
-      { id: 'testType', label: 'Test Type' }
-    ] },
-    { title: 'Edge Cases', fields: [
-      { id: 'nullValue', label: 'Null Value' },
-      { id: 'emptyString', label: 'Empty String' },
-      { id: 'whitespace', label: 'Whitespace Only' },
-      { id: 'maxLength', label: 'Maximum Length String' },
-      { id: 'minValue', label: 'Minimum Value' },
-      { id: 'maxValue', label: 'Maximum Value' },
-      { id: 'negativeNumber', label: 'Negative Number' },
-      { id: 'zeroValue', label: 'Zero Value' },
-      { id: 'floatingPoint', label: 'Floating Point' },
-      { id: 'specialChars', label: 'Special Characters' },
-      { id: 'unicodeChars', label: 'Unicode Characters' },
-      { id: 'sqlInjection', label: 'SQL Injection Test' },
-      { id: 'xssPayload', label: 'XSS Payload' },
-      { id: 'longText', label: 'Very Long Text' },
-      { id: 'invalidFormat', label: 'Invalid Format' },
-      { id: 'boundaryValue', label: 'Boundary Value' }
-    ] },
-    { title: 'Performance Testing', fields: [
-      { id: 'responseTime', label: 'Response Time (ms)' },
-      { id: 'throughput', label: 'Throughput (req/sec)' },
-      { id: 'cpuUsage', label: 'CPU Usage (%)' },
-      { id: 'memoryUsage', label: 'Memory Usage (MB)' },
-      { id: 'diskUsage', label: 'Disk Usage (GB)' },
-      { id: 'networkLatency', label: 'Network Latency (ms)' },
-      { id: 'concurrentUsers', label: 'Concurrent Users' },
-      { id: 'errorRate', label: 'Error Rate (%)' },
-      { id: 'loadTime', label: 'Page Load Time (s)' },
-      { id: 'transactionRate', label: 'Transaction Rate' },
-      { id: 'bandwidth', label: 'Bandwidth Usage' },
-      { id: 'connectionPool', label: 'Connection Pool Size' },
-      { id: 'queueLength', label: 'Queue Length' },
-      { id: 'cacheHitRatio', label: 'Cache Hit Ratio (%)' },
-      { id: 'dbConnections', label: 'DB Connections' }
-    ] },
-    { title: 'Security Testing', fields: [
-      { id: 'vulnerabilityId', label: 'Vulnerability ID' },
-      { id: 'securityLevel', label: 'Security Level' },
-      { id: 'encryptionType', label: 'Encryption Type' },
-      { id: 'authToken', label: 'Auth Token' },
-      { id: 'sessionId', label: 'Session ID' },
-      { id: 'csrfToken', label: 'CSRF Token' },
-      { id: 'jwtToken', label: 'JWT Token' },
-      { id: 'apiKey', label: 'API Key' },
-      { id: 'hashValue', label: 'Hash Value' },
-      { id: 'saltValue', label: 'Salt Value' },
-      { id: 'certificateId', label: 'Certificate ID' },
-      { id: 'permissionLevel', label: 'Permission Level' },
-      { id: 'accessRole', label: 'Access Role' },
-      { id: 'securityScan', label: 'Security Scan Result' },
-      { id: 'penetrationTest', label: 'Penetration Test' }
-    ] },
-    { title: 'Email Testing', fields: [
-      { id: 'validEmail', label: 'Valid Email' },
-      { id: 'invalidEmail', label: 'Invalid Email' },
-      { id: 'businessEmail', label: 'Business Email' },
-      { id: 'personalEmail', label: 'Personal Email' },
-      { id: 'tempEmail', label: 'Temporary Email' },
-      { id: 'subdomainEmail', label: 'Subdomain Email' },
-      { id: 'internationalEmail', label: 'International Email' },
-      { id: 'longEmail', label: 'Long Email' },
-      { id: 'shortEmail', label: 'Short Email' },
-      { id: 'specialCharEmail', label: 'Special Char Email' },
-      { id: 'numericEmail', label: 'Numeric Email' },
-      { id: 'disposableEmail', label: 'Disposable Email' },
-      { id: 'roleBasedEmail', label: 'Role-based Email' },
-      { id: 'customDomainEmail', label: 'Custom Domain Email' }
-    ] },
-    { title: 'Password Testing', fields: [
-      { id: 'customPassword', label: 'Custom Password' },
-      { id: 'weakPassword', label: 'Weak Password' },
-      { id: 'strongPassword', label: 'Strong Password' },
-      { id: 'numericPassword', label: 'Numeric Only' },
-      { id: 'alphabeticPassword', label: 'Alphabetic Only' },
-      { id: 'specialCharPassword', label: 'Special Chars Only' },
-      { id: 'mixedPassword', label: 'Mixed Characters' },
-      { id: 'arabicPassword', label: 'Arabic Characters' },
-      { id: 'commonPassword', label: 'Common Password' },
-      { id: 'complexPassword', label: 'Complex Password' }
-    ] },
-    { title: 'Phone Testing', fields: [
-      { id: 'customPhone', label: 'Custom Phone' },
-      { id: 'mobileNumber', label: 'Mobile (05X)' },
-      { id: 'landlineNumber', label: 'Landline (01X)' },
-      { id: 'shortMobile', label: 'Mobile (5X)' },
-      { id: 'shortLandline', label: 'Landline (1X)' },
-      { id: 'invalidPhone', label: 'Invalid Phone' },
-      { id: 'wrongLengthPhone', label: 'Wrong Length' },
-      { id: 'internationalPhone', label: 'International (+966)' },
-      { id: 'formattedPhone', label: 'Formatted Phone' },
-      { id: 'unformattedPhone', label: 'Unformatted Phone' }
-    ] },
-    { title: 'Date & Time', fields: [
-      { id: 'date', label: 'Date' }, 
-      { id: 'time', label: 'Time' }, 
-      { id: 'datetime', label: 'DateTime' }, 
-      { id: 'timestamp', label: 'Timestamp' },
-      { id: 'hijriDate', label: 'Hijri Date' },
-      { id: 'dayOfWeek', label: 'Day of Week (EN)' },
-      { id: 'dayOfWeekAr', label: 'Day of Week (AR)' },
-      { id: 'month', label: 'Month (EN)' },
-      { id: 'monthAr', label: 'Month (AR)' },
-      { id: 'hijriToGregorian', label: 'Hijri → Gregorian' },
-      { id: 'gregorianToHijri', label: 'Gregorian → Hijri' }
-    ] },
-    { title: 'Other', fields: [
-      { id: 'uuid', label: 'UUID' }, 
-      { id: 'url', label: 'URL' }, 
-      { id: 'password', label: 'Password' }, 
-      { id: 'ip', label: 'IP Address' }, 
-      { id: 'color', label: 'Color' },
-      { id: 'macAddress', label: 'MAC Address' },
-      { id: 'userAgent', label: 'User Agent' },
-      { id: 'apiKey', label: 'API Key' }
-    ] },
-    { title: 'Files', fields: [
-      { id: 'txt', label: 'Text File (.txt)' }, 
-      { id: 'json', label: 'JSON File (.json)' }, 
-      { id: 'csv', label: 'CSV File (.csv)' },
-      { id: 'xml', label: 'XML File (.xml)' },
-      { id: 'html', label: 'HTML File (.html)' },
-      { id: 'css', label: 'CSS File (.css)' },
-      { id: 'js', label: 'JavaScript (.js)' },
-      { id: 'py', label: 'Python File (.py)' },
-      { id: 'java', label: 'Java File (.java)' },
-      { id: 'cpp', label: 'C++ File (.cpp)' },
-      { id: 'pdf', label: 'PDF File (.pdf)' },
-      { id: 'doc', label: 'Word File (.doc)' },
-      { id: 'docx', label: 'Word File (.docx)' },
-      { id: 'xlsx', label: 'Excel File (.xlsx)' },
-      { id: 'xls', label: 'Excel File (.xls)' },
-      { id: 'ppt', label: 'PowerPoint (.ppt)' },
-      { id: 'pptx', label: 'PowerPoint (.pptx)' },
-      { id: 'jpg', label: 'JPEG Image (.jpg)' },
-      { id: 'png', label: 'PNG Image (.png)' },
-      { id: 'gif', label: 'GIF Image (.gif)' },
-      { id: 'svg', label: 'SVG Image (.svg)' },
-      { id: 'bmp', label: 'BMP Image (.bmp)' },
-      { id: 'webp', label: 'WebP Image (.webp)' },
-      { id: 'ico', label: 'Icon File (.ico)' },
-      { id: 'zip', label: 'ZIP Archive (.zip)' },
-      { id: 'rar', label: 'RAR Archive (.rar)' },
-      { id: '7z', label: '7-Zip Archive (.7z)' },
-      { id: 'tar', label: 'TAR Archive (.tar)' },
-      { id: 'mp3', label: 'MP3 Audio (.mp3)' },
-      { id: 'wav', label: 'WAV Audio (.wav)' },
-      { id: 'flac', label: 'FLAC Audio (.flac)' },
-      { id: 'mp4', label: 'MP4 Video (.mp4)' },
-      { id: 'avi', label: 'AVI Video (.avi)' },
-      { id: 'mkv', label: 'MKV Video (.mkv)' },
-      { id: 'mov', label: 'MOV Video (.mov)' },
-      { id: 'wmv', label: 'WMV Video (.wmv)' },
-      { id: 'sql', label: 'SQL File (.sql)' },
-      { id: 'db', label: 'Database (.db)' },
-      { id: 'log', label: 'Log File (.log)' },
-      { id: 'ini', label: 'Config File (.ini)' },
-      { id: 'cfg', label: 'Config File (.cfg)' },
-      { id: 'conf', label: 'Config File (.conf)' },
-      { id: 'yaml', label: 'YAML File (.yaml)' },
-      { id: 'yml', label: 'YAML File (.yml)' },
-      { id: 'toml', label: 'TOML File (.toml)' },
-      { id: 'md', label: 'Markdown (.md)' },
-      { id: 'rtf', label: 'Rich Text (.rtf)' },
-      { id: 'eps', label: 'EPS File (.eps)' },
-      { id: 'ai', label: 'Adobe Illustrator (.ai)' },
-      { id: 'psd', label: 'Photoshop (.psd)' },
-      { id: 'sketch', label: 'Sketch File (.sketch)' },
-      { id: 'fig', label: 'Figma File (.fig)' }
-    ] }
+    {
+      title: "Personal",
+      fields: [
+        { id: "firstName", label: "First Name (EN)" },
+        { id: "firstNameAr", label: "First Name (AR)" },
+        { id: "lastName", label: "Last Name (EN)" },
+        { id: "lastNameAr", label: "Last Name (AR)" },
+        { id: "fullName", label: "Full Name (EN)" },
+        { id: "fullNameAr", label: "Full Name (AR)" },
+        { id: "gender", label: "Gender (EN)" },
+        { id: "genderAr", label: "Gender (AR)" },
+        { id: "birthdate", label: "Birthdate" },
+        { id: "age", label: "Age" },
+        { id: "nationality", label: "Nationality (EN)" },
+        { id: "nationalityAr", label: "Nationality (AR)" },
+        { id: "bloodType", label: "Blood Type" },
+        { id: "saudiId", label: "Saudi ID" },
+        { id: "iqamaNumber", label: "Iqama Number" },
+        { id: "borderNumber", label: "Border Number" },
+        { id: "passportNumber", label: "Passport Number" },
+        { id: "maritalStatus", label: "Marital Status (EN)" },
+        { id: "maritalStatusAr", label: "Marital Status (AR)" },
+        { id: "religion", label: "Religion (EN)" },
+        { id: "religionAr", label: "Religion (AR)" },
+      ],
+    },
+    {
+      title: "Contact",
+      fields: [
+        { id: "email", label: "Email" },
+        { id: "mobileNumber", label: "Mobile Number" },
+        { id: "landlineNumber", label: "Landline Number" },
+        { id: "whatsappNumber", label: "WhatsApp Number" },
+        { id: "address", label: "Address (EN)" },
+        { id: "addressAr", label: "Address (AR)" },
+        { id: "nationalAddress", label: "National Address" },
+        { id: "city", label: "City (EN)" },
+        { id: "cityAr", label: "City (AR)" },
+        { id: "district", label: "District (EN)" },
+        { id: "districtAr", label: "District (AR)" },
+        { id: "street", label: "Street (EN)" },
+        { id: "streetAr", label: "Street (AR)" },
+        { id: "buildingNumber", label: "Building Number" },
+        { id: "unitNumber", label: "Unit Number" },
+        { id: "postalCode", label: "Postal Code" },
+        { id: "additionalNumber", label: "Additional Number" },
+        { id: "country", label: "Country (EN)" },
+        { id: "countryAr", label: "Country (AR)" },
+      ],
+    },
+    {
+      title: "Saudi Government",
+      fields: [
+        { id: "commercialRegister", label: "Commercial Register" },
+        { id: "taxNumber", label: "Tax Number (VAT)" },
+        { id: "municipalLicense", label: "Municipal License" },
+        { id: "chamberMembership", label: "Chamber Membership" },
+        { id: "socialInsurance", label: "Social Insurance (GOSI)" },
+        { id: "laborOfficeNumber", label: "Labor Office Number" },
+        { id: "zakat", label: "Zakat Number" },
+        { id: "customsCode", label: "Customs Code" },
+        { id: "saudiPost", label: "Saudi Post Box" },
+        { id: "absherId", label: "Absher ID" },
+        { id: "nafathId", label: "Nafath ID" },
+        { id: "elmId", label: "Elm ID" },
+        { id: "region", label: "Region (EN)" },
+        { id: "regionAr", label: "Region (AR)" },
+        { id: "province", label: "Province (EN)" },
+        { id: "provinceAr", label: "Province (AR)" },
+      ],
+    },
+    {
+      title: "Work",
+      fields: [
+        { id: "company", label: "Company" },
+        { id: "jobTitle", label: "Job Title (EN)" },
+        { id: "jobTitleAr", label: "Job Title (AR)" },
+        { id: "salary", label: "Salary" },
+        { id: "department", label: "Department (EN)" },
+        { id: "departmentAr", label: "Department (AR)" },
+        { id: "workEmail", label: "Work Email" },
+        { id: "workPhone", label: "Work Phone" },
+        { id: "employeeId", label: "Employee ID" },
+        { id: "workExperience", label: "Experience (Years)" },
+        { id: "workLocation", label: "Work Location (EN)" },
+        { id: "workLocationAr", label: "Work Location (AR)" },
+      ],
+    },
+    {
+      title: "Education",
+      fields: [
+        { id: "university", label: "University (EN)" },
+        { id: "universityAr", label: "University (AR)" },
+        { id: "degree", label: "Degree (EN)" },
+        { id: "degreeAr", label: "Degree (AR)" },
+        { id: "major", label: "Major (EN)" },
+        { id: "majorAr", label: "Major (AR)" },
+        { id: "graduationYear", label: "Graduation Year" },
+        { id: "gpa", label: "GPA" },
+        { id: "studentId", label: "Student ID" },
+      ],
+    },
+    {
+      title: "Finance",
+      fields: [
+        { id: "iban", label: "IBAN" },
+        { id: "creditCard", label: "Credit Card" },
+        { id: "cvv", label: "CVV" },
+        { id: "bankName", label: "Bank Name (EN)" },
+        { id: "bankNameAr", label: "Bank Name (AR)" },
+        { id: "accountNumber", label: "Account Number" },
+        { id: "swiftCode", label: "SWIFT Code" },
+        { id: "currency", label: "Currency (EN)" },
+        { id: "currencyAr", label: "Currency (AR)" },
+      ],
+    },
+    {
+      title: "Healthcare",
+      fields: [
+        { id: "medicalRecord", label: "Medical Record" },
+        { id: "insuranceNumber", label: "Insurance Number" },
+        { id: "doctorName", label: "Doctor Name (EN)" },
+        { id: "doctorNameAr", label: "Doctor Name (AR)" },
+        { id: "hospital", label: "Hospital (EN)" },
+        { id: "hospitalAr", label: "Hospital (AR)" },
+        { id: "diagnosis", label: "Diagnosis (EN)" },
+        { id: "diagnosisAr", label: "Diagnosis (AR)" },
+        { id: "medication", label: "Medication (EN)" },
+        { id: "medicationAr", label: "Medication (AR)" },
+      ],
+    },
+    {
+      title: "Vehicle",
+      fields: [
+        { id: "licensePlate", label: "License Plate" },
+        { id: "carModel", label: "Car Model (EN)" },
+        { id: "carModelAr", label: "Car Model (AR)" },
+        { id: "carBrand", label: "Car Brand (EN)" },
+        { id: "carBrandAr", label: "Car Brand (AR)" },
+        { id: "carYear", label: "Car Year" },
+        { id: "carColor", label: "Car Color (EN)" },
+        { id: "carColorAr", label: "Car Color (AR)" },
+        { id: "vin", label: "VIN Number" },
+        { id: "engineNumber", label: "Engine Number" },
+      ],
+    },
+    {
+      title: "E-commerce",
+      fields: [
+        { id: "productName", label: "Product Name (EN)" },
+        { id: "productNameAr", label: "Product Name (AR)" },
+        { id: "productSku", label: "Product SKU" },
+        { id: "productPrice", label: "Product Price" },
+        { id: "productCategory", label: "Category (EN)" },
+        { id: "productCategoryAr", label: "Category (AR)" },
+        { id: "productBrand", label: "Brand (EN)" },
+        { id: "productBrandAr", label: "Brand (AR)" },
+        { id: "productDescription", label: "Description (EN)" },
+        { id: "productDescriptionAr", label: "Description (AR)" },
+        { id: "orderNumber", label: "Order Number" },
+        { id: "trackingNumber", label: "Tracking Number" },
+        { id: "couponCode", label: "Coupon Code" },
+        { id: "reviewRating", label: "Review Rating" },
+      ],
+    },
+    {
+      title: "Social Media",
+      fields: [
+        { id: "username", label: "Username" },
+        { id: "displayName", label: "Display Name (EN)" },
+        { id: "displayNameAr", label: "Display Name (AR)" },
+        { id: "bio", label: "Bio (EN)" },
+        { id: "bioAr", label: "Bio (AR)" },
+        { id: "hashtag", label: "Hashtag" },
+        { id: "mention", label: "Mention" },
+        { id: "followers", label: "Followers Count" },
+        { id: "following", label: "Following Count" },
+        { id: "posts", label: "Posts Count" },
+        { id: "socialHandle", label: "Social Handle" },
+      ],
+    },
+    {
+      title: "Technology",
+      fields: [
+        { id: "ipAddress", label: "IP Address" },
+        { id: "macAddress", label: "MAC Address" },
+        { id: "userAgent", label: "User Agent" },
+        { id: "apiKey", label: "API Key" },
+        { id: "deviceId", label: "Device ID" },
+        { id: "sessionId", label: "Session ID" },
+        { id: "serverName", label: "Server Name" },
+        { id: "databaseName", label: "Database Name" },
+        { id: "appVersion", label: "App Version" },
+        { id: "osVersion", label: "OS Version" },
+        { id: "browserName", label: "Browser Name" },
+        { id: "deviceType", label: "Device Type (EN)" },
+        { id: "deviceTypeAr", label: "Device Type (AR)" },
+      ],
+    },
+    {
+      title: "Gaming",
+      fields: [
+        { id: "gamertag", label: "Gamertag" },
+        { id: "playerLevel", label: "Player Level" },
+        { id: "playerScore", label: "Player Score" },
+        { id: "gameTitle", label: "Game Title (EN)" },
+        { id: "gameTitleAr", label: "Game Title (AR)" },
+        { id: "achievement", label: "Achievement (EN)" },
+        { id: "achievementAr", label: "Achievement (AR)" },
+        { id: "guild", label: "Guild Name (EN)" },
+        { id: "guildAr", label: "Guild Name (AR)" },
+        { id: "character", label: "Character Name (EN)" },
+        { id: "characterAr", label: "Character Name (AR)" },
+      ],
+    },
+    {
+      title: "Travel",
+      fields: [
+        { id: "flightNumber", label: "Flight Number" },
+        { id: "airline", label: "Airline (EN)" },
+        { id: "airlineAr", label: "Airline (AR)" },
+        { id: "airport", label: "Airport (EN)" },
+        { id: "airportAr", label: "Airport (AR)" },
+        { id: "hotelName", label: "Hotel Name (EN)" },
+        { id: "hotelNameAr", label: "Hotel Name (AR)" },
+        { id: "bookingReference", label: "Booking Reference" },
+        { id: "seatNumber", label: "Seat Number" },
+        { id: "gateNumber", label: "Gate Number" },
+        { id: "terminal", label: "Terminal" },
+        { id: "destination", label: "Destination (EN)" },
+        { id: "destinationAr", label: "Destination (AR)" },
+      ],
+    },
+    {
+      title: "Food & Restaurant",
+      fields: [
+        { id: "dishName", label: "Dish Name (EN)" },
+        { id: "dishNameAr", label: "Dish Name (AR)" },
+        { id: "restaurantName", label: "Restaurant Name (EN)" },
+        { id: "restaurantNameAr", label: "Restaurant Name (AR)" },
+        { id: "cuisine", label: "Cuisine Type (EN)" },
+        { id: "cuisineAr", label: "Cuisine Type (AR)" },
+        { id: "menuPrice", label: "Menu Price" },
+        { id: "ingredient", label: "Ingredient (EN)" },
+        { id: "ingredientAr", label: "Ingredient (AR)" },
+        { id: "tableNumber", label: "Table Number" },
+        { id: "orderNumber", label: "Order Number" },
+        { id: "deliveryTime", label: "Delivery Time" },
+        { id: "chefName", label: "Chef Name (EN)" },
+        { id: "chefNameAr", label: "Chef Name (AR)" },
+      ],
+    },
+    {
+      title: "Sports & Fitness",
+      fields: [
+        { id: "sportName", label: "Sport Name (EN)" },
+        { id: "sportNameAr", label: "Sport Name (AR)" },
+        { id: "teamName", label: "Team Name (EN)" },
+        { id: "teamNameAr", label: "Team Name (AR)" },
+        { id: "playerName", label: "Player Name (EN)" },
+        { id: "playerNameAr", label: "Player Name (AR)" },
+        { id: "coachName", label: "Coach Name (EN)" },
+        { id: "coachNameAr", label: "Coach Name (AR)" },
+        { id: "stadiumName", label: "Stadium Name (EN)" },
+        { id: "stadiumNameAr", label: "Stadium Name (AR)" },
+        { id: "matchScore", label: "Match Score" },
+        { id: "workoutType", label: "Workout Type (EN)" },
+        { id: "workoutTypeAr", label: "Workout Type (AR)" },
+        { id: "fitnessGoal", label: "Fitness Goal (EN)" },
+        { id: "fitnessGoalAr", label: "Fitness Goal (AR)" },
+      ],
+    },
+    {
+      title: "Real Estate",
+      fields: [
+        { id: "propertyType", label: "Property Type (EN)" },
+        { id: "propertyTypeAr", label: "Property Type (AR)" },
+        { id: "propertyPrice", label: "Property Price" },
+        { id: "propertySize", label: "Property Size" },
+        { id: "bedrooms", label: "Bedrooms" },
+        { id: "bathrooms", label: "Bathrooms" },
+        { id: "propertyAge", label: "Property Age" },
+        { id: "neighborhood", label: "Neighborhood (EN)" },
+        { id: "neighborhoodAr", label: "Neighborhood (AR)" },
+        { id: "agentName", label: "Agent Name (EN)" },
+        { id: "agentNameAr", label: "Agent Name (AR)" },
+        { id: "propertyId", label: "Property ID" },
+        { id: "listingDate", label: "Listing Date" },
+        { id: "amenities", label: "Amenities (EN)" },
+        { id: "amenitiesAr", label: "Amenities (AR)" },
+      ],
+    },
+    {
+      title: "Entertainment",
+      fields: [
+        { id: "movieTitle", label: "Movie Title (EN)" },
+        { id: "movieTitleAr", label: "Movie Title (AR)" },
+        { id: "actorName", label: "Actor Name (EN)" },
+        { id: "actorNameAr", label: "Actor Name (AR)" },
+        { id: "directorName", label: "Director Name (EN)" },
+        { id: "directorNameAr", label: "Director Name (AR)" },
+        { id: "genre", label: "Genre (EN)" },
+        { id: "genreAr", label: "Genre (AR)" },
+        { id: "releaseYear", label: "Release Year" },
+        { id: "rating", label: "Rating" },
+        { id: "duration", label: "Duration" },
+        { id: "cinemaName", label: "Cinema Name (EN)" },
+        { id: "cinemaNameAr", label: "Cinema Name (AR)" },
+        { id: "showTime", label: "Show Time" },
+        { id: "ticketPrice", label: "Ticket Price" },
+      ],
+    },
+    {
+      title: "Science & Research",
+      fields: [
+        { id: "researchTitle", label: "Research Title (EN)" },
+        { id: "researchTitleAr", label: "Research Title (AR)" },
+        { id: "scientistName", label: "Scientist Name (EN)" },
+        { id: "scientistNameAr", label: "Scientist Name (AR)" },
+        { id: "labName", label: "Lab Name (EN)" },
+        { id: "labNameAr", label: "Lab Name (AR)" },
+        { id: "researchField", label: "Research Field (EN)" },
+        { id: "researchFieldAr", label: "Research Field (AR)" },
+        { id: "publicationDate", label: "Publication Date" },
+        { id: "journalName", label: "Journal Name (EN)" },
+        { id: "journalNameAr", label: "Journal Name (AR)" },
+        { id: "experimentId", label: "Experiment ID" },
+        { id: "hypothesis", label: "Hypothesis (EN)" },
+        { id: "hypothesisAr", label: "Hypothesis (AR)" },
+        { id: "methodology", label: "Methodology (EN)" },
+        { id: "methodologyAr", label: "Methodology (AR)" },
+      ],
+    },
+    {
+      title: "Legal & Law",
+      fields: [
+        { id: "lawFirm", label: "Law Firm (EN)" },
+        { id: "lawFirmAr", label: "Law Firm (AR)" },
+        { id: "lawyerName", label: "Lawyer Name (EN)" },
+        { id: "lawyerNameAr", label: "Lawyer Name (AR)" },
+        { id: "caseNumber", label: "Case Number" },
+        { id: "caseType", label: "Case Type (EN)" },
+        { id: "caseTypeAr", label: "Case Type (AR)" },
+        { id: "courtName", label: "Court Name (EN)" },
+        { id: "courtNameAr", label: "Court Name (AR)" },
+        { id: "judgeName", label: "Judge Name (EN)" },
+        { id: "judgeNameAr", label: "Judge Name (AR)" },
+        { id: "licenseNumber", label: "License Number" },
+        { id: "contractId", label: "Contract ID" },
+        { id: "legalStatus", label: "Legal Status (EN)" },
+        { id: "legalStatusAr", label: "Legal Status (AR)" },
+      ],
+    },
+    {
+      title: "Fashion & Beauty",
+      fields: [
+        { id: "brandName", label: "Brand Name (EN)" },
+        { id: "brandNameAr", label: "Brand Name (AR)" },
+        { id: "productColor", label: "Product Color (EN)" },
+        { id: "productColorAr", label: "Product Color (AR)" },
+        { id: "size", label: "Size" },
+        { id: "material", label: "Material (EN)" },
+        { id: "materialAr", label: "Material (AR)" },
+        { id: "season", label: "Season (EN)" },
+        { id: "seasonAr", label: "Season (AR)" },
+        { id: "designer", label: "Designer (EN)" },
+        { id: "designerAr", label: "Designer (AR)" },
+        { id: "collection", label: "Collection (EN)" },
+        { id: "collectionAr", label: "Collection (AR)" },
+        { id: "styleCode", label: "Style Code" },
+        { id: "retailPrice", label: "Retail Price" },
+      ],
+    },
+    {
+      title: "Agriculture",
+      fields: [
+        { id: "cropName", label: "Crop Name (EN)" },
+        { id: "cropNameAr", label: "Crop Name (AR)" },
+        { id: "farmName", label: "Farm Name (EN)" },
+        { id: "farmNameAr", label: "Farm Name (AR)" },
+        { id: "farmerName", label: "Farmer Name (EN)" },
+        { id: "farmerNameAr", label: "Farmer Name (AR)" },
+        { id: "plantingDate", label: "Planting Date" },
+        { id: "harvestDate", label: "Harvest Date" },
+        { id: "farmSize", label: "Farm Size" },
+        { id: "soilType", label: "Soil Type (EN)" },
+        { id: "soilTypeAr", label: "Soil Type (AR)" },
+        { id: "irrigationType", label: "Irrigation Type (EN)" },
+        { id: "irrigationTypeAr", label: "Irrigation Type (AR)" },
+        { id: "yieldAmount", label: "Yield Amount" },
+        { id: "pesticide", label: "Pesticide (EN)" },
+        { id: "pesticideAr", label: "Pesticide (AR)" },
+      ],
+    },
+    {
+      title: "Logistics & Shipping",
+      fields: [
+        { id: "shipmentId", label: "Shipment ID" },
+        { id: "carrierName", label: "Carrier Name (EN)" },
+        { id: "carrierNameAr", label: "Carrier Name (AR)" },
+        { id: "trackingCode", label: "Tracking Code" },
+        { id: "origin", label: "Origin (EN)" },
+        { id: "originAr", label: "Origin (AR)" },
+        { id: "destination", label: "Destination (EN)" },
+        { id: "destinationAr", label: "Destination (AR)" },
+        { id: "shipmentWeight", label: "Shipment Weight" },
+        { id: "shipmentDimensions", label: "Dimensions" },
+        { id: "deliveryStatus", label: "Delivery Status (EN)" },
+        { id: "deliveryStatusAr", label: "Delivery Status (AR)" },
+        { id: "shippingCost", label: "Shipping Cost" },
+        { id: "estimatedDelivery", label: "Estimated Delivery" },
+        { id: "warehouseLocation", label: "Warehouse Location (EN)" },
+        { id: "warehouseLocationAr", label: "Warehouse Location (AR)" },
+      ],
+    },
+    {
+      title: "Energy & Utilities",
+      fields: [
+        { id: "meterNumber", label: "Meter Number" },
+        { id: "utilityCompany", label: "Utility Company (EN)" },
+        { id: "utilityCompanyAr", label: "Utility Company (AR)" },
+        { id: "energyType", label: "Energy Type (EN)" },
+        { id: "energyTypeAr", label: "Energy Type (AR)" },
+        { id: "consumption", label: "Consumption" },
+        { id: "billAmount", label: "Bill Amount" },
+        { id: "billingPeriod", label: "Billing Period" },
+        { id: "powerPlant", label: "Power Plant (EN)" },
+        { id: "powerPlantAr", label: "Power Plant (AR)" },
+        { id: "gridConnection", label: "Grid Connection" },
+        { id: "voltage", label: "Voltage" },
+        { id: "frequency", label: "Frequency" },
+        { id: "serviceType", label: "Service Type (EN)" },
+        { id: "serviceTypeAr", label: "Service Type (AR)" },
+      ],
+    },
+    {
+      title: "Random Values",
+      fields: [
+        { id: "customRandom", label: "Custom Random" },
+        { id: "randomNumbers", label: "Random Numbers" },
+        { id: "randomLetters", label: "Random Letters" },
+        { id: "randomUppercase", label: "Random Uppercase" },
+        { id: "randomLowercase", label: "Random Lowercase" },
+        { id: "randomArabicLetters", label: "Random Arabic Letters" },
+        { id: "randomMixed", label: "Random Mixed" },
+        { id: "randomAlphanumeric", label: "Random Alphanumeric" },
+        { id: "randomSpecialChars", label: "Random Special Chars" },
+        { id: "randomHex", label: "Random Hex" },
+      ],
+    },
+    {
+      title: "Random Text",
+      fields: [
+        { id: "randomText", label: "Random Text" },
+        { id: "randomDigits", label: "Random Digits" },
+        { id: "randomEnglish", label: "Random English" },
+        { id: "randomArabic", label: "Random Arabic" },
+        { id: "randomSpecial", label: "Random Special Chars" },
+        { id: "randomMixed", label: "Random Mixed" },
+        { id: "randomArabicNumbers", label: "Arabic Numbers ١٢٣" },
+        { id: "randomIndianNumbers", label: "Indian Numbers ۱۲۳" },
+        { id: "randomChinese", label: "Random Chinese" },
+        { id: "randomJapanese", label: "Random Japanese" },
+        { id: "randomRussian", label: "Random Russian" },
+        { id: "randomEmoji", label: "Random Emoji" },
+        { id: "randomInvalidChars", label: "Invalid/Control Chars" },
+      ],
+    },
+    {
+      title: "Banking & Finance",
+      fields: [
+        { id: "bankBranch", label: "Bank Branch (EN)" },
+        { id: "bankBranchAr", label: "Bank Branch (AR)" },
+        { id: "routingNumber", label: "Routing Number" },
+        { id: "sortCode", label: "Sort Code" },
+        { id: "bic", label: "BIC/SWIFT Code" },
+        { id: "accountType", label: "Account Type (EN)" },
+        { id: "accountTypeAr", label: "Account Type (AR)" },
+        { id: "transactionId", label: "Transaction ID" },
+        { id: "checkNumber", label: "Check Number" },
+        { id: "loanNumber", label: "Loan Number" },
+        { id: "creditScore", label: "Credit Score" },
+        { id: "interestRate", label: "Interest Rate" },
+        { id: "exchangeRate", label: "Exchange Rate" },
+        { id: "investmentAmount", label: "Investment Amount" },
+      ],
+    },
+    {
+      title: "Insurance",
+      fields: [
+        { id: "policyNumber", label: "Policy Number" },
+        { id: "insuranceCompany", label: "Insurance Company (EN)" },
+        { id: "insuranceCompanyAr", label: "Insurance Company (AR)" },
+        { id: "policyType", label: "Policy Type (EN)" },
+        { id: "policyTypeAr", label: "Policy Type (AR)" },
+        { id: "premiumAmount", label: "Premium Amount" },
+        { id: "coverageAmount", label: "Coverage Amount" },
+        { id: "deductible", label: "Deductible" },
+        { id: "claimNumber", label: "Claim Number" },
+        { id: "agentName", label: "Agent Name (EN)" },
+        { id: "agentNameAr", label: "Agent Name (AR)" },
+        { id: "policyStartDate", label: "Policy Start Date" },
+        { id: "policyEndDate", label: "Policy End Date" },
+        { id: "beneficiary", label: "Beneficiary (EN)" },
+        { id: "beneficiaryAr", label: "Beneficiary (AR)" },
+      ],
+    },
+    {
+      title: "Manufacturing",
+      fields: [
+        { id: "factoryName", label: "Factory Name (EN)" },
+        { id: "factoryNameAr", label: "Factory Name (AR)" },
+        { id: "productionLine", label: "Production Line" },
+        { id: "batchNumber", label: "Batch Number" },
+        { id: "lotNumber", label: "Lot Number" },
+        { id: "qualityGrade", label: "Quality Grade" },
+        { id: "manufacturingDate", label: "Manufacturing Date" },
+        { id: "expiryDate", label: "Expiry Date" },
+        { id: "machineId", label: "Machine ID" },
+        { id: "operatorName", label: "Operator Name (EN)" },
+        { id: "operatorNameAr", label: "Operator Name (AR)" },
+        { id: "shiftNumber", label: "Shift Number" },
+        { id: "productionQuantity", label: "Production Quantity" },
+        { id: "defectRate", label: "Defect Rate" },
+        { id: "rawMaterial", label: "Raw Material (EN)" },
+        { id: "rawMaterialAr", label: "Raw Material (AR)" },
+      ],
+    },
+    {
+      title: "Telecommunications",
+      fields: [
+        { id: "phoneProvider", label: "Phone Provider (EN)" },
+        { id: "phoneProviderAr", label: "Phone Provider (AR)" },
+        { id: "planType", label: "Plan Type (EN)" },
+        { id: "planTypeAr", label: "Plan Type (AR)" },
+        { id: "dataAllowance", label: "Data Allowance" },
+        { id: "callMinutes", label: "Call Minutes" },
+        { id: "smsCount", label: "SMS Count" },
+        { id: "networkType", label: "Network Type" },
+        { id: "signalStrength", label: "Signal Strength" },
+        { id: "towerLocation", label: "Tower Location (EN)" },
+        { id: "towerLocationAr", label: "Tower Location (AR)" },
+        { id: "imei", label: "IMEI Number" },
+        { id: "simCard", label: "SIM Card Number" },
+        { id: "roamingStatus", label: "Roaming Status (EN)" },
+        { id: "roamingStatusAr", label: "Roaming Status (AR)" },
+      ],
+    },
+    {
+      title: "Construction",
+      fields: [
+        { id: "projectName", label: "Project Name (EN)" },
+        { id: "projectNameAr", label: "Project Name (AR)" },
+        { id: "contractorName", label: "Contractor Name (EN)" },
+        { id: "contractorNameAr", label: "Contractor Name (AR)" },
+        { id: "projectManager", label: "Project Manager (EN)" },
+        { id: "projectManagerAr", label: "Project Manager (AR)" },
+        { id: "buildingPermit", label: "Building Permit" },
+        { id: "projectBudget", label: "Project Budget" },
+        { id: "completionDate", label: "Completion Date" },
+        { id: "floorArea", label: "Floor Area" },
+        { id: "buildingHeight", label: "Building Height" },
+        { id: "constructionType", label: "Construction Type (EN)" },
+        { id: "constructionTypeAr", label: "Construction Type (AR)" },
+        { id: "materialType", label: "Material Type (EN)" },
+        { id: "materialTypeAr", label: "Material Type (AR)" },
+        { id: "safetyRating", label: "Safety Rating" },
+      ],
+    },
+    {
+      title: "Testing & QA",
+      fields: [
+        { id: "testCaseId", label: "Test Case ID" },
+        { id: "testSuite", label: "Test Suite" },
+        { id: "testScenario", label: "Test Scenario" },
+        { id: "testStatus", label: "Test Status" },
+        { id: "bugId", label: "Bug ID" },
+        { id: "severity", label: "Severity Level" },
+        { id: "priority", label: "Priority Level" },
+        { id: "testEnvironment", label: "Test Environment" },
+        { id: "browserVersion", label: "Browser Version" },
+        { id: "operatingSystem", label: "Operating System" },
+        { id: "testData", label: "Test Data Set" },
+        { id: "expectedResult", label: "Expected Result" },
+        { id: "actualResult", label: "Actual Result" },
+        { id: "testExecutor", label: "Test Executor" },
+        { id: "executionTime", label: "Execution Time" },
+        { id: "testType", label: "Test Type" },
+      ],
+    },
+    {
+      title: "Edge Cases",
+      fields: [
+        { id: "nullValue", label: "Null Value" },
+        { id: "emptyString", label: "Empty String" },
+        { id: "whitespace", label: "Whitespace Only" },
+        { id: "maxLength", label: "Maximum Length String" },
+        { id: "minValue", label: "Minimum Value" },
+        { id: "maxValue", label: "Maximum Value" },
+        { id: "negativeNumber", label: "Negative Number" },
+        { id: "zeroValue", label: "Zero Value" },
+        { id: "floatingPoint", label: "Floating Point" },
+        { id: "specialChars", label: "Special Characters" },
+        { id: "unicodeChars", label: "Unicode Characters" },
+        { id: "sqlInjection", label: "SQL Injection Test" },
+        { id: "xssPayload", label: "XSS Payload" },
+        { id: "longText", label: "Very Long Text" },
+        { id: "invalidFormat", label: "Invalid Format" },
+        { id: "boundaryValue", label: "Boundary Value" },
+      ],
+    },
+    {
+      title: "Performance Testing",
+      fields: [
+        { id: "responseTime", label: "Response Time (ms)" },
+        { id: "throughput", label: "Throughput (req/sec)" },
+        { id: "cpuUsage", label: "CPU Usage (%)" },
+        { id: "memoryUsage", label: "Memory Usage (MB)" },
+        { id: "diskUsage", label: "Disk Usage (GB)" },
+        { id: "networkLatency", label: "Network Latency (ms)" },
+        { id: "concurrentUsers", label: "Concurrent Users" },
+        { id: "errorRate", label: "Error Rate (%)" },
+        { id: "loadTime", label: "Page Load Time (s)" },
+        { id: "transactionRate", label: "Transaction Rate" },
+        { id: "bandwidth", label: "Bandwidth Usage" },
+        { id: "connectionPool", label: "Connection Pool Size" },
+        { id: "queueLength", label: "Queue Length" },
+        { id: "cacheHitRatio", label: "Cache Hit Ratio (%)" },
+        { id: "dbConnections", label: "DB Connections" },
+      ],
+    },
+    {
+      title: "Security Testing",
+      fields: [
+        { id: "vulnerabilityId", label: "Vulnerability ID" },
+        { id: "securityLevel", label: "Security Level" },
+        { id: "encryptionType", label: "Encryption Type" },
+        { id: "authToken", label: "Auth Token" },
+        { id: "sessionId", label: "Session ID" },
+        { id: "csrfToken", label: "CSRF Token" },
+        { id: "jwtToken", label: "JWT Token" },
+        { id: "apiKey", label: "API Key" },
+        { id: "hashValue", label: "Hash Value" },
+        { id: "saltValue", label: "Salt Value" },
+        { id: "certificateId", label: "Certificate ID" },
+        { id: "permissionLevel", label: "Permission Level" },
+        { id: "accessRole", label: "Access Role" },
+        { id: "securityScan", label: "Security Scan Result" },
+        { id: "penetrationTest", label: "Penetration Test" },
+      ],
+    },
+    {
+      title: "Email Testing",
+      fields: [
+        { id: "validEmail", label: "Valid Email" },
+        { id: "invalidEmail", label: "Invalid Email" },
+        { id: "businessEmail", label: "Business Email" },
+        { id: "personalEmail", label: "Personal Email" },
+        { id: "tempEmail", label: "Temporary Email" },
+        { id: "subdomainEmail", label: "Subdomain Email" },
+        { id: "internationalEmail", label: "International Email" },
+        { id: "longEmail", label: "Long Email" },
+        { id: "shortEmail", label: "Short Email" },
+        { id: "specialCharEmail", label: "Special Char Email" },
+        { id: "numericEmail", label: "Numeric Email" },
+        { id: "disposableEmail", label: "Disposable Email" },
+        { id: "roleBasedEmail", label: "Role-based Email" },
+        { id: "customDomainEmail", label: "Custom Domain Email" },
+      ],
+    },
+    {
+      title: "Password Testing",
+      fields: [
+        { id: "customPassword", label: "Custom Password" },
+        { id: "weakPassword", label: "Weak Password" },
+        { id: "strongPassword", label: "Strong Password" },
+        { id: "numericPassword", label: "Numeric Only" },
+        { id: "alphabeticPassword", label: "Alphabetic Only" },
+        { id: "specialCharPassword", label: "Special Chars Only" },
+        { id: "mixedPassword", label: "Mixed Characters" },
+        { id: "arabicPassword", label: "Arabic Characters" },
+        { id: "commonPassword", label: "Common Password" },
+        { id: "complexPassword", label: "Complex Password" },
+      ],
+    },
+    {
+      title: "Phone Testing",
+      fields: [
+        { id: "customPhone", label: "Custom Phone" },
+        { id: "mobileNumber", label: "Mobile (05X)" },
+        { id: "landlineNumber", label: "Landline (01X)" },
+        { id: "shortMobile", label: "Mobile (5X)" },
+        { id: "shortLandline", label: "Landline (1X)" },
+        { id: "invalidPhone", label: "Invalid Phone" },
+        { id: "wrongLengthPhone", label: "Wrong Length" },
+        { id: "internationalPhone", label: "International (+966)" },
+        { id: "formattedPhone", label: "Formatted Phone" },
+        { id: "unformattedPhone", label: "Unformatted Phone" },
+      ],
+    },
+    {
+      title: "Date & Time",
+      fields: [
+        { id: "date", label: "Date" },
+        { id: "time", label: "Time" },
+        { id: "datetime", label: "DateTime" },
+        { id: "timestamp", label: "Timestamp" },
+        { id: "hijriDate", label: "Hijri Date" },
+        { id: "dayOfWeek", label: "Day of Week (EN)" },
+        { id: "dayOfWeekAr", label: "Day of Week (AR)" },
+        { id: "month", label: "Month (EN)" },
+        { id: "monthAr", label: "Month (AR)" },
+        { id: "hijriToGregorian", label: "Hijri → Gregorian" },
+        { id: "gregorianToHijri", label: "Gregorian → Hijri" },
+      ],
+    },
+    {
+      title: "Other",
+      fields: [
+        { id: "uuid", label: "UUID" },
+        { id: "url", label: "URL" },
+        { id: "password", label: "Password" },
+        { id: "ip", label: "IP Address" },
+        { id: "color", label: "Color" },
+        { id: "macAddress", label: "MAC Address" },
+        { id: "userAgent", label: "User Agent" },
+        { id: "apiKey", label: "API Key" },
+      ],
+    },
+    {
+      title: "Files",
+      fields: [
+        { id: "txt", label: "Text File (.txt)" },
+        { id: "json", label: "JSON File (.json)" },
+        { id: "csv", label: "CSV File (.csv)" },
+        { id: "xml", label: "XML File (.xml)" },
+        { id: "html", label: "HTML File (.html)" },
+        { id: "css", label: "CSS File (.css)" },
+        { id: "js", label: "JavaScript (.js)" },
+        { id: "py", label: "Python File (.py)" },
+        { id: "java", label: "Java File (.java)" },
+        { id: "cpp", label: "C++ File (.cpp)" },
+        { id: "pdf", label: "PDF File (.pdf)" },
+        { id: "doc", label: "Word File (.doc)" },
+        { id: "docx", label: "Word File (.docx)" },
+        { id: "xlsx", label: "Excel File (.xlsx)" },
+        { id: "xls", label: "Excel File (.xls)" },
+        { id: "ppt", label: "PowerPoint (.ppt)" },
+        { id: "pptx", label: "PowerPoint (.pptx)" },
+        { id: "jpg", label: "JPEG Image (.jpg)" },
+        { id: "png", label: "PNG Image (.png)" },
+        { id: "gif", label: "GIF Image (.gif)" },
+        { id: "svg", label: "SVG Image (.svg)" },
+        { id: "bmp", label: "BMP Image (.bmp)" },
+        { id: "webp", label: "WebP Image (.webp)" },
+        { id: "ico", label: "Icon File (.ico)" },
+        { id: "zip", label: "ZIP Archive (.zip)" },
+        { id: "rar", label: "RAR Archive (.rar)" },
+        { id: "7z", label: "7-Zip Archive (.7z)" },
+        { id: "tar", label: "TAR Archive (.tar)" },
+        { id: "mp3", label: "MP3 Audio (.mp3)" },
+        { id: "wav", label: "WAV Audio (.wav)" },
+        { id: "flac", label: "FLAC Audio (.flac)" },
+        { id: "mp4", label: "MP4 Video (.mp4)" },
+        { id: "avi", label: "AVI Video (.avi)" },
+        { id: "mkv", label: "MKV Video (.mkv)" },
+        { id: "mov", label: "MOV Video (.mov)" },
+        { id: "wmv", label: "WMV Video (.wmv)" },
+        { id: "sql", label: "SQL File (.sql)" },
+        { id: "db", label: "Database (.db)" },
+        { id: "log", label: "Log File (.log)" },
+        { id: "ini", label: "Config File (.ini)" },
+        { id: "cfg", label: "Config File (.cfg)" },
+        { id: "conf", label: "Config File (.conf)" },
+        { id: "yaml", label: "YAML File (.yaml)" },
+        { id: "yml", label: "YAML File (.yml)" },
+        { id: "toml", label: "TOML File (.toml)" },
+        { id: "md", label: "Markdown (.md)" },
+        { id: "rtf", label: "Rich Text (.rtf)" },
+        { id: "eps", label: "EPS File (.eps)" },
+        { id: "ai", label: "Adobe Illustrator (.ai)" },
+        { id: "psd", label: "Photoshop (.psd)" },
+        { id: "sketch", label: "Sketch File (.sketch)" },
+        { id: "fig", label: "Figma File (.fig)" },
+      ],
+    },
   ];
 
-  const tabsHTML = categories.map((cat, idx) => `<button class="dg-tab ${idx === 0 ? 'active' : ''}" data-tab="${idx}">${cat.title}</button>`).join('');
-  const contentHTML = categories.map((cat, idx) => `
-    <div class="dg-tab-content ${idx === 0 ? 'active' : ''}" data-content="${idx}">
+  const tabsHTML = categories
+    .map(
+      (cat, idx) =>
+        `<button class="dg-tab ${idx === 0 ? "active" : ""}" data-tab="${idx}">${cat.title}</button>`,
+    )
+    .join("");
+  const contentHTML = categories
+    .map(
+      (cat, idx) => `
+    <div class="dg-tab-content ${idx === 0 ? "active" : ""}" data-content="${idx}">
       <div class="dg-tab-controls">
         <button class="dg-btn dg-btn-secondary dg-select-all" data-tab="${idx}">✓ Tab</button>
         <button class="dg-btn dg-btn-secondary dg-unselect-all" data-tab="${idx}">✕ Tab</button>
       </div>
       <div class="dg-fields-wrapper">
-        ${cat.fields.map(field => `<label class="dg-checkbox"><input type="checkbox" value="${field.id}"><span>${field.label}</span></label>`).join('')}
+        ${cat.fields.map((field) => `<label class="dg-checkbox"><input type="checkbox" value="${field.id}"><span>${field.label}</span></label>`).join("")}
       </div>
-      ${cat.title === 'Files' ? `
+      ${
+        cat.title === "Files"
+          ? `
         <div class="dg-file-controls" id="fileControls">
           <div class="dg-file-control-group">
             <label>File Name:</label>
@@ -803,8 +946,12 @@ function createDataGeneratorUI(containerId) {
             </div>
           </div>
         </div>
-      ` : ''}
-      ${cat.title === 'Date & Time' ? `
+      `
+          : ""
+      }
+      ${
+        cat.title === "Date & Time"
+          ? `
         <div class="dg-file-controls" id="dateTimeControls">
           <div class="dg-file-control-group">
             <label>Date Range:</label>
@@ -874,8 +1021,12 @@ function createDataGeneratorUI(containerId) {
           </div>
           <div id="conversionResult" style="margin-top: 8px; padding: 8px; background: #f0f9ff; border-radius: 6px; font-size: 10px; display: none;"></div>
         </div>
-      ` : ''}
-      ${cat.title === 'Phone Testing' ? `
+      `
+          : ""
+      }
+      ${
+        cat.title === "Phone Testing"
+          ? `
         <div class="dg-file-controls" id="phoneControls">
           <div class="dg-file-control-group">
             <label>Phone Type:</label>
@@ -911,8 +1062,51 @@ function createDataGeneratorUI(containerId) {
             </div>
           </div>
         </div>
-      ` : ''}
-      ${cat.title === 'Random Text' ? `
+      `
+          : ""
+      }
+      ${
+        cat.title === "Random Values"
+          ? `
+        <div class="dg-file-controls" id="randomValuesControls">
+          <div class="dg-file-control-group">
+            <label>Character Types:</label>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;">
+              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                <input type="checkbox" id="includeNumbers" checked> Numbers (0-9)
+              </label>
+              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                <input type="checkbox" id="includeUppercase" checked> Uppercase (A-Z)
+              </label>
+              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                <input type="checkbox" id="includeLowercase" checked> Lowercase (a-z)
+              </label>
+              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                <input type="checkbox" id="includeArabicLetters"> Arabic Letters (أ-ي)
+              </label>
+              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                <input type="checkbox" id="includeSpecialChars"> Special (!@#$%)
+              </label>
+            </div>
+          </div>
+          <div class="dg-file-control-group">
+            <label>Length:</label>
+            <div class="dg-file-size-group">
+              <input type="number" id="randomLength" value="10" min="1" max="1000" style="width: 80px;">
+              <span style="font-size: 10px; color: #64748b;">characters</span>
+            </div>
+          </div>
+          <div class="dg-file-control-group">
+            <label>Custom Characters:</label>
+            <input type="text" id="customChars" placeholder="Add custom characters..." style="width: 100%; padding: 4px 6px; font-size: 10px;">
+          </div>
+        </div>
+      `
+          : ""
+      }
+      ${
+        cat.title === "Random Text"
+          ? `
         <div class="dg-file-controls" id="randomTextControls">
           <div class="dg-file-control-group">
             <label>Text Length:</label>
@@ -939,8 +1133,12 @@ function createDataGeneratorUI(containerId) {
             </div>
           </div>
         </div>
-      ` : ''}
-      ${cat.title === 'Email Testing' ? `
+      `
+          : ""
+      }
+      ${
+        cat.title === "Email Testing"
+          ? `
         <div class="dg-file-controls" id="emailControls">
           <div class="dg-file-control-group">
             <label>Email Domain:</label>
@@ -981,8 +1179,12 @@ function createDataGeneratorUI(containerId) {
             </select>
           </div>
         </div>
-      ` : ''}
-      ${cat.title === 'Password Testing' ? `
+      `
+          : ""
+      }
+      ${
+        cat.title === "Password Testing"
+          ? `
         <div class="dg-file-controls" id="passwordControls">
           <div class="dg-file-control-group">
             <label>Password Length:</label>
@@ -1023,9 +1225,13 @@ function createDataGeneratorUI(containerId) {
             </div>
           </div>
         </div>
-      ` : ''}
+      `
+          : ""
+      }
     </div>
-  `).join('');
+  `,
+    )
+    .join("");
 
   container.innerHTML = `
     <div class="dg-app">
@@ -1072,91 +1278,118 @@ function createDataGeneratorUI(containerId) {
 
   let generatedData = [];
 
-  document.querySelectorAll('.dg-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
+  document.querySelectorAll(".dg-tab").forEach((tab) => {
+    tab.addEventListener("click", () => {
       const tabIdx = tab.dataset.tab;
-      document.querySelectorAll('.dg-tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.dg-tab-content').forEach(c => c.classList.remove('active'));
-      tab.classList.add('active');
-      document.querySelector(`[data-content="${tabIdx}"]`).classList.add('active');
-      
+      document
+        .querySelectorAll(".dg-tab")
+        .forEach((t) => t.classList.remove("active"));
+      document
+        .querySelectorAll(".dg-tab-content")
+        .forEach((c) => c.classList.remove("active"));
+      tab.classList.add("active");
+      document
+        .querySelector(`[data-content="${tabIdx}"]`)
+        .classList.add("active");
+
       // Show/hide file controls and download button based on Files tab
-      const isFilesTab = categories[tabIdx].title === 'Files';
-      const isDateTimeTab = categories[tabIdx].title === 'Date & Time';
-      const isRandomTextTab = categories[tabIdx].title === 'Random Text';
-      const isEmailTestingTab = categories[tabIdx].title === 'Email Testing';
-      const isPasswordTestingTab = categories[tabIdx].title === 'Password Testing';
-      const isPhoneTestingTab = categories[tabIdx].title === 'Phone Testing';
-      const fileControls = document.getElementById('fileControls');
-      const dateTimeControls = document.getElementById('dateTimeControls');
-      const randomTextControls = document.getElementById('randomTextControls');
-      const emailControls = document.getElementById('emailControls');
-      const passwordControls = document.getElementById('passwordControls');
-      const phoneControls = document.getElementById('phoneControls');
-      const downloadBtn = document.getElementById('downloadBtn');
-      
+      const isFilesTab = categories[tabIdx].title === "Files";
+      const isDateTimeTab = categories[tabIdx].title === "Date & Time";
+      const isRandomValuesTab = categories[tabIdx].title === "Random Values";
+      const isRandomTextTab = categories[tabIdx].title === "Random Text";
+      const isEmailTestingTab = categories[tabIdx].title === "Email Testing";
+      const isPasswordTestingTab =
+        categories[tabIdx].title === "Password Testing";
+      const isPhoneTestingTab = categories[tabIdx].title === "Phone Testing";
+      const fileControls = document.getElementById("fileControls");
+      const dateTimeControls = document.getElementById("dateTimeControls");
+      const randomValuesControls = document.getElementById(
+        "randomValuesControls",
+      );
+      const randomTextControls = document.getElementById("randomTextControls");
+      const emailControls = document.getElementById("emailControls");
+      const passwordControls = document.getElementById("passwordControls");
+      const phoneControls = document.getElementById("phoneControls");
+      const downloadBtn = document.getElementById("downloadBtn");
+
       if (fileControls) {
-        fileControls.classList.toggle('active', isFilesTab);
+        fileControls.classList.toggle("active", isFilesTab);
       }
       if (dateTimeControls) {
-        dateTimeControls.classList.toggle('active', isDateTimeTab);
+        dateTimeControls.classList.toggle("active", isDateTimeTab);
+      }
+      if (randomValuesControls) {
+        randomValuesControls.classList.toggle("active", isRandomValuesTab);
       }
       if (randomTextControls) {
-        randomTextControls.classList.toggle('active', isRandomTextTab);
+        randomTextControls.classList.toggle("active", isRandomTextTab);
       }
       if (emailControls) {
-        emailControls.classList.toggle('active', isEmailTestingTab);
+        emailControls.classList.toggle("active", isEmailTestingTab);
       }
       if (passwordControls) {
-        passwordControls.classList.toggle('active', isPasswordTestingTab);
+        passwordControls.classList.toggle("active", isPasswordTestingTab);
       }
       if (phoneControls) {
-        phoneControls.classList.toggle('active', isPhoneTestingTab);
+        phoneControls.classList.toggle("active", isPhoneTestingTab);
       }
       if (downloadBtn) {
-        downloadBtn.style.display = isFilesTab ? 'inline-block' : 'none';
+        downloadBtn.style.display = isFilesTab ? "inline-block" : "none";
       }
     });
   });
 
-  document.querySelector('.dg-select-all-categories').addEventListener('click', () => {
-    document.querySelectorAll('.dg-checkbox input').forEach(c => c.checked = true);
-  });
+  document
+    .querySelector(".dg-select-all-categories")
+    .addEventListener("click", () => {
+      document
+        .querySelectorAll(".dg-checkbox input")
+        .forEach((c) => (c.checked = true));
+    });
 
-  document.querySelector('.dg-unselect-all-categories').addEventListener('click', () => {
-    document.querySelectorAll('.dg-checkbox input').forEach(c => c.checked = false);
-  });
+  document
+    .querySelector(".dg-unselect-all-categories")
+    .addEventListener("click", () => {
+      document
+        .querySelectorAll(".dg-checkbox input")
+        .forEach((c) => (c.checked = false));
+    });
 
-  document.querySelectorAll('.dg-select-all').forEach(btn => {
-    btn.addEventListener('click', () => {
+  document.querySelectorAll(".dg-select-all").forEach((btn) => {
+    btn.addEventListener("click", () => {
       const tabIdx = btn.dataset.tab;
-      document.querySelectorAll(`[data-content="${tabIdx}"] .dg-checkbox input`).forEach(c => c.checked = true);
+      document
+        .querySelectorAll(`[data-content="${tabIdx}"] .dg-checkbox input`)
+        .forEach((c) => (c.checked = true));
     });
   });
 
-  document.querySelectorAll('.dg-unselect-all').forEach(btn => {
-    btn.addEventListener('click', () => {
+  document.querySelectorAll(".dg-unselect-all").forEach((btn) => {
+    btn.addEventListener("click", () => {
       const tabIdx = btn.dataset.tab;
-      document.querySelectorAll(`[data-content="${tabIdx}"] .dg-checkbox input`).forEach(c => c.checked = false);
+      document
+        .querySelectorAll(`[data-content="${tabIdx}"] .dg-checkbox input`)
+        .forEach((c) => (c.checked = false));
     });
   });
 
   // Search functionality
-  const searchInput = document.getElementById('searchInput');
-  const searchResults = document.getElementById('searchResults');
-  const searchClear = document.getElementById('searchClear');
-  const searchIcon = document.getElementById('searchIcon');
+  const searchInput = document.getElementById("searchInput");
+  const searchResults = document.getElementById("searchResults");
+  const searchClear = document.getElementById("searchClear");
+  const searchIcon = document.getElementById("searchIcon");
 
   function createSearchIndex() {
     const searchIndex = [];
     categories.forEach((category, categoryIndex) => {
-      category.fields.forEach(field => {
+      category.fields.forEach((field) => {
         searchIndex.push({
           categoryIndex,
           categoryTitle: category.title,
           fieldId: field.id,
           fieldLabel: field.label,
-          searchText: `${category.title} ${field.label} ${field.id}`.toLowerCase()
+          searchText:
+            `${category.title} ${field.label} ${field.id}`.toLowerCase(),
         });
       });
     });
@@ -1167,76 +1400,102 @@ function createDataGeneratorUI(containerId) {
 
   function highlightText(text, query) {
     if (!query) return text;
-    const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+    const regex = new RegExp(
+      `(${query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
+      "gi",
+    );
     return text.replace(regex, '<span class="dg-search-highlight">$1</span>');
   }
 
   function performSearch(query) {
     if (!query || query.length < 2) {
-      searchResults.style.display = 'none';
+      searchResults.style.display = "none";
       return;
     }
 
-    const results = searchIndex.filter(item => 
-      item.searchText.includes(query.toLowerCase())
-    ).slice(0, 10);
+    const results = searchIndex
+      .filter((item) => item.searchText.includes(query.toLowerCase()))
+      .slice(0, 10);
 
     if (results.length === 0) {
-      searchResults.innerHTML = '<div class="dg-search-result">No results found</div>';
+      searchResults.innerHTML =
+        '<div class="dg-search-result">No results found</div>';
     } else {
-      searchResults.innerHTML = results.map(result => `
+      searchResults.innerHTML = results
+        .map(
+          (result) => `
         <div class="dg-search-result" data-category="${result.categoryIndex}" data-field="${result.fieldId}">
           <div class="dg-search-category">${highlightText(result.categoryTitle, query)}</div>
           <div class="dg-search-field">${highlightText(result.fieldLabel, query)}</div>
         </div>
-      `).join('');
+      `,
+        )
+        .join("");
     }
 
-    searchResults.style.display = 'block';
+    searchResults.style.display = "block";
   }
 
   function selectSearchResult(categoryIndex, fieldId) {
     // Switch to the category tab
-    document.querySelectorAll('.dg-tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.dg-tab-content').forEach(c => c.classList.remove('active'));
-    
+    document
+      .querySelectorAll(".dg-tab")
+      .forEach((t) => t.classList.remove("active"));
+    document
+      .querySelectorAll(".dg-tab-content")
+      .forEach((c) => c.classList.remove("active"));
+
     const targetTab = document.querySelector(`[data-tab="${categoryIndex}"]`);
-    const targetContent = document.querySelector(`[data-content="${categoryIndex}"]`);
-    
+    const targetContent = document.querySelector(
+      `[data-content="${categoryIndex}"]`,
+    );
+
     if (targetTab && targetContent) {
-      targetTab.classList.add('active');
-      targetContent.classList.add('active');
-      
+      targetTab.classList.add("active");
+      targetContent.classList.add("active");
+
       // Show/hide controls based on category
       const categoryTitle = categories[categoryIndex].title;
-      const isFilesTab = categoryTitle === 'Files';
-      const isDateTimeTab = categoryTitle === 'Date & Time';
-      const isRandomTextTab = categoryTitle === 'Random Text';
-      const isEmailTestingTab = categoryTitle === 'Email Testing';
-      const isPasswordTestingTab = categoryTitle === 'Password Testing';
-      const isPhoneTestingTab = categoryTitle === 'Phone Testing';
-      
-      const fileControls = document.getElementById('fileControls');
-      const dateTimeControls = document.getElementById('dateTimeControls');
-      const randomTextControls = document.getElementById('randomTextControls');
-      const emailControls = document.getElementById('emailControls');
-      const passwordControls = document.getElementById('passwordControls');
-      const phoneControls = document.getElementById('phoneControls');
-      const downloadBtn = document.getElementById('downloadBtn');
-      
-      if (fileControls) fileControls.classList.toggle('active', isFilesTab);
-      if (dateTimeControls) dateTimeControls.classList.toggle('active', isDateTimeTab);
-      if (randomTextControls) randomTextControls.classList.toggle('active', isRandomTextTab);
-      if (emailControls) emailControls.classList.toggle('active', isEmailTestingTab);
-      if (passwordControls) passwordControls.classList.toggle('active', isPasswordTestingTab);
-      if (phoneControls) phoneControls.classList.toggle('active', isPhoneTestingTab);
-      if (downloadBtn) downloadBtn.style.display = isFilesTab ? 'inline-block' : 'none';
+      const isFilesTab = categoryTitle === "Files";
+      const isDateTimeTab = categoryTitle === "Date & Time";
+      const isRandomValuesTab = categoryTitle === "Random Values";
+      const isRandomTextTab = categoryTitle === "Random Text";
+      const isEmailTestingTab = categoryTitle === "Email Testing";
+      const isPasswordTestingTab = categoryTitle === "Password Testing";
+      const isPhoneTestingTab = categoryTitle === "Phone Testing";
+
+      const fileControls = document.getElementById("fileControls");
+      const dateTimeControls = document.getElementById("dateTimeControls");
+      const randomValuesControls = document.getElementById(
+        "randomValuesControls",
+      );
+      const randomTextControls = document.getElementById("randomTextControls");
+      const emailControls = document.getElementById("emailControls");
+      const passwordControls = document.getElementById("passwordControls");
+      const phoneControls = document.getElementById("phoneControls");
+      const downloadBtn = document.getElementById("downloadBtn");
+
+      if (fileControls) fileControls.classList.toggle("active", isFilesTab);
+      if (dateTimeControls)
+        dateTimeControls.classList.toggle("active", isDateTimeTab);
+      if (randomValuesControls)
+        randomValuesControls.classList.toggle("active", isRandomValuesTab);
+      if (randomTextControls)
+        randomTextControls.classList.toggle("active", isRandomTextTab);
+      if (emailControls)
+        emailControls.classList.toggle("active", isEmailTestingTab);
+      if (passwordControls)
+        passwordControls.classList.toggle("active", isPasswordTestingTab);
+      if (phoneControls)
+        phoneControls.classList.toggle("active", isPhoneTestingTab);
+      if (downloadBtn)
+        downloadBtn.style.display = isFilesTab ? "inline-block" : "none";
     }
 
     // Only highlight and check field if it's a specific field search, not category search
     const searchQuery = searchInput.value.toLowerCase().trim();
     const categoryTitle = categories[categoryIndex].title.toLowerCase();
-    
+
     // If search query matches category name, don't select any field
     if (searchQuery === categoryTitle || categoryTitle.includes(searchQuery)) {
       // Just navigate to tab, don't select any field
@@ -1245,60 +1504,60 @@ function createDataGeneratorUI(containerId) {
       const fieldCheckbox = document.querySelector(`input[value="${fieldId}"]`);
       if (fieldCheckbox) {
         fieldCheckbox.checked = true;
-        fieldCheckbox.closest('.dg-checkbox').style.background = '#e0e7ff';
-        fieldCheckbox.closest('.dg-checkbox').style.borderColor = '#667eea';
-        
+        fieldCheckbox.closest(".dg-checkbox").style.background = "#e0e7ff";
+        fieldCheckbox.closest(".dg-checkbox").style.borderColor = "#667eea";
+
         // Scroll to the field
-        fieldCheckbox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        
+        fieldCheckbox.scrollIntoView({ behavior: "smooth", block: "center" });
+
         // Remove highlight after 2 seconds
         setTimeout(() => {
-          fieldCheckbox.closest('.dg-checkbox').style.background = '';
-          fieldCheckbox.closest('.dg-checkbox').style.borderColor = '';
+          fieldCheckbox.closest(".dg-checkbox").style.background = "";
+          fieldCheckbox.closest(".dg-checkbox").style.borderColor = "";
         }, 2000);
       }
     }
 
     // Clear search
-    searchInput.value = '';
-    searchResults.style.display = 'none';
-    searchClear.style.display = 'none';
-    searchIcon.style.display = 'block';
+    searchInput.value = "";
+    searchResults.style.display = "none";
+    searchClear.style.display = "none";
+    searchIcon.style.display = "block";
   }
 
-  searchInput.addEventListener('input', (e) => {
+  searchInput.addEventListener("input", (e) => {
     const query = e.target.value.trim();
     performSearch(query);
-    
+
     if (query) {
-      searchClear.style.display = 'block';
-      searchIcon.style.display = 'none';
+      searchClear.style.display = "block";
+      searchIcon.style.display = "none";
     } else {
-      searchClear.style.display = 'none';
-      searchIcon.style.display = 'block';
+      searchClear.style.display = "none";
+      searchIcon.style.display = "block";
     }
   });
 
-  searchInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      searchInput.value = '';
-      searchResults.style.display = 'none';
-      searchClear.style.display = 'none';
-      searchIcon.style.display = 'block';
+  searchInput.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      searchInput.value = "";
+      searchResults.style.display = "none";
+      searchClear.style.display = "none";
+      searchIcon.style.display = "block";
       searchInput.blur();
     }
   });
 
-  searchClear.addEventListener('click', () => {
-    searchInput.value = '';
-    searchResults.style.display = 'none';
-    searchClear.style.display = 'none';
-    searchIcon.style.display = 'block';
+  searchClear.addEventListener("click", () => {
+    searchInput.value = "";
+    searchResults.style.display = "none";
+    searchClear.style.display = "none";
+    searchIcon.style.display = "block";
     searchInput.focus();
   });
 
-  searchResults.addEventListener('click', (e) => {
-    const resultItem = e.target.closest('.dg-search-result');
+  searchResults.addEventListener("click", (e) => {
+    const resultItem = e.target.closest(".dg-search-result");
     if (resultItem) {
       const categoryIndex = parseInt(resultItem.dataset.category);
       const fieldId = resultItem.dataset.field;
@@ -1307,67 +1566,84 @@ function createDataGeneratorUI(containerId) {
   });
 
   // Hide search results when clicking outside
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.dg-search')) {
-      searchResults.style.display = 'none';
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".dg-search")) {
+      searchResults.style.display = "none";
     }
   });
 
   // Handle custom domain toggle
-  document.addEventListener('change', function(e) {
-    if (e.target && e.target.id === 'emailDomain') {
-      const customDomainGroup = document.getElementById('customDomainGroup');
+  document.addEventListener("change", function (e) {
+    if (e.target && e.target.id === "emailDomain") {
+      const customDomainGroup = document.getElementById("customDomainGroup");
       if (customDomainGroup) {
-        if (e.target.value === 'custom') {
-          customDomainGroup.style.display = 'block';
+        if (e.target.value === "custom") {
+          customDomainGroup.style.display = "block";
           // Focus on custom domain input
-          const customDomainInput = document.getElementById('customDomain');
+          const customDomainInput = document.getElementById("customDomain");
           if (customDomainInput) {
             setTimeout(() => customDomainInput.focus(), 100);
           }
         } else {
-          customDomainGroup.style.display = 'none';
+          customDomainGroup.style.display = "none";
         }
       }
     }
   });
 
-  document.getElementById('controlsHeader').addEventListener('click', () => {
-    const controls = document.querySelector('.dg-controls');
-    controls.classList.toggle('collapsed');
+  document.getElementById("controlsHeader").addEventListener("click", () => {
+    const controls = document.querySelector(".dg-controls");
+    controls.classList.toggle("collapsed");
   });
 
-  document.getElementById('generateBtn').addEventListener('click', () => {
+  document.getElementById("generateBtn").addEventListener("click", () => {
     if (!window.generators || Object.keys(window.generators).length === 0) {
-      alert('Generators not loaded');
+      alert("Generators not loaded");
       return;
     }
 
-    const count = parseInt(document.getElementById('recordCount').value) || 1;
-    const checked = Array.from(document.querySelectorAll('.dg-checkbox input')).filter(c => c.checked).map(c => c.value);
-    
+    const count = parseInt(document.getElementById("recordCount").value) || 1;
+    const checked = Array.from(document.querySelectorAll(".dg-checkbox input"))
+      .filter((c) => c.checked)
+      .map((c) => c.value);
+
     if (checked.length === 0) {
-      alert('Please select at least one field');
+      alert("Please select at least one field");
       return;
     }
 
     // Check if any file types are selected
-    const fileTypes = ['txt', 'json', 'csv', 'xml', 'html', 'pdf', 'doc', 'xlsx', 'jpg', 'png', 'zip'];
-    const selectedFileTypes = checked.filter(field => fileTypes.includes(field));
-    
+    const fileTypes = [
+      "txt",
+      "json",
+      "csv",
+      "xml",
+      "html",
+      "pdf",
+      "doc",
+      "xlsx",
+      "jpg",
+      "png",
+      "zip",
+    ];
+    const selectedFileTypes = checked.filter((field) =>
+      fileTypes.includes(field),
+    );
+
     if (selectedFileTypes.length > 0) {
       // Handle file generation
-      const fileName = document.getElementById('fileName').value || 'test-file';
-      const fileSize = parseInt(document.getElementById('fileSize').value) || 10;
-      const fileSizeUnit = document.getElementById('fileSizeUnit').value;
-      
+      const fileName = document.getElementById("fileName").value || "test-file";
+      const fileSize =
+        parseInt(document.getElementById("fileSize").value) || 10;
+      const fileSizeUnit = document.getElementById("fileSizeUnit").value;
+
       generatedData = [];
-      selectedFileTypes.forEach(fileType => {
+      selectedFileTypes.forEach((fileType) => {
         const record = {
           fileName: `${fileName}.${fileType}`,
           fileType: fileType,
           fileSize: `${fileSize} ${fileSizeUnit}`,
-          generated: new Date().toISOString()
+          generated: new Date().toISOString(),
         };
         generatedData.push(record);
       });
@@ -1377,12 +1653,12 @@ function createDataGeneratorUI(containerId) {
       for (let i = 0; i < count; i++) {
         if (window.resetSharedData) window.resetSharedData();
         const record = {};
-        checked.forEach(fieldId => {
+        checked.forEach((fieldId) => {
           if (window.generators[fieldId]) {
             try {
               record[fieldId] = window.generators[fieldId]();
             } catch (e) {
-              record[fieldId] = 'Error';
+              record[fieldId] = "Error";
             }
           }
         });
@@ -1390,185 +1666,261 @@ function createDataGeneratorUI(containerId) {
       }
     }
 
-    const resultsDiv = document.getElementById('results');
-    const recordTabs = generatedData.map((_, idx) => `<button class="dg-record-tab ${idx === 0 ? 'active' : ''}" data-record="${idx}">Record ${idx + 1}</button>`).join('');
-    const recordContents = generatedData.map((record, recordIdx) => {
-      const grouped = {};
-      Object.entries(record).forEach(([key, value]) => {
-        const category = categories.find(cat => cat.fields.some(f => f.id === key));
-        const catName = category ? category.title : 'Other';
-        if (!grouped[catName]) grouped[catName] = [];
-        grouped[catName].push({ key, value });
-      });
-      
-      const catTabs = Object.keys(grouped).map((cat, idx) => `<button class="dg-category-tab ${idx === 0 ? 'active' : ''}" data-category="${recordIdx}-${cat}">${cat}</button>`).join('');
-      const catContents = Object.entries(grouped).map(([cat, fields], idx) => `
-        <div class="dg-category-content ${idx === 0 ? 'active' : ''}" data-category-content="${recordIdx}-${cat}">
-          ${fields.map(({ key, value }) => `<div class="dg-record-field"><span class="dg-record-label">${key}</span><span class="dg-field-value" data-value="${value}">${value}</span></div>`).join('')}
+    const resultsDiv = document.getElementById("results");
+    const recordTabs = generatedData
+      .map(
+        (_, idx) =>
+          `<button class="dg-record-tab ${idx === 0 ? "active" : ""}" data-record="${idx}">Record ${idx + 1}</button>`,
+      )
+      .join("");
+    const recordContents = generatedData
+      .map((record, recordIdx) => {
+        const grouped = {};
+        Object.entries(record).forEach(([key, value]) => {
+          const category = categories.find((cat) =>
+            cat.fields.some((f) => f.id === key),
+          );
+          const catName = category ? category.title : "Other";
+          if (!grouped[catName]) grouped[catName] = [];
+          grouped[catName].push({ key, value });
+        });
+
+        const catTabs = Object.keys(grouped)
+          .map(
+            (cat, idx) =>
+              `<button class="dg-category-tab ${idx === 0 ? "active" : ""}" data-category="${recordIdx}-${cat}">${cat}</button>`,
+          )
+          .join("");
+        const catContents = Object.entries(grouped)
+          .map(
+            ([cat, fields], idx) => `
+        <div class="dg-category-content ${idx === 0 ? "active" : ""}" data-category-content="${recordIdx}-${cat}">
+          ${fields.map(({ key, value }) => `<div class="dg-record-field"><span class="dg-record-label">${key}</span><span class="dg-field-value" data-value="${value}">${value}</span></div>`).join("")}
         </div>
-      `).join('');
-      
-      return `
-        <div class="dg-record-content ${recordIdx === 0 ? 'active' : ''}" data-record-content="${recordIdx}">
+      `,
+          )
+          .join("");
+
+        return `
+        <div class="dg-record-content ${recordIdx === 0 ? "active" : ""}" data-record-content="${recordIdx}">
           <div class="dg-category-tabs">${catTabs}</div>
           <div class="dg-category-contents">${catContents}</div>
         </div>
       `;
-    }).join('');
-    
+      })
+      .join("");
+
     resultsDiv.innerHTML = `<div class="dg-record-tabs">${recordTabs}</div><div class="dg-record-contents">${recordContents}</div>`;
-    
-    document.querySelectorAll('.dg-record-tab').forEach(tab => {
-      tab.addEventListener('click', () => {
+
+    document.querySelectorAll(".dg-record-tab").forEach((tab) => {
+      tab.addEventListener("click", () => {
         const recordIdx = tab.dataset.record;
-        document.querySelectorAll('.dg-record-tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.dg-record-content').forEach(c => c.classList.remove('active'));
-        tab.classList.add('active');
-        document.querySelector(`.dg-record-content[data-record-content="${recordIdx}"]`).classList.add('active');
+        document
+          .querySelectorAll(".dg-record-tab")
+          .forEach((t) => t.classList.remove("active"));
+        document
+          .querySelectorAll(".dg-record-content")
+          .forEach((c) => c.classList.remove("active"));
+        tab.classList.add("active");
+        document
+          .querySelector(
+            `.dg-record-content[data-record-content="${recordIdx}"]`,
+          )
+          .classList.add("active");
       });
     });
-    
-    document.querySelectorAll('.dg-category-tab').forEach(tab => {
-      tab.addEventListener('click', () => {
+
+    document.querySelectorAll(".dg-category-tab").forEach((tab) => {
+      tab.addEventListener("click", () => {
         const catKey = tab.dataset.category;
-        const recordIdx = catKey.split('-')[0];
-        document.querySelectorAll(`.dg-record-content[data-record-content="${recordIdx}"] .dg-category-tab`).forEach(t => t.classList.remove('active'));
-        document.querySelectorAll(`.dg-record-content[data-record-content="${recordIdx}"] .dg-category-content`).forEach(c => c.classList.remove('active'));
-        tab.classList.add('active');
-        document.querySelector(`.dg-category-content[data-category-content="${catKey}"]`).classList.add('active');
+        const recordIdx = catKey.split("-")[0];
+        document
+          .querySelectorAll(
+            `.dg-record-content[data-record-content="${recordIdx}"] .dg-category-tab`,
+          )
+          .forEach((t) => t.classList.remove("active"));
+        document
+          .querySelectorAll(
+            `.dg-record-content[data-record-content="${recordIdx}"] .dg-category-content`,
+          )
+          .forEach((c) => c.classList.remove("active"));
+        tab.classList.add("active");
+        document
+          .querySelector(
+            `.dg-category-content[data-category-content="${catKey}"]`,
+          )
+          .classList.add("active");
       });
     });
-    
-    document.querySelectorAll('.dg-field-value').forEach(el => {
-      el.addEventListener('click', function() {
-        const value = this.getAttribute('data-value');
+
+    document.querySelectorAll(".dg-field-value").forEach((el) => {
+      el.addEventListener("click", function () {
+        const value = this.getAttribute("data-value");
         navigator.clipboard.writeText(value).then(() => {
           const original = this.textContent;
-          this.textContent = 'Copied!';
-          setTimeout(() => this.textContent = original, 800);
+          this.textContent = "Copied!";
+          setTimeout(() => (this.textContent = original), 800);
         });
       });
     });
   });
 
-  document.getElementById('copyBtn').addEventListener('click', () => {
+  document.getElementById("copyBtn").addEventListener("click", () => {
     if (generatedData.length === 0) {
-      alert('Generate data first');
+      alert("Generate data first");
       return;
     }
-    navigator.clipboard.writeText(JSON.stringify(generatedData, null, 2)).then(() => {
-      const btn = document.getElementById('copyBtn');
-      const originalText = btn.textContent;
-      btn.textContent = 'Copied!';
-      setTimeout(() => btn.textContent = originalText, 1000);
-    });
+    navigator.clipboard
+      .writeText(JSON.stringify(generatedData, null, 2))
+      .then(() => {
+        const btn = document.getElementById("copyBtn");
+        const originalText = btn.textContent;
+        btn.textContent = "Copied!";
+        setTimeout(() => (btn.textContent = originalText), 1000);
+      });
   });
 
-  document.getElementById('downloadBtn').addEventListener('click', () => {
+  document.getElementById("downloadBtn").addEventListener("click", () => {
     if (generatedData.length === 0) {
-      alert('Generate files first');
+      alert("Generate files first");
       return;
     }
 
     // Check if we have file data
-    const hasFileData = generatedData.some(record => record.fileType);
+    const hasFileData = generatedData.some((record) => record.fileType);
     if (!hasFileData) {
-      alert('No files generated. Please select file types and generate first.');
+      alert("No files generated. Please select file types and generate first.");
       return;
     }
 
-    const fileName = document.getElementById('fileName').value || 'test-file';
-    const fileSize = parseInt(document.getElementById('fileSize').value) || 10;
-    const fileSizeUnit = document.getElementById('fileSizeUnit').value;
-    
+    const fileName = document.getElementById("fileName").value || "test-file";
+    const fileSize = parseInt(document.getElementById("fileSize").value) || 10;
+    const fileSizeUnit = document.getElementById("fileSizeUnit").value;
+
     let fileSizeBytes = fileSize;
-    if (fileSizeUnit === 'KB') fileSizeBytes = fileSize * 1024;
-    else if (fileSizeUnit === 'MB') fileSizeBytes = fileSize * 1024 * 1024;
-    else if (fileSizeUnit === 'GB') fileSizeBytes = fileSize * 1024 * 1024 * 1024;
-    
+    if (fileSizeUnit === "KB") fileSizeBytes = fileSize * 1024;
+    else if (fileSizeUnit === "MB") fileSizeBytes = fileSize * 1024 * 1024;
+    else if (fileSizeUnit === "GB")
+      fileSizeBytes = fileSize * 1024 * 1024 * 1024;
+
     // Download each generated file
-    generatedData.forEach(record => {
+    generatedData.forEach((record) => {
       if (!record.fileType) return;
-      
+
       const fileType = record.fileType;
-      let content = '';
-      let mimeType = 'text/plain';
-      
-      if (fileType === 'json') {
-        content = JSON.stringify({ message: 'Test JSON file', generated: new Date().toISOString() }, null, 2);
-        mimeType = 'application/json';
-      } else if (fileType === 'csv') {
-        content = 'Name,Email,Phone\nJohn Doe,john@example.com,+1234567890\nJane Smith,jane@example.com,+0987654321';
-        mimeType = 'text/csv';
-      } else if (fileType === 'xml') {
-        content = '<?xml version="1.0" encoding="UTF-8"?>\n<data>\n  <message>Test XML file</message>\n  <generated>' + new Date().toISOString() + '</generated>\n</data>';
-        mimeType = 'application/xml';
-      } else if (fileType === 'html') {
-        content = '<!DOCTYPE html><html><head><title>Test HTML</title></head><body><h1>Test HTML File</h1><p>Generated: ' + new Date().toISOString() + '</p></body></html>';
-        mimeType = 'text/html';
-      } else if (fileType === 'css') {
-        content = 'body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }\n.container { max-width: 1200px; margin: 0 auto; }';
-        mimeType = 'text/css';
-      } else if (fileType === 'js') {
-        content = 'console.log("Test JavaScript file generated on ' + new Date().toISOString() + '");\nfunction testFunction() {\n  return "Hello World";\n}';
-        mimeType = 'application/javascript';
-      } else if (fileType === 'py') {
-        content = '#!/usr/bin/env python3\n# Test Python file\nprint("Generated on ' + new Date().toISOString() + '")\n\ndef hello_world():\n    return "Hello World"';
-        mimeType = 'text/x-python';
-      } else if (fileType === 'java') {
-        content = 'public class TestFile {\n    public static void main(String[] args) {\n        System.out.println("Generated on ' + new Date().toISOString() + '");\n    }\n}';
-        mimeType = 'text/x-java-source';
-      } else if (fileType === 'cpp') {
-        content = '#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << "Generated on ' + new Date().toISOString() + '" << endl;\n    return 0;\n}';
-        mimeType = 'text/x-c++src';
-      } else if (fileType === 'sql') {
-        content = '-- Test SQL file\n-- Generated on ' + new Date().toISOString() + '\nCREATE TABLE users (\n    id INT PRIMARY KEY,\n    name VARCHAR(100),\n    email VARCHAR(100)\n);';
-        mimeType = 'application/sql';
-      } else if (['yaml', 'yml'].includes(fileType)) {
-        content = 'name: Test YAML\nversion: 1.0\ngenerated: ' + new Date().toISOString() + '\nconfig:\n  debug: true\n  port: 8080';
-        mimeType = 'application/x-yaml';
-      } else if (fileType === 'md') {
-        content = '# Test Markdown File\n\nGenerated on ' + new Date().toISOString() + '\n\n## Features\n- Item 1\n- Item 2\n\n**Bold text** and *italic text*';
-        mimeType = 'text/markdown';
-      } else if (['jpg', 'png', 'gif', 'bmp', 'webp'].includes(fileType)) {
-        const canvas = document.createElement('canvas');
+      let content = "";
+      let mimeType = "text/plain";
+
+      if (fileType === "json") {
+        content = JSON.stringify(
+          { message: "Test JSON file", generated: new Date().toISOString() },
+          null,
+          2,
+        );
+        mimeType = "application/json";
+      } else if (fileType === "csv") {
+        content =
+          "Name,Email,Phone\nJohn Doe,john@example.com,+1234567890\nJane Smith,jane@example.com,+0987654321";
+        mimeType = "text/csv";
+      } else if (fileType === "xml") {
+        content =
+          '<?xml version="1.0" encoding="UTF-8"?>\n<data>\n  <message>Test XML file</message>\n  <generated>' +
+          new Date().toISOString() +
+          "</generated>\n</data>";
+        mimeType = "application/xml";
+      } else if (fileType === "html") {
+        content =
+          "<!DOCTYPE html><html><head><title>Test HTML</title></head><body><h1>Test HTML File</h1><p>Generated: " +
+          new Date().toISOString() +
+          "</p></body></html>";
+        mimeType = "text/html";
+      } else if (fileType === "css") {
+        content =
+          "body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }\n.container { max-width: 1200px; margin: 0 auto; }";
+        mimeType = "text/css";
+      } else if (fileType === "js") {
+        content =
+          'console.log("Test JavaScript file generated on ' +
+          new Date().toISOString() +
+          '");\nfunction testFunction() {\n  return "Hello World";\n}';
+        mimeType = "application/javascript";
+      } else if (fileType === "py") {
+        content =
+          '#!/usr/bin/env python3\n# Test Python file\nprint("Generated on ' +
+          new Date().toISOString() +
+          '")\n\ndef hello_world():\n    return "Hello World"';
+        mimeType = "text/x-python";
+      } else if (fileType === "java") {
+        content =
+          'public class TestFile {\n    public static void main(String[] args) {\n        System.out.println("Generated on ' +
+          new Date().toISOString() +
+          '");\n    }\n}';
+        mimeType = "text/x-java-source";
+      } else if (fileType === "cpp") {
+        content =
+          '#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << "Generated on ' +
+          new Date().toISOString() +
+          '" << endl;\n    return 0;\n}';
+        mimeType = "text/x-c++src";
+      } else if (fileType === "sql") {
+        content =
+          "-- Test SQL file\n-- Generated on " +
+          new Date().toISOString() +
+          "\nCREATE TABLE users (\n    id INT PRIMARY KEY,\n    name VARCHAR(100),\n    email VARCHAR(100)\n);";
+        mimeType = "application/sql";
+      } else if (["yaml", "yml"].includes(fileType)) {
+        content =
+          "name: Test YAML\nversion: 1.0\ngenerated: " +
+          new Date().toISOString() +
+          "\nconfig:\n  debug: true\n  port: 8080";
+        mimeType = "application/x-yaml";
+      } else if (fileType === "md") {
+        content =
+          "# Test Markdown File\n\nGenerated on " +
+          new Date().toISOString() +
+          "\n\n## Features\n- Item 1\n- Item 2\n\n**Bold text** and *italic text*";
+        mimeType = "text/markdown";
+      } else if (["jpg", "png", "gif", "bmp", "webp"].includes(fileType)) {
+        const canvas = document.createElement("canvas");
         canvas.width = 800;
         canvas.height = 600;
-        const ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#' + Math.floor(Math.random()*16777215).toString(16);
+        const ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#" + Math.floor(Math.random() * 16777215).toString(16);
         ctx.fillRect(0, 0, 800, 600);
-        ctx.fillStyle = '#fff';
-        ctx.font = '30px Arial';
-        ctx.fillText('Test Image - ' + new Date().toISOString(), 50, 300);
-        content = canvas.toDataURL('image/' + (fileType === 'jpg' ? 'jpeg' : fileType));
-        mimeType = 'image/' + (fileType === 'jpg' ? 'jpeg' : fileType);
-      } else if (fileType === 'svg') {
+        ctx.fillStyle = "#fff";
+        ctx.font = "30px Arial";
+        ctx.fillText("Test Image - " + new Date().toISOString(), 50, 300);
+        content = canvas.toDataURL(
+          "image/" + (fileType === "jpg" ? "jpeg" : fileType),
+        );
+        mimeType = "image/" + (fileType === "jpg" ? "jpeg" : fileType);
+      } else if (fileType === "svg") {
         content = `<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
-          <rect width="800" height="600" fill="#${Math.floor(Math.random()*16777215).toString(16)}"/>
+          <rect width="800" height="600" fill="#${Math.floor(Math.random() * 16777215).toString(16)}"/>
           <text x="50" y="300" font-size="30" fill="white">Test SVG - ${new Date().toISOString()}</text>
         </svg>`;
-        mimeType = 'image/svg+xml';
+        mimeType = "image/svg+xml";
       } else {
         content = `This is a test ${fileType.toUpperCase()} file generated on ${new Date().toISOString()}\n\nFile Type: ${fileType}\nSize: ${fileSize} ${fileSizeUnit}`;
       }
-      
+
       // Handle image data URLs differently
-      if (['jpg', 'png', 'gif', 'bmp', 'webp'].includes(fileType)) {
-        const a = document.createElement('a');
+      if (["jpg", "png", "gif", "bmp", "webp"].includes(fileType)) {
+        const a = document.createElement("a");
         a.href = content;
         a.download = `${fileName}.${fileType}`;
         a.click();
       } else {
         // Pad to exact size for non-image files
         if (content.length < fileSizeBytes) {
-          content += '\n' + 'x'.repeat(fileSizeBytes - content.length - 1);
+          content += "\n" + "x".repeat(fileSizeBytes - content.length - 1);
         } else if (content.length > fileSizeBytes) {
           content = content.substring(0, fileSizeBytes);
         }
-        
+
         const blob = new Blob([content], { type: mimeType });
         const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
+        const a = document.createElement("a");
         a.href = url;
         a.download = `${fileName}.${fileType}`;
         a.click();
@@ -1576,48 +1928,74 @@ function createDataGeneratorUI(containerId) {
       }
     });
   });
-  
+
   // Add event listeners for date conversion
-  const convertToHijriBtn = document.getElementById('convertToHijri');
-  const convertToGregorianBtn = document.getElementById('convertToGregorian');
-  const conversionResult = document.getElementById('conversionResult');
+  const convertToHijriBtn = document.getElementById("convertToHijri");
+  const convertToGregorianBtn = document.getElementById("convertToGregorian");
+  const conversionResult = document.getElementById("conversionResult");
 
   if (convertToHijriBtn) {
-    convertToHijriBtn.addEventListener('click', () => {
-      const dateInput = document.getElementById('specificGregorianDate');
+    convertToHijriBtn.addEventListener("click", () => {
+      const dateInput = document.getElementById("specificGregorianDate");
       if (dateInput && dateInput.value) {
         const gregorianDate = new Date(dateInput.value);
         const hijri = gregorianToHijri(gregorianDate);
-        const hijriMonths = ['محرم', 'صفر', 'ربيع الأول', 'ربيع الثاني', 'جمادى الأولى', 'جمادى الثانية', 'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة'];
+        const hijriMonths = [
+          "محرم",
+          "صفر",
+          "ربيع الأول",
+          "ربيع الثاني",
+          "جمادى الأولى",
+          "جمادى الثانية",
+          "رجب",
+          "شعبان",
+          "رمضان",
+          "شوال",
+          "ذو القعدة",
+          "ذو الحجة",
+        ];
         const result = `${dateInput.value} → ${hijri.day} ${hijriMonths[hijri.month - 1]} ${hijri.year}هـ`;
         conversionResult.textContent = result;
-        conversionResult.style.display = 'block';
+        conversionResult.style.display = "block";
       }
     });
   }
 
   if (convertToGregorianBtn) {
-    convertToGregorianBtn.addEventListener('click', () => {
-      const dayInput = document.getElementById('hijriDay');
-      const monthSelect = document.getElementById('hijriMonth');
-      const yearInput = document.getElementById('hijriYear');
-      
+    convertToGregorianBtn.addEventListener("click", () => {
+      const dayInput = document.getElementById("hijriDay");
+      const monthSelect = document.getElementById("hijriMonth");
+      const yearInput = document.getElementById("hijriYear");
+
       if (dayInput.value && monthSelect.value && yearInput.value) {
         const hDay = parseInt(dayInput.value);
         const hMonth = parseInt(monthSelect.value);
         const hYear = parseInt(yearInput.value);
         const gregorianDate = hijriToGregorian(hYear, hMonth, hDay);
-        const hijriMonths = ['محرم', 'صفر', 'ربيع الأول', 'ربيع الثاني', 'جمادى الأولى', 'جمادى الثانية', 'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة'];
-        const result = `${hDay} ${hijriMonths[hMonth - 1]} ${hYear}هـ → ${gregorianDate.getFullYear()}-${(gregorianDate.getMonth() + 1).toString().padStart(2, '0')}-${gregorianDate.getDate().toString().padStart(2, '0')}`;
+        const hijriMonths = [
+          "محرم",
+          "صفر",
+          "ربيع الأول",
+          "ربيع الثاني",
+          "جمادى الأولى",
+          "جمادى الثانية",
+          "رجب",
+          "شعبان",
+          "رمضان",
+          "شوال",
+          "ذو القعدة",
+          "ذو الحجة",
+        ];
+        const result = `${hDay} ${hijriMonths[hMonth - 1]} ${hYear}هـ → ${gregorianDate.getFullYear()}-${(gregorianDate.getMonth() + 1).toString().padStart(2, "0")}-${gregorianDate.getDate().toString().padStart(2, "0")}`;
         conversionResult.textContent = result;
-        conversionResult.style.display = 'block';
+        conversionResult.style.display = "block";
       }
     });
   }
 }
 
-if (typeof module !== 'undefined' && module.exports) {
+if (typeof module !== "undefined" && module.exports) {
   module.exports = { createDataGeneratorUI };
-} else if (typeof window !== 'undefined') {
+} else if (typeof window !== "undefined") {
   window.createDataGeneratorUI = createDataGeneratorUI;
 }

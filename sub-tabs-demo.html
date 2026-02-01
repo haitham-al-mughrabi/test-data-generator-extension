@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sub-Tabs Demo - Test Data Generator</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; margin: 0; padding: 20px; background: #f8fafc; }
+        .demo-container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); overflow: hidden; }
+        .demo-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; text-align: center; }
+        .demo-header h1 { margin: 0; font-size: 24px; }
+        .demo-header p { margin: 10px 0 0 0; opacity: 0.9; }
+        
+        /* Main Tabs */
+        .main-tabs { display: flex; background: white; border-bottom: 2px solid #e2e8f0; overflow-x: auto; }
+        .main-tab { padding: 12px 20px; border: none; background: none; cursor: pointer; font-size: 14px; font-weight: 600; color: #64748b; border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.2s; }
+        .main-tab:nth-child(1) { background: linear-gradient(135deg, #fef3c7, #fde68a); color: #92400e; }
+        .main-tab:nth-child(2) { background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1e40af; }
+        .main-tab:nth-child(3) { background: linear-gradient(135deg, #dcfce7, #bbf7d0); color: #166534; }
+        .main-tab:nth-child(4) { background: linear-gradient(135deg, #fce7f3, #fbcfe8); color: #be185d; }
+        .main-tab:hover { transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .main-tab.active { border-bottom-color: currentColor; transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+        
+        /* Sub Tabs */
+        .sub-tabs { display: none; background: rgba(255,255,255,0.95); border-bottom: 1px solid #e2e8f0; padding: 12px 20px; }
+        .sub-tabs.active { display: flex; gap: 12px; flex-wrap: wrap; }
+        .sub-tab { padding: 8px 16px; background: rgba(255,255,255,0.8); border: 1px solid #e2e8f0; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 500; color: #64748b; transition: all 0.2s; }
+        .sub-tab:hover { background: white; border-color: #cbd5e1; transform: translateY(-1px); }
+        .sub-tab.active { background: white; border-color: #667eea; color: #667eea; box-shadow: 0 2px 6px rgba(102, 126, 234, 0.2); }
+        
+        /* Content */
+        .tab-content { display: none; padding: 20px; }
+        .tab-content.active { display: block; }
+        .sub-content { display: none; }
+        .sub-content.active { display: block; }
+        
+        .field-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 16px; }
+        .field-item { padding: 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 13px; }
+        .field-label { font-weight: 600; color: #374151; margin-bottom: 4px; }
+        .field-id { color: #6b7280; font-family: monospace; font-size: 11px; }
+        
+        .demo-note { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 16px; margin: 20px; color: #1e40af; }
+        .demo-note h3 { margin: 0 0 8px 0; color: #1d4ed8; }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1>🎲 Sub-Tabs Demo - Test Data Generator</h1>
+            <p>Proposed reorganization with main categories and sub-categories</p>
+        </div>
+        
+        <div class="demo-note">
+            <h3>💡 Proposed Structure</h3>
+            <p>This demo shows how we could reorganize the current 37+ categories into 4 main tabs with logical sub-categories for better organization and navigation.</p>
+        </div>
+        
+        <!-- Main Tabs -->
+        <div class="main-tabs">
+            <button class="main-tab active" data-tab="personal">👤 Personal</button>
+            <button class="main-tab" data-tab="contact">📞 Contact & Location</button>
+            <button class="main-tab" data-tab="business">💼 Business & Work</button>
+            <button class="main-tab" data-tab="testing">🧪 Testing & QA</button>
+        </div>
+        
+        <!-- Personal Sub-tabs -->
+        <div class="sub-tabs active" data-subtabs="personal">
+            <button class="sub-tab active" data-subtab="identity">Identity</button>
+            <button class="sub-tab" data-subtab="demographics">Demographics</button>
+            <button class="sub-tab" data-subtab="documents">Documents</button>
+            <button class="sub-tab" data-subtab="health">Health</button>
+        </div>
+        
+        <!-- Contact Sub-tabs -->
+        <div class="sub-tabs" data-subtabs="contact">
+            <button class="sub-tab" data-subtab="communication">Communication</button>
+            <button class="sub-tab" data-subtab="address">Address</button>
+            <button class="sub-tab" data-subtab="location">Location</button>
+            <button class="sub-tab" data-subtab="social">Social Media</button>
+        </div>
+        
+        <!-- Business Sub-tabs -->
+        <div class="sub-tabs" data-subtabs="business">
+            <button class="sub-tab" data-subtab="work">Work Info</button>
+            <button class="sub-tab" data-subtab="finance">Finance</button>
+            <button class="sub-tab" data-subtab="government">Government</button>
+            <button class="sub-tab" data-subtab="commerce">E-commerce</button>
+        </div>
+        
+        <!-- Testing Sub-tabs -->
+        <div class="sub-tabs" data-subtabs="testing">
+            <button class="sub-tab" data-subtab="email">Email Testing</button>
+            <button class="sub-tab" data-subtab="phone">Phone Testing</button>
+            <button class="sub-tab" data-subtab="password">Password Testing</button>
+            <button class="sub-tab" data-subtab="data">Data Testing</button>
+        </div>
+        
+        <!-- Content Areas -->
+        <div class="tab-content active" data-content="personal">
+            <div class="sub-content active" data-subcontent="identity">
+                <h3>👤 Identity Fields</h3>
+                <div class="field-grid">
+                    <div class="field-item">
+                        <div class="field-label">First Name (EN)</div>
+                        <div class="field-id">firstName</div>
+                    </div>
+                    <div class="field-item">
+                        <div class="field-label">First Name (AR)</div>
+                        <div class="field-id">firstNameAr</div>
+                    </div>
+                    <div class="field-item">
+                        <div class="field-label">Last Name (EN)</div>
+                        <div class="field-id">lastName</div>
+                    </div>
+                    <div class="field-item">
+                        <div class="field-label">Last Name (AR)</div>
+                        <div class="field-id">lastNameAr</div>
+                    </div>
+                    <div class="field-item">
+                        <div class="field-label">Full Name (EN)</div>
+                        <div class="field-id">fullName</div>
+                    </div>
+                    <div class="field-item">
+                        <div class="field-label">Full Name (AR)</div>
+                        <div class="field-id">fullNameAr</div>
+                    </div>
+                    <div class="field-item">
+                        <div class="field-label">Gender (EN)</div>
+                        <div class="field-id">gender</div>
+                    </div>
+                    <div class="field-item">
+                        <div class="field-label">Gender (AR)</div>
+                        <div class="field-id">genderAr</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="sub-content" data-subcontent="demographics">
+                <h3>📊 Demographics Fields</h3>
+                <div class="field-grid">
+                    <div class="field-item">
+                        <div class="field-label">Birthdate</div>
+                        <div class="field-id">birthdate</div>
+                    </div>
+                    <div class="field-item">
+                        <div class="field-label">Age</div>
+                        <div class="field-id">age</div>
+                    </div>
+                    <div class="field-item">
+                        <div class="field-label">Nationality (EN)</div>
+                        <div class="field-id">nationality</div>
+                    </div>
+                    <div class="field-item">
+                        <div class="field-label">Nationality (AR)</div>
+                        <div class="field-id">nationalityAr</div>
+                    </div>
+                    <div class="field-item">
+                        <div class="field-label">Blood Type</div>
+                        <div class="field-id">bloodType</div>
+                    </div>
+                    <div class="field-item">
+                        <div class="field-label">Marital Status (EN)</div>
+                        <div class="field-id">maritalStatus</div>
+                    </div>
+                    <div class="field-item">
+                        <div class="field-label">Marital Status (AR)</div>
+                        <div class="field-id">maritalStatusAr</div>
+                    </div>
+                    <div class="field-item">
+                        <div class="field-label">Religion (EN)</div>
+                        <div class="field-id">religion</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="sub-content" data-subcontent="documents">
+                <h3>📄 Documents Fields</h3>
+                <div class="field-grid">
+                    <div class="field-item">
+                        <div class="field-label">Saudi ID</div>
+                        <div class="field-id">saudiId</div>
+                    </div>
+                    <div class="field-item">
+                        <div class="field-label">Iqama Number</div>
+                        <div class="field-id">iqamaNumber</div>
+                    </div>
+                    <div class="field-item">
+                        <div class="field-label">Border Number</div>
+                        <div class="field-id">borderNumber</div>
+                    </div>
+                    <div class="field-item">
+                        <div class="field-label">Passport Number</div>
+                        <div class="field-id">passportNumber</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="sub-content" data-subcontent="health">
+                <h3>🏥 Health Fields</h3>
+                <div class="field-grid">
+                    <div class="field-item">
+                        <div class="field-label">Medical Record Number</div>
+                        <div class="field-id">medicalRecordNumber</div>
+                    </div>
+                    <div class="field-item">
+                        <div class="field-label">Insurance Number</div>
+                        <div class="field-id">insuranceNumber</div>
+                    </div>
+                    <div class="field-item">
+                        <div class="field-label">Emergency Contact</div>
+                        <div class="field-id">emergencyContact</div>
+                    </div>
+                    <div class="field-item">
+                        <div class="field-label">Allergies</div>
+                        <div class="field-id">allergies</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="demo-note">
+            <h3>🎯 Benefits of Sub-Tabs</h3>
+            <ul>
+                <li><strong>Better Organization:</strong> Logical grouping of related fields</li>
+                <li><strong>Reduced Clutter:</strong> From 37+ tabs to 4 main categories</li>
+                <li><strong>Improved Navigation:</strong> Easier to find specific field types</li>
+                <li><strong>Scalability:</strong> Easy to add new fields to appropriate sub-categories</li>
+                <li><strong>User Experience:</strong> Less overwhelming interface</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        // Main tab switching
+        document.querySelectorAll('.main-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabName = tab.dataset.tab;
+                
+                // Update main tabs
+                document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Update sub-tabs
+                document.querySelectorAll('.sub-tabs').forEach(st => st.classList.remove('active'));
+                document.querySelector(`[data-subtabs="${tabName}"]`).classList.add('active');
+                
+                // Update content
+                document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+                document.querySelector(`[data-content="${tabName}"]`).classList.add('active');
+                
+                // Activate first sub-tab
+                const firstSubTab = document.querySelector(`[data-subtabs="${tabName}"] .sub-tab`);
+                if (firstSubTab) {
+                    document.querySelectorAll('.sub-tab').forEach(st => st.classList.remove('active'));
+                    firstSubTab.classList.add('active');
+                    
+                    const firstSubContent = firstSubTab.dataset.subtab;
+                    document.querySelectorAll('.sub-content').forEach(sc => sc.classList.remove('active'));
+                    document.querySelector(`[data-subcontent="${firstSubContent}"]`).classList.add('active');
+                }
+            });
+        });
+        
+        // Sub-tab switching
+        document.querySelectorAll('.sub-tab').forEach(subTab => {
+            subTab.addEventListener('click', () => {
+                const subTabName = subTab.dataset.subtab;
+                
+                // Update sub-tabs
+                document.querySelectorAll('.sub-tab').forEach(st => st.classList.remove('active'));
+                subTab.classList.add('active');
+                
+                // Update sub-content
+                document.querySelectorAll('.sub-content').forEach(sc => sc.classList.remove('active'));
+                document.querySelector(`[data-subcontent="${subTabName}"]`).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
