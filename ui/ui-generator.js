@@ -303,6 +303,33 @@ function createDataGeneratorUI(containerId) {
           </div>
         </div>
       ` : ''}
+      ${cat.title === 'Date & Time' ? `
+        <div class="dg-file-controls" id="dateTimeControls">
+          <div class="dg-file-control-group">
+            <label>Date Range:</label>
+            <div class="dg-file-size-group">
+              <input type="date" id="dateFrom" value="2020-01-01">
+              <input type="date" id="dateTo" value="2030-12-31">
+            </div>
+          </div>
+          <div class="dg-file-control-group">
+            <label>Time Range:</label>
+            <div class="dg-file-size-group">
+              <input type="time" id="timeFrom" value="00:00">
+              <input type="time" id="timeTo" value="23:59">
+            </div>
+          </div>
+          <div class="dg-file-control-group">
+            <label>Date Format:</label>
+            <select id="dateFormat">
+              <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+              <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+              <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+              <option value="DD-MM-YYYY">DD-MM-YYYY</option>
+            </select>
+          </div>
+        </div>
+      ` : ''}
     </div>
   `).join('');
 
@@ -353,11 +380,16 @@ function createDataGeneratorUI(containerId) {
       
       // Show/hide file controls and download button based on Files tab
       const isFilesTab = categories[tabIdx].title === 'Files';
+      const isDateTimeTab = categories[tabIdx].title === 'Date & Time';
       const fileControls = document.getElementById('fileControls');
+      const dateTimeControls = document.getElementById('dateTimeControls');
       const downloadBtn = document.getElementById('downloadBtn');
       
       if (fileControls) {
         fileControls.classList.toggle('active', isFilesTab);
+      }
+      if (dateTimeControls) {
+        dateTimeControls.classList.toggle('active', isDateTimeTab);
       }
       if (downloadBtn) {
         downloadBtn.style.display = isFilesTab ? 'inline-block' : 'none';

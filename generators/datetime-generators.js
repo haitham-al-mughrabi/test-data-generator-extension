@@ -1,9 +1,55 @@
 // Date and time generators
+function getCustomDateRange() {
+  const dateFrom = document.getElementById('dateFrom');
+  const dateTo = document.getElementById('dateTo');
+  if (dateFrom && dateTo && dateFrom.value && dateTo.value) {
+    return {
+      start: new Date(dateFrom.value),
+      end: new Date(dateTo.value)
+    };
+  }
+  return {
+    start: new Date(2020, 0, 1),
+    end: new Date()
+  };
+}
+
+function getCustomTimeRange() {
+  const timeFrom = document.getElementById('timeFrom');
+  const timeTo = document.getElementById('timeTo');
+  if (timeFrom && timeTo && timeFrom.value && timeTo.value) {
+    return {
+      start: timeFrom.value,
+      end: timeTo.value
+    };
+  }
+  return {
+    start: '00:00',
+    end: '23:59'
+  };
+}
+
+function formatCustomDate(date) {
+  const format = document.getElementById('dateFormat');
+  const formatValue = format ? format.value : 'YYYY-MM-DD';
+  
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  
+  switch (formatValue) {
+    case 'DD/MM/YYYY': return `${day}/${month}/${year}`;
+    case 'MM/DD/YYYY': return `${month}/${day}/${year}`;
+    case 'DD-MM-YYYY': return `${day}-${month}-${year}`;
+    default: return `${year}-${month}-${day}`;
+  }
+}
+
 const dateTimeGenerators = {
   date: () => {
-    const start = new Date(2020, 0, 1);
-    const end = new Date();
-    return randomDate(start, end).toISOString().split('T')[0];
+    const range = getCustomDateRange();
+    const date = randomDate(range.start, range.end);
+    return formatCustomDate(date);
   },
 
   // Enhanced Date & Time Generators
@@ -59,9 +105,29 @@ const dateTimeGenerators = {
   },
 
   time: () => {
-    const hour = randomNum(0, 23).toString().padStart(2, '0');
-    const minute = randomNum(0, 59).toString().padStart(2, '0');
+    const range = getCustomTimeRange();
+    const startParts = range.start.split(':');
+    const endParts = range.end.split(':');
+    const startMinutes = parseInt(startParts[0]) * 60 + parseInt(startParts[1]);
+    const endMinutes = parseInt(endParts[0]) * 60 + parseInt(endParts[1]);
+    const randomMinutes = randomNum(startMinutes, endMinutes);
+    const hour = Math.floor(randomMinutes / 60).toString().padStart(2, '0');
+    const minute = (randomMinutes % 60).toString().padStart(2, '0');
     return `${hour}:${minute}`;
+  },
+
+  datetime: () => {
+    const range = getCustomDateRange();
+    const date = randomDate(range.start, range.end);
+    const timeRange = getCustomTimeRange();
+    const startParts = timeRange.start.split(':');
+    const endParts = timeRange.end.split(':');
+    const startMinutes = parseInt(startParts[0]) * 60 + parseInt(startParts[1]);
+    const endMinutes = parseInt(endParts[0]) * 60 + parseInt(endParts[1]);
+    const randomMinutes = randomNum(startMinutes, endMinutes);
+    const hour = Math.floor(randomMinutes / 60).toString().padStart(2, '0');
+    const minute = (randomMinutes % 60).toString().padStart(2, '0');
+    return `${formatCustomDate(date)} ${hour}:${minute}`;
   },
 
   time12: () => {
