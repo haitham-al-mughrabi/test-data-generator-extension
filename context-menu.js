@@ -3,6 +3,61 @@
   let contextMenu = null;
   let targetInput = null;
 
+  // Smart field detection
+  function detectFieldType(input) {
+    const name = (input.name || '').toLowerCase();
+    const id = (input.id || '').toLowerCase();
+    const placeholder = (input.placeholder || '').toLowerCase();
+    const type = (input.type || '').toLowerCase();
+    const className = (input.className || '').toLowerCase();
+    const label = getFieldLabel(input);
+    
+    const allText = `${name} ${id} ${placeholder} ${type} ${className} ${label}`.toLowerCase();
+    
+    // Field detection patterns
+    const patterns = [
+      { pattern: /first.*name|fname|given.*name/i, generators: ['firstName', 'firstNameAr'] },
+      { pattern: /last.*name|lname|family.*name|surname/i, generators: ['lastName', 'lastNameAr'] },
+      { pattern: /full.*name|name|الاسم/i, generators: ['fullName', 'fullNameAr'] },
+      { pattern: /email|mail|بريد/i, generators: ['email', 'validEmail'] },
+      { pattern: /phone|mobile|cell|هاتف|جوال/i, generators: ['mobileNumber', 'customPhone'] },
+      { pattern: /address|عنوان/i, generators: ['address', 'addressAr'] },
+      { pattern: /city|مدينة/i, generators: ['city', 'cityAr'] },
+      { pattern: /saudi.*id|national.*id|هوية/i, generators: ['saudiId'] },
+      { pattern: /iqama|إقامة/i, generators: ['iqamaNumber'] },
+      { pattern: /company|employer|شركة/i, generators: ['company'] },
+      { pattern: /job|position|title|وظيفة/i, generators: ['jobTitle', 'jobTitleAr'] },
+      { pattern: /iban|حساب.*بنكي/i, generators: ['iban'] },
+      { pattern: /card|credit|visa|master|بطاقة/i, generators: ['creditCard'] },
+      { pattern: /password|pass|كلمة.*مرور/i, generators: ['strongPassword', 'customPassword'] },
+      { pattern: /date|تاريخ/i, generators: ['date', 'hijriDate'] },
+      { pattern: /age|عمر/i, generators: ['age'] }
+    ];
+    
+    const suggestions = [];
+    patterns.forEach(pattern => {
+      if (pattern.pattern.test(allText)) {
+        suggestions.push(...pattern.generators);
+      }
+    });
+    
+    return [...new Set(suggestions)].slice(0, 3);
+  }
+  
+  function getFieldLabel(input) {
+    if (input.labels && input.labels.length > 0) {
+      return input.labels[0].textContent || '';
+    }
+    const label = document.querySelector(`label[for="${input.id}"]`);
+    if (label) return label.textContent || '';
+    const parent = input.parentElement;
+    if (parent) {
+      const label = parent.querySelector('label');
+      if (label) return label.textContent || '';
+    }
+    return '';
+  }
+
   // Create context menu
   function createContextMenu() {
     const menu = document.createElement('div');
@@ -111,6 +166,64 @@
     `;
     generateHeader.textContent = '🎲 Generate Data';
     contentArea.appendChild(generateHeader);
+    
+    // Add smart suggestions if available
+    const suggestions = detectFieldType(targetInput);
+    if (suggestions.length > 0) {
+      const suggestionsHeader = document.createElement('div');
+      suggestionsHeader.className = 'menu-header';
+      suggestionsHeader.style.cssText = `
+        padding: 6px 12px;
+        background: #e0f2fe;
+        border-bottom: 1px solid #b3e5fc;
+        font-size: 10px;
+        font-weight: 600;
+        color: #0277bd;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      `;
+      suggestionsHeader.textContent = '💡 Smart Suggestions';
+      contentArea.appendChild(suggestionsHeader);
+
+      suggestions.forEach(generatorName => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'menu-item generator-item smart-suggestion';
+        itemDiv.dataset.searchText = generatorName.toLowerCase();
+        itemDiv.dataset.generator = generatorName;
+        itemDiv.style.cssText = `
+          padding: 8px 12px;
+          cursor: pointer;
+          font-size: 12px;
+          color: #0277bd;
+          background: #f0f9ff;
+          border-bottom: 1px solid #e0f2fe;
+          transition: background 0.2s;
+          font-weight: 500;
+        `;
+        itemDiv.textContent = `⭐ ${generatorName.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}`;
+        itemDiv.addEventListener('mouseenter', () => {
+          itemDiv.style.background = '#e0f2fe';
+        });
+        itemDiv.addEventListener('mouseleave', () => {
+          itemDiv.style.background = '#f0f9ff';
+        });
+        itemDiv.addEventListener('click', () => {
+          fillInput(generatorName);
+          hideContextMenu();
+        });
+        contentArea.appendChild(itemDiv);
+      });
+
+      // Add separator after suggestions
+      const suggestionsSeparator = document.createElement('div');
+      suggestionsSeparator.className = 'menu-separator';
+      suggestionsSeparator.style.cssText = `
+        height: 2px;
+        background: #e2e8f0;
+        margin: 4px 0;
+      `;
+      contentArea.appendChild(suggestionsSeparator);
+    }
     
     // Common data categories
     const categories = [
