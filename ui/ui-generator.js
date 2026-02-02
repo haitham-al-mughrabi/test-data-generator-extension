@@ -62,16 +62,18 @@ function createDataGeneratorUI(containerId) {
     .dg-sub-tab.active { color: #667eea; border-bottom-color: #667eea; }
     .dg-main { flex: 1; display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
     .dg-content { flex: 1; overflow-y: auto; min-height: 0; background: white; }
-    .dg-top-controls { display: flex; gap: 6px; padding: 8px 0; border-bottom: 1px solid #e2e8f0; flex-shrink: 0; }
-    .dg-top-controls .dg-btn { flex: 1; padding: 8px 10px; font-size: 11px; margin: 0; background: #667eea !important; color: white !important; min-width: 0; height: 32px; display: flex; align-items: center; justify-content: center; }
-    .dg-top-controls .dg-btn:hover { background: #5a67d8 !important; }
+    .dg-top-controls { display: flex; background: #f8fafc; border-bottom: 1px solid #e2e8f0; overflow-x: auto; flex-shrink: 0; padding: 0 14px; }
+    .dg-top-controls .dg-btn { padding: 8px 12px; border: none; background: none; cursor: pointer; font-size: 11px; font-weight: 500; color: #64748b; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.2s; margin-right: 4px; }
+    .dg-top-controls .dg-btn:hover { color: #667eea; }
     .dg-tab-content { display: none; }
     .dg-tab-content.active { display: block; }
     .dg-sub-tab-content { display: none; padding: 14px; }
     .dg-sub-tab-content.active { display: block; }
-    .dg-tab-controls { display: flex; gap: 6px; margin-bottom: 8px; }
-    .dg-tab-controls .dg-btn { flex: 1; padding: 8px 10px; font-size: 11px; background: #cbd5e1 !important; color: #334155 !important; min-width: 0; height: 32px; display: flex; align-items: center; justify-content: center; }
+    .dg-tab-controls { display: flex; gap: 4px; margin-bottom: 8px; }
+    .dg-tab-controls .dg-btn { flex: 1; padding: 6px 8px; font-size: 10px; background: #cbd5e1 !important; color: #334155 !important; min-width: 0; height: 28px; display: flex; align-items: center; justify-content: center; }
     .dg-tab-controls .dg-btn:hover { background: #94a3b8 !important; }
+    .dg-tab-controls .dg-btn.unselect { background: #ef4444 !important; color: white !important; }
+    .dg-tab-controls .dg-btn.unselect:hover { background: #dc2626 !important; }
     .dg-fields-wrapper { display: flex; flex-wrap: wrap; gap: 8px; }
     .dg-checkbox { display: inline-flex; align-items: center; gap: 6px; padding: 8px 10px; cursor: pointer; font-size: 12px; background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 6px; transition: all 0.2s; width: calc(50% - 4px); box-sizing: border-box; }
     .dg-checkbox:hover { background: #e0e7ff; border-color: #667eea; }
@@ -998,10 +1000,6 @@ function createDataGeneratorUI(containerId) {
           const subTabContentsHTML = cat.subTabs
             .map((subTab, subIdx) => `
               <div class="dg-sub-tab-content ${subIdx === 0 ? "active" : ""}" data-sub-content="${idx}-${subIdx}">
-                <div class="dg-tab-controls">
-                  <button class="dg-btn dg-btn-secondary dg-select-sub-all" data-sub-tab="${idx}-${subIdx}">✓ Sub-Tab</button>
-                  <button class="dg-btn dg-btn-secondary dg-unselect-sub-all" data-sub-tab="${idx}-${subIdx}">✕ Sub-Tab</button>
-                </div>
                 <div class="dg-fields-wrapper">
                   ${subTab.fields.map((field) => `<label class="dg-checkbox"><input type="checkbox" value="${field.id}"><span>${field.label}</span></label>`).join("")}
                 </div>
@@ -1010,11 +1008,15 @@ function createDataGeneratorUI(containerId) {
 
           return `
             <div class="dg-tab-content ${idx === 0 ? "active" : ""}" data-content="${idx}">
-              <div class="dg-tab-controls">
-                <button class="dg-btn dg-btn-secondary dg-select-all" data-tab="${idx}">✓ Tab</button>
-                <button class="dg-btn dg-btn-secondary dg-unselect-all" data-tab="${idx}">✕ Tab</button>
-              </div>
               <div class="dg-sub-tabs">${subTabsHTML}</div>
+              <div class="dg-top-controls">
+                <button class="dg-btn dg-btn-secondary dg-unselect-all-categories">✕ All</button>
+                <button class="dg-btn dg-btn-secondary dg-unselect-all" data-tab="current">✕ Tab</button>
+                <button class="dg-btn dg-btn-secondary dg-unselect-sub-all" data-sub-tab="current">✕ Sub</button>
+                <button class="dg-btn dg-btn-secondary dg-select-sub-all" data-sub-tab="current">✓ Sub</button>
+                <button class="dg-btn dg-btn-secondary dg-select-all" data-tab="current">✓ Tab</button>
+                <button class="dg-btn dg-btn-secondary dg-select-all-categories">✓ All</button>
+              </div>
               ${subTabContentsHTML}
             </div>
           `;
@@ -1022,9 +1024,13 @@ function createDataGeneratorUI(containerId) {
           // Legacy format for categories without sub-tabs
           return `
             <div class="dg-tab-content ${idx === 0 ? "active" : ""}" data-content="${idx}">
-              <div class="dg-tab-controls">
-                <button class="dg-btn dg-btn-secondary dg-select-all" data-tab="${idx}">✓ Tab</button>
-                <button class="dg-btn dg-btn-secondary dg-unselect-all" data-tab="${idx}">✕ Tab</button>
+              <div class="dg-top-controls">
+                <button class="dg-btn dg-btn-secondary dg-unselect-all-categories">✕ All</button>
+                <button class="dg-btn dg-btn-secondary dg-unselect-all" data-tab="current">✕ Tab</button>
+                <button class="dg-btn dg-btn-secondary dg-unselect-sub-all" data-sub-tab="current">✕ Sub</button>
+                <button class="dg-btn dg-btn-secondary dg-select-sub-all" data-sub-tab="current">✓ Sub</button>
+                <button class="dg-btn dg-btn-secondary dg-select-all" data-tab="current">✓ Tab</button>
+                <button class="dg-btn dg-btn-secondary dg-select-all-categories">✓ All</button>
               </div>
               <div class="dg-fields-wrapper">
                 ${cat.fields.map((field) => `<label class="dg-checkbox"><input type="checkbox" value="${field.id}"><span>${field.label}</span></label>`).join("")}
@@ -1152,10 +1158,6 @@ function createDataGeneratorUI(containerId) {
       <div class="dg-tabs">${tabsHTML}</div>
       <div class="dg-main">
         <div class="dg-content">
-          <div class="dg-top-controls">
-            <button class="dg-btn dg-btn-secondary dg-select-all-categories">✓ Select All</button>
-            <button class="dg-btn dg-btn-secondary dg-unselect-all-categories">✕ Unselect All</button>
-          </div>
           ${contentHTML}
         </div>
         <div class="dg-controls">
@@ -1285,18 +1287,40 @@ function createDataGeneratorUI(containerId) {
   document.querySelectorAll(".dg-select-all").forEach((btn) => {
     btn.addEventListener("click", () => {
       const tabIdx = btn.dataset.tab;
-      document
-        .querySelectorAll(`[data-content="${tabIdx}"] .dg-checkbox input`)
-        .forEach((c) => (c.checked = true));
+      if (tabIdx === "current") {
+        // Get currently active tab
+        const activeTab = document.querySelector(".dg-tab.active");
+        if (activeTab) {
+          const currentTabIdx = activeTab.dataset.tab;
+          document
+            .querySelectorAll(`[data-content="${currentTabIdx}"] .dg-checkbox input`)
+            .forEach((c) => (c.checked = true));
+        }
+      } else {
+        document
+          .querySelectorAll(`[data-content="${tabIdx}"] .dg-checkbox input`)
+          .forEach((c) => (c.checked = true));
+      }
     });
   });
 
   document.querySelectorAll(".dg-unselect-all").forEach((btn) => {
     btn.addEventListener("click", () => {
       const tabIdx = btn.dataset.tab;
-      document
-        .querySelectorAll(`[data-content="${tabIdx}"] .dg-checkbox input`)
-        .forEach((c) => (c.checked = false));
+      if (tabIdx === "current") {
+        // Get currently active tab
+        const activeTab = document.querySelector(".dg-tab.active");
+        if (activeTab) {
+          const currentTabIdx = activeTab.dataset.tab;
+          document
+            .querySelectorAll(`[data-content="${currentTabIdx}"] .dg-checkbox input`)
+            .forEach((c) => (c.checked = false));
+        }
+      } else {
+        document
+          .querySelectorAll(`[data-content="${tabIdx}"] .dg-checkbox input`)
+          .forEach((c) => (c.checked = false));
+      }
     });
   });
 
@@ -1304,18 +1328,40 @@ function createDataGeneratorUI(containerId) {
   document.querySelectorAll(".dg-select-sub-all").forEach((btn) => {
     btn.addEventListener("click", () => {
       const subTabKey = btn.dataset.subTab;
-      document
-        .querySelectorAll(`[data-sub-content="${subTabKey}"] .dg-checkbox input`)
-        .forEach((c) => (c.checked = true));
+      if (subTabKey === "current") {
+        // Get currently active sub-tab
+        const activeSubTab = document.querySelector(".dg-sub-tab.active");
+        if (activeSubTab) {
+          const currentSubTabKey = activeSubTab.dataset.subTab;
+          document
+            .querySelectorAll(`[data-sub-content="${currentSubTabKey}"] .dg-checkbox input`)
+            .forEach((c) => (c.checked = true));
+        }
+      } else {
+        document
+          .querySelectorAll(`[data-sub-content="${subTabKey}"] .dg-checkbox input`)
+          .forEach((c) => (c.checked = true));
+      }
     });
   });
 
   document.querySelectorAll(".dg-unselect-sub-all").forEach((btn) => {
     btn.addEventListener("click", () => {
       const subTabKey = btn.dataset.subTab;
-      document
-        .querySelectorAll(`[data-sub-content="${subTabKey}"] .dg-checkbox input`)
-        .forEach((c) => (c.checked = false));
+      if (subTabKey === "current") {
+        // Get currently active sub-tab
+        const activeSubTab = document.querySelector(".dg-sub-tab.active");
+        if (activeSubTab) {
+          const currentSubTabKey = activeSubTab.dataset.subTab;
+          document
+            .querySelectorAll(`[data-sub-content="${currentSubTabKey}"] .dg-checkbox input`)
+            .forEach((c) => (c.checked = false));
+        }
+      } else {
+        document
+          .querySelectorAll(`[data-sub-content="${subTabKey}"] .dg-checkbox input`)
+          .forEach((c) => (c.checked = false));
+      }
     });
   });
 
