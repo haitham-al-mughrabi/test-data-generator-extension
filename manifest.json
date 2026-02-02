@@ -1,8 +1,16 @@
 {
   "manifest_version": 3,
   "name": "Test Data Generator",
-  "version": "1.0",
-  "description": "Generate random test data for development and testing",
+  "version": "1.0.0",
+  "description": "Generate realistic test data across 40+ categories with bilingual support (Arabic/English) for development and testing",
+  "author": "Test Data Generator Team",
+  "homepage_url": "https://github.com/your-username/test-data-generator",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
   "permissions": [
     "activeTab",
     "storage",
