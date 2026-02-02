@@ -215,24 +215,39 @@ function createDataGeneratorUI(containerId) {
     },
     {
       title: "Saudi Government",
-      fields: [
-        { id: "commercialRegister", label: "Commercial Register" },
-        { id: "taxNumber", label: "Tax Number (VAT)" },
-        { id: "municipalLicense", label: "Municipal License" },
-        { id: "chamberMembership", label: "Chamber Membership" },
-        { id: "socialInsurance", label: "Social Insurance (GOSI)" },
-        { id: "laborOfficeNumber", label: "Labor Office Number" },
-        { id: "zakat", label: "Zakat Number" },
-        { id: "customsCode", label: "Customs Code" },
-        { id: "saudiPost", label: "Saudi Post Box" },
-        { id: "absherId", label: "Absher ID" },
-        { id: "nafathId", label: "Nafath ID" },
-        { id: "elmId", label: "Elm ID" },
-        { id: "region", label: "Region (EN)" },
-        { id: "regionAr", label: "Region (AR)" },
-        { id: "province", label: "Province (EN)" },
-        { id: "provinceAr", label: "Province (AR)" },
-      ],
+      subTabs: [
+        {
+          title: "Business Registration",
+          fields: [
+            { id: "commercialRegister", label: "Commercial Register" },
+            { id: "taxNumber", label: "Tax Number (VAT)" },
+            { id: "municipalLicense", label: "Municipal License" },
+            { id: "chamberMembership", label: "Chamber Membership" },
+          ]
+        },
+        {
+          title: "Employment & Social",
+          fields: [
+            { id: "socialInsurance", label: "Social Insurance (GOSI)" },
+            { id: "laborOfficeNumber", label: "Labor Office Number" },
+            { id: "zakat", label: "Zakat Number" },
+          ]
+        },
+        {
+          title: "Services & Location",
+          fields: [
+            { id: "customsCode", label: "Customs Code" },
+            { id: "saudiPost", label: "Saudi Post Box" },
+            { id: "absherId", label: "Absher ID" },
+            { id: "nafathId", label: "Nafath ID" },
+            { id: "elmId", label: "Elm ID" },
+            { id: "region", label: "Region (EN)" },
+            { id: "regionAr", label: "Region (AR)" },
+            { id: "province", label: "Province (EN)" },
+            { id: "provinceAr", label: "Province (AR)" },
+          ]
+        }
+      ]
     },
     {
       title: "Work",
@@ -268,17 +283,32 @@ function createDataGeneratorUI(containerId) {
     },
     {
       title: "Education",
-      fields: [
-        { id: "university", label: "University (EN)" },
-        { id: "universityAr", label: "University (AR)" },
-        { id: "degree", label: "Degree (EN)" },
-        { id: "degreeAr", label: "Degree (AR)" },
-        { id: "major", label: "Major (EN)" },
-        { id: "majorAr", label: "Major (AR)" },
-        { id: "graduationYear", label: "Graduation Year" },
-        { id: "gpa", label: "GPA" },
-        { id: "studentId", label: "Student ID" },
-      ],
+      subTabs: [
+        {
+          title: "Institution",
+          fields: [
+            { id: "university", label: "University (EN)" },
+            { id: "universityAr", label: "University (AR)" },
+          ]
+        },
+        {
+          title: "Academic Details",
+          fields: [
+            { id: "degree", label: "Degree (EN)" },
+            { id: "degreeAr", label: "Degree (AR)" },
+            { id: "major", label: "Major (EN)" },
+            { id: "majorAr", label: "Major (AR)" },
+            { id: "graduationYear", label: "Graduation Year" },
+            { id: "gpa", label: "GPA" },
+          ]
+        },
+        {
+          title: "Student Info",
+          fields: [
+            { id: "studentId", label: "Student ID" },
+          ]
+        }
+      ]
     },
     {
       title: "Finance",
@@ -311,120 +341,220 @@ function createDataGeneratorUI(containerId) {
     },
     {
       title: "Healthcare",
-      fields: [
-        { id: "medicalRecord", label: "Medical Record" },
-        { id: "insuranceNumber", label: "Insurance Number" },
-        { id: "doctorName", label: "Doctor Name (EN)" },
-        { id: "doctorNameAr", label: "Doctor Name (AR)" },
-        { id: "hospital", label: "Hospital (EN)" },
-        { id: "hospitalAr", label: "Hospital (AR)" },
-        { id: "diagnosis", label: "Diagnosis (EN)" },
-        { id: "diagnosisAr", label: "Diagnosis (AR)" },
-        { id: "medication", label: "Medication (EN)" },
-        { id: "medicationAr", label: "Medication (AR)" },
-      ],
+      subTabs: [
+        {
+          title: "Medical Records",
+          fields: [
+            { id: "medicalRecord", label: "Medical Record" },
+            { id: "insuranceNumber", label: "Insurance Number" },
+          ]
+        },
+        {
+          title: "Healthcare Providers",
+          fields: [
+            { id: "doctorName", label: "Doctor Name (EN)" },
+            { id: "doctorNameAr", label: "Doctor Name (AR)" },
+            { id: "hospital", label: "Hospital (EN)" },
+            { id: "hospitalAr", label: "Hospital (AR)" },
+          ]
+        },
+        {
+          title: "Medical Details",
+          fields: [
+            { id: "diagnosis", label: "Diagnosis (EN)" },
+            { id: "diagnosisAr", label: "Diagnosis (AR)" },
+            { id: "medication", label: "Medication (EN)" },
+            { id: "medicationAr", label: "Medication (AR)" },
+          ]
+        }
+      ]
     },
     {
       title: "Vehicle",
-      fields: [
-        { id: "licensePlate", label: "License Plate" },
-        { id: "carModel", label: "Car Model (EN)" },
-        { id: "carModelAr", label: "Car Model (AR)" },
-        { id: "carBrand", label: "Car Brand (EN)" },
-        { id: "carBrandAr", label: "Car Brand (AR)" },
-        { id: "carYear", label: "Car Year" },
-        { id: "carColor", label: "Car Color (EN)" },
-        { id: "carColorAr", label: "Car Color (AR)" },
-        { id: "vin", label: "VIN Number" },
-        { id: "engineNumber", label: "Engine Number" },
-      ],
+      subTabs: [
+        {
+          title: "Vehicle Info",
+          fields: [
+            { id: "carModel", label: "Car Model (EN)" },
+            { id: "carModelAr", label: "Car Model (AR)" },
+            { id: "carBrand", label: "Car Brand (EN)" },
+            { id: "carBrandAr", label: "Car Brand (AR)" },
+            { id: "carYear", label: "Car Year" },
+            { id: "carColor", label: "Car Color (EN)" },
+            { id: "carColorAr", label: "Car Color (AR)" },
+          ]
+        },
+        {
+          title: "Registration & IDs",
+          fields: [
+            { id: "licensePlate", label: "License Plate" },
+            { id: "vin", label: "VIN Number" },
+            { id: "engineNumber", label: "Engine Number" },
+          ]
+        }
+      ]
     },
     {
       title: "E-commerce",
-      fields: [
-        { id: "productName", label: "Product Name (EN)" },
-        { id: "productNameAr", label: "Product Name (AR)" },
-        { id: "productSku", label: "Product SKU" },
-        { id: "productPrice", label: "Product Price" },
-        { id: "productCategory", label: "Category (EN)" },
-        { id: "productCategoryAr", label: "Category (AR)" },
-        { id: "productBrand", label: "Brand (EN)" },
-        { id: "productBrandAr", label: "Brand (AR)" },
-        { id: "productDescription", label: "Description (EN)" },
-        { id: "productDescriptionAr", label: "Description (AR)" },
-        { id: "orderNumber", label: "Order Number" },
-        { id: "trackingNumber", label: "Tracking Number" },
-        { id: "couponCode", label: "Coupon Code" },
-        { id: "reviewRating", label: "Review Rating" },
-      ],
+      subTabs: [
+        {
+          title: "Products",
+          fields: [
+            { id: "productName", label: "Product Name (EN)" },
+            { id: "productNameAr", label: "Product Name (AR)" },
+            { id: "productSku", label: "Product SKU" },
+            { id: "productPrice", label: "Product Price" },
+            { id: "productCategory", label: "Category (EN)" },
+            { id: "productCategoryAr", label: "Category (AR)" },
+            { id: "productBrand", label: "Brand (EN)" },
+            { id: "productBrandAr", label: "Brand (AR)" },
+            { id: "productDescription", label: "Description (EN)" },
+            { id: "productDescriptionAr", label: "Description (AR)" },
+          ]
+        },
+        {
+          title: "Orders & Shipping",
+          fields: [
+            { id: "orderNumber", label: "Order Number" },
+            { id: "trackingNumber", label: "Tracking Number" },
+            { id: "couponCode", label: "Coupon Code" },
+          ]
+        },
+        {
+          title: "Reviews",
+          fields: [
+            { id: "reviewRating", label: "Review Rating" },
+          ]
+        }
+      ]
     },
     {
       title: "Social Media",
-      fields: [
-        { id: "username", label: "Username" },
-        { id: "displayName", label: "Display Name (EN)" },
-        { id: "displayNameAr", label: "Display Name (AR)" },
-        { id: "bio", label: "Bio (EN)" },
-        { id: "bioAr", label: "Bio (AR)" },
-        { id: "hashtag", label: "Hashtag" },
-        { id: "mention", label: "Mention" },
-        { id: "followers", label: "Followers Count" },
-        { id: "following", label: "Following Count" },
-        { id: "posts", label: "Posts Count" },
-        { id: "socialHandle", label: "Social Handle" },
-      ],
+      subTabs: [
+        {
+          title: "Profile Info",
+          fields: [
+            { id: "username", label: "Username" },
+            { id: "displayName", label: "Display Name (EN)" },
+            { id: "displayNameAr", label: "Display Name (AR)" },
+            { id: "socialHandle", label: "Social Handle" },
+          ]
+        },
+        {
+          title: "Content",
+          fields: [
+            { id: "bio", label: "Bio (EN)" },
+            { id: "bioAr", label: "Bio (AR)" },
+            { id: "hashtag", label: "Hashtag" },
+            { id: "mention", label: "Mention" },
+          ]
+        },
+        {
+          title: "Statistics",
+          fields: [
+            { id: "followers", label: "Followers Count" },
+            { id: "following", label: "Following Count" },
+            { id: "posts", label: "Posts Count" },
+          ]
+        }
+      ]
     },
     {
       title: "Technology",
-      fields: [
-        { id: "ipAddress", label: "IP Address" },
-        { id: "macAddress", label: "MAC Address" },
-        { id: "userAgent", label: "User Agent" },
-        { id: "apiKey", label: "API Key" },
-        { id: "deviceId", label: "Device ID" },
-        { id: "sessionId", label: "Session ID" },
-        { id: "serverName", label: "Server Name" },
-        { id: "databaseName", label: "Database Name" },
-        { id: "appVersion", label: "App Version" },
-        { id: "osVersion", label: "OS Version" },
-        { id: "browserName", label: "Browser Name" },
-        { id: "deviceType", label: "Device Type (EN)" },
-        { id: "deviceTypeAr", label: "Device Type (AR)" },
-      ],
+      subTabs: [
+        {
+          title: "Network & IDs",
+          fields: [
+            { id: "ipAddress", label: "IP Address" },
+            { id: "macAddress", label: "MAC Address" },
+            { id: "deviceId", label: "Device ID" },
+            { id: "sessionId", label: "Session ID" },
+          ]
+        },
+        {
+          title: "Software & Apps",
+          fields: [
+            { id: "userAgent", label: "User Agent" },
+            { id: "apiKey", label: "API Key" },
+            { id: "appVersion", label: "App Version" },
+            { id: "osVersion", label: "OS Version" },
+            { id: "browserName", label: "Browser Name" },
+          ]
+        },
+        {
+          title: "Infrastructure",
+          fields: [
+            { id: "serverName", label: "Server Name" },
+            { id: "databaseName", label: "Database Name" },
+            { id: "deviceType", label: "Device Type (EN)" },
+            { id: "deviceTypeAr", label: "Device Type (AR)" },
+          ]
+        }
+      ]
     },
     {
       title: "Gaming",
-      fields: [
-        { id: "gamertag", label: "Gamertag" },
-        { id: "playerLevel", label: "Player Level" },
-        { id: "playerScore", label: "Player Score" },
-        { id: "gameTitle", label: "Game Title (EN)" },
-        { id: "gameTitleAr", label: "Game Title (AR)" },
-        { id: "achievement", label: "Achievement (EN)" },
-        { id: "achievementAr", label: "Achievement (AR)" },
-        { id: "guild", label: "Guild Name (EN)" },
-        { id: "guildAr", label: "Guild Name (AR)" },
-        { id: "character", label: "Character Name (EN)" },
-        { id: "characterAr", label: "Character Name (AR)" },
-      ],
+      subTabs: [
+        {
+          title: "Player Info",
+          fields: [
+            { id: "gamertag", label: "Gamertag" },
+            { id: "playerLevel", label: "Player Level" },
+            { id: "playerScore", label: "Player Score" },
+            { id: "character", label: "Character Name (EN)" },
+            { id: "characterAr", label: "Character Name (AR)" },
+          ]
+        },
+        {
+          title: "Games & Achievements",
+          fields: [
+            { id: "gameTitle", label: "Game Title (EN)" },
+            { id: "gameTitleAr", label: "Game Title (AR)" },
+            { id: "achievement", label: "Achievement (EN)" },
+            { id: "achievementAr", label: "Achievement (AR)" },
+          ]
+        },
+        {
+          title: "Social",
+          fields: [
+            { id: "guild", label: "Guild Name (EN)" },
+            { id: "guildAr", label: "Guild Name (AR)" },
+          ]
+        }
+      ]
     },
     {
       title: "Travel",
-      fields: [
-        { id: "flightNumber", label: "Flight Number" },
-        { id: "airline", label: "Airline (EN)" },
-        { id: "airlineAr", label: "Airline (AR)" },
-        { id: "airport", label: "Airport (EN)" },
-        { id: "airportAr", label: "Airport (AR)" },
-        { id: "hotelName", label: "Hotel Name (EN)" },
-        { id: "hotelNameAr", label: "Hotel Name (AR)" },
-        { id: "bookingReference", label: "Booking Reference" },
-        { id: "seatNumber", label: "Seat Number" },
-        { id: "gateNumber", label: "Gate Number" },
-        { id: "terminal", label: "Terminal" },
-        { id: "destination", label: "Destination (EN)" },
-        { id: "destinationAr", label: "Destination (AR)" },
-      ],
+      subTabs: [
+        {
+          title: "Flights",
+          fields: [
+            { id: "flightNumber", label: "Flight Number" },
+            { id: "airline", label: "Airline (EN)" },
+            { id: "airlineAr", label: "Airline (AR)" },
+            { id: "airport", label: "Airport (EN)" },
+            { id: "airportAr", label: "Airport (AR)" },
+            { id: "seatNumber", label: "Seat Number" },
+            { id: "gateNumber", label: "Gate Number" },
+            { id: "terminal", label: "Terminal" },
+          ]
+        },
+        {
+          title: "Accommodation",
+          fields: [
+            { id: "hotelName", label: "Hotel Name (EN)" },
+            { id: "hotelNameAr", label: "Hotel Name (AR)" },
+            { id: "bookingReference", label: "Booking Reference" },
+          ]
+        },
+        {
+          title: "Destinations",
+          fields: [
+            { id: "destination", label: "Destination (EN)" },
+            { id: "destinationAr", label: "Destination (AR)" },
+          ]
+        }
+      ]
     },
     {
       title: "Food & Restaurant",
@@ -895,89 +1025,128 @@ function createDataGeneratorUI(containerId) {
     },
     {
       title: "Date & Time",
-      fields: [
-        { id: "date", label: "Date" },
-        { id: "time", label: "Time" },
-        { id: "datetime", label: "DateTime" },
-        { id: "timestamp", label: "Timestamp" },
-        { id: "hijriDate", label: "Hijri Date" },
-        { id: "dayOfWeek", label: "Day of Week (EN)" },
-        { id: "dayOfWeekAr", label: "Day of Week (AR)" },
-        { id: "month", label: "Month (EN)" },
-        { id: "monthAr", label: "Month (AR)" },
-        { id: "hijriToGregorian", label: "Hijri → Gregorian" },
-        { id: "gregorianToHijri", label: "Gregorian → Hijri" },
-      ],
+      subTabs: [
+        {
+          title: "Basic Dates",
+          fields: [
+            { id: "date", label: "Date" },
+            { id: "time", label: "Time" },
+            { id: "datetime", label: "DateTime" },
+            { id: "timestamp", label: "Timestamp" },
+          ]
+        },
+        {
+          title: "Hijri Calendar",
+          fields: [
+            { id: "hijriDate", label: "Hijri Date" },
+            { id: "hijriToGregorian", label: "Hijri → Gregorian" },
+            { id: "gregorianToHijri", label: "Gregorian → Hijri" },
+          ]
+        },
+        {
+          title: "Localized",
+          fields: [
+            { id: "dayOfWeek", label: "Day of Week (EN)" },
+            { id: "dayOfWeekAr", label: "Day of Week (AR)" },
+            { id: "month", label: "Month (EN)" },
+            { id: "monthAr", label: "Month (AR)" },
+          ]
+        }
+      ]
     },
     {
       title: "Other",
-      fields: [
-        { id: "uuid", label: "UUID" },
-        { id: "url", label: "URL" },
-        { id: "password", label: "Password" },
-        { id: "ip", label: "IP Address" },
-        { id: "color", label: "Color" },
-        { id: "macAddress", label: "MAC Address" },
-        { id: "userAgent", label: "User Agent" },
-        { id: "apiKey", label: "API Key" },
-      ],
+      subTabs: [
+        {
+          title: "Identifiers",
+          fields: [
+            { id: "uuid", label: "UUID" },
+            { id: "apiKey", label: "API Key" },
+          ]
+        },
+        {
+          title: "Network & Web",
+          fields: [
+            { id: "url", label: "URL" },
+            { id: "ip", label: "IP Address" },
+            { id: "macAddress", label: "MAC Address" },
+            { id: "userAgent", label: "User Agent" },
+          ]
+        },
+        {
+          title: "Security & Misc",
+          fields: [
+            { id: "password", label: "Password" },
+            { id: "color", label: "Color" },
+          ]
+        }
+      ]
     },
     {
       title: "Files",
-      fields: [
-        { id: "txt", label: "Text File (.txt)" },
-        { id: "json", label: "JSON File (.json)" },
-        { id: "csv", label: "CSV File (.csv)" },
-        { id: "xml", label: "XML File (.xml)" },
-        { id: "html", label: "HTML File (.html)" },
-        { id: "css", label: "CSS File (.css)" },
-        { id: "js", label: "JavaScript (.js)" },
-        { id: "py", label: "Python File (.py)" },
-        { id: "java", label: "Java File (.java)" },
-        { id: "cpp", label: "C++ File (.cpp)" },
-        { id: "pdf", label: "PDF File (.pdf)" },
-        { id: "doc", label: "Word File (.doc)" },
-        { id: "docx", label: "Word File (.docx)" },
-        { id: "xlsx", label: "Excel File (.xlsx)" },
-        { id: "xls", label: "Excel File (.xls)" },
-        { id: "ppt", label: "PowerPoint (.ppt)" },
-        { id: "pptx", label: "PowerPoint (.pptx)" },
-        { id: "jpg", label: "JPEG Image (.jpg)" },
-        { id: "png", label: "PNG Image (.png)" },
-        { id: "gif", label: "GIF Image (.gif)" },
-        { id: "svg", label: "SVG Image (.svg)" },
-        { id: "bmp", label: "BMP Image (.bmp)" },
-        { id: "webp", label: "WebP Image (.webp)" },
-        { id: "ico", label: "Icon File (.ico)" },
-        { id: "zip", label: "ZIP Archive (.zip)" },
-        { id: "rar", label: "RAR Archive (.rar)" },
-        { id: "7z", label: "7-Zip Archive (.7z)" },
-        { id: "tar", label: "TAR Archive (.tar)" },
-        { id: "mp3", label: "MP3 Audio (.mp3)" },
-        { id: "wav", label: "WAV Audio (.wav)" },
-        { id: "flac", label: "FLAC Audio (.flac)" },
-        { id: "mp4", label: "MP4 Video (.mp4)" },
-        { id: "avi", label: "AVI Video (.avi)" },
-        { id: "mkv", label: "MKV Video (.mkv)" },
-        { id: "mov", label: "MOV Video (.mov)" },
-        { id: "wmv", label: "WMV Video (.wmv)" },
-        { id: "sql", label: "SQL File (.sql)" },
-        { id: "db", label: "Database (.db)" },
-        { id: "log", label: "Log File (.log)" },
-        { id: "ini", label: "Config File (.ini)" },
-        { id: "cfg", label: "Config File (.cfg)" },
-        { id: "conf", label: "Config File (.conf)" },
-        { id: "yaml", label: "YAML File (.yaml)" },
-        { id: "yml", label: "YAML File (.yml)" },
-        { id: "toml", label: "TOML File (.toml)" },
-        { id: "md", label: "Markdown (.md)" },
-        { id: "rtf", label: "Rich Text (.rtf)" },
-        { id: "eps", label: "EPS File (.eps)" },
-        { id: "ai", label: "Adobe Illustrator (.ai)" },
-        { id: "psd", label: "Photoshop (.psd)" },
-        { id: "sketch", label: "Sketch File (.sketch)" },
-        { id: "fig", label: "Figma File (.fig)" },
-      ],
+      subTabs: [
+        {
+          title: "Documents",
+          fields: [
+            { id: "txt", label: "Text File (.txt)" },
+            { id: "pdf", label: "PDF File (.pdf)" },
+            { id: "doc", label: "Word File (.doc)" },
+            { id: "docx", label: "Word File (.docx)" },
+            { id: "rtf", label: "Rich Text (.rtf)" },
+            { id: "md", label: "Markdown (.md)" },
+          ]
+        },
+        {
+          title: "Spreadsheets & Data",
+          fields: [
+            { id: "xlsx", label: "Excel File (.xlsx)" },
+            { id: "xls", label: "Excel File (.xls)" },
+            { id: "csv", label: "CSV File (.csv)" },
+            { id: "json", label: "JSON File (.json)" },
+            { id: "xml", label: "XML File (.xml)" },
+            { id: "yaml", label: "YAML File (.yaml)" },
+            { id: "yml", label: "YAML File (.yml)" },
+            { id: "toml", label: "TOML File (.toml)" },
+          ]
+        },
+        {
+          title: "Code & Scripts",
+          fields: [
+            { id: "html", label: "HTML File (.html)" },
+            { id: "css", label: "CSS File (.css)" },
+            { id: "js", label: "JavaScript (.js)" },
+            { id: "py", label: "Python File (.py)" },
+            { id: "java", label: "Java File (.java)" },
+            { id: "cpp", label: "C++ File (.cpp)" },
+            { id: "sql", label: "SQL File (.sql)" },
+          ]
+        },
+        {
+          title: "Images",
+          fields: [
+            { id: "jpg", label: "JPEG Image (.jpg)" },
+            { id: "png", label: "PNG Image (.png)" },
+            { id: "gif", label: "GIF Image (.gif)" },
+            { id: "svg", label: "SVG Image (.svg)" },
+            { id: "bmp", label: "BMP Image (.bmp)" },
+            { id: "webp", label: "WebP Image (.webp)" },
+            { id: "ico", label: "Icon File (.ico)" },
+          ]
+        },
+        {
+          title: "Archives & Media",
+          fields: [
+            { id: "zip", label: "ZIP Archive (.zip)" },
+            { id: "rar", label: "RAR Archive (.rar)" },
+            { id: "7z", label: "7-Zip Archive (.7z)" },
+            { id: "tar", label: "TAR Archive (.tar)" },
+            { id: "mp3", label: "MP3 Audio (.mp3)" },
+            { id: "wav", label: "WAV Audio (.wav)" },
+            { id: "mp4", label: "MP4 Video (.mp4)" },
+            { id: "avi", label: "AVI Video (.avi)" },
+          ]
+        }
+      ]
     },
   ];
 
