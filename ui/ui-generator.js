@@ -56,13 +56,19 @@ function createDataGeneratorUI(containerId) {
     .dg-tab { padding: 10px 14px; border: none; background: none; cursor: pointer; font-size: 12px; font-weight: 600; color: #64748b; border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.2s; }
     .dg-tab:hover { color: #667eea; }
     .dg-tab.active { color: #667eea; border-bottom-color: #667eea; }
+    .dg-sub-tabs { display: flex; background: #f8fafc; border-bottom: 1px solid #e2e8f0; overflow-x: auto; flex-shrink: 0; padding: 0 14px; }
+    .dg-sub-tab { padding: 8px 12px; border: none; background: none; cursor: pointer; font-size: 11px; font-weight: 500; color: #64748b; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.2s; margin-right: 4px; }
+    .dg-sub-tab:hover { color: #667eea; }
+    .dg-sub-tab.active { color: #667eea; border-bottom-color: #667eea; }
     .dg-main { flex: 1; display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
     .dg-content { flex: 1; overflow-y: auto; min-height: 0; background: white; }
     .dg-top-controls { display: flex; gap: 6px; padding: 8px 0; border-bottom: 1px solid #e2e8f0; flex-shrink: 0; }
     .dg-top-controls .dg-btn { flex: 1; padding: 8px 10px; font-size: 11px; margin: 0; background: #667eea !important; color: white !important; min-width: 0; height: 32px; display: flex; align-items: center; justify-content: center; }
     .dg-top-controls .dg-btn:hover { background: #5a67d8 !important; }
-    .dg-tab-content { display: none; padding: 14px; }
+    .dg-tab-content { display: none; }
     .dg-tab-content.active { display: block; }
+    .dg-sub-tab-content { display: none; padding: 14px; }
+    .dg-sub-tab-content.active { display: block; }
     .dg-tab-controls { display: flex; gap: 6px; margin-bottom: 8px; }
     .dg-tab-controls .dg-btn { flex: 1; padding: 8px 10px; font-size: 11px; background: #cbd5e1 !important; color: #334155 !important; min-width: 0; height: 32px; display: flex; align-items: center; justify-content: center; }
     .dg-tab-controls .dg-btn:hover { background: #94a3b8 !important; }
@@ -122,53 +128,88 @@ function createDataGeneratorUI(containerId) {
   const categories = [
     {
       title: "Personal",
-      fields: [
-        { id: "firstName", label: "First Name (EN)" },
-        { id: "firstNameAr", label: "First Name (AR)" },
-        { id: "lastName", label: "Last Name (EN)" },
-        { id: "lastNameAr", label: "Last Name (AR)" },
-        { id: "fullName", label: "Full Name (EN)" },
-        { id: "fullNameAr", label: "Full Name (AR)" },
-        { id: "gender", label: "Gender (EN)" },
-        { id: "genderAr", label: "Gender (AR)" },
-        { id: "birthdate", label: "Birthdate" },
-        { id: "age", label: "Age" },
-        { id: "nationality", label: "Nationality (EN)" },
-        { id: "nationalityAr", label: "Nationality (AR)" },
-        { id: "bloodType", label: "Blood Type" },
-        { id: "saudiId", label: "Saudi ID" },
-        { id: "iqamaNumber", label: "Iqama Number" },
-        { id: "borderNumber", label: "Border Number" },
-        { id: "passportNumber", label: "Passport Number" },
-        { id: "maritalStatus", label: "Marital Status (EN)" },
-        { id: "maritalStatusAr", label: "Marital Status (AR)" },
-        { id: "religion", label: "Religion (EN)" },
-        { id: "religionAr", label: "Religion (AR)" },
-      ],
+      subTabs: [
+        {
+          title: "Names",
+          fields: [
+            { id: "firstName", label: "First Name (EN)" },
+            { id: "firstNameAr", label: "First Name (AR)" },
+            { id: "lastName", label: "Last Name (EN)" },
+            { id: "lastNameAr", label: "Last Name (AR)" },
+            { id: "fullName", label: "Full Name (EN)" },
+            { id: "fullNameAr", label: "Full Name (AR)" },
+          ]
+        },
+        {
+          title: "Demographics",
+          fields: [
+            { id: "gender", label: "Gender (EN)" },
+            { id: "genderAr", label: "Gender (AR)" },
+            { id: "birthdate", label: "Birthdate" },
+            { id: "age", label: "Age" },
+            { id: "nationality", label: "Nationality (EN)" },
+            { id: "nationalityAr", label: "Nationality (AR)" },
+            { id: "bloodType", label: "Blood Type" },
+          ]
+        },
+        {
+          title: "IDs & Documents",
+          fields: [
+            { id: "saudiId", label: "Saudi ID" },
+            { id: "iqamaNumber", label: "Iqama Number" },
+            { id: "borderNumber", label: "Border Number" },
+            { id: "passportNumber", label: "Passport Number" },
+          ]
+        },
+        {
+          title: "Status",
+          fields: [
+            { id: "maritalStatus", label: "Marital Status (EN)" },
+            { id: "maritalStatusAr", label: "Marital Status (AR)" },
+            { id: "religion", label: "Religion (EN)" },
+            { id: "religionAr", label: "Religion (AR)" },
+          ]
+        }
+      ]
     },
     {
       title: "Contact",
-      fields: [
-        { id: "email", label: "Email" },
-        { id: "mobileNumber", label: "Mobile Number" },
-        { id: "landlineNumber", label: "Landline Number" },
-        { id: "whatsappNumber", label: "WhatsApp Number" },
-        { id: "address", label: "Address (EN)" },
-        { id: "addressAr", label: "Address (AR)" },
-        { id: "nationalAddress", label: "National Address" },
-        { id: "city", label: "City (EN)" },
-        { id: "cityAr", label: "City (AR)" },
-        { id: "district", label: "District (EN)" },
-        { id: "districtAr", label: "District (AR)" },
-        { id: "street", label: "Street (EN)" },
-        { id: "streetAr", label: "Street (AR)" },
-        { id: "buildingNumber", label: "Building Number" },
-        { id: "unitNumber", label: "Unit Number" },
-        { id: "postalCode", label: "Postal Code" },
-        { id: "additionalNumber", label: "Additional Number" },
-        { id: "country", label: "Country (EN)" },
-        { id: "countryAr", label: "Country (AR)" },
-      ],
+      subTabs: [
+        {
+          title: "Email & Phone",
+          fields: [
+            { id: "email", label: "Email" },
+            { id: "mobileNumber", label: "Mobile Number" },
+            { id: "landlineNumber", label: "Landline Number" },
+            { id: "whatsappNumber", label: "WhatsApp Number" },
+          ]
+        },
+        {
+          title: "Address",
+          fields: [
+            { id: "address", label: "Address (EN)" },
+            { id: "addressAr", label: "Address (AR)" },
+            { id: "nationalAddress", label: "National Address" },
+            { id: "city", label: "City (EN)" },
+            { id: "cityAr", label: "City (AR)" },
+            { id: "district", label: "District (EN)" },
+            { id: "districtAr", label: "District (AR)" },
+          ]
+        },
+        {
+          title: "Location Details",
+          fields: [
+            { id: "street", label: "Street (EN)" },
+            { id: "streetAr", label: "Street (AR)" },
+            { id: "buildingNumber", label: "Building Number" },
+            { id: "unitNumber", label: "Unit Number" },
+            { id: "postalCode", label: "Postal Code" },
+            { id: "additionalNumber", label: "Additional Number" },
+            { id: "country", label: "Country (EN)" },
+            { id: "countryAr", label: "Country (AR)" },
+          ]
+        }
+      ]
     },
     {
       title: "Saudi Government",
@@ -193,20 +234,35 @@ function createDataGeneratorUI(containerId) {
     },
     {
       title: "Work",
-      fields: [
-        { id: "company", label: "Company" },
-        { id: "jobTitle", label: "Job Title (EN)" },
-        { id: "jobTitleAr", label: "Job Title (AR)" },
-        { id: "salary", label: "Salary" },
-        { id: "department", label: "Department (EN)" },
-        { id: "departmentAr", label: "Department (AR)" },
-        { id: "workEmail", label: "Work Email" },
-        { id: "workPhone", label: "Work Phone" },
-        { id: "employeeId", label: "Employee ID" },
-        { id: "workExperience", label: "Experience (Years)" },
-        { id: "workLocation", label: "Work Location (EN)" },
-        { id: "workLocationAr", label: "Work Location (AR)" },
-      ],
+      subTabs: [
+        {
+          title: "Company Info",
+          fields: [
+            { id: "company", label: "Company" },
+            { id: "department", label: "Department (EN)" },
+            { id: "departmentAr", label: "Department (AR)" },
+            { id: "workLocation", label: "Work Location (EN)" },
+            { id: "workLocationAr", label: "Work Location (AR)" },
+          ]
+        },
+        {
+          title: "Job Details",
+          fields: [
+            { id: "jobTitle", label: "Job Title (EN)" },
+            { id: "jobTitleAr", label: "Job Title (AR)" },
+            { id: "employeeId", label: "Employee ID" },
+            { id: "workExperience", label: "Experience (Years)" },
+          ]
+        },
+        {
+          title: "Compensation & Contact",
+          fields: [
+            { id: "salary", label: "Salary" },
+            { id: "workEmail", label: "Work Email" },
+            { id: "workPhone", label: "Work Phone" },
+          ]
+        }
+      ]
     },
     {
       title: "Education",
@@ -224,17 +280,32 @@ function createDataGeneratorUI(containerId) {
     },
     {
       title: "Finance",
-      fields: [
-        { id: "iban", label: "IBAN" },
-        { id: "creditCard", label: "Credit Card" },
-        { id: "cvv", label: "CVV" },
-        { id: "bankName", label: "Bank Name (EN)" },
-        { id: "bankNameAr", label: "Bank Name (AR)" },
-        { id: "accountNumber", label: "Account Number" },
-        { id: "swiftCode", label: "SWIFT Code" },
-        { id: "currency", label: "Currency (EN)" },
-        { id: "currencyAr", label: "Currency (AR)" },
-      ],
+      subTabs: [
+        {
+          title: "Banking",
+          fields: [
+            { id: "iban", label: "IBAN" },
+            { id: "bankName", label: "Bank Name (EN)" },
+            { id: "bankNameAr", label: "Bank Name (AR)" },
+            { id: "accountNumber", label: "Account Number" },
+            { id: "swiftCode", label: "SWIFT Code" },
+          ]
+        },
+        {
+          title: "Cards & Payment",
+          fields: [
+            { id: "creditCard", label: "Credit Card" },
+            { id: "cvv", label: "CVV" },
+          ]
+        },
+        {
+          title: "Currency",
+          fields: [
+            { id: "currency", label: "Currency (EN)" },
+            { id: "currencyAr", label: "Currency (AR)" },
+          ]
+        }
+      ]
     },
     {
       title: "Healthcare",
@@ -916,320 +987,154 @@ function createDataGeneratorUI(containerId) {
     .join("");
   const contentHTML = categories
     .map(
-      (cat, idx) => `
-    <div class="dg-tab-content ${idx === 0 ? "active" : ""}" data-content="${idx}">
-      <div class="dg-tab-controls">
-        <button class="dg-btn dg-btn-secondary dg-select-all" data-tab="${idx}">✓ Tab</button>
-        <button class="dg-btn dg-btn-secondary dg-unselect-all" data-tab="${idx}">✕ Tab</button>
-      </div>
-      <div class="dg-fields-wrapper">
-        ${cat.fields.map((field) => `<label class="dg-checkbox"><input type="checkbox" value="${field.id}"><span>${field.label}</span></label>`).join("")}
-      </div>
-      ${
-        cat.title === "Files"
-          ? `
-        <div class="dg-file-controls" id="fileControls">
-          <div class="dg-file-control-group">
-            <label>File Name:</label>
-            <input type="text" id="fileName" placeholder="test-file" value="test-file">
-          </div>
-          <div class="dg-file-control-group">
-            <label>File Size:</label>
-            <div class="dg-file-size-group">
-              <input type="number" id="fileSize" value="10" min="1">
-              <select id="fileSizeUnit">
-                <option value="B">Bytes</option>
-                <option value="KB" selected>KB</option>
-                <option value="MB">MB</option>
-                <option value="GB">GB</option>
-              </select>
+      (cat, idx) => {
+        // Check if category has sub-tabs
+        if (cat.subTabs) {
+          const subTabsHTML = cat.subTabs
+            .map((subTab, subIdx) => 
+              `<button class="dg-sub-tab ${subIdx === 0 ? "active" : ""}" data-sub-tab="${idx}-${subIdx}">${subTab.title}</button>`
+            ).join("");
+          
+          const subTabContentsHTML = cat.subTabs
+            .map((subTab, subIdx) => `
+              <div class="dg-sub-tab-content ${subIdx === 0 ? "active" : ""}" data-sub-content="${idx}-${subIdx}">
+                <div class="dg-tab-controls">
+                  <button class="dg-btn dg-btn-secondary dg-select-sub-all" data-sub-tab="${idx}-${subIdx}">✓ Sub-Tab</button>
+                  <button class="dg-btn dg-btn-secondary dg-unselect-sub-all" data-sub-tab="${idx}-${subIdx}">✕ Sub-Tab</button>
+                </div>
+                <div class="dg-fields-wrapper">
+                  ${subTab.fields.map((field) => `<label class="dg-checkbox"><input type="checkbox" value="${field.id}"><span>${field.label}</span></label>`).join("")}
+                </div>
+              </div>
+            `).join("");
+
+          return `
+            <div class="dg-tab-content ${idx === 0 ? "active" : ""}" data-content="${idx}">
+              <div class="dg-tab-controls">
+                <button class="dg-btn dg-btn-secondary dg-select-all" data-tab="${idx}">✓ Tab</button>
+                <button class="dg-btn dg-btn-secondary dg-unselect-all" data-tab="${idx}">✕ Tab</button>
+              </div>
+              <div class="dg-sub-tabs">${subTabsHTML}</div>
+              ${subTabContentsHTML}
             </div>
-          </div>
-        </div>
-      `
-          : ""
+          `;
+        } else {
+          // Legacy format for categories without sub-tabs
+          return `
+            <div class="dg-tab-content ${idx === 0 ? "active" : ""}" data-content="${idx}">
+              <div class="dg-tab-controls">
+                <button class="dg-btn dg-btn-secondary dg-select-all" data-tab="${idx}">✓ Tab</button>
+                <button class="dg-btn dg-btn-secondary dg-unselect-all" data-tab="${idx}">✕ Tab</button>
+              </div>
+              <div class="dg-fields-wrapper">
+                ${cat.fields.map((field) => `<label class="dg-checkbox"><input type="checkbox" value="${field.id}"><span>${field.label}</span></label>`).join("")}
+              </div>
+              <div class="dg-fields-wrapper">
+                ${cat.fields.map((field) => `<label class="dg-checkbox"><input type="checkbox" value="${field.id}"><span>${field.label}</span></label>`).join("")}
+              </div>
+              ${
+                cat.title === "Files"
+                  ? `
+                <div class="dg-file-controls" id="fileControls">
+                  <div class="dg-file-control-group">
+                    <label>File Name:</label>
+                    <input type="text" id="fileName" placeholder="test-file" value="test-file">
+                  </div>
+                  <div class="dg-file-control-group">
+                    <label>File Size:</label>
+                    <div class="dg-file-size-group">
+                      <input type="number" id="fileSize" value="10" min="1">
+                      <select id="fileSizeUnit">
+                        <option value="B">Bytes</option>
+                        <option value="KB" selected>KB</option>
+                        <option value="MB">MB</option>
+                        <option value="GB">GB</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              `
+                  : ""
+              }
+              ${
+                cat.title === "Date & Time"
+                  ? `
+                <div class="dg-file-controls" id="dateTimeControls">
+                  <div class="dg-file-control-group">
+                    <label>Date Range:</label>
+                    <div class="dg-file-size-group">
+                      <input type="date" id="dateFrom" value="2020-01-01">
+                      <input type="date" id="dateTo" value="2030-12-31">
+                    </div>
+                  </div>
+                  <div class="dg-file-control-group">
+                    <label>Time Range:</label>
+                    <div class="dg-file-size-group">
+                      <input type="time" id="timeFrom" value="00:00">
+                      <input type="time" id="timeTo" value="23:59">
+                    </div>
+                  </div>
+                  <div class="dg-file-control-group">
+                    <label>Date Format:</label>
+                    <select id="dateFormat">
+                      <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                      <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                      <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                      <option value="DD-MM-YYYY">DD-MM-YYYY</option>
+                    </select>
+                  </div>
+                  <div class="dg-file-control-group">
+                    <label>Date Conversion:</label>
+                    <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;">
+                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                        <input type="checkbox" id="includeHijri"> Include Hijri
+                      </label>
+                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                        <input type="checkbox" id="includeGregorian" checked> Include Gregorian
+                      </label>
+                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                        <input type="checkbox" id="showBothDates"> Show Both
+                      </label>
+                    </div>
+                  </div>
+                  <div class="dg-file-control-group">
+                    <label>Convert Specific Date:</label>
+                    <div class="dg-file-size-group">
+                      <input type="date" id="specificGregorianDate" placeholder="Gregorian Date">
+                      <button type="button" id="convertToHijri" style="width: 80px; padding: 4px; font-size: 9px; background: #667eea; color: white; border: none; border-radius: 4px;">→ Hijri</button>
+                    </div>
+                  </div>
+                  <div class="dg-file-control-group">
+                    <label>Convert Hijri Date:</label>
+                    <div style="display: flex; gap: 4px;">
+                      <input type="number" id="hijriDay" placeholder="Day" min="1" max="30" style="width: 50px;">
+                      <select id="hijriMonth" style="flex: 1;">
+                        <option value="1">محرم</option>
+                        <option value="2">صفر</option>
+                        <option value="3">ربيع الأول</option>
+                        <option value="4">ربيع الثاني</option>
+                        <option value="5">جمادى الأولى</option>
+                        <option value="6">جمادى الثانية</option>
+                        <option value="7">رجب</option>
+                        <option value="8">شعبان</option>
+                        <option value="9">رمضان</option>
+                        <option value="10">شوال</option>
+                        <option value="11">ذو القعدة</option>
+                        <option value="12">ذو الحجة</option>
+                      </select>
+                      <input type="number" id="hijriYear" placeholder="Year" min="1400" max="1500" style="width: 60px;">
+                      <button type="button" id="convertToGregorian" style="width: 80px; padding: 4px; font-size: 9px; background: #667eea; color: white; border: none; border-radius: 4px;">→ Greg</button>
+                    </div>
+                  </div>
+                  <div id="conversionResult" style="margin-top: 8px; padding: 8px; background: #f0f9ff; border-radius: 6px; font-size: 10px; display: none;"></div>
+                </div>
+              `
+                  : ""
+              }
+            </div>
+          `;
+        }
       }
-      ${
-        cat.title === "Date & Time"
-          ? `
-        <div class="dg-file-controls" id="dateTimeControls">
-          <div class="dg-file-control-group">
-            <label>Date Range:</label>
-            <div class="dg-file-size-group">
-              <input type="date" id="dateFrom" value="2020-01-01">
-              <input type="date" id="dateTo" value="2030-12-31">
-            </div>
-          </div>
-          <div class="dg-file-control-group">
-            <label>Time Range:</label>
-            <div class="dg-file-size-group">
-              <input type="time" id="timeFrom" value="00:00">
-              <input type="time" id="timeTo" value="23:59">
-            </div>
-          </div>
-          <div class="dg-file-control-group">
-            <label>Date Format:</label>
-            <select id="dateFormat">
-              <option value="YYYY-MM-DD">YYYY-MM-DD</option>
-              <option value="DD/MM/YYYY">DD/MM/YYYY</option>
-              <option value="MM/DD/YYYY">MM/DD/YYYY</option>
-              <option value="DD-MM-YYYY">DD-MM-YYYY</option>
-            </select>
-          </div>
-          <div class="dg-file-control-group">
-            <label>Date Conversion:</label>
-            <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;">
-              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                <input type="checkbox" id="includeHijri"> Include Hijri
-              </label>
-              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                <input type="checkbox" id="includeGregorian" checked> Include Gregorian
-              </label>
-              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                <input type="checkbox" id="showBothDates"> Show Both
-              </label>
-            </div>
-          </div>
-          <div class="dg-file-control-group">
-            <label>Convert Specific Date:</label>
-            <div class="dg-file-size-group">
-              <input type="date" id="specificGregorianDate" placeholder="Gregorian Date">
-              <button type="button" id="convertToHijri" style="width: 80px; padding: 4px; font-size: 9px; background: #667eea; color: white; border: none; border-radius: 4px;">→ Hijri</button>
-            </div>
-          </div>
-          <div class="dg-file-control-group">
-            <label>Convert Hijri Date:</label>
-            <div style="display: flex; gap: 4px;">
-              <input type="number" id="hijriDay" placeholder="Day" min="1" max="30" style="width: 50px;">
-              <select id="hijriMonth" style="flex: 1;">
-                <option value="1">محرم</option>
-                <option value="2">صفر</option>
-                <option value="3">ربيع الأول</option>
-                <option value="4">ربيع الثاني</option>
-                <option value="5">جمادى الأولى</option>
-                <option value="6">جمادى الثانية</option>
-                <option value="7">رجب</option>
-                <option value="8">شعبان</option>
-                <option value="9">رمضان</option>
-                <option value="10">شوال</option>
-                <option value="11">ذو القعدة</option>
-                <option value="12">ذو الحجة</option>
-              </select>
-              <input type="number" id="hijriYear" placeholder="Year" min="1400" max="1500" style="width: 60px;">
-              <button type="button" id="convertToGregorian" style="width: 80px; padding: 4px; font-size: 9px; background: #667eea; color: white; border: none; border-radius: 4px;">→ Greg</button>
-            </div>
-          </div>
-          <div id="conversionResult" style="margin-top: 8px; padding: 8px; background: #f0f9ff; border-radius: 6px; font-size: 10px; display: none;"></div>
-        </div>
-      `
-          : ""
-      }
-      ${
-        cat.title === "Phone Testing"
-          ? `
-        <div class="dg-file-controls" id="phoneControls">
-          <div class="dg-file-control-group">
-            <label>Phone Type:</label>
-            <select id="phoneType">
-              <option value="mobile">Mobile (05X)</option>
-              <option value="landline">Landline (01X)</option>
-              <option value="short-mobile">Short Mobile (5X)</option>
-              <option value="short-landline">Short Landline (1X)</option>
-              <option value="mixed">Mixed Types</option>
-            </select>
-          </div>
-          <div class="dg-file-control-group">
-            <label>Phone Format:</label>
-            <select id="phoneFormat">
-              <option value="formatted">Formatted (+966 5X XXX XXXX)</option>
-              <option value="unformatted">Unformatted (05XXXXXXXX)</option>
-              <option value="international">International (+966)</option>
-              <option value="local">Local (05X)</option>
-            </select>
-          </div>
-          <div class="dg-file-control-group">
-            <label>Validation:</label>
-            <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;">
-              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                <input type="checkbox" id="generateValid" checked> Valid Numbers
-              </label>
-              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                <input type="checkbox" id="generateInvalid"> Invalid Numbers
-              </label>
-              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                <input type="checkbox" id="wrongLength"> Wrong Length
-              </label>
-            </div>
-          </div>
-        </div>
-      `
-          : ""
-      }
-      ${
-        cat.title === "Random Values"
-          ? `
-        <div class="dg-file-controls" id="randomValuesControls">
-          <div class="dg-file-control-group">
-            <label>Character Types:</label>
-            <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;">
-              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                <input type="checkbox" id="includeNumbers" checked> Numbers (0-9)
-              </label>
-              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                <input type="checkbox" id="includeUppercase" checked> Uppercase (A-Z)
-              </label>
-              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                <input type="checkbox" id="includeLowercase" checked> Lowercase (a-z)
-              </label>
-              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                <input type="checkbox" id="includeArabicLetters"> Arabic Letters (أ-ي)
-              </label>
-              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                <input type="checkbox" id="includeSpecialChars"> Special (!@#$%)
-              </label>
-            </div>
-          </div>
-          <div class="dg-file-control-group">
-            <label>Length:</label>
-            <div class="dg-file-size-group">
-              <input type="number" id="randomLength" value="10" min="1" max="1000" style="width: 80px;">
-              <span style="font-size: 10px; color: #64748b;">characters</span>
-            </div>
-          </div>
-          <div class="dg-file-control-group">
-            <label>Custom Characters:</label>
-            <input type="text" id="customChars" placeholder="Add custom characters..." style="width: 100%; padding: 4px 6px; font-size: 10px;">
-          </div>
-        </div>
-      `
-          : ""
-      }
-      ${
-        cat.title === "Random Text"
-          ? `
-        <div class="dg-file-controls" id="randomTextControls">
-          <div class="dg-file-control-group">
-            <label>Text Length:</label>
-            <input type="number" id="textLength" value="50" min="1" max="10000">
-          </div>
-          <div class="dg-file-control-group">
-            <label>Character Types:</label>
-            <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px;">
-              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                <input type="checkbox" id="includeDigits" checked> Digits (0-9)
-              </label>
-              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                <input type="checkbox" id="includeEnglish" checked> English (A-z)
-              </label>
-              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                <input type="checkbox" id="includeArabic"> Arabic (ا-ي)
-              </label>
-              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                <input type="checkbox" id="includeSpecial"> Special (!@#$)
-              </label>
-              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                <input type="checkbox" id="includeSpace"> Spaces
-              </label>
-            </div>
-          </div>
-        </div>
-      `
-          : ""
-      }
-      ${
-        cat.title === "Email Testing"
-          ? `
-        <div class="dg-file-controls" id="emailControls">
-          <div class="dg-file-control-group">
-            <label>Email Domain:</label>
-            <select id="emailDomain">
-              <option value="random">Random Domain</option>
-              <option value="gmail.com">gmail.com</option>
-              <option value="yahoo.com">yahoo.com</option>
-              <option value="hotmail.com">hotmail.com</option>
-              <option value="outlook.com">outlook.com</option>
-              <option value="company.com">company.com</option>
-              <option value="test.com">test.com</option>
-              <option value="example.com">example.com</option>
-              <option value="custom">Custom Domain</option>
-            </select>
-          </div>
-          <div class="dg-file-control-group" id="customDomainGroup" style="display: none;">
-            <label>Custom Domain:</label>
-            <input type="text" id="customDomain" placeholder="mydomain.com">
-          </div>
-          <div class="dg-file-control-group">
-            <label>Email Format:</label>
-            <select id="emailFormat">
-              <option value="standard">Standard (name@domain.com)</option>
-              <option value="subdomain">Subdomain (name@sub.domain.com)</option>
-              <option value="plus">Plus Addressing (name+tag@domain.com)</option>
-              <option value="dot">Dot Notation (first.last@domain.com)</option>
-              <option value="underscore">Underscore (first_last@domain.com)</option>
-              <option value="hyphen">Hyphen (first-last@domain.com)</option>
-            </select>
-          </div>
-          <div class="dg-file-control-group">
-            <label>Email Length:</label>
-            <select id="emailLength">
-              <option value="short">Short (5-10 chars)</option>
-              <option value="medium" selected>Medium (10-20 chars)</option>
-              <option value="long">Long (20-40 chars)</option>
-              <option value="very-long">Very Long (40+ chars)</option>
-            </select>
-          </div>
-        </div>
-      `
-          : ""
-      }
-      ${
-        cat.title === "Password Testing"
-          ? `
-        <div class="dg-file-controls" id="passwordControls">
-          <div class="dg-file-control-group">
-            <label>Password Length:</label>
-            <input type="number" id="passwordLength" value="12" min="4" max="128">
-          </div>
-          <div class="dg-file-control-group">
-            <label>Character Types:</label>
-            <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;">
-              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                <input type="checkbox" id="includeUppercase" checked> Uppercase (A-Z)
-              </label>
-              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                <input type="checkbox" id="includeLowercase" checked> Lowercase (a-z)
-              </label>
-              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                <input type="checkbox" id="includeNumbers" checked> Numbers (0-9)
-              </label>
-              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                <input type="checkbox" id="includeSpecialChars"> Special (!@#$)
-              </label>
-              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                <input type="checkbox" id="includeArabicChars"> Arabic (ا-ي)
-              </label>
-            </div>
-          </div>
-          <div class="dg-file-control-group">
-            <label>Requirements:</label>
-            <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;">
-              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                <input type="checkbox" id="mustStartWith"> Must start with letter
-              </label>
-              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                <input type="checkbox" id="mustEndWith"> Must end with number
-              </label>
-              <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                <input type="checkbox" id="noRepeating"> No repeating chars
-              </label>
-            </div>
-          </div>
-        </div>
-      `
-          : ""
-      }
-    </div>
-  `,
     )
     .join("");
 
@@ -1339,6 +1244,28 @@ function createDataGeneratorUI(containerId) {
     });
   });
 
+  // Sub-tab event handlers
+  document.querySelectorAll(".dg-sub-tab").forEach((subTab) => {
+    subTab.addEventListener("click", () => {
+      const subTabKey = subTab.dataset.subTab;
+      const [tabIdx] = subTabKey.split('-');
+      
+      // Remove active class from all sub-tabs in this main tab
+      document
+        .querySelectorAll(`[data-content="${tabIdx}"] .dg-sub-tab`)
+        .forEach((t) => t.classList.remove("active"));
+      document
+        .querySelectorAll(`[data-content="${tabIdx}"] .dg-sub-tab-content`)
+        .forEach((c) => c.classList.remove("active"));
+      
+      // Add active class to clicked sub-tab
+      subTab.classList.add("active");
+      document
+        .querySelector(`[data-sub-content="${subTabKey}"]`)
+        .classList.add("active");
+    });
+  });
+
   document
     .querySelector(".dg-select-all-categories")
     .addEventListener("click", () => {
@@ -1373,6 +1300,25 @@ function createDataGeneratorUI(containerId) {
     });
   });
 
+  // Sub-tab select/unselect handlers
+  document.querySelectorAll(".dg-select-sub-all").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const subTabKey = btn.dataset.subTab;
+      document
+        .querySelectorAll(`[data-sub-content="${subTabKey}"] .dg-checkbox input`)
+        .forEach((c) => (c.checked = true));
+    });
+  });
+
+  document.querySelectorAll(".dg-unselect-sub-all").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const subTabKey = btn.dataset.subTab;
+      document
+        .querySelectorAll(`[data-sub-content="${subTabKey}"] .dg-checkbox input`)
+        .forEach((c) => (c.checked = false));
+    });
+  });
+
   // Search functionality
   const searchInput = document.getElementById("searchInput");
   const searchResults = document.getElementById("searchResults");
@@ -1382,16 +1328,35 @@ function createDataGeneratorUI(containerId) {
   function createSearchIndex() {
     const searchIndex = [];
     categories.forEach((category, categoryIndex) => {
-      category.fields.forEach((field) => {
-        searchIndex.push({
-          categoryIndex,
-          categoryTitle: category.title,
-          fieldId: field.id,
-          fieldLabel: field.label,
-          searchText:
-            `${category.title} ${field.label} ${field.id}`.toLowerCase(),
+      if (category.subTabs) {
+        // Handle categories with sub-tabs
+        category.subTabs.forEach((subTab, subTabIndex) => {
+          subTab.fields.forEach((field) => {
+            searchIndex.push({
+              categoryIndex,
+              subTabIndex,
+              categoryTitle: category.title,
+              subTabTitle: subTab.title,
+              fieldId: field.id,
+              fieldLabel: field.label,
+              searchText:
+                `${category.title} ${subTab.title} ${field.label} ${field.id}`.toLowerCase(),
+            });
+          });
         });
-      });
+      } else {
+        // Handle legacy categories without sub-tabs
+        category.fields.forEach((field) => {
+          searchIndex.push({
+            categoryIndex,
+            categoryTitle: category.title,
+            fieldId: field.id,
+            fieldLabel: field.label,
+            searchText:
+              `${category.title} ${field.label} ${field.id}`.toLowerCase(),
+          });
+        });
+      }
     });
     return searchIndex;
   }
@@ -1424,8 +1389,8 @@ function createDataGeneratorUI(containerId) {
       searchResults.innerHTML = results
         .map(
           (result) => `
-        <div class="dg-search-result" data-category="${result.categoryIndex}" data-field="${result.fieldId}">
-          <div class="dg-search-category">${highlightText(result.categoryTitle, query)}</div>
+        <div class="dg-search-result" data-category="${result.categoryIndex}" data-sub-tab="${result.subTabIndex || ''}" data-field="${result.fieldId}">
+          <div class="dg-search-category">${highlightText(result.categoryTitle, query)}${result.subTabTitle ? ` → ${highlightText(result.subTabTitle, query)}` : ''}</div>
           <div class="dg-search-field">${highlightText(result.fieldLabel, query)}</div>
         </div>
       `,
@@ -1436,7 +1401,7 @@ function createDataGeneratorUI(containerId) {
     searchResults.style.display = "block";
   }
 
-  function selectSearchResult(categoryIndex, fieldId) {
+  function selectSearchResult(categoryIndex, fieldId, subTabIndex = null) {
     // Switch to the category tab
     document
       .querySelectorAll(".dg-tab")
@@ -1453,6 +1418,25 @@ function createDataGeneratorUI(containerId) {
     if (targetTab && targetContent) {
       targetTab.classList.add("active");
       targetContent.classList.add("active");
+
+      // If category has sub-tabs and a specific sub-tab is requested
+      if (subTabIndex !== null && categories[categoryIndex].subTabs) {
+        // Switch to the specific sub-tab
+        document
+          .querySelectorAll(`[data-content="${categoryIndex}"] .dg-sub-tab`)
+          .forEach((t) => t.classList.remove("active"));
+        document
+          .querySelectorAll(`[data-content="${categoryIndex}"] .dg-sub-tab-content`)
+          .forEach((c) => c.classList.remove("active"));
+
+        const targetSubTab = document.querySelector(`[data-sub-tab="${categoryIndex}-${subTabIndex}"]`);
+        const targetSubContent = document.querySelector(`[data-sub-content="${categoryIndex}-${subTabIndex}"]`);
+
+        if (targetSubTab && targetSubContent) {
+          targetSubTab.classList.add("active");
+          targetSubContent.classList.add("active");
+        }
+      }
 
       // Show/hide controls based on category
       const categoryTitle = categories[categoryIndex].title;
@@ -1561,7 +1545,8 @@ function createDataGeneratorUI(containerId) {
     if (resultItem) {
       const categoryIndex = parseInt(resultItem.dataset.category);
       const fieldId = resultItem.dataset.field;
-      selectSearchResult(categoryIndex, fieldId);
+      const subTabIndex = resultItem.dataset.subTab ? parseInt(resultItem.dataset.subTab) : null;
+      selectSearchResult(categoryIndex, fieldId, subTabIndex);
     }
   });
 
