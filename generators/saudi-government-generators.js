@@ -56,6 +56,18 @@ const saudiGovernmentGenerators = {
   
   qiwaNumber: () => `QW${randomNum(100000000, 999999999)}`,
   
+  qiwaContractId: () => `QWC${randomNum(1000000000, 9999999999)}`,
+  
+  mudadContractId: () => `MDC${randomNum(1000000000, 9999999999)}`,
+  
+  takamolId: () => `TKM${randomNum(100000000, 999999999)}`,
+  
+  musanedId: () => `MSN${randomNum(100000000, 999999999)}`,
+  
+  ajeerContractId: () => `AJR${randomNum(1000000000, 9999999999)}`,
+  
+  fasahTerminationId: () => `FSH${randomNum(100000000, 999999999)}`,
+  
   laborOfficeNumber: () => `LO${randomNum(1000000, 9999999)}`,
   
   zakat: () => `ZK${randomNum(100000000, 999999999)}`,
@@ -89,6 +101,18 @@ const saudiGovernmentGenerators = {
   samaLicense: () => `SAMA${randomNum(100000, 999999)}`,
   
   zatcaCsid: () => `CSID${randomNum(100000000000, 999999999999)}`,
+  
+  tawakkalnaQr: () => `TW${randomNum(1000000000000000, 9999999999999999)}`,
+  
+  sehhatyId: () => `SH${randomNum(100000000, 999999999)}`,
+  
+  muqeemNumber: () => `MQ${randomNum(100000000, 999999999)}`,
+  
+  nusukPermit: () => `NSK${randomNum(1000000, 9999999)}`,
+  
+  waselCard: () => `WSL${randomNum(1000000000, 9999999999)}`,
+  
+  darbCard: () => `DRB${randomNum(1000000000, 9999999999)}`,
 
   region: () => {
     if (!sharedSaudiData) generateSharedSaudiData();

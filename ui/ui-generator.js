@@ -237,24 +237,41 @@ function createDataGeneratorUI(containerId) {
             { id: "laborOfficeNumber", label: "Labor Office Number" },
             { id: "zakat", label: "Zakat Number" },
             { id: "qiwaNumber", label: "Qiwa Platform Number" },
+            { id: "qiwaContractId", label: "Qiwa Employment Contract ID" },
+            { id: "mudadContractId", label: "Mudad Contract ID (Legacy)" },
             { id: "hrdfCertificate", label: "HRDF Training Certificate" },
             { id: "saudizationNumber", label: "Saudization Compliance ID" },
+            { id: "takamolId", label: "Takamol Training Platform ID" },
           ]
         },
         {
-          title: "Services & Location",
+          title: "Digital Services",
           fields: [
-            { id: "customsCode", label: "Customs Code" },
-            { id: "saudiPost", label: "Saudi Post Box" },
             { id: "absherId", label: "Absher ID" },
             { id: "nafathId", label: "Nafath ID" },
             { id: "elmId", label: "Elm ID" },
+            { id: "tawakkalnaQr", label: "Tawakkalna QR Code" },
+            { id: "sehhatyId", label: "Sehhaty Health ID" },
+            { id: "muqeemNumber", label: "Muqeem Residence Service" },
+            { id: "nusukPermit", label: "Nusuk Hajj/Umrah Permit" },
+            { id: "zatcaCsid", label: "ZATCA CSID (E-Invoice)" },
+          ]
+        },
+        {
+          title: "Services & Infrastructure",
+          fields: [
+            { id: "customsCode", label: "Customs Code" },
+            { id: "saudiPost", label: "Saudi Post Box" },
             { id: "balady", label: "Balady Municipal ID" },
             { id: "misaLicense", label: "MISA Investment License" },
             { id: "etimadNumber", label: "Etimad Supplier Number" },
             { id: "sadadPayment", label: "SADAD Payment ID" },
             { id: "samaLicense", label: "SAMA Financial License" },
-            { id: "zatcaCsid", label: "ZATCA CSID (E-Invoice)" },
+            { id: "waselCard", label: "Wasel Transport Card" },
+            { id: "darbCard", label: "Darb Metro/Bus Card" },
+            { id: "musanedId", label: "Musaned Domestic Worker ID" },
+            { id: "ajeerContractId", label: "Ajeer Domestic Contract ID" },
+            { id: "fasahTerminationId", label: "Fasah Contract Termination ID" },
             { id: "region", label: "Region (EN)" },
             { id: "regionAr", label: "Region (AR)" },
             { id: "province", label: "Province (EN)" },
@@ -402,8 +419,13 @@ function createDataGeneratorUI(containerId) {
           title: "Registration & IDs",
           fields: [
             { id: "licensePlate", label: "License Plate" },
+            { id: "saudiLicensePlate", label: "Saudi License Plate" },
+            { id: "diplomaticPlate", label: "Diplomatic Plate" },
+            { id: "publicTransportPlate", label: "Public Transport Plate" },
+            { id: "commercialPlate", label: "Commercial Plate" },
             { id: "vin", label: "VIN Number" },
             { id: "engineNumber", label: "Engine Number" },
+            { id: "vehicleRegistration", label: "Vehicle Registration (Istimara)" },
           ]
         }
       ]

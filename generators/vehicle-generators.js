@@ -62,6 +62,19 @@ const vehicleGenerators = {
     }
     return plate;
   },
+  
+  saudiLicensePlate: () => {
+    const arabicLetters = ['أ', 'ب', 'ج', 'د', 'ه', 'و', 'ز', 'ح', 'ط', 'ي', 'ك', 'ل', 'م', 'ن', 'س', 'ع', 'ف', 'ص', 'ق', 'ر', 'ش', 'ت', 'ث', 'خ', 'ذ', 'ض', 'ظ', 'غ'];
+    return `${randomChoice(arabicLetters)}${randomChoice(arabicLetters)}${randomChoice(arabicLetters)} ${randomNum(1000, 9999)}`;
+  },
+  
+  diplomaticPlate: () => `CD ${randomNum(100, 999)} ${randomNum(10, 99)}`,
+  
+  publicTransportPlate: () => `PT ${randomNum(1000, 9999)} ${randomNum(10, 99)}`,
+  
+  commercialPlate: () => `CM ${randomNum(1000, 9999)} ${randomNum(10, 99)}`,
+  
+  vehicleRegistration: () => `IST${randomNum(100000000, 999999999)}`,
 
   carBrand: () => {
     if (!sharedVehicleData) generateSharedVehicleData();
