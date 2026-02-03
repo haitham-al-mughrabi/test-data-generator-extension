@@ -1640,13 +1640,20 @@ function createDataGeneratorUI(containerId) {
                     </div>
                   </div>
                   <div class="dg-file-control-group">
-                    <label>Date Format:</label>
-                    <select id="dateFormat">
-                      <option value="YYYY-MM-DD">YYYY-MM-DD</option>
-                      <option value="DD/MM/YYYY">DD/MM/YYYY</option>
-                      <option value="MM/DD/YYYY">MM/DD/YYYY</option>
-                      <option value="DD-MM-YYYY">DD-MM-YYYY</option>
-                    </select>
+                    <label>Date Format & Language:</label>
+                    <div style="display: flex; gap: 6px;">
+                      <select id="dateFormat">
+                        <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                        <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                        <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                        <option value="DD-MM-YYYY">DD-MM-YYYY</option>
+                      </select>
+                      <select id="hijriLanguage">
+                        <option value="arabic">Arabic (هجري)</option>
+                        <option value="english">English</option>
+                        <option value="numbers">Numbers Only</option>
+                      </select>
+                    </div>
                   </div>
                   <div class="dg-file-control-group">
                     <label>Date Conversion:</label>
@@ -1664,8 +1671,23 @@ function createDataGeneratorUI(containerId) {
                   </div>
                   <div class="dg-file-control-group">
                     <label>Convert Specific Date:</label>
-                    <div class="dg-file-size-group">
-                      <input type="date" id="specificGregorianDate" placeholder="Gregorian Date">
+                    <div style="display: flex; gap: 4px;">
+                      <input type="number" id="specificGregorianDay" placeholder="Day" min="1" max="31" style="width: 50px;">
+                      <select id="specificGregorianMonth" style="flex: 1;">
+                        <option value="1">January</option>
+                        <option value="2">February</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                      </select>
+                      <input type="number" id="specificGregorianYear" placeholder="Year" min="1900" max="2100" style="width: 70px;">
                       <button type="button" id="convertToHijri" style="width: 80px; padding: 4px; font-size: 9px; background: #667eea; color: white; border: none; border-radius: 4px;">→ Hijri</button>
                     </div>
                   </div>
@@ -1691,7 +1713,13 @@ function createDataGeneratorUI(containerId) {
                       <button type="button" id="convertToGregorian" style="width: 80px; padding: 4px; font-size: 9px; background: #667eea; color: white; border: none; border-radius: 4px;">→ Greg</button>
                     </div>
                   </div>
-                  <div id="conversionResult" style="margin-top: 8px; padding: 8px; background: #f0f9ff; border-radius: 6px; font-size: 10px; display: none;"></div>
+                  <div id="conversionResult" style="margin-top: 8px; padding: 8px; background: #f0f9ff; border-radius: 6px; font-size: 10px; display: none;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                      <span style="font-weight: bold;">Conversion Result:</span>
+                      <button type="button" id="copyConversionResult" style="padding: 2px 6px; font-size: 8px; background: #667eea; color: white; border: none; border-radius: 3px; cursor: pointer;">Copy</button>
+                    </div>
+                    <div id="conversionResultText"></div>
+                  </div>
                 </div>
               `
                   : ""
@@ -1988,8 +2016,23 @@ function createDataGeneratorUI(containerId) {
                   </div>
                   <div class="dg-file-control-group">
                     <label>Convert Specific Date:</label>
-                    <div class="dg-file-size-group">
-                      <input type="date" id="specificGregorianDate" placeholder="Gregorian Date">
+                    <div style="display: flex; gap: 4px;">
+                      <input type="number" id="specificGregorianDay" placeholder="Day" min="1" max="31" style="width: 50px;">
+                      <select id="specificGregorianMonth" style="flex: 1;">
+                        <option value="1">January</option>
+                        <option value="2">February</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                      </select>
+                      <input type="number" id="specificGregorianYear" placeholder="Year" min="1900" max="2100" style="width: 70px;">
                       <button type="button" id="convertToHijri" style="width: 80px; padding: 4px; font-size: 9px; background: #667eea; color: white; border: none; border-radius: 4px;">→ Hijri</button>
                     </div>
                   </div>
@@ -2852,30 +2895,48 @@ function createDataGeneratorUI(containerId) {
   const convertToHijriBtn = document.getElementById("convertToHijri");
   const convertToGregorianBtn = document.getElementById("convertToGregorian");
   const conversionResult = document.getElementById("conversionResult");
+  const copyResultBtn = document.getElementById("copyConversionResult");
 
   if (convertToHijriBtn) {
     convertToHijriBtn.addEventListener("click", () => {
-      const dateInput = document.getElementById("specificGregorianDate");
-      if (dateInput && dateInput.value) {
-        const gregorianDate = new Date(dateInput.value);
+      const dayInput = document.getElementById("specificGregorianDay");
+      const monthSelect = document.getElementById("specificGregorianMonth");
+      const yearInput = document.getElementById("specificGregorianYear");
+      const languageSelect = document.getElementById("hijriLanguage");
+      
+      if (dayInput?.value && monthSelect?.value && yearInput?.value) {
+        const gregorianDate = new Date(yearInput.value, monthSelect.value - 1, dayInput.value);
         const hijri = gregorianToHijri(gregorianDate);
-        const hijriMonths = [
-          "محرم",
-          "صفر",
-          "ربيع الأول",
-          "ربيع الثاني",
-          "جمادى الأولى",
-          "جمادى الثانية",
-          "رجب",
-          "شعبان",
-          "رمضان",
-          "شوال",
-          "ذو القعدة",
-          "ذو الحجة",
-        ];
-        const result = `${dateInput.value} → ${hijri.day} ${hijriMonths[hijri.month - 1]} ${hijri.year}هـ`;
-        conversionResult.textContent = result;
+        const language = languageSelect?.value || "arabic";
+        
+        const hijriMonths = {
+          arabic: ["محرم", "صفر", "ربيع الأول", "ربيع الثاني", "جمادى الأولى", "جمادى الثانية", "رجب", "شعبان", "رمضان", "شوال", "ذو القعدة", "ذو الحجة"],
+          english: ["Muharram", "Safar", "Rabi' al-awwal", "Rabi' al-thani", "Jumada al-awwal", "Jumada al-thani", "Rajab", "Sha'ban", "Ramadan", "Shawwal", "Dhu al-Qi'dah", "Dhu al-Hijjah"],
+          numbers: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+        };
+        
+        let result;
+        if (language === "numbers") {
+          result = `${dayInput.value}/${monthSelect.value}/${yearInput.value} → ${hijri.day}/${hijri.month}/${hijri.year}`;
+        } else {
+          const monthName = hijriMonths[language][hijri.month - 1];
+          result = `${dayInput.value}/${monthSelect.value}/${yearInput.value} → ${hijri.day} ${monthName} ${hijri.year}${language === "arabic" ? "هـ" : " AH"}`;
+        }
+        
+        document.getElementById("conversionResultText").textContent = result;
         conversionResult.style.display = "block";
+      }
+    });
+  }
+
+  if (copyResultBtn) {
+    copyResultBtn.addEventListener("click", () => {
+      const resultText = document.getElementById("conversionResultText")?.textContent;
+      if (resultText) {
+        navigator.clipboard.writeText(resultText).then(() => {
+          copyResultBtn.textContent = "Copied!";
+          setTimeout(() => copyResultBtn.textContent = "Copy", 1000);
+        });
       }
     });
   }
