@@ -40,13 +40,21 @@ function generateSharedSaudiData() {
 const saudiGovernmentGenerators = {
   commercialRegister: () => `${randomNum(1000000000, 9999999999)}`,
   
-  taxNumber: () => `3${randomNum(100000000000000, 999999999999999)}`,
+  unifiedEstablishmentNumber: () => `7${randomNum(100000000, 999999999)}`,
+  
+  taxNumber: () => `3${randomNum(10000000000000, 99999999999999)}`,
   
   municipalLicense: () => `ML${randomNum(100000, 999999)}`,
+  
+  moiciLicense: () => `MOCI${randomNum(100000, 999999)}`,
   
   chamberMembership: () => `CM${randomNum(10000000, 99999999)}`,
   
   socialInsurance: () => `${randomNum(100000000, 999999999)}`,
+  
+  gosiNumber: () => `GOSI${randomNum(1000000, 9999999)}`,
+  
+  qiwaNumber: () => `QW${randomNum(100000000, 999999999)}`,
   
   laborOfficeNumber: () => `LO${randomNum(1000000, 9999999)}`,
   
@@ -61,6 +69,26 @@ const saudiGovernmentGenerators = {
   nafathId: () => `NFT${randomNum(100000000, 999999999)}`,
   
   elmId: () => `ELM${randomNum(10000000, 99999999)}`,
+  
+  balady: () => `BLD${randomNum(100000, 999999)}`,
+  
+  misaLicense: () => `MISA${randomNum(100000, 999999)}`,
+  
+  monshaatLicense: () => `MST${randomNum(100000, 999999)}`,
+  
+  saberCertificate: () => `SABER${randomNum(1000000, 9999999)}`,
+  
+  hrdfCertificate: () => `HRDF${randomNum(100000, 999999)}`,
+  
+  saudizationNumber: () => `SZ${randomNum(10000000, 99999999)}`,
+  
+  etimadNumber: () => `ETM${randomNum(100000000, 999999999)}`,
+  
+  sadadPayment: () => `SADAD${randomNum(1000000, 9999999)}`,
+  
+  samaLicense: () => `SAMA${randomNum(100000, 999999)}`,
+  
+  zatcaCsid: () => `CSID${randomNum(100000000000, 999999999999)}`,
 
   region: () => {
     if (!sharedSaudiData) generateSharedSaudiData();

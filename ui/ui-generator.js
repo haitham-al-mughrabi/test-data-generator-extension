@@ -220,17 +220,25 @@ function createDataGeneratorUI(containerId) {
           title: "Business Registration",
           fields: [
             { id: "commercialRegister", label: "Commercial Register" },
+            { id: "unifiedEstablishmentNumber", label: "Unified Establishment Number" },
             { id: "taxNumber", label: "Tax Number (VAT)" },
             { id: "municipalLicense", label: "Municipal License" },
             { id: "chamberMembership", label: "Chamber Membership" },
+            { id: "moiciLicense", label: "MOCI License" },
+            { id: "monshaatLicense", label: "Monsha'at SME License" },
+            { id: "saberCertificate", label: "SABER Certificate" },
           ]
         },
         {
           title: "Employment & Social",
           fields: [
             { id: "socialInsurance", label: "Social Insurance (GOSI)" },
+            { id: "gosiNumber", label: "GOSI Registration Number" },
             { id: "laborOfficeNumber", label: "Labor Office Number" },
             { id: "zakat", label: "Zakat Number" },
+            { id: "qiwaNumber", label: "Qiwa Platform Number" },
+            { id: "hrdfCertificate", label: "HRDF Training Certificate" },
+            { id: "saudizationNumber", label: "Saudization Compliance ID" },
           ]
         },
         {
@@ -241,6 +249,12 @@ function createDataGeneratorUI(containerId) {
             { id: "absherId", label: "Absher ID" },
             { id: "nafathId", label: "Nafath ID" },
             { id: "elmId", label: "Elm ID" },
+            { id: "balady", label: "Balady Municipal ID" },
+            { id: "misaLicense", label: "MISA Investment License" },
+            { id: "etimadNumber", label: "Etimad Supplier Number" },
+            { id: "sadadPayment", label: "SADAD Payment ID" },
+            { id: "samaLicense", label: "SAMA Financial License" },
+            { id: "zatcaCsid", label: "ZATCA CSID (E-Invoice)" },
             { id: "region", label: "Region (EN)" },
             { id: "regionAr", label: "Region (AR)" },
             { id: "province", label: "Province (EN)" },
@@ -558,470 +572,845 @@ function createDataGeneratorUI(containerId) {
     },
     {
       title: "Food & Restaurant",
-      fields: [
-        { id: "dishName", label: "Dish Name (EN)" },
-        { id: "dishNameAr", label: "Dish Name (AR)" },
-        { id: "restaurantName", label: "Restaurant Name (EN)" },
-        { id: "restaurantNameAr", label: "Restaurant Name (AR)" },
-        { id: "cuisine", label: "Cuisine Type (EN)" },
-        { id: "cuisineAr", label: "Cuisine Type (AR)" },
-        { id: "menuPrice", label: "Menu Price" },
-        { id: "ingredient", label: "Ingredient (EN)" },
-        { id: "ingredientAr", label: "Ingredient (AR)" },
-        { id: "tableNumber", label: "Table Number" },
-        { id: "orderNumber", label: "Order Number" },
-        { id: "deliveryTime", label: "Delivery Time" },
-        { id: "chefName", label: "Chef Name (EN)" },
-        { id: "chefNameAr", label: "Chef Name (AR)" },
-      ],
+      subTabs: [
+        {
+          title: "Menu & Dishes",
+          fields: [
+            { id: "dishName", label: "Dish Name (EN)" },
+            { id: "dishNameAr", label: "Dish Name (AR)" },
+            { id: "cuisine", label: "Cuisine Type (EN)" },
+            { id: "cuisineAr", label: "Cuisine Type (AR)" },
+            { id: "menuPrice", label: "Menu Price" },
+            { id: "ingredient", label: "Ingredient (EN)" },
+            { id: "ingredientAr", label: "Ingredient (AR)" },
+          ]
+        },
+        {
+          title: "Restaurant Info",
+          fields: [
+            { id: "restaurantName", label: "Restaurant Name (EN)" },
+            { id: "restaurantNameAr", label: "Restaurant Name (AR)" },
+            { id: "chefName", label: "Chef Name (EN)" },
+            { id: "chefNameAr", label: "Chef Name (AR)" },
+          ]
+        },
+        {
+          title: "Orders & Service",
+          fields: [
+            { id: "tableNumber", label: "Table Number" },
+            { id: "orderNumber", label: "Order Number" },
+            { id: "deliveryTime", label: "Delivery Time" },
+          ]
+        }
+      ]
     },
     {
       title: "Sports & Fitness",
-      fields: [
-        { id: "sportName", label: "Sport Name (EN)" },
-        { id: "sportNameAr", label: "Sport Name (AR)" },
-        { id: "teamName", label: "Team Name (EN)" },
-        { id: "teamNameAr", label: "Team Name (AR)" },
-        { id: "playerName", label: "Player Name (EN)" },
-        { id: "playerNameAr", label: "Player Name (AR)" },
-        { id: "coachName", label: "Coach Name (EN)" },
-        { id: "coachNameAr", label: "Coach Name (AR)" },
-        { id: "stadiumName", label: "Stadium Name (EN)" },
-        { id: "stadiumNameAr", label: "Stadium Name (AR)" },
-        { id: "matchScore", label: "Match Score" },
-        { id: "workoutType", label: "Workout Type (EN)" },
-        { id: "workoutTypeAr", label: "Workout Type (AR)" },
-        { id: "fitnessGoal", label: "Fitness Goal (EN)" },
-        { id: "fitnessGoalAr", label: "Fitness Goal (AR)" },
-      ],
+      subTabs: [
+        {
+          title: "Sports Info",
+          fields: [
+            { id: "sportName", label: "Sport Name (EN)" },
+            { id: "sportNameAr", label: "Sport Name (AR)" },
+            { id: "teamName", label: "Team Name (EN)" },
+            { id: "teamNameAr", label: "Team Name (AR)" },
+            { id: "stadiumName", label: "Stadium Name (EN)" },
+            { id: "stadiumNameAr", label: "Stadium Name (AR)" },
+          ]
+        },
+        {
+          title: "People",
+          fields: [
+            { id: "playerName", label: "Player Name (EN)" },
+            { id: "playerNameAr", label: "Player Name (AR)" },
+            { id: "coachName", label: "Coach Name (EN)" },
+            { id: "coachNameAr", label: "Coach Name (AR)" },
+          ]
+        },
+        {
+          title: "Performance & Fitness",
+          fields: [
+            { id: "matchScore", label: "Match Score" },
+            { id: "workoutType", label: "Workout Type (EN)" },
+            { id: "workoutTypeAr", label: "Workout Type (AR)" },
+            { id: "fitnessGoal", label: "Fitness Goal (EN)" },
+            { id: "fitnessGoalAr", label: "Fitness Goal (AR)" },
+          ]
+        }
+      ]
     },
     {
       title: "Real Estate",
-      fields: [
-        { id: "propertyType", label: "Property Type (EN)" },
-        { id: "propertyTypeAr", label: "Property Type (AR)" },
-        { id: "propertyPrice", label: "Property Price" },
-        { id: "propertySize", label: "Property Size" },
-        { id: "bedrooms", label: "Bedrooms" },
-        { id: "bathrooms", label: "Bathrooms" },
-        { id: "propertyAge", label: "Property Age" },
-        { id: "neighborhood", label: "Neighborhood (EN)" },
-        { id: "neighborhoodAr", label: "Neighborhood (AR)" },
-        { id: "agentName", label: "Agent Name (EN)" },
-        { id: "agentNameAr", label: "Agent Name (AR)" },
-        { id: "propertyId", label: "Property ID" },
-        { id: "listingDate", label: "Listing Date" },
-        { id: "amenities", label: "Amenities (EN)" },
-        { id: "amenitiesAr", label: "Amenities (AR)" },
-      ],
+      subTabs: [
+        {
+          title: "Property Details",
+          fields: [
+            { id: "propertyType", label: "Property Type (EN)" },
+            { id: "propertyTypeAr", label: "Property Type (AR)" },
+            { id: "propertyPrice", label: "Property Price" },
+            { id: "propertySize", label: "Property Size" },
+            { id: "bedrooms", label: "Bedrooms" },
+            { id: "bathrooms", label: "Bathrooms" },
+            { id: "propertyAge", label: "Property Age" },
+            { id: "propertyId", label: "Property ID" },
+          ]
+        },
+        {
+          title: "Location & Features",
+          fields: [
+            { id: "neighborhood", label: "Neighborhood (EN)" },
+            { id: "neighborhoodAr", label: "Neighborhood (AR)" },
+            { id: "amenities", label: "Amenities (EN)" },
+            { id: "amenitiesAr", label: "Amenities (AR)" },
+          ]
+        },
+        {
+          title: "Listing Info",
+          fields: [
+            { id: "agentName", label: "Agent Name (EN)" },
+            { id: "agentNameAr", label: "Agent Name (AR)" },
+            { id: "listingDate", label: "Listing Date" },
+          ]
+        }
+      ]
     },
     {
       title: "Entertainment",
-      fields: [
-        { id: "movieTitle", label: "Movie Title (EN)" },
-        { id: "movieTitleAr", label: "Movie Title (AR)" },
-        { id: "actorName", label: "Actor Name (EN)" },
-        { id: "actorNameAr", label: "Actor Name (AR)" },
-        { id: "directorName", label: "Director Name (EN)" },
-        { id: "directorNameAr", label: "Director Name (AR)" },
-        { id: "genre", label: "Genre (EN)" },
-        { id: "genreAr", label: "Genre (AR)" },
-        { id: "releaseYear", label: "Release Year" },
-        { id: "rating", label: "Rating" },
-        { id: "duration", label: "Duration" },
-        { id: "cinemaName", label: "Cinema Name (EN)" },
-        { id: "cinemaNameAr", label: "Cinema Name (AR)" },
-        { id: "showTime", label: "Show Time" },
-        { id: "ticketPrice", label: "Ticket Price" },
-      ],
+      subTabs: [
+        {
+          title: "Movies & Shows",
+          fields: [
+            { id: "movieTitle", label: "Movie Title (EN)" },
+            { id: "movieTitleAr", label: "Movie Title (AR)" },
+            { id: "genre", label: "Genre (EN)" },
+            { id: "genreAr", label: "Genre (AR)" },
+            { id: "releaseYear", label: "Release Year" },
+            { id: "rating", label: "Rating" },
+            { id: "duration", label: "Duration" },
+          ]
+        },
+        {
+          title: "People",
+          fields: [
+            { id: "actorName", label: "Actor Name (EN)" },
+            { id: "actorNameAr", label: "Actor Name (AR)" },
+            { id: "directorName", label: "Director Name (EN)" },
+            { id: "directorNameAr", label: "Director Name (AR)" },
+          ]
+        },
+        {
+          title: "Cinema & Tickets",
+          fields: [
+            { id: "cinemaName", label: "Cinema Name (EN)" },
+            { id: "cinemaNameAr", label: "Cinema Name (AR)" },
+            { id: "showTime", label: "Show Time" },
+            { id: "ticketPrice", label: "Ticket Price" },
+          ]
+        }
+      ]
     },
     {
       title: "Science & Research",
-      fields: [
-        { id: "researchTitle", label: "Research Title (EN)" },
-        { id: "researchTitleAr", label: "Research Title (AR)" },
-        { id: "scientistName", label: "Scientist Name (EN)" },
-        { id: "scientistNameAr", label: "Scientist Name (AR)" },
-        { id: "labName", label: "Lab Name (EN)" },
-        { id: "labNameAr", label: "Lab Name (AR)" },
-        { id: "researchField", label: "Research Field (EN)" },
-        { id: "researchFieldAr", label: "Research Field (AR)" },
-        { id: "publicationDate", label: "Publication Date" },
-        { id: "journalName", label: "Journal Name (EN)" },
-        { id: "journalNameAr", label: "Journal Name (AR)" },
-        { id: "experimentId", label: "Experiment ID" },
-        { id: "hypothesis", label: "Hypothesis (EN)" },
-        { id: "hypothesisAr", label: "Hypothesis (AR)" },
-        { id: "methodology", label: "Methodology (EN)" },
-        { id: "methodologyAr", label: "Methodology (AR)" },
-      ],
+      subTabs: [
+        {
+          title: "Research Projects",
+          fields: [
+            { id: "researchTitle", label: "Research Title (EN)" },
+            { id: "researchTitleAr", label: "Research Title (AR)" },
+            { id: "researchField", label: "Research Field (EN)" },
+            { id: "researchFieldAr", label: "Research Field (AR)" },
+            { id: "experimentId", label: "Experiment ID" },
+          ]
+        },
+        {
+          title: "People & Institutions",
+          fields: [
+            { id: "scientistName", label: "Scientist Name (EN)" },
+            { id: "scientistNameAr", label: "Scientist Name (AR)" },
+            { id: "labName", label: "Lab Name (EN)" },
+            { id: "labNameAr", label: "Lab Name (AR)" },
+          ]
+        },
+        {
+          title: "Publications & Methods",
+          fields: [
+            { id: "publicationDate", label: "Publication Date" },
+            { id: "journalName", label: "Journal Name (EN)" },
+            { id: "journalNameAr", label: "Journal Name (AR)" },
+            { id: "hypothesis", label: "Hypothesis (EN)" },
+            { id: "hypothesisAr", label: "Hypothesis (AR)" },
+            { id: "methodology", label: "Methodology (EN)" },
+            { id: "methodologyAr", label: "Methodology (AR)" },
+          ]
+        }
+      ]
     },
     {
       title: "Legal & Law",
-      fields: [
-        { id: "lawFirm", label: "Law Firm (EN)" },
-        { id: "lawFirmAr", label: "Law Firm (AR)" },
-        { id: "lawyerName", label: "Lawyer Name (EN)" },
-        { id: "lawyerNameAr", label: "Lawyer Name (AR)" },
-        { id: "caseNumber", label: "Case Number" },
-        { id: "caseType", label: "Case Type (EN)" },
-        { id: "caseTypeAr", label: "Case Type (AR)" },
-        { id: "courtName", label: "Court Name (EN)" },
-        { id: "courtNameAr", label: "Court Name (AR)" },
-        { id: "judgeName", label: "Judge Name (EN)" },
-        { id: "judgeNameAr", label: "Judge Name (AR)" },
-        { id: "licenseNumber", label: "License Number" },
-        { id: "contractId", label: "Contract ID" },
-        { id: "legalStatus", label: "Legal Status (EN)" },
-        { id: "legalStatusAr", label: "Legal Status (AR)" },
-      ],
+      subTabs: [
+        {
+          title: "Legal Entities",
+          fields: [
+            { id: "lawFirm", label: "Law Firm (EN)" },
+            { id: "lawFirmAr", label: "Law Firm (AR)" },
+            { id: "lawyerName", label: "Lawyer Name (EN)" },
+            { id: "lawyerNameAr", label: "Lawyer Name (AR)" },
+            { id: "judgeName", label: "Judge Name (EN)" },
+            { id: "judgeNameAr", label: "Judge Name (AR)" },
+          ]
+        },
+        {
+          title: "Cases & Courts",
+          fields: [
+            { id: "caseNumber", label: "Case Number" },
+            { id: "caseType", label: "Case Type (EN)" },
+            { id: "caseTypeAr", label: "Case Type (AR)" },
+            { id: "courtName", label: "Court Name (EN)" },
+            { id: "courtNameAr", label: "Court Name (AR)" },
+          ]
+        },
+        {
+          title: "Documents & Status",
+          fields: [
+            { id: "licenseNumber", label: "License Number" },
+            { id: "contractId", label: "Contract ID" },
+            { id: "legalStatus", label: "Legal Status (EN)" },
+            { id: "legalStatusAr", label: "Legal Status (AR)" },
+          ]
+        }
+      ]
     },
     {
       title: "Fashion & Beauty",
-      fields: [
-        { id: "brandName", label: "Brand Name (EN)" },
-        { id: "brandNameAr", label: "Brand Name (AR)" },
-        { id: "productColor", label: "Product Color (EN)" },
-        { id: "productColorAr", label: "Product Color (AR)" },
-        { id: "size", label: "Size" },
-        { id: "material", label: "Material (EN)" },
-        { id: "materialAr", label: "Material (AR)" },
-        { id: "season", label: "Season (EN)" },
-        { id: "seasonAr", label: "Season (AR)" },
-        { id: "designer", label: "Designer (EN)" },
-        { id: "designerAr", label: "Designer (AR)" },
-        { id: "collection", label: "Collection (EN)" },
-        { id: "collectionAr", label: "Collection (AR)" },
-        { id: "styleCode", label: "Style Code" },
-        { id: "retailPrice", label: "Retail Price" },
-      ],
+      subTabs: [
+        {
+          title: "Brands & Designers",
+          fields: [
+            { id: "brandName", label: "Brand Name (EN)" },
+            { id: "brandNameAr", label: "Brand Name (AR)" },
+            { id: "designer", label: "Designer (EN)" },
+            { id: "designerAr", label: "Designer (AR)" },
+            { id: "collection", label: "Collection (EN)" },
+            { id: "collectionAr", label: "Collection (AR)" },
+          ]
+        },
+        {
+          title: "Product Details",
+          fields: [
+            { id: "productColor", label: "Product Color (EN)" },
+            { id: "productColorAr", label: "Product Color (AR)" },
+            { id: "size", label: "Size" },
+            { id: "material", label: "Material (EN)" },
+            { id: "materialAr", label: "Material (AR)" },
+            { id: "styleCode", label: "Style Code" },
+          ]
+        },
+        {
+          title: "Seasonal & Pricing",
+          fields: [
+            { id: "season", label: "Season (EN)" },
+            { id: "seasonAr", label: "Season (AR)" },
+            { id: "retailPrice", label: "Retail Price" },
+          ]
+        }
+      ]
     },
     {
       title: "Agriculture",
-      fields: [
-        { id: "cropName", label: "Crop Name (EN)" },
-        { id: "cropNameAr", label: "Crop Name (AR)" },
-        { id: "farmName", label: "Farm Name (EN)" },
-        { id: "farmNameAr", label: "Farm Name (AR)" },
-        { id: "farmerName", label: "Farmer Name (EN)" },
-        { id: "farmerNameAr", label: "Farmer Name (AR)" },
-        { id: "plantingDate", label: "Planting Date" },
-        { id: "harvestDate", label: "Harvest Date" },
-        { id: "farmSize", label: "Farm Size" },
-        { id: "soilType", label: "Soil Type (EN)" },
-        { id: "soilTypeAr", label: "Soil Type (AR)" },
-        { id: "irrigationType", label: "Irrigation Type (EN)" },
-        { id: "irrigationTypeAr", label: "Irrigation Type (AR)" },
-        { id: "yieldAmount", label: "Yield Amount" },
-        { id: "pesticide", label: "Pesticide (EN)" },
-        { id: "pesticideAr", label: "Pesticide (AR)" },
-      ],
+      subTabs: [
+        {
+          title: "Farm & Farmer",
+          fields: [
+            { id: "farmName", label: "Farm Name (EN)" },
+            { id: "farmNameAr", label: "Farm Name (AR)" },
+            { id: "farmerName", label: "Farmer Name (EN)" },
+            { id: "farmerNameAr", label: "Farmer Name (AR)" },
+            { id: "farmSize", label: "Farm Size" },
+          ]
+        },
+        {
+          title: "Crops & Cultivation",
+          fields: [
+            { id: "cropName", label: "Crop Name (EN)" },
+            { id: "cropNameAr", label: "Crop Name (AR)" },
+            { id: "plantingDate", label: "Planting Date" },
+            { id: "harvestDate", label: "Harvest Date" },
+            { id: "yieldAmount", label: "Yield Amount" },
+          ]
+        },
+        {
+          title: "Farming Methods",
+          fields: [
+            { id: "soilType", label: "Soil Type (EN)" },
+            { id: "soilTypeAr", label: "Soil Type (AR)" },
+            { id: "irrigationType", label: "Irrigation Type (EN)" },
+            { id: "irrigationTypeAr", label: "Irrigation Type (AR)" },
+            { id: "pesticide", label: "Pesticide (EN)" },
+            { id: "pesticideAr", label: "Pesticide (AR)" },
+          ]
+        }
+      ]
     },
     {
       title: "Logistics & Shipping",
-      fields: [
-        { id: "shipmentId", label: "Shipment ID" },
-        { id: "carrierName", label: "Carrier Name (EN)" },
-        { id: "carrierNameAr", label: "Carrier Name (AR)" },
-        { id: "trackingCode", label: "Tracking Code" },
-        { id: "origin", label: "Origin (EN)" },
-        { id: "originAr", label: "Origin (AR)" },
-        { id: "destination", label: "Destination (EN)" },
-        { id: "destinationAr", label: "Destination (AR)" },
-        { id: "shipmentWeight", label: "Shipment Weight" },
-        { id: "shipmentDimensions", label: "Dimensions" },
-        { id: "deliveryStatus", label: "Delivery Status (EN)" },
-        { id: "deliveryStatusAr", label: "Delivery Status (AR)" },
-        { id: "shippingCost", label: "Shipping Cost" },
-        { id: "estimatedDelivery", label: "Estimated Delivery" },
-        { id: "warehouseLocation", label: "Warehouse Location (EN)" },
-        { id: "warehouseLocationAr", label: "Warehouse Location (AR)" },
-      ],
+      subTabs: [
+        {
+          title: "Shipment Info",
+          fields: [
+            { id: "shipmentId", label: "Shipment ID" },
+            { id: "trackingCode", label: "Tracking Code" },
+            { id: "shipmentWeight", label: "Shipment Weight" },
+            { id: "shipmentDimensions", label: "Dimensions" },
+            { id: "shippingCost", label: "Shipping Cost" },
+          ]
+        },
+        {
+          title: "Carrier & Delivery",
+          fields: [
+            { id: "carrierName", label: "Carrier Name (EN)" },
+            { id: "carrierNameAr", label: "Carrier Name (AR)" },
+            { id: "deliveryStatus", label: "Delivery Status (EN)" },
+            { id: "deliveryStatusAr", label: "Delivery Status (AR)" },
+            { id: "estimatedDelivery", label: "Estimated Delivery" },
+          ]
+        },
+        {
+          title: "Locations",
+          fields: [
+            { id: "origin", label: "Origin (EN)" },
+            { id: "originAr", label: "Origin (AR)" },
+            { id: "destination", label: "Destination (EN)" },
+            { id: "destinationAr", label: "Destination (AR)" },
+            { id: "warehouseLocation", label: "Warehouse Location (EN)" },
+            { id: "warehouseLocationAr", label: "Warehouse Location (AR)" },
+          ]
+        }
+      ]
     },
     {
       title: "Energy & Utilities",
-      fields: [
-        { id: "meterNumber", label: "Meter Number" },
-        { id: "utilityCompany", label: "Utility Company (EN)" },
-        { id: "utilityCompanyAr", label: "Utility Company (AR)" },
-        { id: "energyType", label: "Energy Type (EN)" },
-        { id: "energyTypeAr", label: "Energy Type (AR)" },
-        { id: "consumption", label: "Consumption" },
-        { id: "billAmount", label: "Bill Amount" },
-        { id: "billingPeriod", label: "Billing Period" },
-        { id: "powerPlant", label: "Power Plant (EN)" },
-        { id: "powerPlantAr", label: "Power Plant (AR)" },
-        { id: "gridConnection", label: "Grid Connection" },
-        { id: "voltage", label: "Voltage" },
-        { id: "frequency", label: "Frequency" },
-        { id: "serviceType", label: "Service Type (EN)" },
-        { id: "serviceTypeAr", label: "Service Type (AR)" },
-      ],
+      subTabs: [
+        {
+          title: "Utility Services",
+          fields: [
+            { id: "utilityCompany", label: "Utility Company (EN)" },
+            { id: "utilityCompanyAr", label: "Utility Company (AR)" },
+            { id: "energyType", label: "Energy Type (EN)" },
+            { id: "energyTypeAr", label: "Energy Type (AR)" },
+            { id: "serviceType", label: "Service Type (EN)" },
+            { id: "serviceTypeAr", label: "Service Type (AR)" },
+          ]
+        },
+        {
+          title: "Metering & Consumption",
+          fields: [
+            { id: "meterNumber", label: "Meter Number" },
+            { id: "consumption", label: "Consumption" },
+            { id: "billAmount", label: "Bill Amount" },
+            { id: "billingPeriod", label: "Billing Period" },
+          ]
+        },
+        {
+          title: "Infrastructure",
+          fields: [
+            { id: "powerPlant", label: "Power Plant (EN)" },
+            { id: "powerPlantAr", label: "Power Plant (AR)" },
+            { id: "gridConnection", label: "Grid Connection" },
+            { id: "voltage", label: "Voltage" },
+            { id: "frequency", label: "Frequency" },
+          ]
+        }
+      ]
     },
     {
       title: "Random Values",
-      fields: [
-        { id: "customRandom", label: "Custom Random" },
-        { id: "randomNumbers", label: "Random Numbers" },
-        { id: "randomLetters", label: "Random Letters" },
-        { id: "randomUppercase", label: "Random Uppercase" },
-        { id: "randomLowercase", label: "Random Lowercase" },
-        { id: "randomArabicLetters", label: "Random Arabic Letters" },
-        { id: "randomMixed", label: "Random Mixed" },
-        { id: "randomAlphanumeric", label: "Random Alphanumeric" },
-        { id: "randomSpecialChars", label: "Random Special Chars" },
-        { id: "randomHex", label: "Random Hex" },
-      ],
+      subTabs: [
+        {
+          title: "Basic Random",
+          fields: [
+            { id: "customRandom", label: "Custom Random" },
+            { id: "randomNumbers", label: "Random Numbers" },
+            { id: "randomLetters", label: "Random Letters" },
+            { id: "randomMixed", label: "Random Mixed" },
+            { id: "randomAlphanumeric", label: "Random Alphanumeric" },
+          ]
+        },
+        {
+          title: "Case Variations",
+          fields: [
+            { id: "randomUppercase", label: "Random Uppercase" },
+            { id: "randomLowercase", label: "Random Lowercase" },
+          ]
+        },
+        {
+          title: "Special & International",
+          fields: [
+            { id: "randomArabicLetters", label: "Random Arabic Letters" },
+            { id: "randomSpecialChars", label: "Random Special Chars" },
+            { id: "randomHex", label: "Random Hex" },
+          ]
+        }
+      ]
     },
     {
       title: "Random Text",
-      fields: [
-        { id: "randomText", label: "Random Text" },
-        { id: "randomDigits", label: "Random Digits" },
-        { id: "randomEnglish", label: "Random English" },
-        { id: "randomArabic", label: "Random Arabic" },
-        { id: "randomSpecial", label: "Random Special Chars" },
-        { id: "randomMixed", label: "Random Mixed" },
-        { id: "randomArabicNumbers", label: "Arabic Numbers ١٢٣" },
-        { id: "randomIndianNumbers", label: "Indian Numbers ۱۲۳" },
-        { id: "randomChinese", label: "Random Chinese" },
-        { id: "randomJapanese", label: "Random Japanese" },
-        { id: "randomRussian", label: "Random Russian" },
-        { id: "randomEmoji", label: "Random Emoji" },
-        { id: "randomInvalidChars", label: "Invalid/Control Chars" },
-      ],
+      subTabs: [
+        {
+          title: "Basic Text",
+          fields: [
+            { id: "randomText", label: "Random Text" },
+            { id: "randomDigits", label: "Random Digits" },
+            { id: "randomEnglish", label: "Random English" },
+            { id: "randomSpecial", label: "Random Special Chars" },
+            { id: "randomMixed", label: "Random Mixed" },
+          ]
+        },
+        {
+          title: "International",
+          fields: [
+            { id: "randomArabic", label: "Random Arabic" },
+            { id: "randomArabicNumbers", label: "Arabic Numbers ١٢٣" },
+            { id: "randomIndianNumbers", label: "Indian Numbers ۱۲۳" },
+            { id: "randomChinese", label: "Random Chinese" },
+            { id: "randomJapanese", label: "Random Japanese" },
+            { id: "randomRussian", label: "Random Russian" },
+          ]
+        },
+        {
+          title: "Special Characters",
+          fields: [
+            { id: "randomEmoji", label: "Random Emoji" },
+            { id: "randomInvalidChars", label: "Invalid/Control Chars" },
+          ]
+        }
+      ]
     },
     {
       title: "Banking & Finance",
-      fields: [
-        { id: "bankBranch", label: "Bank Branch (EN)" },
-        { id: "bankBranchAr", label: "Bank Branch (AR)" },
-        { id: "routingNumber", label: "Routing Number" },
-        { id: "sortCode", label: "Sort Code" },
-        { id: "bic", label: "BIC/SWIFT Code" },
-        { id: "accountType", label: "Account Type (EN)" },
-        { id: "accountTypeAr", label: "Account Type (AR)" },
-        { id: "transactionId", label: "Transaction ID" },
-        { id: "checkNumber", label: "Check Number" },
-        { id: "loanNumber", label: "Loan Number" },
-        { id: "creditScore", label: "Credit Score" },
-        { id: "interestRate", label: "Interest Rate" },
-        { id: "exchangeRate", label: "Exchange Rate" },
-        { id: "investmentAmount", label: "Investment Amount" },
-      ],
+      subTabs: [
+        {
+          title: "Bank Details",
+          fields: [
+            { id: "bankBranch", label: "Bank Branch (EN)" },
+            { id: "bankBranchAr", label: "Bank Branch (AR)" },
+            { id: "routingNumber", label: "Routing Number" },
+            { id: "sortCode", label: "Sort Code" },
+            { id: "bic", label: "BIC/SWIFT Code" },
+          ]
+        },
+        {
+          title: "Accounts & Products",
+          fields: [
+            { id: "accountType", label: "Account Type (EN)" },
+            { id: "accountTypeAr", label: "Account Type (AR)" },
+            { id: "loanNumber", label: "Loan Number" },
+            { id: "creditScore", label: "Credit Score" },
+            { id: "investmentAmount", label: "Investment Amount" },
+          ]
+        },
+        {
+          title: "Transactions & Rates",
+          fields: [
+            { id: "transactionId", label: "Transaction ID" },
+            { id: "checkNumber", label: "Check Number" },
+            { id: "interestRate", label: "Interest Rate" },
+            { id: "exchangeRate", label: "Exchange Rate" },
+          ]
+        }
+      ]
     },
     {
       title: "Insurance",
-      fields: [
-        { id: "policyNumber", label: "Policy Number" },
-        { id: "insuranceCompany", label: "Insurance Company (EN)" },
-        { id: "insuranceCompanyAr", label: "Insurance Company (AR)" },
-        { id: "policyType", label: "Policy Type (EN)" },
-        { id: "policyTypeAr", label: "Policy Type (AR)" },
-        { id: "premiumAmount", label: "Premium Amount" },
-        { id: "coverageAmount", label: "Coverage Amount" },
-        { id: "deductible", label: "Deductible" },
-        { id: "claimNumber", label: "Claim Number" },
-        { id: "agentName", label: "Agent Name (EN)" },
-        { id: "agentNameAr", label: "Agent Name (AR)" },
-        { id: "policyStartDate", label: "Policy Start Date" },
-        { id: "policyEndDate", label: "Policy End Date" },
-        { id: "beneficiary", label: "Beneficiary (EN)" },
-        { id: "beneficiaryAr", label: "Beneficiary (AR)" },
-      ],
+      subTabs: [
+        {
+          title: "Policy Details",
+          fields: [
+            { id: "policyNumber", label: "Policy Number" },
+            { id: "policyType", label: "Policy Type (EN)" },
+            { id: "policyTypeAr", label: "Policy Type (AR)" },
+            { id: "policyStartDate", label: "Policy Start Date" },
+            { id: "policyEndDate", label: "Policy End Date" },
+          ]
+        },
+        {
+          title: "Coverage & Costs",
+          fields: [
+            { id: "premiumAmount", label: "Premium Amount" },
+            { id: "coverageAmount", label: "Coverage Amount" },
+            { id: "deductible", label: "Deductible" },
+          ]
+        },
+        {
+          title: "People & Claims",
+          fields: [
+            { id: "insuranceCompany", label: "Insurance Company (EN)" },
+            { id: "insuranceCompanyAr", label: "Insurance Company (AR)" },
+            { id: "agentName", label: "Agent Name (EN)" },
+            { id: "agentNameAr", label: "Agent Name (AR)" },
+            { id: "claimNumber", label: "Claim Number" },
+            { id: "beneficiary", label: "Beneficiary (EN)" },
+            { id: "beneficiaryAr", label: "Beneficiary (AR)" },
+          ]
+        }
+      ]
     },
     {
       title: "Manufacturing",
-      fields: [
-        { id: "factoryName", label: "Factory Name (EN)" },
-        { id: "factoryNameAr", label: "Factory Name (AR)" },
-        { id: "productionLine", label: "Production Line" },
-        { id: "batchNumber", label: "Batch Number" },
-        { id: "lotNumber", label: "Lot Number" },
-        { id: "qualityGrade", label: "Quality Grade" },
-        { id: "manufacturingDate", label: "Manufacturing Date" },
-        { id: "expiryDate", label: "Expiry Date" },
-        { id: "machineId", label: "Machine ID" },
-        { id: "operatorName", label: "Operator Name (EN)" },
-        { id: "operatorNameAr", label: "Operator Name (AR)" },
-        { id: "shiftNumber", label: "Shift Number" },
-        { id: "productionQuantity", label: "Production Quantity" },
-        { id: "defectRate", label: "Defect Rate" },
-        { id: "rawMaterial", label: "Raw Material (EN)" },
-        { id: "rawMaterialAr", label: "Raw Material (AR)" },
-      ],
+      subTabs: [
+        {
+          title: "Production Facility",
+          fields: [
+            { id: "factoryName", label: "Factory Name (EN)" },
+            { id: "factoryNameAr", label: "Factory Name (AR)" },
+            { id: "productionLine", label: "Production Line" },
+            { id: "machineId", label: "Machine ID" },
+            { id: "shiftNumber", label: "Shift Number" },
+          ]
+        },
+        {
+          title: "Production Data",
+          fields: [
+            { id: "batchNumber", label: "Batch Number" },
+            { id: "lotNumber", label: "Lot Number" },
+            { id: "manufacturingDate", label: "Manufacturing Date" },
+            { id: "expiryDate", label: "Expiry Date" },
+            { id: "productionQuantity", label: "Production Quantity" },
+          ]
+        },
+        {
+          title: "Quality & Materials",
+          fields: [
+            { id: "qualityGrade", label: "Quality Grade" },
+            { id: "defectRate", label: "Defect Rate" },
+            { id: "operatorName", label: "Operator Name (EN)" },
+            { id: "operatorNameAr", label: "Operator Name (AR)" },
+            { id: "rawMaterial", label: "Raw Material (EN)" },
+            { id: "rawMaterialAr", label: "Raw Material (AR)" },
+          ]
+        }
+      ]
     },
     {
       title: "Telecommunications",
-      fields: [
-        { id: "phoneProvider", label: "Phone Provider (EN)" },
-        { id: "phoneProviderAr", label: "Phone Provider (AR)" },
-        { id: "planType", label: "Plan Type (EN)" },
-        { id: "planTypeAr", label: "Plan Type (AR)" },
-        { id: "dataAllowance", label: "Data Allowance" },
-        { id: "callMinutes", label: "Call Minutes" },
-        { id: "smsCount", label: "SMS Count" },
-        { id: "networkType", label: "Network Type" },
-        { id: "signalStrength", label: "Signal Strength" },
-        { id: "towerLocation", label: "Tower Location (EN)" },
-        { id: "towerLocationAr", label: "Tower Location (AR)" },
-        { id: "imei", label: "IMEI Number" },
-        { id: "simCard", label: "SIM Card Number" },
-        { id: "roamingStatus", label: "Roaming Status (EN)" },
-        { id: "roamingStatusAr", label: "Roaming Status (AR)" },
-      ],
+      subTabs: [
+        {
+          title: "Service Provider",
+          fields: [
+            { id: "phoneProvider", label: "Phone Provider (EN)" },
+            { id: "phoneProviderAr", label: "Phone Provider (AR)" },
+            { id: "planType", label: "Plan Type (EN)" },
+            { id: "planTypeAr", label: "Plan Type (AR)" },
+            { id: "networkType", label: "Network Type" },
+          ]
+        },
+        {
+          title: "Usage & Allowances",
+          fields: [
+            { id: "dataAllowance", label: "Data Allowance" },
+            { id: "callMinutes", label: "Call Minutes" },
+            { id: "smsCount", label: "SMS Count" },
+            { id: "roamingStatus", label: "Roaming Status (EN)" },
+            { id: "roamingStatusAr", label: "Roaming Status (AR)" },
+          ]
+        },
+        {
+          title: "Device & Network",
+          fields: [
+            { id: "signalStrength", label: "Signal Strength" },
+            { id: "towerLocation", label: "Tower Location (EN)" },
+            { id: "towerLocationAr", label: "Tower Location (AR)" },
+            { id: "imei", label: "IMEI Number" },
+            { id: "simCard", label: "SIM Card Number" },
+          ]
+        }
+      ]
     },
     {
       title: "Construction",
-      fields: [
-        { id: "projectName", label: "Project Name (EN)" },
-        { id: "projectNameAr", label: "Project Name (AR)" },
-        { id: "contractorName", label: "Contractor Name (EN)" },
-        { id: "contractorNameAr", label: "Contractor Name (AR)" },
-        { id: "projectManager", label: "Project Manager (EN)" },
-        { id: "projectManagerAr", label: "Project Manager (AR)" },
-        { id: "buildingPermit", label: "Building Permit" },
-        { id: "projectBudget", label: "Project Budget" },
-        { id: "completionDate", label: "Completion Date" },
-        { id: "floorArea", label: "Floor Area" },
-        { id: "buildingHeight", label: "Building Height" },
-        { id: "constructionType", label: "Construction Type (EN)" },
-        { id: "constructionTypeAr", label: "Construction Type (AR)" },
-        { id: "materialType", label: "Material Type (EN)" },
-        { id: "materialTypeAr", label: "Material Type (AR)" },
-        { id: "safetyRating", label: "Safety Rating" },
-      ],
+      subTabs: [
+        {
+          title: "Project Info",
+          fields: [
+            { id: "projectName", label: "Project Name (EN)" },
+            { id: "projectNameAr", label: "Project Name (AR)" },
+            { id: "projectBudget", label: "Project Budget" },
+            { id: "completionDate", label: "Completion Date" },
+            { id: "buildingPermit", label: "Building Permit" },
+          ]
+        },
+        {
+          title: "People & Companies",
+          fields: [
+            { id: "contractorName", label: "Contractor Name (EN)" },
+            { id: "contractorNameAr", label: "Contractor Name (AR)" },
+            { id: "projectManager", label: "Project Manager (EN)" },
+            { id: "projectManagerAr", label: "Project Manager (AR)" },
+          ]
+        },
+        {
+          title: "Building Specs",
+          fields: [
+            { id: "floorArea", label: "Floor Area" },
+            { id: "buildingHeight", label: "Building Height" },
+            { id: "constructionType", label: "Construction Type (EN)" },
+            { id: "constructionTypeAr", label: "Construction Type (AR)" },
+            { id: "materialType", label: "Material Type (EN)" },
+            { id: "materialTypeAr", label: "Material Type (AR)" },
+            { id: "safetyRating", label: "Safety Rating" },
+          ]
+        }
+      ]
     },
     {
       title: "Testing & QA",
-      fields: [
-        { id: "testCaseId", label: "Test Case ID" },
-        { id: "testSuite", label: "Test Suite" },
-        { id: "testScenario", label: "Test Scenario" },
-        { id: "testStatus", label: "Test Status" },
-        { id: "bugId", label: "Bug ID" },
-        { id: "severity", label: "Severity Level" },
-        { id: "priority", label: "Priority Level" },
-        { id: "testEnvironment", label: "Test Environment" },
-        { id: "browserVersion", label: "Browser Version" },
-        { id: "operatingSystem", label: "Operating System" },
-        { id: "testData", label: "Test Data Set" },
-        { id: "expectedResult", label: "Expected Result" },
-        { id: "actualResult", label: "Actual Result" },
-        { id: "testExecutor", label: "Test Executor" },
-        { id: "executionTime", label: "Execution Time" },
-        { id: "testType", label: "Test Type" },
-      ],
+      subTabs: [
+        {
+          title: "Test Cases",
+          fields: [
+            { id: "testCaseId", label: "Test Case ID" },
+            { id: "testSuite", label: "Test Suite" },
+            { id: "testScenario", label: "Test Scenario" },
+            { id: "testStatus", label: "Test Status" },
+            { id: "testType", label: "Test Type" },
+          ]
+        },
+        {
+          title: "Bug Tracking",
+          fields: [
+            { id: "bugId", label: "Bug ID" },
+            { id: "severity", label: "Severity Level" },
+            { id: "priority", label: "Priority Level" },
+          ]
+        },
+        {
+          title: "Test Environment",
+          fields: [
+            { id: "testEnvironment", label: "Test Environment" },
+            { id: "browserVersion", label: "Browser Version" },
+            { id: "operatingSystem", label: "Operating System" },
+            { id: "testData", label: "Test Data Set" },
+            { id: "testExecutor", label: "Test Executor" },
+            { id: "executionTime", label: "Execution Time" },
+          ]
+        },
+        {
+          title: "Results",
+          fields: [
+            { id: "expectedResult", label: "Expected Result" },
+            { id: "actualResult", label: "Actual Result" },
+          ]
+        }
+      ]
     },
     {
       title: "Edge Cases",
-      fields: [
-        { id: "nullValue", label: "Null Value" },
-        { id: "emptyString", label: "Empty String" },
-        { id: "whitespace", label: "Whitespace Only" },
-        { id: "maxLength", label: "Maximum Length String" },
-        { id: "minValue", label: "Minimum Value" },
-        { id: "maxValue", label: "Maximum Value" },
-        { id: "negativeNumber", label: "Negative Number" },
-        { id: "zeroValue", label: "Zero Value" },
-        { id: "floatingPoint", label: "Floating Point" },
-        { id: "specialChars", label: "Special Characters" },
-        { id: "unicodeChars", label: "Unicode Characters" },
-        { id: "sqlInjection", label: "SQL Injection Test" },
-        { id: "xssPayload", label: "XSS Payload" },
-        { id: "longText", label: "Very Long Text" },
-        { id: "invalidFormat", label: "Invalid Format" },
-        { id: "boundaryValue", label: "Boundary Value" },
-      ],
+      subTabs: [
+        {
+          title: "Null & Empty",
+          fields: [
+            { id: "nullValue", label: "Null Value" },
+            { id: "emptyString", label: "Empty String" },
+            { id: "whitespace", label: "Whitespace Only" },
+            { id: "zeroValue", label: "Zero Value" },
+          ]
+        },
+        {
+          title: "Boundary Values",
+          fields: [
+            { id: "maxLength", label: "Maximum Length String" },
+            { id: "minValue", label: "Minimum Value" },
+            { id: "maxValue", label: "Maximum Value" },
+            { id: "boundaryValue", label: "Boundary Value" },
+            { id: "negativeNumber", label: "Negative Number" },
+            { id: "floatingPoint", label: "Floating Point" },
+          ]
+        },
+        {
+          title: "Special Characters",
+          fields: [
+            { id: "specialChars", label: "Special Characters" },
+            { id: "unicodeChars", label: "Unicode Characters" },
+            { id: "longText", label: "Very Long Text" },
+            { id: "invalidFormat", label: "Invalid Format" },
+          ]
+        },
+        {
+          title: "Security Testing",
+          fields: [
+            { id: "sqlInjection", label: "SQL Injection Test" },
+            { id: "xssPayload", label: "XSS Payload" },
+          ]
+        }
+      ]
     },
     {
       title: "Performance Testing",
-      fields: [
-        { id: "responseTime", label: "Response Time (ms)" },
-        { id: "throughput", label: "Throughput (req/sec)" },
-        { id: "cpuUsage", label: "CPU Usage (%)" },
-        { id: "memoryUsage", label: "Memory Usage (MB)" },
-        { id: "diskUsage", label: "Disk Usage (GB)" },
-        { id: "networkLatency", label: "Network Latency (ms)" },
-        { id: "concurrentUsers", label: "Concurrent Users" },
-        { id: "errorRate", label: "Error Rate (%)" },
-        { id: "loadTime", label: "Page Load Time (s)" },
-        { id: "transactionRate", label: "Transaction Rate" },
-        { id: "bandwidth", label: "Bandwidth Usage" },
-        { id: "connectionPool", label: "Connection Pool Size" },
-        { id: "queueLength", label: "Queue Length" },
-        { id: "cacheHitRatio", label: "Cache Hit Ratio (%)" },
-        { id: "dbConnections", label: "DB Connections" },
-      ],
+      subTabs: [
+        {
+          title: "Response Metrics",
+          fields: [
+            { id: "responseTime", label: "Response Time (ms)" },
+            { id: "throughput", label: "Throughput (req/sec)" },
+            { id: "loadTime", label: "Page Load Time (s)" },
+            { id: "transactionRate", label: "Transaction Rate" },
+          ]
+        },
+        {
+          title: "System Resources",
+          fields: [
+            { id: "cpuUsage", label: "CPU Usage (%)" },
+            { id: "memoryUsage", label: "Memory Usage (MB)" },
+            { id: "diskUsage", label: "Disk Usage (GB)" },
+            { id: "bandwidth", label: "Bandwidth Usage" },
+          ]
+        },
+        {
+          title: "Network & Connections",
+          fields: [
+            { id: "networkLatency", label: "Network Latency (ms)" },
+            { id: "concurrentUsers", label: "Concurrent Users" },
+            { id: "connectionPool", label: "Connection Pool Size" },
+            { id: "dbConnections", label: "DB Connections" },
+          ]
+        },
+        {
+          title: "Quality Metrics",
+          fields: [
+            { id: "errorRate", label: "Error Rate (%)" },
+            { id: "queueLength", label: "Queue Length" },
+            { id: "cacheHitRatio", label: "Cache Hit Ratio (%)" },
+          ]
+        }
+      ]
     },
     {
       title: "Security Testing",
-      fields: [
-        { id: "vulnerabilityId", label: "Vulnerability ID" },
-        { id: "securityLevel", label: "Security Level" },
-        { id: "encryptionType", label: "Encryption Type" },
-        { id: "authToken", label: "Auth Token" },
-        { id: "sessionId", label: "Session ID" },
-        { id: "csrfToken", label: "CSRF Token" },
-        { id: "jwtToken", label: "JWT Token" },
-        { id: "apiKey", label: "API Key" },
-        { id: "hashValue", label: "Hash Value" },
-        { id: "saltValue", label: "Salt Value" },
-        { id: "certificateId", label: "Certificate ID" },
-        { id: "permissionLevel", label: "Permission Level" },
-        { id: "accessRole", label: "Access Role" },
-        { id: "securityScan", label: "Security Scan Result" },
-        { id: "penetrationTest", label: "Penetration Test" },
-      ],
+      subTabs: [
+        {
+          title: "Vulnerabilities",
+          fields: [
+            { id: "vulnerabilityId", label: "Vulnerability ID" },
+            { id: "securityLevel", label: "Security Level" },
+            { id: "securityScan", label: "Security Scan Result" },
+            { id: "penetrationTest", label: "Penetration Test" },
+          ]
+        },
+        {
+          title: "Authentication",
+          fields: [
+            { id: "authToken", label: "Auth Token" },
+            { id: "sessionId", label: "Session ID" },
+            { id: "csrfToken", label: "CSRF Token" },
+            { id: "jwtToken", label: "JWT Token" },
+            { id: "apiKey", label: "API Key" },
+          ]
+        },
+        {
+          title: "Encryption & Access",
+          fields: [
+            { id: "encryptionType", label: "Encryption Type" },
+            { id: "hashValue", label: "Hash Value" },
+            { id: "saltValue", label: "Salt Value" },
+            { id: "certificateId", label: "Certificate ID" },
+            { id: "permissionLevel", label: "Permission Level" },
+            { id: "accessRole", label: "Access Role" },
+          ]
+        }
+      ]
     },
     {
       title: "Email Testing",
-      fields: [
-        { id: "validEmail", label: "Valid Email" },
-        { id: "invalidEmail", label: "Invalid Email" },
-        { id: "businessEmail", label: "Business Email" },
-        { id: "personalEmail", label: "Personal Email" },
-        { id: "tempEmail", label: "Temporary Email" },
-        { id: "subdomainEmail", label: "Subdomain Email" },
-        { id: "internationalEmail", label: "International Email" },
-        { id: "longEmail", label: "Long Email" },
-        { id: "shortEmail", label: "Short Email" },
-        { id: "specialCharEmail", label: "Special Char Email" },
-        { id: "numericEmail", label: "Numeric Email" },
-        { id: "disposableEmail", label: "Disposable Email" },
-        { id: "roleBasedEmail", label: "Role-based Email" },
-        { id: "customDomainEmail", label: "Custom Domain Email" },
-      ],
+      subTabs: [
+        {
+          title: "Valid Emails",
+          fields: [
+            { id: "validEmail", label: "Valid Email" },
+            { id: "businessEmail", label: "Business Email" },
+            { id: "personalEmail", label: "Personal Email" },
+            { id: "customDomainEmail", label: "Custom Domain Email" },
+          ]
+        },
+        {
+          title: "Special Formats",
+          fields: [
+            { id: "subdomainEmail", label: "Subdomain Email" },
+            { id: "internationalEmail", label: "International Email" },
+            { id: "specialCharEmail", label: "Special Char Email" },
+            { id: "numericEmail", label: "Numeric Email" },
+            { id: "roleBasedEmail", label: "Role-based Email" },
+          ]
+        },
+        {
+          title: "Edge Cases",
+          fields: [
+            { id: "invalidEmail", label: "Invalid Email" },
+            { id: "tempEmail", label: "Temporary Email" },
+            { id: "disposableEmail", label: "Disposable Email" },
+            { id: "longEmail", label: "Long Email" },
+            { id: "shortEmail", label: "Short Email" },
+          ]
+        }
+      ]
     },
     {
       title: "Password Testing",
-      fields: [
-        { id: "customPassword", label: "Custom Password" },
-        { id: "weakPassword", label: "Weak Password" },
-        { id: "strongPassword", label: "Strong Password" },
-        { id: "numericPassword", label: "Numeric Only" },
-        { id: "alphabeticPassword", label: "Alphabetic Only" },
-        { id: "specialCharPassword", label: "Special Chars Only" },
-        { id: "mixedPassword", label: "Mixed Characters" },
-        { id: "arabicPassword", label: "Arabic Characters" },
-        { id: "commonPassword", label: "Common Password" },
-        { id: "complexPassword", label: "Complex Password" },
-      ],
+      subTabs: [
+        {
+          title: "Standard Passwords",
+          fields: [
+            { id: "customPassword", label: "Custom Password" },
+            { id: "strongPassword", label: "Strong Password" },
+            { id: "complexPassword", label: "Complex Password" },
+          ]
+        },
+        {
+          title: "Character Types",
+          fields: [
+            { id: "numericPassword", label: "Numeric Only" },
+            { id: "alphabeticPassword", label: "Alphabetic Only" },
+            { id: "specialCharPassword", label: "Special Chars Only" },
+            { id: "mixedPassword", label: "Mixed Characters" },
+            { id: "arabicPassword", label: "Arabic Characters" },
+          ]
+        },
+        {
+          title: "Security Levels",
+          fields: [
+            { id: "weakPassword", label: "Weak Password" },
+            { id: "commonPassword", label: "Common Password" },
+          ]
+        }
+      ]
     },
     {
       title: "Phone Testing",
-      fields: [
-        { id: "customPhone", label: "Custom Phone" },
-        { id: "mobileNumber", label: "Mobile (05X)" },
-        { id: "landlineNumber", label: "Landline (01X)" },
-        { id: "shortMobile", label: "Mobile (5X)" },
-        { id: "shortLandline", label: "Landline (1X)" },
-        { id: "invalidPhone", label: "Invalid Phone" },
-        { id: "wrongLengthPhone", label: "Wrong Length" },
-        { id: "internationalPhone", label: "International (+966)" },
-        { id: "formattedPhone", label: "Formatted Phone" },
-        { id: "unformattedPhone", label: "Unformatted Phone" },
-      ],
+      subTabs: [
+        {
+          title: "Valid Numbers",
+          fields: [
+            { id: "customPhone", label: "Custom Phone" },
+            { id: "mobileNumber", label: "Mobile (05X)" },
+            { id: "landlineNumber", label: "Landline (01X)" },
+            { id: "shortMobile", label: "Mobile (5X)" },
+            { id: "shortLandline", label: "Landline (1X)" },
+          ]
+        },
+        {
+          title: "Formatted Numbers",
+          fields: [
+            { id: "internationalPhone", label: "International (+966)" },
+            { id: "formattedPhone", label: "Formatted Phone" },
+            { id: "unformattedPhone", label: "Unformatted Phone" },
+          ]
+        },
+        {
+          title: "Invalid Cases",
+          fields: [
+            { id: "invalidPhone", label: "Invalid Phone" },
+            { id: "wrongLengthPhone", label: "Wrong Length" },
+          ]
+        }
+      ]
     },
     {
       title: "Date & Time",
@@ -1186,6 +1575,309 @@ function createDataGeneratorUI(containerId) {
                 <button class="dg-btn dg-btn-secondary dg-select-all" data-tab="current">✓ Tab</button>
                 <button class="dg-btn dg-btn-secondary dg-select-all-categories">✓ All</button>
               </div>
+              ${
+                cat.title === "Files"
+                  ? `
+                <div class="dg-file-controls active" id="fileControls">
+                  <div class="dg-file-control-group">
+                    <label>File Name:</label>
+                    <input type="text" id="fileName" placeholder="test-file" value="test-file">
+                  </div>
+                  <div class="dg-file-control-group">
+                    <label>File Size:</label>
+                    <div class="dg-file-size-group">
+                      <input type="number" id="fileSize" value="10" min="1">
+                      <select id="fileSizeUnit">
+                        <option value="B">Bytes</option>
+                        <option value="KB" selected>KB</option>
+                        <option value="MB">MB</option>
+                        <option value="GB">GB</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              `
+                  : ""
+              }
+              ${
+                cat.title === "Date & Time"
+                  ? `
+                <div class="dg-file-controls active" id="dateTimeControls">
+                  <div class="dg-file-control-group">
+                    <label>Date Range:</label>
+                    <div class="dg-file-size-group">
+                      <input type="date" id="dateFrom" value="2020-01-01">
+                      <input type="date" id="dateTo" value="2030-12-31">
+                    </div>
+                  </div>
+                  <div class="dg-file-control-group">
+                    <label>Time Range:</label>
+                    <div class="dg-file-size-group">
+                      <input type="time" id="timeFrom" value="00:00">
+                      <input type="time" id="timeTo" value="23:59">
+                    </div>
+                  </div>
+                  <div class="dg-file-control-group">
+                    <label>Date Format:</label>
+                    <select id="dateFormat">
+                      <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                      <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                      <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                      <option value="DD-MM-YYYY">DD-MM-YYYY</option>
+                    </select>
+                  </div>
+                  <div class="dg-file-control-group">
+                    <label>Date Conversion:</label>
+                    <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;">
+                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                        <input type="checkbox" id="includeHijri"> Include Hijri
+                      </label>
+                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                        <input type="checkbox" id="includeGregorian" checked> Include Gregorian
+                      </label>
+                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                        <input type="checkbox" id="showBothDates"> Show Both
+                      </label>
+                    </div>
+                  </div>
+                  <div class="dg-file-control-group">
+                    <label>Convert Specific Date:</label>
+                    <div class="dg-file-size-group">
+                      <input type="date" id="specificGregorianDate" placeholder="Gregorian Date">
+                      <button type="button" id="convertToHijri" style="width: 80px; padding: 4px; font-size: 9px; background: #667eea; color: white; border: none; border-radius: 4px;">→ Hijri</button>
+                    </div>
+                  </div>
+                  <div class="dg-file-control-group">
+                    <label>Convert Hijri Date:</label>
+                    <div style="display: flex; gap: 4px;">
+                      <input type="number" id="hijriDay" placeholder="Day" min="1" max="30" style="width: 50px;">
+                      <select id="hijriMonth" style="flex: 1;">
+                        <option value="1">محرم</option>
+                        <option value="2">صفر</option>
+                        <option value="3">ربيع الأول</option>
+                        <option value="4">ربيع الثاني</option>
+                        <option value="5">جمادى الأولى</option>
+                        <option value="6">جمادى الثانية</option>
+                        <option value="7">رجب</option>
+                        <option value="8">شعبان</option>
+                        <option value="9">رمضان</option>
+                        <option value="10">شوال</option>
+                        <option value="11">ذو القعدة</option>
+                        <option value="12">ذو الحجة</option>
+                      </select>
+                      <input type="number" id="hijriYear" placeholder="Year" min="1400" max="1500" style="width: 60px;">
+                      <button type="button" id="convertToGregorian" style="width: 80px; padding: 4px; font-size: 9px; background: #667eea; color: white; border: none; border-radius: 4px;">→ Greg</button>
+                    </div>
+                  </div>
+                  <div id="conversionResult" style="margin-top: 8px; padding: 8px; background: #f0f9ff; border-radius: 6px; font-size: 10px; display: none;"></div>
+                </div>
+              `
+                  : ""
+              }
+              ${
+                cat.title === "Random Values"
+                  ? `
+                <div class="dg-file-controls active" id="randomValuesControls">
+                  <div class="dg-file-control-group">
+                    <label>Character Types:</label>
+                    <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;">
+                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                        <input type="checkbox" id="includeNumbers" checked> Numbers (0-9)
+                      </label>
+                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                        <input type="checkbox" id="includeUppercase" checked> Uppercase (A-Z)
+                      </label>
+                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                        <input type="checkbox" id="includeLowercase" checked> Lowercase (a-z)
+                      </label>
+                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                        <input type="checkbox" id="includeArabicLetters"> Arabic Letters (أ-ي)
+                      </label>
+                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                        <input type="checkbox" id="includeSpecialChars"> Special (!@#$%)
+                      </label>
+                    </div>
+                  </div>
+                  <div class="dg-file-control-group">
+                    <label>Length:</label>
+                    <div class="dg-file-size-group">
+                      <input type="number" id="randomLength" value="10" min="1" max="1000" style="width: 80px;">
+                      <span style="font-size: 10px; color: #64748b;">characters</span>
+                    </div>
+                  </div>
+                  <div class="dg-file-control-group">
+                    <label>Custom Characters:</label>
+                    <input type="text" id="customChars" placeholder="Add custom characters..." style="width: 100%; padding: 4px 6px; font-size: 10px;">
+                  </div>
+                </div>
+              `
+                  : ""
+              }
+              ${
+                cat.title === "Random Text"
+                  ? `
+                <div class="dg-file-controls active" id="randomTextControls">
+                  <div class="dg-file-control-group">
+                    <label>Text Length:</label>
+                    <input type="number" id="textLength" value="50" min="1" max="10000">
+                  </div>
+                  <div class="dg-file-control-group">
+                    <label>Character Types:</label>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px;">
+                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                        <input type="checkbox" id="includeDigits" checked> Digits (0-9)
+                      </label>
+                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                        <input type="checkbox" id="includeEnglish" checked> English (A-z)
+                      </label>
+                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                        <input type="checkbox" id="includeArabic"> Arabic (ا-ي)
+                      </label>
+                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                        <input type="checkbox" id="includeSpecial"> Special (!@#$)
+                      </label>
+                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                        <input type="checkbox" id="includeSpace"> Spaces
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              `
+                  : ""
+              }
+              ${
+                cat.title === "Email Testing"
+                  ? `
+                <div class="dg-file-controls active" id="emailControls">
+                  <div class="dg-file-control-group">
+                    <label>Email Domain:</label>
+                    <select id="emailDomain">
+                      <option value="random">Random Domain</option>
+                      <option value="gmail.com">gmail.com</option>
+                      <option value="yahoo.com">yahoo.com</option>
+                      <option value="hotmail.com">hotmail.com</option>
+                      <option value="outlook.com">outlook.com</option>
+                      <option value="company.com">company.com</option>
+                      <option value="test.com">test.com</option>
+                      <option value="example.com">example.com</option>
+                      <option value="custom">Custom Domain</option>
+                    </select>
+                  </div>
+                  <div class="dg-file-control-group" id="customDomainGroup" style="display: none;">
+                    <label>Custom Domain:</label>
+                    <input type="text" id="customDomain" placeholder="mydomain.com">
+                  </div>
+                  <div class="dg-file-control-group">
+                    <label>Email Format:</label>
+                    <select id="emailFormat">
+                      <option value="standard">Standard (name@domain.com)</option>
+                      <option value="subdomain">Subdomain (name@sub.domain.com)</option>
+                      <option value="plus">Plus Addressing (name+tag@domain.com)</option>
+                      <option value="dot">Dot Notation (first.last@domain.com)</option>
+                      <option value="underscore">Underscore (first_last@domain.com)</option>
+                      <option value="hyphen">Hyphen (first-last@domain.com)</option>
+                    </select>
+                  </div>
+                  <div class="dg-file-control-group">
+                    <label>Email Length:</label>
+                    <select id="emailLength">
+                      <option value="short">Short (5-10 chars)</option>
+                      <option value="medium" selected>Medium (10-20 chars)</option>
+                      <option value="long">Long (20-40 chars)</option>
+                      <option value="very-long">Very Long (40+ chars)</option>
+                    </select>
+                  </div>
+                </div>
+              `
+                  : ""
+              }
+              ${
+                cat.title === "Password Testing"
+                  ? `
+                <div class="dg-file-controls active" id="passwordControls">
+                  <div class="dg-file-control-group">
+                    <label>Password Length:</label>
+                    <input type="number" id="passwordLength" value="12" min="4" max="128">
+                  </div>
+                  <div class="dg-file-control-group">
+                    <label>Character Types:</label>
+                    <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;">
+                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                        <input type="checkbox" id="includeUppercase" checked> Uppercase (A-Z)
+                      </label>
+                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                        <input type="checkbox" id="includeLowercase" checked> Lowercase (a-z)
+                      </label>
+                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                        <input type="checkbox" id="includeNumbers" checked> Numbers (0-9)
+                      </label>
+                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                        <input type="checkbox" id="includeSpecialChars"> Special (!@#$)
+                      </label>
+                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                        <input type="checkbox" id="includeArabicChars"> Arabic (ا-ي)
+                      </label>
+                    </div>
+                  </div>
+                  <div class="dg-file-control-group">
+                    <label>Requirements:</label>
+                    <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;">
+                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                        <input type="checkbox" id="mustStartWith"> Must start with letter
+                      </label>
+                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                        <input type="checkbox" id="mustEndWith"> Must end with number
+                      </label>
+                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                        <input type="checkbox" id="noRepeating"> No repeating chars
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              `
+                  : ""
+              }
+              ${
+                cat.title === "Phone Testing"
+                  ? `
+                <div class="dg-file-controls active" id="phoneControls">
+                  <div class="dg-file-control-group">
+                    <label>Phone Type:</label>
+                    <select id="phoneType">
+                      <option value="mobile">Mobile (05X)</option>
+                      <option value="landline">Landline (01X)</option>
+                      <option value="short-mobile">Short Mobile (5X)</option>
+                      <option value="short-landline">Short Landline (1X)</option>
+                      <option value="mixed">Mixed Types</option>
+                    </select>
+                  </div>
+                  <div class="dg-file-control-group">
+                    <label>Phone Format:</label>
+                    <select id="phoneFormat">
+                      <option value="formatted">Formatted (+966 5X XXX XXXX)</option>
+                      <option value="unformatted">Unformatted (05XXXXXXXX)</option>
+                      <option value="international">International (+966)</option>
+                      <option value="local">Local (05X)</option>
+                    </select>
+                  </div>
+                  <div class="dg-file-control-group">
+                    <label>Validation:</label>
+                    <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;">
+                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                        <input type="checkbox" id="generateValid" checked> Valid Numbers
+                      </label>
+                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                        <input type="checkbox" id="generateInvalid"> Invalid Numbers
+                      </label>
+                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
+                        <input type="checkbox" id="wrongLength"> Wrong Length
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              `
+                  : ""
+              }
               ${subTabContentsHTML}
             </div>
           `;
@@ -1369,14 +2061,14 @@ function createDataGeneratorUI(containerId) {
         .classList.add("active");
 
       // Show/hide file controls and download button based on Files tab
-      const isFilesTab = categories[tabIdx].title === "Files";
-      const isDateTimeTab = categories[tabIdx].title === "Date & Time";
-      const isRandomValuesTab = categories[tabIdx].title === "Random Values";
-      const isRandomTextTab = categories[tabIdx].title === "Random Text";
-      const isEmailTestingTab = categories[tabIdx].title === "Email Testing";
-      const isPasswordTestingTab =
-        categories[tabIdx].title === "Password Testing";
-      const isPhoneTestingTab = categories[tabIdx].title === "Phone Testing";
+      const category = categories[tabIdx];
+      const isFilesTab = category.title === "Files";
+      const isDateTimeTab = category.title === "Date & Time";
+      const isRandomValuesTab = category.title === "Random Values";
+      const isRandomTextTab = category.title === "Random Text";
+      const isEmailTestingTab = category.title === "Email Testing";
+      const isPasswordTestingTab = category.title === "Password Testing";
+      const isPhoneTestingTab = category.title === "Phone Testing";
       const fileControls = document.getElementById("fileControls");
       const dateTimeControls = document.getElementById("dateTimeControls");
       const randomValuesControls = document.getElementById(
@@ -1457,7 +2149,7 @@ function createDataGeneratorUI(containerId) {
     btn.addEventListener("click", () => {
       const tabIdx = btn.dataset.tab;
       if (tabIdx === "current") {
-        // Get currently active tab
+        // Get currently active tab and select ALL checkboxes in that tab (all sub-tabs)
         const activeTab = document.querySelector(".dg-tab.active");
         if (activeTab) {
           const currentTabIdx = activeTab.dataset.tab;
@@ -1477,7 +2169,7 @@ function createDataGeneratorUI(containerId) {
     btn.addEventListener("click", () => {
       const tabIdx = btn.dataset.tab;
       if (tabIdx === "current") {
-        // Get currently active tab
+        // Get currently active tab and unselect ALL checkboxes in that tab (all sub-tabs)
         const activeTab = document.querySelector(".dg-tab.active");
         if (activeTab) {
           const currentTabIdx = activeTab.dataset.tab;
@@ -1493,12 +2185,12 @@ function createDataGeneratorUI(containerId) {
     });
   });
 
-  // Sub-tab select/unselect handlers
+  // Sub-tab select/unselect handlers - these work only on current visible sub-tab
   document.querySelectorAll(".dg-select-sub-all").forEach((btn) => {
     btn.addEventListener("click", () => {
       const subTabKey = btn.dataset.subTab;
       if (subTabKey === "current") {
-        // Get currently active sub-tab
+        // Get currently active sub-tab and select only its checkboxes
         const activeSubTab = document.querySelector(".dg-sub-tab.active");
         if (activeSubTab) {
           const currentSubTabKey = activeSubTab.dataset.subTab;
@@ -1518,7 +2210,7 @@ function createDataGeneratorUI(containerId) {
     btn.addEventListener("click", () => {
       const subTabKey = btn.dataset.subTab;
       if (subTabKey === "current") {
-        // Get currently active sub-tab
+        // Get currently active sub-tab and unselect only its checkboxes
         const activeSubTab = document.querySelector(".dg-sub-tab.active");
         if (activeSubTab) {
           const currentSubTabKey = activeSubTab.dataset.subTab;
@@ -1654,7 +2346,8 @@ function createDataGeneratorUI(containerId) {
       }
 
       // Show/hide controls based on category
-      const categoryTitle = categories[categoryIndex].title;
+      const category = categories[categoryIndex];
+      const categoryTitle = category.title;
       const isFilesTab = categoryTitle === "Files";
       const isDateTimeTab = categoryTitle === "Date & Time";
       const isRandomValuesTab = categoryTitle === "Random Values";
@@ -1877,9 +2570,13 @@ function createDataGeneratorUI(containerId) {
       .map((record, recordIdx) => {
         const grouped = {};
         Object.entries(record).forEach(([key, value]) => {
-          const category = categories.find((cat) =>
-            cat.fields.some((f) => f.id === key),
-          );
+          const category = categories.find((cat) => {
+            if (cat.subTabs) {
+              return cat.subTabs.some(subTab => subTab.fields.some(f => f.id === key));
+            } else {
+              return cat.fields && cat.fields.some((f) => f.id === key);
+            }
+          });
           const catName = category ? category.title : "Other";
           if (!grouped[catName]) grouped[catName] = [];
           grouped[catName].push({ key, value });
