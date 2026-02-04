@@ -1469,10 +1469,38 @@ function createDataGeneratorUI(containerId) {
       title: "Other",
       subTabs: [
         {
-          title: "Identifiers",
+          title: "UUIDs & GUIDs",
           fields: [
-            { id: "uuid", label: "UUID" },
-            { id: "apiKey", label: "API Key" },
+            { id: "uuid", label: "UUID v4" },
+            { id: "uuidv1", label: "UUID v1 (Timestamp)" },
+            { id: "uuidv3", label: "UUID v3 (MD5)" },
+            { id: "uuidv5", label: "UUID v5 (SHA-1)" },
+            { id: "guid", label: "GUID (Microsoft)" },
+            { id: "shortUuid", label: "Short UUID" },
+            { id: "uuidNoDashes", label: "UUID (No Dashes)" },
+          ]
+        },
+        {
+          title: "Database IDs",
+          fields: [
+            { id: "mongoObjectId", label: "MongoDB ObjectId" },
+            { id: "snowflakeId", label: "Snowflake ID" },
+            { id: "ulid", label: "ULID" },
+            { id: "ksuid", label: "KSUID" },
+            { id: "cuid", label: "CUID" },
+            { id: "nanoid", label: "Nano ID" },
+            { id: "xid", label: "XID" },
+          ]
+        },
+        {
+          title: "Custom IDs",
+          fields: [
+            { id: "alphanumericId", label: "Alphanumeric ID" },
+            { id: "numericId", label: "Numeric ID" },
+            { id: "hexId", label: "Hex ID" },
+            { id: "base64Id", label: "Base64 ID" },
+            { id: "prefixedId", label: "Prefixed ID" },
+            { id: "timestampId", label: "Timestamp ID" },
           ]
         },
         {
@@ -1480,8 +1508,11 @@ function createDataGeneratorUI(containerId) {
           fields: [
             { id: "url", label: "URL" },
             { id: "ip", label: "IP Address" },
+            { id: "ipv6", label: "IPv6 Address" },
             { id: "macAddress", label: "MAC Address" },
             { id: "userAgent", label: "User Agent" },
+            { id: "sessionId", label: "Session ID" },
+            { id: "apiKey", label: "API Key" },
           ]
         },
         {
@@ -1489,6 +1520,9 @@ function createDataGeneratorUI(containerId) {
           fields: [
             { id: "password", label: "Password" },
             { id: "color", label: "Color" },
+            { id: "jwt", label: "JWT Token" },
+            { id: "hash", label: "Hash (SHA-256)" },
+            { id: "randomSeed", label: "Random Seed" },
           ]
         }
       ]
