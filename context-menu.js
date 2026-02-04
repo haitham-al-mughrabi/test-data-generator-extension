@@ -113,7 +113,10 @@
       { label: '📋 Copy', action: 'copy' },
       { label: '📄 Paste', action: 'paste' },
       { label: '🗑️ Delete', action: 'delete' },
-      { label: '🔤 Select All', action: 'selectAll' }
+      { label: '🔤 Select All', action: 'selectAll' },
+      { label: '📋 Select All & Copy', action: 'selectAllAndCopy' },
+      { label: '✂️ Select All & Cut', action: 'selectAllAndCut' },
+      { label: '🗑️ Select All & Remove', action: 'selectAllAndRemove' }
     ];
 
     standardActions.forEach(item => {
@@ -952,6 +955,35 @@
           
         case 'selectAll':
           targetInput.select();
+          break;
+          
+        case 'selectAllAndCopy':
+          targetInput.select();
+          if (targetInput.value) {
+            navigator.clipboard.writeText(targetInput.value).catch(() => {
+              document.execCommand('copy');
+            });
+          }
+          break;
+          
+        case 'selectAllAndCut':
+          targetInput.select();
+          if (targetInput.value) {
+            navigator.clipboard.writeText(targetInput.value).then(() => {
+              targetInput.value = '';
+              targetInput.dispatchEvent(new Event('input', { bubbles: true }));
+              targetInput.dispatchEvent(new Event('change', { bubbles: true }));
+            }).catch(() => {
+              document.execCommand('cut');
+            });
+          }
+          break;
+          
+        case 'selectAllAndRemove':
+          targetInput.select();
+          targetInput.value = '';
+          targetInput.dispatchEvent(new Event('input', { bubbles: true }));
+          targetInput.dispatchEvent(new Event('change', { bubbles: true }));
           break;
       }
     } catch (error) {
