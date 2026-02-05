@@ -2350,19 +2350,23 @@ function createDataGeneratorUI(containerId) {
   // Sub-tab event handlers removed - no longer needed with flattened structure
 
   document
-    .querySelector(".dg-select-all-categories")
-    .addEventListener("click", () => {
-      document
-        .querySelectorAll(".dg-checkbox input")
-        .forEach((c) => (c.checked = true));
+    .querySelectorAll(".dg-select-all-categories")
+    .forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document
+          .querySelectorAll(".dg-checkbox input")
+          .forEach((c) => (c.checked = true));
+      });
     });
 
   document
-    .querySelector(".dg-unselect-all-categories")
-    .addEventListener("click", () => {
-      document
-        .querySelectorAll(".dg-checkbox input")
-        .forEach((c) => (c.checked = false));
+    .querySelectorAll(".dg-unselect-all-categories")
+    .forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document
+          .querySelectorAll(".dg-checkbox input")
+          .forEach((c) => (c.checked = false));
+      });
     });
 
   document.querySelectorAll(".dg-select-all").forEach((btn) => {
