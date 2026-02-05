@@ -52,10 +52,11 @@ function createDataGeneratorUI(containerId) {
     .dg-search-category { font-weight: 600; color: #667eea; }
     .dg-search-field { color: #334155; margin-left: 8px; }
     .dg-search-highlight { background: #fef3c7; padding: 1px 2px; border-radius: 2px; }
-    .dg-tabs { display: flex; background: white; border-bottom: 2px solid #e2e8f0; overflow-x: auto; flex-shrink: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-    .dg-tab { padding: 10px 14px; border: none; background: none; cursor: pointer; font-size: 12px; font-weight: 600; color: #64748b; border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.2s; }
-    .dg-tab:hover { color: #667eea; }
-    .dg-tab.active { color: #667eea; border-bottom-color: #667eea; }
+    .dg-body { flex: 1; display: flex; min-height: 0; overflow: hidden; }
+    .dg-tabs { display: flex; flex-direction: column; background: white; border-right: 2px solid #e2e8f0; overflow-y: auto; flex-shrink: 0; width: 180px; box-shadow: 2px 0 3px rgba(0,0,0,0.05); }
+    .dg-tab { padding: 12px 16px; border: none; background: none; cursor: pointer; font-size: 12px; font-weight: 600; color: #64748b; border-left: 3px solid transparent; white-space: nowrap; transition: all 0.2s; text-align: left; }
+    .dg-tab:hover { color: #667eea; background: #f8fafc; }
+    .dg-tab.active { color: #667eea; border-left-color: #667eea; background: #f0f4ff; }
     .dg-sub-tabs { display: none; }
     .dg-sub-tab { display: none; }
     .dg-sub-tab:hover { display: none; }
@@ -2203,30 +2204,31 @@ function createDataGeneratorUI(containerId) {
           <div class="dg-search-results" id="searchResults"></div>
         </div>
       </div>
-      <div class="dg-tabs">${tabsHTML}</div>
-      <div class="dg-main">
-        <div class="dg-content">
-          ${contentHTML}
-        </div>
-        <div class="dg-controls">
-          <div class="dg-controls-header" id="controlsHeader">
-            <span>Controls</span>
-            <div class="dg-controls-toggle">▲</div>
+      <div class="dg-body">
+        <div class="dg-tabs">${tabsHTML}</div>
+        <div class="dg-main">
+          <div class="dg-content">
+            ${contentHTML}
           </div>
-          <div class="dg-controls-content">
-            <div class="dg-count-control">
-              <label>Records:</label>
-              <input type="number" id="recordCount" value="1" min="1" max="100">
+          <div class="dg-controls">
+            <div class="dg-controls-header" id="controlsHeader">
+              <span>Controls</span>
+              <div class="dg-controls-toggle">▲</div>
             </div>
-            
-            <!-- Image Dimension Controls -->
-            <div class="dg-image-controls" id="imageControls">
-              <h4>Image Dimensions</h4>
-              
-              <div class="dg-current-dimensions" id="currentDimensions">
-                Current: 400 × 300 px (4:3 ratio)
+            <div class="dg-controls-content">
+              <div class="dg-count-control">
+                <label>Records:</label>
+                <input type="number" id="recordCount" value="1" min="1" max="100">
               </div>
               
+              <!-- Image Dimension Controls -->
+              <div class="dg-image-controls" id="imageControls">
+                <h4>Image Dimensions</h4>
+                
+                <div class="dg-current-dimensions" id="currentDimensions">
+                  Current: 400 × 300 px (4:3 ratio)
+                </div>
+                
               <div class="dg-image-control-group">
                 <label>Custom Size</label>
                 <div class="dg-image-size-group">
@@ -2272,6 +2274,7 @@ function createDataGeneratorUI(containerId) {
           </div>
           <div class="dg-results" id="results"></div>
         </div>
+      </div>
       </div>
       <div class="dg-footer">Developed by Haitham Al Mughrabi ❤️ ${new Date().getFullYear()}</div>
     </div>
