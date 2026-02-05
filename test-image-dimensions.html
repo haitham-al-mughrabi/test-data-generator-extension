@@ -18,14 +18,42 @@
     <h1>Image Dimensions Test</h1>
     
     <div class="test-section">
-        <h2>Dimension Controls</h2>
-        <div class="controls">
-            <label>Width: <input type="number" id="width" value="400" min="50" max="2000"></label>
-            <label>Height: <input type="number" id="height" value="300" min="50" max="2000"></label>
-            <button onclick="updateDimensions()">Update</button>
-            <button onclick="setDimensions(200, 200)">200×200</button>
-            <button onclick="setDimensions(600, 400)">600×400</button>
-            <button onclick="setDimensions(800, 600)">800×600</button>
+        <h2>🖼️ Enhanced Dimension Controls</h2>
+        <div class="controls" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border: 2px solid #0ea5e9; border-radius: 8px;">
+            <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 10px;">
+                <label><strong>Width:</strong> <input type="number" id="width" value="400" min="50" max="2000" style="border: 2px solid #0ea5e9; border-radius: 6px; padding: 8px; text-align: center; font-weight: 600;"></label>
+                <span style="font-weight: 700; font-size: 14px; color: #0c4a6e;">×</span>
+                <label><strong>Height:</strong> <input type="number" id="height" value="300" min="50" max="2000" style="border: 2px solid #0ea5e9; border-radius: 6px; padding: 8px; text-align: center; font-weight: 600;"></label>
+                <button onclick="updateDimensions()" style="background: #0ea5e9; color: white; border: none; padding: 8px 12px; border-radius: 6px; font-weight: 600;">Update</button>
+            </div>
+            
+            <div style="background: rgba(255,255,255,0.8); padding: 8px; border-radius: 6px; margin-bottom: 10px; border: 1px solid rgba(14, 165, 233, 0.3);">
+                <strong>Current:</strong> <span id="currentDisplay">400 × 300 px (4:3 ratio)</span>
+            </div>
+            
+            <div style="margin-bottom: 10px;">
+                <strong>Popular:</strong>
+                <button onclick="setDimensions(400, 300)" style="background: #f59e0b; color: white; border: 2px solid #f59e0b;">400×300</button>
+                <button onclick="setDimensions(800, 600)" style="background: #f59e0b; color: white; border: 2px solid #f59e0b;">800×600</button>
+                <button onclick="setDimensions(1200, 800)" style="background: #f59e0b; color: white; border: 2px solid #f59e0b;">1200×800</button>
+            </div>
+            
+            <div style="margin-bottom: 10px;">
+                <strong>Standard:</strong>
+                <button onclick="setDimensions(200, 200)">200×200</button>
+                <button onclick="setDimensions(600, 400)">600×400</button>
+                <button onclick="setDimensions(1024, 768)">1024×768</button>
+                <button onclick="setDimensions(1920, 1080)">1920×1080</button>
+            </div>
+            
+            <div>
+                <strong>Aspect Ratios:</strong>
+                <button onclick="setAspectRatio('1:1')" style="font-size: 10px;">1:1</button>
+                <button onclick="setAspectRatio('4:3')" style="font-size: 10px;">4:3</button>
+                <button onclick="setAspectRatio('16:9')" style="font-size: 10px;">16:9</button>
+                <button onclick="setAspectRatio('3:2')" style="font-size: 10px;">3:2</button>
+                <button onclick="setAspectRatio('21:9')" style="font-size: 10px;">21:9</button>
+            </div>
         </div>
         <div class="result" id="current-dimensions"></div>
     </div>
@@ -53,14 +81,55 @@
                 setImageDimensions(width, height);
             }
             
+            updateCurrentDisplay(width, height);
             displayCurrentDimensions();
             generateImages();
+        }
+        
+        function updateCurrentDisplay(width, height) {
+            // Calculate aspect ratio
+            const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
+            const divisor = gcd(width, height);
+            const aspectRatio = `${width / divisor}:${height / divisor}`;
+            
+            document.getElementById('currentDisplay').textContent = `${width} × ${height} px (${aspectRatio} ratio)`;
         }
         
         function setDimensions(width, height) {
             document.getElementById('width').value = width;
             document.getElementById('height').value = height;
             updateDimensions();
+        }
+        
+        function setAspectRatio(ratio) {
+            const baseSize = 400;
+            let width, height;
+            
+            switch(ratio) {
+                case "1:1":
+                    width = height = baseSize;
+                    break;
+                case "4:3":
+                    width = baseSize;
+                    height = Math.round(baseSize * 3 / 4);
+                    break;
+                case "16:9":
+                    width = baseSize;
+                    height = Math.round(baseSize * 9 / 16);
+                    break;
+                case "3:2":
+                    width = baseSize;
+                    height = Math.round(baseSize * 2 / 3);
+                    break;
+                case "21:9":
+                    width = baseSize;
+                    height = Math.round(baseSize * 9 / 21);
+                    break;
+                default:
+                    width = height = baseSize;
+            }
+            
+            setDimensions(width, height);
         }
         
         function displayCurrentDimensions() {

@@ -56,19 +56,22 @@ function createDataGeneratorUI(containerId) {
     .dg-tab { padding: 10px 14px; border: none; background: none; cursor: pointer; font-size: 12px; font-weight: 600; color: #64748b; border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.2s; }
     .dg-tab:hover { color: #667eea; }
     .dg-tab.active { color: #667eea; border-bottom-color: #667eea; }
-    .dg-sub-tabs { display: flex; background: #f8fafc; border-bottom: 1px solid #e2e8f0; overflow-x: auto; flex-shrink: 0; padding: 0 14px; }
-    .dg-sub-tab { padding: 8px 12px; border: none; background: none; cursor: pointer; font-size: 11px; font-weight: 500; color: #64748b; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.2s; margin-right: 4px; }
-    .dg-sub-tab:hover { color: #667eea; }
-    .dg-sub-tab.active { color: #667eea; border-bottom-color: #667eea; }
+    .dg-sub-tabs { display: none; }
+    .dg-sub-tab { display: none; }
+    .dg-sub-tab:hover { display: none; }
+    .dg-sub-tab.active { display: none; }
     .dg-main { flex: 1; display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
     .dg-content { flex: 1; overflow-y: auto; min-height: 0; background: white; }
+    .dg-content-scroll { padding: 14px; overflow-y: auto; }
+    .dg-field-section { margin-bottom: 20px; }
+    .dg-section-title { font-size: 13px; font-weight: 700; color: #667eea; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid #e0e7ff; }
     .dg-top-controls { display: flex; background: #f8fafc; border-bottom: 1px solid #e2e8f0; overflow-x: auto; flex-shrink: 0; padding: 0 14px; }
     .dg-top-controls .dg-btn { padding: 8px 12px; border: none; background: none; cursor: pointer; font-size: 11px; font-weight: 500; color: #64748b; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.2s; margin-right: 4px; }
     .dg-top-controls .dg-btn:hover { color: #667eea; }
     .dg-tab-content { display: none; }
     .dg-tab-content.active { display: block; }
-    .dg-sub-tab-content { display: none; padding: 14px; }
-    .dg-sub-tab-content.active { display: block; }
+    .dg-sub-tab-content { display: none; }
+    .dg-sub-tab-content.active { display: none; }
     .dg-tab-controls { display: flex; gap: 4px; margin-bottom: 8px; }
     .dg-tab-controls .dg-btn { flex: 1; padding: 6px 8px; font-size: 10px; background: #cbd5e1 !important; color: #334155 !important; min-width: 0; height: 28px; display: flex; align-items: center; justify-content: center; }
     .dg-tab-controls .dg-btn:hover { background: #94a3b8 !important; }
@@ -124,18 +127,27 @@ function createDataGeneratorUI(containerId) {
     .dg-file-size-group { display: flex; gap: 6px; }
     .dg-file-size-group input { flex: 1; }
     .dg-file-size-group select { width: 80px; flex-shrink: 0; }
-    .dg-image-controls { display: none; margin-top: 10px; padding: 12px; background: #f0f9ff; border: 1px solid #0ea5e9; border-radius: 6px; }
+    .dg-image-controls { display: none; margin-top: 10px; padding: 15px; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border: 2px solid #0ea5e9; border-radius: 8px; box-shadow: 0 2px 8px rgba(14, 165, 233, 0.1); }
     .dg-image-controls.active { display: block; }
-    .dg-image-control-group { margin-bottom: 10px; }
+    .dg-image-controls h4 { margin: 0 0 12px 0; color: #0c4a6e; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+    .dg-image-controls h4::before { content: "🖼️"; font-size: 16px; }
+    .dg-image-control-group { margin-bottom: 12px; }
     .dg-image-control-group:last-child { margin-bottom: 0; }
-    .dg-image-control-group label { display: block; font-size: 11px; font-weight: 600; color: #0c4a6e; margin-bottom: 4px; }
-    .dg-image-control-group input, .dg-image-control-group select { width: 100%; padding: 6px 8px; border: 1px solid #0ea5e9; border-radius: 4px; font-size: 11px; box-sizing: border-box; }
-    .dg-image-size-group { display: flex; gap: 6px; align-items: center; }
-    .dg-image-size-group input { flex: 1; }
-    .dg-image-size-group span { color: #0c4a6e; font-weight: 600; }
-    .dg-preset-buttons { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
-    .dg-preset-btn { padding: 4px 8px; border: 1px solid #0ea5e9; background: white; color: #0c4a6e; border-radius: 3px; cursor: pointer; font-size: 10px; transition: all 0.2s; }
-    .dg-preset-btn:hover { background: #0ea5e9; color: white; }
+    .dg-image-control-group label { display: block; font-size: 11px; font-weight: 600; color: #0c4a6e; margin-bottom: 6px; }
+    .dg-image-size-group { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+    .dg-image-size-group input { flex: 1; padding: 8px 10px; border: 2px solid #0ea5e9; border-radius: 6px; font-size: 12px; font-weight: 600; text-align: center; background: white; transition: all 0.2s; }
+    .dg-image-size-group input:focus { outline: none; border-color: #0284c7; box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1); }
+    .dg-image-size-group span { color: #0c4a6e; font-weight: 700; font-size: 14px; }
+    .dg-current-dimensions { background: rgba(255, 255, 255, 0.8); padding: 8px 10px; border-radius: 6px; font-size: 11px; color: #0c4a6e; font-weight: 600; margin-bottom: 8px; border: 1px solid rgba(14, 165, 233, 0.3); }
+    .dg-preset-buttons { display: flex; flex-wrap: wrap; gap: 4px; }
+    .dg-preset-btn { padding: 6px 10px; border: 2px solid #0ea5e9; background: white; color: #0c4a6e; border-radius: 6px; cursor: pointer; font-size: 10px; font-weight: 600; transition: all 0.2s; min-width: 70px; text-align: center; }
+    .dg-preset-btn:hover { background: #0ea5e9; color: white; transform: translateY(-1px); box-shadow: 0 2px 4px rgba(14, 165, 233, 0.3); }
+    .dg-preset-btn.popular { background: #f59e0b; border-color: #f59e0b; color: white; }
+    .dg-preset-btn.popular:hover { background: #d97706; border-color: #d97706; }
+    .dg-aspect-ratios { margin-top: 8px; }
+    .dg-aspect-ratios label { font-size: 10px; margin-bottom: 4px; }
+    .dg-aspect-btn { padding: 4px 8px; border: 1px solid #0ea5e9; background: white; color: #0c4a6e; border-radius: 4px; cursor: pointer; font-size: 9px; font-weight: 600; margin: 2px; transition: all 0.2s; }
+    .dg-aspect-btn:hover { background: #0ea5e9; color: white; }
   `;
   document.head.appendChild(style);
 
@@ -1605,6 +1617,78 @@ function createDataGeneratorUI(containerId) {
         }
       ]
     },
+    {
+      title: "Images & Avatars",
+      subTabs: [
+        {
+          title: "Placeholder Images",
+          fields: [
+            { id: 'imageDimensions', label: 'Current Dimensions' },
+            { id: 'imageWidth', label: 'Width (px)' },
+            { id: 'imageHeight', label: 'Height (px)' },
+            { id: 'imageAspectRatio', label: 'Aspect Ratio' },
+            { id: 'placeholderImage', label: 'Placeholder Image' },
+            { id: 'placeholderImageWithText', label: 'Placeholder with Text' },
+            { id: 'placeholderImageColored', label: 'Colored Placeholder' },
+            { id: 'placeholderCom', label: 'Placeholder.com' },
+            { id: 'dummyImage', label: 'DummyImage.com' },
+            { id: 'fakeImg', label: 'FakeImg.pl' }
+          ]
+        },
+        {
+          title: "Real Photos",
+          fields: [
+            { id: 'loremPicsumImage', label: 'Lorem Picsum Image' },
+            { id: 'loremPicsumImageWithId', label: 'Lorem Picsum with ID' },
+            { id: 'loremPicsumGrayscale', label: 'Lorem Picsum Grayscale' },
+            { id: 'loremPicsumBlurred', label: 'Lorem Picsum Blurred' },
+            { id: 'unsplashImage', label: 'Unsplash Image' },
+            { id: 'unsplashFeaturedImage', label: 'Unsplash Featured' },
+            { id: 'unsplashDailyImage', label: 'Unsplash Daily' },
+            { id: 'imageUrl', label: 'Random Image URL' }
+          ]
+        },
+        {
+          title: "Avatar Generators",
+          fields: [
+            { id: 'avatarUrl', label: 'Avatar URL' },
+            { id: 'avatarDiceBear', label: 'DiceBear Avatar' },
+            { id: 'avatarRobohash', label: 'Robohash Avatar' },
+            { id: 'avatarPravatar', label: 'Pravatar Avatar' },
+            { id: 'uiAvatar', label: 'UI Avatar' },
+            { id: 'uiAvatarRounded', label: 'UI Avatar Rounded' },
+            { id: 'gravatar', label: 'Gravatar' },
+            { id: 'facebookProfileImage', label: 'Facebook Profile' },
+            { id: 'twitterProfileImage', label: 'Twitter Profile' },
+            { id: 'linkedinProfileImage', label: 'LinkedIn Profile' }
+          ]
+        },
+        {
+          title: "Media & Graphics",
+          fields: [
+            { id: 'sampleVideoUrl', label: 'Sample Video URL' },
+            { id: 'youtubeVideoUrl', label: 'YouTube Video URL' },
+            { id: 'youtubeThumbnail', label: 'YouTube Thumbnail' },
+            { id: 'youtubeThumbnailCustom', label: 'YouTube Thumbnail Custom' },
+            { id: 'vimeoVideoUrl', label: 'Vimeo Video URL' },
+            { id: 'sampleAudioUrl', label: 'Sample Audio URL' },
+            { id: 'qrCodeUrl', label: 'QR Code URL' },
+            { id: 'qrCodeColored', label: 'QR Code Colored' },
+            { id: 'chartUrl', label: 'Chart URL' },
+            { id: 'chartBarUrl', label: 'Bar Chart URL' },
+            { id: 'chartPieUrl', label: 'Pie Chart URL' },
+            { id: 'mapImage', label: 'Map Image' },
+            { id: 'mapImageSatellite', label: 'Satellite Map' },
+            { id: 'iconUrl', label: 'Icon URL' },
+            { id: 'iconUrlColored', label: 'Colored Icon URL' },
+            { id: 'countryFlag', label: 'Country Flag' },
+            { id: 'countryFlagRounded', label: 'Country Flag Rounded' },
+            { id: 'cdnImageUrl', label: 'CDN Image URL' },
+            { id: 'stockPhotoUrl', label: 'Stock Photo URL' }
+          ]
+        }
+      ]
+    },
   ];
 
   const tabsHTML = categories
@@ -1618,14 +1702,11 @@ function createDataGeneratorUI(containerId) {
       (cat, idx) => {
         // Check if category has sub-tabs
         if (cat.subTabs) {
-          const subTabsHTML = cat.subTabs
-            .map((subTab, subIdx) => 
-              `<button class="dg-sub-tab ${subIdx === 0 ? "active" : ""}" data-sub-tab="${idx}-${subIdx}">${subTab.title}</button>`
-            ).join("");
-          
-          const subTabContentsHTML = cat.subTabs
-            .map((subTab, subIdx) => `
-              <div class="dg-sub-tab-content ${subIdx === 0 ? "active" : ""}" data-sub-content="${idx}-${subIdx}">
+          // Flatten all fields from sub-tabs into sections
+          const allFieldsHTML = cat.subTabs
+            .map((subTab) => `
+              <div class="dg-field-section">
+                <div class="dg-section-title">${subTab.title}</div>
                 <div class="dg-fields-wrapper">
                   ${subTab.fields.map((field) => `<label class="dg-checkbox"><input type="checkbox" value="${field.id}"><span>${field.label}</span></label>`).join("")}
                 </div>
@@ -1634,12 +1715,9 @@ function createDataGeneratorUI(containerId) {
 
           return `
             <div class="dg-tab-content ${idx === 0 ? "active" : ""}" data-content="${idx}">
-              <div class="dg-sub-tabs">${subTabsHTML}</div>
               <div class="dg-top-controls">
                 <button class="dg-btn dg-btn-secondary dg-unselect-all-categories">✕ All</button>
                 <button class="dg-btn dg-btn-secondary dg-unselect-all" data-tab="current">✕ Tab</button>
-                <button class="dg-btn dg-btn-secondary dg-unselect-sub-all" data-sub-tab="current">✕ Sub</button>
-                <button class="dg-btn dg-btn-secondary dg-select-sub-all" data-sub-tab="current">✓ Sub</button>
                 <button class="dg-btn dg-btn-secondary dg-select-all" data-tab="current">✓ Tab</button>
                 <button class="dg-btn dg-btn-secondary dg-select-all-categories">✓ All</button>
               </div>
@@ -1974,7 +2052,9 @@ function createDataGeneratorUI(containerId) {
               `
                   : ""
               }
-              ${subTabContentsHTML}
+              <div class="dg-content-scroll">
+                ${allFieldsHTML}
+              </div>
             </div>
           `;
         } else {
@@ -1984,8 +2064,6 @@ function createDataGeneratorUI(containerId) {
               <div class="dg-top-controls">
                 <button class="dg-btn dg-btn-secondary dg-unselect-all-categories">✕ All</button>
                 <button class="dg-btn dg-btn-secondary dg-unselect-all" data-tab="current">✕ Tab</button>
-                <button class="dg-btn dg-btn-secondary dg-unselect-sub-all" data-sub-tab="current">✕ Sub</button>
-                <button class="dg-btn dg-btn-secondary dg-select-sub-all" data-sub-tab="current">✓ Sub</button>
                 <button class="dg-btn dg-btn-secondary dg-select-all" data-tab="current">✓ Tab</button>
                 <button class="dg-btn dg-btn-secondary dg-select-all-categories">✓ All</button>
               </div>
@@ -2145,22 +2223,45 @@ function createDataGeneratorUI(containerId) {
             
             <!-- Image Dimension Controls -->
             <div class="dg-image-controls" id="imageControls">
+              <h4>Image Dimensions</h4>
+              
+              <div class="dg-current-dimensions" id="currentDimensions">
+                Current: 400 × 300 px (4:3 ratio)
+              </div>
+              
               <div class="dg-image-control-group">
-                <label>Image Dimensions</label>
+                <label>Custom Size</label>
                 <div class="dg-image-size-group">
                   <input type="number" id="imageWidth" value="400" min="50" max="2000" placeholder="Width">
                   <span>×</span>
                   <input type="number" id="imageHeight" value="300" min="50" max="2000" placeholder="Height">
                 </div>
+              </div>
+              
+              <div class="dg-image-control-group">
+                <label>Popular Sizes</label>
                 <div class="dg-preset-buttons">
+                  <button class="dg-preset-btn popular" data-size="400,300">400×300</button>
+                  <button class="dg-preset-btn popular" data-size="800,600">800×600</button>
+                  <button class="dg-preset-btn popular" data-size="1200,800">1200×800</button>
                   <button class="dg-preset-btn" data-size="150,150">150×150</button>
                   <button class="dg-preset-btn" data-size="300,200">300×200</button>
-                  <button class="dg-preset-btn" data-size="400,300">400×300</button>
                   <button class="dg-preset-btn" data-size="600,400">600×400</button>
-                  <button class="dg-preset-btn" data-size="800,600">800×600</button>
                   <button class="dg-preset-btn" data-size="1024,768">1024×768</button>
-                  <button class="dg-preset-btn" data-size="1200,800">1200×800</button>
                   <button class="dg-preset-btn" data-size="1920,1080">1920×1080</button>
+                </div>
+              </div>
+              
+              <div class="dg-image-control-group">
+                <div class="dg-aspect-ratios">
+                  <label>Common Aspect Ratios</label>
+                  <div>
+                    <button class="dg-aspect-btn" data-ratio="1:1" data-base="400">1:1 Square</button>
+                    <button class="dg-aspect-btn" data-ratio="4:3" data-base="400">4:3 Standard</button>
+                    <button class="dg-aspect-btn" data-ratio="16:9" data-base="400">16:9 Widescreen</button>
+                    <button class="dg-aspect-btn" data-ratio="3:2" data-base="400">3:2 Photo</button>
+                    <button class="dg-aspect-btn" data-ratio="21:9" data-base="400">21:9 Ultrawide</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -2246,27 +2347,7 @@ function createDataGeneratorUI(containerId) {
     });
   });
 
-  // Sub-tab event handlers
-  document.querySelectorAll(".dg-sub-tab").forEach((subTab) => {
-    subTab.addEventListener("click", () => {
-      const subTabKey = subTab.dataset.subTab;
-      const [tabIdx] = subTabKey.split('-');
-      
-      // Remove active class from all sub-tabs in this main tab
-      document
-        .querySelectorAll(`[data-content="${tabIdx}"] .dg-sub-tab`)
-        .forEach((t) => t.classList.remove("active"));
-      document
-        .querySelectorAll(`[data-content="${tabIdx}"] .dg-sub-tab-content`)
-        .forEach((c) => c.classList.remove("active"));
-      
-      // Add active class to clicked sub-tab
-      subTab.classList.add("active");
-      document
-        .querySelector(`[data-sub-content="${subTabKey}"]`)
-        .classList.add("active");
-    });
-  });
+  // Sub-tab event handlers removed - no longer needed with flattened structure
 
   document
     .querySelector(".dg-select-all-categories")
@@ -2288,7 +2369,7 @@ function createDataGeneratorUI(containerId) {
     btn.addEventListener("click", () => {
       const tabIdx = btn.dataset.tab;
       if (tabIdx === "current") {
-        // Get currently active tab and select ALL checkboxes in that tab (all sub-tabs)
+        // Get currently active tab and select ALL checkboxes in that tab
         const activeTab = document.querySelector(".dg-tab.active");
         if (activeTab) {
           const currentTabIdx = activeTab.dataset.tab;
@@ -2324,46 +2405,7 @@ function createDataGeneratorUI(containerId) {
     });
   });
 
-  // Sub-tab select/unselect handlers - these work only on current visible sub-tab
-  document.querySelectorAll(".dg-select-sub-all").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const subTabKey = btn.dataset.subTab;
-      if (subTabKey === "current") {
-        // Get currently active sub-tab and select only its checkboxes
-        const activeSubTab = document.querySelector(".dg-sub-tab.active");
-        if (activeSubTab) {
-          const currentSubTabKey = activeSubTab.dataset.subTab;
-          document
-            .querySelectorAll(`[data-sub-content="${currentSubTabKey}"] .dg-checkbox input`)
-            .forEach((c) => (c.checked = true));
-        }
-      } else {
-        document
-          .querySelectorAll(`[data-sub-content="${subTabKey}"] .dg-checkbox input`)
-          .forEach((c) => (c.checked = true));
-      }
-    });
-  });
-
-  document.querySelectorAll(".dg-unselect-sub-all").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const subTabKey = btn.dataset.subTab;
-      if (subTabKey === "current") {
-        // Get currently active sub-tab and unselect only its checkboxes
-        const activeSubTab = document.querySelector(".dg-sub-tab.active");
-        if (activeSubTab) {
-          const currentSubTabKey = activeSubTab.dataset.subTab;
-          document
-            .querySelectorAll(`[data-sub-content="${currentSubTabKey}"] .dg-checkbox input`)
-            .forEach((c) => (c.checked = false));
-        }
-      } else {
-        document
-          .querySelectorAll(`[data-sub-content="${subTabKey}"] .dg-checkbox input`)
-          .forEach((c) => (c.checked = false));
-      }
-    });
-  });
+  // Sub-tab select/unselect handlers removed - no longer needed with flattened structure
 
   // Search functionality
   const searchInput = document.getElementById("searchInput");
@@ -2465,24 +2507,7 @@ function createDataGeneratorUI(containerId) {
       targetTab.classList.add("active");
       targetContent.classList.add("active");
 
-      // If category has sub-tabs and a specific sub-tab is requested
-      if (subTabIndex !== null && categories[categoryIndex].subTabs) {
-        // Switch to the specific sub-tab
-        document
-          .querySelectorAll(`[data-content="${categoryIndex}"] .dg-sub-tab`)
-          .forEach((t) => t.classList.remove("active"));
-        document
-          .querySelectorAll(`[data-content="${categoryIndex}"] .dg-sub-tab-content`)
-          .forEach((c) => c.classList.remove("active"));
-
-        const targetSubTab = document.querySelector(`[data-sub-tab="${categoryIndex}-${subTabIndex}"]`);
-        const targetSubContent = document.querySelector(`[data-sub-content="${categoryIndex}-${subTabIndex}"]`);
-
-        if (targetSubTab && targetSubContent) {
-          targetSubTab.classList.add("active");
-          targetSubContent.classList.add("active");
-        }
-      }
+      // Sub-tab navigation removed - fields are now all visible in flattened structure
 
       // Show/hide controls based on category
       const category = categories[categoryIndex];
@@ -2631,12 +2656,25 @@ function createDataGeneratorUI(containerId) {
   // Image dimension controls event handlers
   const imageWidthInput = document.getElementById("imageWidth");
   const imageHeightInput = document.getElementById("imageHeight");
+  const currentDimensionsDisplay = document.getElementById("currentDimensions");
   
   function updateImageDimensions() {
     const width = parseInt(imageWidthInput.value) || 400;
     const height = parseInt(imageHeightInput.value) || 300;
     if (typeof setImageDimensions === 'function') {
       setImageDimensions(width, height);
+    }
+    updateCurrentDimensionsDisplay(width, height);
+  }
+  
+  function updateCurrentDimensionsDisplay(width, height) {
+    if (currentDimensionsDisplay) {
+      // Calculate aspect ratio
+      const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
+      const divisor = gcd(width, height);
+      const aspectRatio = `${width / divisor}:${height / divisor}`;
+      
+      currentDimensionsDisplay.textContent = `Current: ${width} × ${height} px (${aspectRatio} ratio)`;
     }
   }
   
@@ -2652,6 +2690,43 @@ function createDataGeneratorUI(containerId) {
   document.querySelectorAll(".dg-preset-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       const [width, height] = btn.dataset.size.split(',');
+      imageWidthInput.value = width;
+      imageHeightInput.value = height;
+      updateImageDimensions();
+    });
+  });
+  
+  // Aspect ratio buttons
+  document.querySelectorAll(".dg-aspect-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const ratio = btn.dataset.ratio;
+      const baseSize = parseInt(btn.dataset.base) || 400;
+      
+      let width, height;
+      switch(ratio) {
+        case "1:1":
+          width = height = baseSize;
+          break;
+        case "4:3":
+          width = baseSize;
+          height = Math.round(baseSize * 3 / 4);
+          break;
+        case "16:9":
+          width = baseSize;
+          height = Math.round(baseSize * 9 / 16);
+          break;
+        case "3:2":
+          width = baseSize;
+          height = Math.round(baseSize * 2 / 3);
+          break;
+        case "21:9":
+          width = baseSize;
+          height = Math.round(baseSize * 9 / 21);
+          break;
+        default:
+          width = height = baseSize;
+      }
+      
       imageWidthInput.value = width;
       imageHeightInput.value = height;
       updateImageDimensions();
@@ -3082,6 +3157,7 @@ function createDataGeneratorUI(containerId) {
     const initialWidth = document.getElementById("imageWidth")?.value || 400;
     const initialHeight = document.getElementById("imageHeight")?.value || 300;
     setImageDimensions(parseInt(initialWidth), parseInt(initialHeight));
+    updateCurrentDimensionsDisplay(parseInt(initialWidth), parseInt(initialHeight));
   }
 }
 

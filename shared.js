@@ -4,6 +4,7 @@ window.generators = {};
 // Wait for all generators to load
 function initGenerators() {
   if (window.personalGenerators) Object.assign(window.generators, window.personalGenerators);
+  if (window.enhancedPersonalGenerators) Object.assign(window.generators, window.enhancedPersonalGenerators);
   if (window.contactGenerators) Object.assign(window.generators, window.contactGenerators);
   if (window.workGenerators) Object.assign(window.generators, window.workGenerators);
   if (window.financeGenerators) Object.assign(window.generators, window.financeGenerators);
@@ -42,6 +43,11 @@ function initGenerators() {
   if (window.emailTestingGenerators) Object.assign(window.generators, window.emailTestingGenerators);
   if (window.passwordTestingGenerators) Object.assign(window.generators, window.passwordTestingGenerators);
   if (window.phoneTestingGenerators) Object.assign(window.generators, window.phoneTestingGenerators);
+  
+  // New enhanced generators
+  if (window.fileMediaGenerators) Object.assign(window.generators, window.fileMediaGenerators);
+  if (window.documentTypesGenerators) Object.assign(window.generators, window.documentTypesGenerators);
+  if (window.imageUrlGenerators) Object.assign(window.generators, window.imageUrlGenerators);
 }
 
 // Initialize immediately

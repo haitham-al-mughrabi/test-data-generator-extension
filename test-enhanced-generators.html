@@ -23,20 +23,39 @@
     <h1>Enhanced Generators Test - Image Dimensions</h1>
     
     <div class="dimension-controls">
-        <h3>Image Dimension Controls</h3>
-        <label>Width: <input type="number" id="widthInput" class="dimension-input" value="400" min="50" max="2000"></label>
-        <label>Height: <input type="number" id="heightInput" class="dimension-input" value="300" min="50" max="2000"></label>
-        <button class="generate-btn" onclick="updateDimensions()">Update Dimensions</button>
-        <br><br>
-        <strong>Presets:</strong>
-        <button class="preset-btn" onclick="setPreset(150, 150)">150×150</button>
-        <button class="preset-btn" onclick="setPreset(300, 200)">300×200</button>
-        <button class="preset-btn" onclick="setPreset(400, 300)">400×300</button>
-        <button class="preset-btn" onclick="setPreset(600, 400)">600×400</button>
-        <button class="preset-btn" onclick="setPreset(800, 600)">800×600</button>
-        <button class="preset-btn" onclick="setPreset(1024, 768)">1024×768</button>
-        <button class="preset-btn" onclick="setPreset(1200, 800)">1200×800</button>
-        <button class="preset-btn" onclick="setPreset(1920, 1080)">1920×1080</button>
+        <h3>🖼️ Enhanced Image Dimension Controls</h3>
+        <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 15px;">
+            <div>
+                <label><strong>Width:</strong> <input type="number" id="widthInput" class="dimension-input" value="400" min="50" max="2000"></label>
+                <label><strong>Height:</strong> <input type="number" id="heightInput" class="dimension-input" value="300" min="50" max="2000"></label>
+            </div>
+            <button class="generate-btn" onclick="updateDimensions()">Update Dimensions</button>
+        </div>
+        
+        <div style="background: rgba(255,255,255,0.8); padding: 10px; border-radius: 6px; margin-bottom: 15px; border: 1px solid #0ea5e9;">
+            <strong>Current:</strong> <span id="currentDimDisplay">400 × 300 px (4:3 ratio)</span>
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <strong>Popular Sizes:</strong><br>
+            <button class="preset-btn" style="background: #f59e0b; border-color: #f59e0b; color: white;" onclick="setPreset(400, 300)">400×300</button>
+            <button class="preset-btn" style="background: #f59e0b; border-color: #f59e0b; color: white;" onclick="setPreset(800, 600)">800×600</button>
+            <button class="preset-btn" style="background: #f59e0b; border-color: #f59e0b; color: white;" onclick="setPreset(1200, 800)">1200×800</button>
+            <button class="preset-btn" onclick="setPreset(150, 150)">150×150</button>
+            <button class="preset-btn" onclick="setPreset(300, 200)">300×200</button>
+            <button class="preset-btn" onclick="setPreset(600, 400)">600×400</button>
+            <button class="preset-btn" onclick="setPreset(1024, 768)">1024×768</button>
+            <button class="preset-btn" onclick="setPreset(1920, 1080)">1920×1080</button>
+        </div>
+        
+        <div>
+            <strong>Aspect Ratios:</strong><br>
+            <button class="preset-btn" onclick="setAspectRatio('1:1', 400)" style="font-size: 10px;">1:1 Square</button>
+            <button class="preset-btn" onclick="setAspectRatio('4:3', 400)" style="font-size: 10px;">4:3 Standard</button>
+            <button class="preset-btn" onclick="setAspectRatio('16:9', 400)" style="font-size: 10px;">16:9 Widescreen</button>
+            <button class="preset-btn" onclick="setAspectRatio('3:2', 400)" style="font-size: 10px;">3:2 Photo</button>
+            <button class="preset-btn" onclick="setAspectRatio('21:9', 400)" style="font-size: 10px;">21:9 Ultrawide</button>
+        </div>
     </div>
     
     <button class="generate-btn" onclick="generateAllData()">Generate All Data</button>
@@ -83,11 +102,52 @@
             
             if (typeof setImageDimensions === 'function') {
                 setImageDimensions(width, height);
+                updateDimensionDisplay(width, height);
                 generateAllData();
             }
         }
         
+        function updateDimensionDisplay(width, height) {
+            // Calculate aspect ratio
+            const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
+            const divisor = gcd(width, height);
+            const aspectRatio = `${width / divisor}:${height / divisor}`;
+            
+            document.getElementById('currentDimDisplay').textContent = `${width} × ${height} px (${aspectRatio} ratio)`;
+        }
+        
         function setPreset(width, height) {
+            document.getElementById('widthInput').value = width;
+            document.getElementById('heightInput').value = height;
+            updateDimensions();
+        }
+        
+        function setAspectRatio(ratio, baseSize) {
+            let width, height;
+            switch(ratio) {
+                case "1:1":
+                    width = height = baseSize;
+                    break;
+                case "4:3":
+                    width = baseSize;
+                    height = Math.round(baseSize * 3 / 4);
+                    break;
+                case "16:9":
+                    width = baseSize;
+                    height = Math.round(baseSize * 9 / 16);
+                    break;
+                case "3:2":
+                    width = baseSize;
+                    height = Math.round(baseSize * 2 / 3);
+                    break;
+                case "21:9":
+                    width = baseSize;
+                    height = Math.round(baseSize * 9 / 21);
+                    break;
+                default:
+                    width = height = baseSize;
+            }
+            
             document.getElementById('widthInput').value = width;
             document.getElementById('heightInput').value = height;
             updateDimensions();
@@ -219,7 +279,7 @@
         
         // Generate initial data on page load
         window.onload = function() {
-            generateAllData();
+            updateDimensions();
         };
     </script>
 </body>
