@@ -173,6 +173,281 @@ const categoriesWithSubTabs = [
         ]
       }
     ]
+  },
+  { 
+    title: 'Media & Entertainment', 
+    subTabs: [
+      {
+        title: 'Movies & TV',
+        fields: [
+          { id: 'movieTitle', label: 'Movie Title' },
+          { id: 'movieGenre', label: 'Movie Genre' },
+          { id: 'movieRating', label: 'Movie Rating' },
+          { id: 'movieDuration', label: 'Movie Duration' },
+          { id: 'tvShow', label: 'TV Show' },
+          { id: 'episodeNumber', label: 'Episode Number' },
+          { id: 'releaseYear', label: 'Release Year' },
+          { id: 'rating', label: 'Rating' }
+        ]
+      },
+      {
+        title: 'Music & Audio',
+        fields: [
+          { id: 'artist', label: 'Artist' },
+          { id: 'songTitle', label: 'Song Title' },
+          { id: 'albumTitle', label: 'Album Title' },
+          { id: 'musicGenre', label: 'Music Genre' },
+          { id: 'duration', label: 'Duration' },
+          { id: 'podcastTitle', label: 'Podcast Title' }
+        ]
+      },
+      {
+        title: 'Books & Games',
+        fields: [
+          { id: 'bookTitle', label: 'Book Title' },
+          { id: 'author', label: 'Author' },
+          { id: 'gameTitle', label: 'Game Title' },
+          { id: 'gameGenre', label: 'Game Genre' },
+          { id: 'gamePlatform', label: 'Game Platform' }
+        ]
+      },
+      {
+        title: 'Social Media',
+        fields: [
+          { id: 'socialMediaPlatform', label: 'Social Media Platform' },
+          { id: 'influencerHandle', label: 'Influencer Handle' },
+          { id: 'contentType', label: 'Content Type' },
+          { id: 'viewCount', label: 'View Count' },
+          { id: 'streamingService', label: 'Streaming Service' }
+        ]
+      }
+    ]
+  },
+  { 
+    title: 'Automotive', 
+    subTabs: [
+      {
+        title: 'Vehicle Info',
+        fields: [
+          { id: 'carBrand', label: 'Car Brand' },
+          { id: 'carModel', label: 'Car Model' },
+          { id: 'carYear', label: 'Car Year' },
+          { id: 'carColor', label: 'Car Color (EN)' },
+          { id: 'carColorAr', label: 'Car Color (AR)' },
+          { id: 'vin', label: 'VIN Number' },
+          { id: 'licensePlate', label: 'License Plate (AR)' },
+          { id: 'licensePlateEn', label: 'License Plate (EN)' }
+        ]
+      },
+      {
+        title: 'Technical Specs',
+        fields: [
+          { id: 'engineSize', label: 'Engine Size' },
+          { id: 'fuelType', label: 'Fuel Type (EN)' },
+          { id: 'fuelTypeAr', label: 'Fuel Type (AR)' },
+          { id: 'transmission', label: 'Transmission (EN)' },
+          { id: 'transmissionAr', label: 'Transmission (AR)' },
+          { id: 'mileage', label: 'Mileage' },
+          { id: 'price', label: 'Price' }
+        ]
+      },
+      {
+        title: 'Services & Legal',
+        fields: [
+          { id: 'insuranceCompany', label: 'Insurance Company' },
+          { id: 'insuranceType', label: 'Insurance Type (EN)' },
+          { id: 'insuranceTypeAr', label: 'Insurance Type (AR)' },
+          { id: 'dealership', label: 'Dealership' },
+          { id: 'serviceType', label: 'Service Type (EN)' },
+          { id: 'serviceTypeAr', label: 'Service Type (AR)' },
+          { id: 'drivingLicenseNumber', label: 'Driving License Number' },
+          { id: 'trafficViolation', label: 'Traffic Violation (EN)' },
+          { id: 'trafficViolationAr', label: 'Traffic Violation (AR)' },
+          { id: 'fineAmount', label: 'Fine Amount' }
+        ]
+      }
+    ]
+  },
+  { 
+    title: 'Weather & Environment', 
+    subTabs: [
+      {
+        title: 'Weather Data',
+        fields: [
+          { id: 'temperature', label: 'Temperature (°C)' },
+          { id: 'temperatureFahrenheit', label: 'Temperature (°F)' },
+          { id: 'humidity', label: 'Humidity' },
+          { id: 'windSpeed', label: 'Wind Speed' },
+          { id: 'windDirection', label: 'Wind Direction (EN)' },
+          { id: 'windDirectionAr', label: 'Wind Direction (AR)' },
+          { id: 'weatherCondition', label: 'Weather Condition (EN)' },
+          { id: 'weatherConditionAr', label: 'Weather Condition (AR)' },
+          { id: 'precipitation', label: 'Precipitation' },
+          { id: 'visibility', label: 'Visibility' }
+        ]
+      },
+      {
+        title: 'Environmental',
+        fields: [
+          { id: 'airQualityIndex', label: 'Air Quality Index' },
+          { id: 'airQuality', label: 'Air Quality (EN)' },
+          { id: 'airQualityAr', label: 'Air Quality (AR)' },
+          { id: 'uvIndex', label: 'UV Index' },
+          { id: 'season', label: 'Season (EN)' },
+          { id: 'seasonAr', label: 'Season (AR)' },
+          { id: 'climateZone', label: 'Climate Zone (EN)' },
+          { id: 'climateZoneAr', label: 'Climate Zone (AR)' }
+        ]
+      },
+      {
+        title: 'Nature & Wildlife',
+        fields: [
+          { id: 'wildlifeSpecies', label: 'Wildlife Species (EN)' },
+          { id: 'wildlifeSpeciesAr', label: 'Wildlife Species (AR)' },
+          { id: 'plantSpecies', label: 'Plant Species (EN)' },
+          { id: 'plantSpeciesAr', label: 'Plant Species (AR)' },
+          { id: 'ecosystemType', label: 'Ecosystem Type (EN)' },
+          { id: 'ecosystemTypeAr', label: 'Ecosystem Type (AR)' },
+          { id: 'waterSource', label: 'Water Source (EN)' },
+          { id: 'waterSourceAr', label: 'Water Source (AR)' }
+        ]
+      }
+    ]
+  },
+  { 
+    title: 'Cryptocurrency', 
+    subTabs: [
+      {
+        title: 'Crypto Assets',
+        fields: [
+          { id: 'cryptoSymbol', label: 'Crypto Symbol' },
+          { id: 'cryptoName', label: 'Crypto Name' },
+          { id: 'cryptoPrice', label: 'Price (USD)' },
+          { id: 'cryptoPriceSAR', label: 'Price (SAR)' },
+          { id: 'marketCap', label: 'Market Cap' },
+          { id: 'volume24h', label: '24h Volume' },
+          { id: 'priceChange24h', label: '24h Change' }
+        ]
+      },
+      {
+        title: 'Wallets & Transactions',
+        fields: [
+          { id: 'walletAddress', label: 'Wallet Address' },
+          { id: 'ethereumAddress', label: 'Ethereum Address' },
+          { id: 'transactionHash', label: 'Transaction Hash' },
+          { id: 'transactionFee', label: 'Transaction Fee (ETH)' },
+          { id: 'transactionFeeSAR', label: 'Transaction Fee (SAR)' },
+          { id: 'gasPrice', label: 'Gas Price' },
+          { id: 'blockHeight', label: 'Block Height' }
+        ]
+      },
+      {
+        title: 'DeFi & Trading',
+        fields: [
+          { id: 'stakingReward', label: 'Staking Reward' },
+          { id: 'yieldFarming', label: 'Yield Farming APY' },
+          { id: 'liquidityPool', label: 'Liquidity Pool' },
+          { id: 'dexName', label: 'DEX Name' },
+          { id: 'tradingPair', label: 'Trading Pair' },
+          { id: 'portfolioValue', label: 'Portfolio Value (USD)' },
+          { id: 'portfolioValueSAR', label: 'Portfolio Value (SAR)' },
+          { id: 'roi', label: 'ROI' }
+        ]
+      }
+    ]
+  },
+  { 
+    title: 'IoT & Smart Home', 
+    subTabs: [
+      {
+        title: 'Device Info',
+        fields: [
+          { id: 'deviceType', label: 'Device Type (EN)' },
+          { id: 'deviceTypeAr', label: 'Device Type (AR)' },
+          { id: 'deviceBrand', label: 'Device Brand' },
+          { id: 'deviceModel', label: 'Device Model' },
+          { id: 'deviceId', label: 'Device ID' },
+          { id: 'macAddress', label: 'MAC Address' },
+          { id: 'ipAddress', label: 'IP Address' },
+          { id: 'firmwareVersion', label: 'Firmware Version' }
+        ]
+      },
+      {
+        title: 'Connectivity',
+        fields: [
+          { id: 'wifiSSID', label: 'WiFi SSID' },
+          { id: 'signalStrength', label: 'Signal Strength' },
+          { id: 'communicationProtocol', label: 'Communication Protocol' },
+          { id: 'deviceStatus', label: 'Device Status (EN)' },
+          { id: 'deviceStatusAr', label: 'Device Status (AR)' },
+          { id: 'batteryLevel', label: 'Battery Level' },
+          { id: 'powerConsumption', label: 'Power Consumption' }
+        ]
+      },
+      {
+        title: 'Automation',
+        fields: [
+          { id: 'automationRule', label: 'Automation Rule (EN)' },
+          { id: 'automationRuleAr', label: 'Automation Rule (AR)' },
+          { id: 'sceneMode', label: 'Scene Mode (EN)' },
+          { id: 'sceneModeAr', label: 'Scene Mode (AR)' },
+          { id: 'voiceCommand', label: 'Voice Command (EN)' },
+          { id: 'voiceCommandAr', label: 'Voice Command (AR)' },
+          { id: 'alertType', label: 'Alert Type (EN)' },
+          { id: 'alertTypeAr', label: 'Alert Type (AR)' }
+        ]
+      }
+    ]
+  },
+  { 
+    title: 'Testing', 
+    subTabs: [
+      {
+        title: 'Email Testing',
+        fields: [
+          { id: 'validEmail', label: 'Valid Email' },
+          { id: 'invalidEmail', label: 'Invalid Email' },
+          { id: 'disposableEmail', label: 'Disposable Email' },
+          { id: 'corporateEmail', label: 'Corporate Email' },
+          { id: 'personalEmail', label: 'Personal Email' },
+          { id: 'longEmail', label: 'Long Email' },
+          { id: 'shortEmail', label: 'Short Email' },
+          { id: 'specialCharEmail', label: 'Special Char Email' },
+          { id: 'unicodeEmail', label: 'Unicode Email' },
+          { id: 'customEmail', label: 'Custom Email' }
+        ]
+      },
+      {
+        title: 'Phone Testing',
+        fields: [
+          { id: 'customPhone', label: 'Custom Phone' },
+          { id: 'mobileNumber', label: 'Mobile (05X)' },
+          { id: 'landlineNumber', label: 'Landline (01X)' },
+          { id: 'shortMobile', label: 'Short Mobile (5X)' },
+          { id: 'shortLandline', label: 'Short Landline (1X)' },
+          { id: 'invalidPhone', label: 'Invalid Phone' },
+          { id: 'wrongLengthPhone', label: 'Wrong Length' },
+          { id: 'internationalPhone', label: 'International (+966)' },
+          { id: 'formattedPhone', label: 'Formatted Phone' },
+          { id: 'unformattedPhone', label: 'Unformatted Phone' }
+        ]
+      },
+      {
+        title: 'Password Testing',
+        fields: [
+          { id: 'customPassword', label: 'Custom Password' },
+          { id: 'strongPassword', label: 'Strong Password' },
+          { id: 'weakPassword', label: 'Weak Password' },
+          { id: 'numericPassword', label: 'Numeric Password' },
+          { id: 'alphaPassword', label: 'Alpha Password' },
+          { id: 'specialCharPassword', label: 'Special Char Password' },
+          { id: 'longPassword', label: 'Long Password' },
+          { id: 'shortPassword', label: 'Short Password' },
+          { id: 'commonPassword', label: 'Common Password' },
+          { id: 'unicodePassword', label: 'Unicode Password' }
+        ]
+      }
+    ]
   }
 ];
 

@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Test Data Generator",
   "version": "1.0.0",
-  "description": "Generate realistic test data across 40+ categories with bilingual support (Arabic/English) for development and testing",
+  "description": "Generate realistic test data across 50+ categories with bilingual support (Arabic/English) for development and testing",
   "author": "Test Data Generator Team",
   "homepage_url": "https://github.com/your-username/test-data-generator",
   "icons": {
@@ -80,6 +80,11 @@
         "generators/email-testing-generators.js",
         "generators/password-testing-generators.js",
         "generators/phone-testing-generators.js",
+        "generators/media-entertainment-generators.js",
+        "generators/automotive-generators.js",
+        "generators/weather-environment-generators.js",
+        "generators/cryptocurrency-generators.js",
+        "generators/iot-smarthome-generators.js",
         "ui/ui-generator.js",
         "injected.js",
         "context-menu.js"

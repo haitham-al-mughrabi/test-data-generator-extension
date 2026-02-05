@@ -1,10 +1,10 @@
 # Test Data Generator Chrome Extension
 
-A comprehensive Chrome extension for generating realistic test data across 40+ categories with bilingual support (Arabic/English), specifically optimized for Saudi Arabian data formats and international standards.
+A comprehensive Chrome extension for generating realistic test data across 50+ categories with bilingual support (Arabic/English), specifically optimized for Saudi Arabian data formats and international standards.
 
 ## 🚀 Features
 
-### 📊 40+ Data Categories
+### 📊 50+ Data Categories
 - **Personal**: Names, Gender, Age, Nationality, Blood Type, Marital Status, Saudi ID
 - **Contact**: Email, Phone, Address, Social Media
 - **Work**: Company, Job Title, Department, Salary
@@ -22,6 +22,11 @@ A comprehensive Chrome extension for generating realistic test data across 40+ c
 - **Agriculture**: Crops, Livestock, Equipment, Weather
 - **Manufacturing**: Products, Quality Control, Supply Chain
 - **Testing & QA**: Edge Cases, Performance Data, Security Testing
+- **Media & Entertainment**: Movies, TV Shows, Music, Books, Games, Social Media
+- **Automotive**: Vehicle Information, Insurance, Services, Traffic Violations
+- **Weather & Environment**: Weather Data, Air Quality, Wildlife, Climate
+- **Cryptocurrency**: Digital Assets, Wallets, Trading, DeFi Protocols
+- **IoT & Smart Home**: Connected Devices, Automation, Sensors, Controls
 
 ### 🎯 Access Methods
 1. **Extension Popup**: Click extension icon in Chrome toolbar
@@ -108,7 +113,7 @@ test-data-generator/
 ├── data/                      # Data files
 │   ├── saudi-data.js          # Saudi-specific data
 │   └── names-data.js          # Name databases
-├── generators/                # Data generators (40+ files)
+├── generators/                # Data generators (50+ files)
 │   ├── personal-generators.js
 │   ├── contact-generators.js
 │   ├── work-generators.js
@@ -225,12 +230,14 @@ MIT License - See [LICENSE](LICENSE) file for details.
 ## 🔄 Version History
 
 ### v1.0.0 (Current)
-- Initial release with 40+ data generators
+- Initial release with 50+ data generators
 - Bilingual support (Arabic/English)
 - Saudi-specific data formats
 - Context menu integration
 - Web page floating button
 - Export functionality (JSON/CSV/Clipboard)
+- New categories: Media & Entertainment, Automotive, Weather & Environment, Cryptocurrency, IoT & Smart Home
+- Expanded existing data sets with more names, cities, companies, and job titles
 
 ---
 
