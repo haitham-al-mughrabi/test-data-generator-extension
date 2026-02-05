@@ -11,6 +11,7 @@ function resetSharedData() {
   if (typeof sharedPersonalData !== 'undefined') sharedPersonalData = null;
   if (typeof sharedLocationData !== 'undefined') sharedLocationData = null;
   if (typeof sharedWorkData !== 'undefined') sharedWorkData = null;
+  if (typeof sharedImageData !== 'undefined') sharedImageData = null;
 }
 
 // Hijri Date Conversion (simplified approximation)

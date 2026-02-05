@@ -62,8 +62,8 @@ function createDataGeneratorUI(containerId) {
     .dg-sub-tab.active { display: none; }
     .dg-main { flex: 1; display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
     .dg-content { flex: 1; overflow-y: auto; min-height: 0; background: white; }
-    .dg-content-scroll { padding: 14px; overflow-y: auto; }
-    .dg-field-section { margin-bottom: 20px; }
+    .dg-field-section { margin-bottom: 20px; padding: 14px; }
+    .dg-field-section:first-child { padding-top: 14px; }
     .dg-section-title { font-size: 13px; font-weight: 700; color: #667eea; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid #e0e7ff; }
     .dg-top-controls { display: flex; background: #f8fafc; border-bottom: 1px solid #e2e8f0; overflow-x: auto; flex-shrink: 0; padding: 0 14px; }
     .dg-top-controls .dg-btn { padding: 8px 12px; border: none; background: none; cursor: pointer; font-size: 11px; font-weight: 500; color: #64748b; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.2s; margin-right: 4px; }
@@ -2052,9 +2052,7 @@ function createDataGeneratorUI(containerId) {
               `
                   : ""
               }
-              <div class="dg-content-scroll">
-                ${allFieldsHTML}
-              </div>
+              ${allFieldsHTML}
             </div>
           `;
         } else {

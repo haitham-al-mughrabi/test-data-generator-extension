@@ -311,13 +311,38 @@ const otherGenerators = {
   number: () => randomNum(1, 10000),
   boolean: () => Math.random() > 0.5,
   
-  uuid: () => {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-      const r = Math.random() * 16 | 0;
-      const v = c == 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
-    });
-  },
+  // UUID & GUID generators
+  uuid: () => generateUuid(),
+  uuidv1: () => generateUuidv1(),
+  uuidv3: () => generateUuidv3(),
+  uuidv5: () => generateUuidv5(),
+  guid: () => generateGuid(),
+  shortUuid: () => generateShortUuid(),
+  uuidNoDashes: () => generateUuidNoDashes(),
+  
+  // Database ID generators
+  mongoObjectId: () => generateMongoObjectId(),
+  snowflakeId: () => generateSnowflakeId(),
+  ulid: () => generateUlid(),
+  ksuid: () => generateKsuid(),
+  cuid: () => generateCuid(),
+  nanoid: () => generateNanoid(),
+  xid: () => generateXid(),
+  
+  // Custom ID generators
+  alphanumericId: () => generateAlphanumericId(),
+  numericId: () => generateNumericId(),
+  hexId: () => generateHexId(),
+  base64Id: () => generateBase64Id(),
+  prefixedId: () => generatePrefixedId(),
+  timestampId: () => generateTimestampId(),
+  
+  // Network & Web
+  sessionId: () => generateSessionId(),
+  ipv6: () => generateIpv6(),
+  jwt: () => generateJwt(),
+  hash: () => generateHash(),
+  randomSeed: () => generateRandomSeed(),
   
   color: () => `#${Math.floor(Math.random()*16777215).toString(16).padStart(6, '0')}`,
   
