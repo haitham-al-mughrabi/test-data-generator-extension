@@ -81,7 +81,8 @@
         "generators/password-testing-generators.js",
         "generators/phone-testing-generators.js",
         "ui/ui-generator.js",
-        "injected.js"
+        "injected.js",
+        "context-menu.js"
       ],
       "matches": ["<all_urls>"]
     }

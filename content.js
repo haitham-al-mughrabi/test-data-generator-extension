@@ -13,7 +13,8 @@ const scripts = [
   'generators/datetime-generators.js',
   'generators/random-values-generators.js',
   'ui/ui-generator.js',
-  'injected.js'
+  'injected.js',
+  'context-menu.js'
 ];
 
 let loadedScripts = 0;
