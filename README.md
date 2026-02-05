@@ -5,7 +5,9 @@ A comprehensive Chrome extension for generating realistic test data across 50+ c
 ## 🚀 Features
 
 ### 📊 50+ Data Categories
-- **Personal**: Names, Gender, Age, Nationality, Blood Type, Marital Status, Saudi ID
+- **Enhanced Personal**: Personality traits, hobbies, skills, languages, medical info, emergency contacts
+- **Files & Media**: File types, extensions, MIME types, sizes, metadata, document management
+- **Images & Avatars**: Placeholder images, avatar generators, media URLs, QR codes, charts
 - **Contact**: Email, Phone, Address, Social Media
 - **Work**: Company, Job Title, Department, Salary
 - **Finance**: IBAN, Credit Cards, Banking, Insurance
@@ -229,7 +231,16 @@ MIT License - See [LICENSE](LICENSE) file for details.
 
 ## 🔄 Version History
 
-### v1.0.0 (Current)
+### v1.1.0 (Latest - Enhanced Version)
+- **Enhanced Personal Details**: Added 40+ new personal data fields including personality traits, hobbies, skills, languages, medical information, and emergency contacts
+- **File Types & Media**: Comprehensive file type support with 50+ extensions, MIME types, file sizes, and metadata
+- **Document Management**: 40+ professional document types across legal, business, academic, technical, and medical categories
+- **Image & Media URLs**: 25+ image services including placeholder generators, avatar creators, and media URLs
+- **Expanded Name Database**: 150+ names (75+ male, 75+ female) and 60+ family names
+- **Data Stability**: Improved consistency with shared data contexts ensuring related fields use the same underlying person/document
+- **New Test Files**: Added comprehensive test files for validating all new generators
+
+### v1.0.0
 - Initial release with 50+ data generators
 - Bilingual support (Arabic/English)
 - Saudi-specific data formats

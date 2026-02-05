@@ -124,6 +124,18 @@ function createDataGeneratorUI(containerId) {
     .dg-file-size-group { display: flex; gap: 6px; }
     .dg-file-size-group input { flex: 1; }
     .dg-file-size-group select { width: 80px; flex-shrink: 0; }
+    .dg-image-controls { display: none; margin-top: 10px; padding: 12px; background: #f0f9ff; border: 1px solid #0ea5e9; border-radius: 6px; }
+    .dg-image-controls.active { display: block; }
+    .dg-image-control-group { margin-bottom: 10px; }
+    .dg-image-control-group:last-child { margin-bottom: 0; }
+    .dg-image-control-group label { display: block; font-size: 11px; font-weight: 600; color: #0c4a6e; margin-bottom: 4px; }
+    .dg-image-control-group input, .dg-image-control-group select { width: 100%; padding: 6px 8px; border: 1px solid #0ea5e9; border-radius: 4px; font-size: 11px; box-sizing: border-box; }
+    .dg-image-size-group { display: flex; gap: 6px; align-items: center; }
+    .dg-image-size-group input { flex: 1; }
+    .dg-image-size-group span { color: #0c4a6e; font-weight: 600; }
+    .dg-preset-buttons { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+    .dg-preset-btn { padding: 4px 8px; border: 1px solid #0ea5e9; background: white; color: #0c4a6e; border-radius: 3px; cursor: pointer; font-size: 10px; transition: all 0.2s; }
+    .dg-preset-btn:hover { background: #0ea5e9; color: white; }
   `;
   document.head.appendChild(style);
 
@@ -2130,6 +2142,29 @@ function createDataGeneratorUI(containerId) {
               <label>Records:</label>
               <input type="number" id="recordCount" value="1" min="1" max="100">
             </div>
+            
+            <!-- Image Dimension Controls -->
+            <div class="dg-image-controls" id="imageControls">
+              <div class="dg-image-control-group">
+                <label>Image Dimensions</label>
+                <div class="dg-image-size-group">
+                  <input type="number" id="imageWidth" value="400" min="50" max="2000" placeholder="Width">
+                  <span>×</span>
+                  <input type="number" id="imageHeight" value="300" min="50" max="2000" placeholder="Height">
+                </div>
+                <div class="dg-preset-buttons">
+                  <button class="dg-preset-btn" data-size="150,150">150×150</button>
+                  <button class="dg-preset-btn" data-size="300,200">300×200</button>
+                  <button class="dg-preset-btn" data-size="400,300">400×300</button>
+                  <button class="dg-preset-btn" data-size="600,400">600×400</button>
+                  <button class="dg-preset-btn" data-size="800,600">800×600</button>
+                  <button class="dg-preset-btn" data-size="1024,768">1024×768</button>
+                  <button class="dg-preset-btn" data-size="1200,800">1200×800</button>
+                  <button class="dg-preset-btn" data-size="1920,1080">1920×1080</button>
+                </div>
+              </div>
+            </div>
+            
             <div class="dg-buttons">
               <button class="dg-btn dg-btn-primary" id="generateBtn">Generate</button>
               <button class="dg-btn dg-btn-secondary" id="copyBtn">Copy</button>
@@ -2168,6 +2203,7 @@ function createDataGeneratorUI(containerId) {
       const isEmailTestingTab = category.title === "Email Testing";
       const isPasswordTestingTab = category.title === "Password Testing";
       const isPhoneTestingTab = category.title === "Phone Testing";
+      const isImagesTab = category.title === "Images & Avatars";
       const fileControls = document.getElementById("fileControls");
       const dateTimeControls = document.getElementById("dateTimeControls");
       const randomValuesControls = document.getElementById(
@@ -2177,6 +2213,7 @@ function createDataGeneratorUI(containerId) {
       const emailControls = document.getElementById("emailControls");
       const passwordControls = document.getElementById("passwordControls");
       const phoneControls = document.getElementById("phoneControls");
+      const imageControls = document.getElementById("imageControls");
       const downloadBtn = document.getElementById("downloadBtn");
 
       if (fileControls) {
@@ -2199,6 +2236,9 @@ function createDataGeneratorUI(containerId) {
       }
       if (phoneControls) {
         phoneControls.classList.toggle("active", isPhoneTestingTab);
+      }
+      if (imageControls) {
+        imageControls.classList.toggle("active", isImagesTab);
       }
       if (downloadBtn) {
         downloadBtn.style.display = isFilesTab ? "inline-block" : "none";
@@ -2586,6 +2626,36 @@ function createDataGeneratorUI(containerId) {
   document.getElementById("controlsHeader").addEventListener("click", () => {
     const controls = document.querySelector(".dg-controls");
     controls.classList.toggle("collapsed");
+  });
+
+  // Image dimension controls event handlers
+  const imageWidthInput = document.getElementById("imageWidth");
+  const imageHeightInput = document.getElementById("imageHeight");
+  
+  function updateImageDimensions() {
+    const width = parseInt(imageWidthInput.value) || 400;
+    const height = parseInt(imageHeightInput.value) || 300;
+    if (typeof setImageDimensions === 'function') {
+      setImageDimensions(width, height);
+    }
+  }
+  
+  if (imageWidthInput) {
+    imageWidthInput.addEventListener("input", updateImageDimensions);
+  }
+  
+  if (imageHeightInput) {
+    imageHeightInput.addEventListener("input", updateImageDimensions);
+  }
+  
+  // Preset dimension buttons
+  document.querySelectorAll(".dg-preset-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const [width, height] = btn.dataset.size.split(',');
+      imageWidthInput.value = width;
+      imageHeightInput.value = height;
+      updateImageDimensions();
+    });
   });
 
   document.getElementById("generateBtn").addEventListener("click", () => {
@@ -3005,6 +3075,13 @@ function createDataGeneratorUI(containerId) {
         conversionResult.style.display = "block";
       }
     });
+  }
+  
+  // Initialize image dimensions on load
+  if (typeof setImageDimensions === 'function') {
+    const initialWidth = document.getElementById("imageWidth")?.value || 400;
+    const initialHeight = document.getElementById("imageHeight")?.value || 300;
+    setImageDimensions(parseInt(initialWidth), parseInt(initialHeight));
   }
 }
 

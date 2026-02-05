@@ -125,6 +125,204 @@ const categoriesWithSubTabs = [
     ]
   },
   { 
+    title: 'Enhanced Personal', 
+    subTabs: [
+      {
+        title: 'Personality & Traits',
+        fields: [
+          { id: 'personalityTrait', label: 'Personality Trait (EN)' },
+          { id: 'personalityTraitAr', label: 'Personality Trait (AR)' },
+          { id: 'personalityScore', label: 'Personality Score' },
+          { id: 'lifestyleChoice', label: 'Lifestyle (EN)' },
+          { id: 'lifestyleChoiceAr', label: 'Lifestyle (AR)' },
+          { id: 'eyeColor', label: 'Eye Color (EN)' },
+          { id: 'eyeColorAr', label: 'Eye Color (AR)' },
+          { id: 'hairColor', label: 'Hair Color (EN)' },
+          { id: 'hairColorAr', label: 'Hair Color (AR)' }
+        ]
+      },
+      {
+        title: 'Interests & Skills',
+        fields: [
+          { id: 'hobby', label: 'Hobby (EN)' },
+          { id: 'hobbyAr', label: 'Hobby (AR)' },
+          { id: 'hobbiesList', label: 'Hobbies List (EN)' },
+          { id: 'hobbiesListAr', label: 'Hobbies List (AR)' },
+          { id: 'skill', label: 'Skill (EN)' },
+          { id: 'skillAr', label: 'Skill (AR)' },
+          { id: 'skillsList', label: 'Skills List (EN)' },
+          { id: 'language', label: 'Language (EN)' },
+          { id: 'languageAr', label: 'Language (AR)' },
+          { id: 'languagesList', label: 'Languages List (EN)' }
+        ]
+      },
+      {
+        title: 'Preferences & Background',
+        fields: [
+          { id: 'favoriteColor', label: 'Favorite Color (EN)' },
+          { id: 'favoriteColorAr', label: 'Favorite Color (AR)' },
+          { id: 'favoriteFood', label: 'Favorite Food (EN)' },
+          { id: 'favoriteFoodAr', label: 'Favorite Food (AR)' },
+          { id: 'favoriteMusic', label: 'Favorite Music (EN)' },
+          { id: 'favoriteMusicAr', label: 'Favorite Music (AR)' },
+          { id: 'birthPlace', label: 'Birth Place (EN)' },
+          { id: 'birthPlaceAr', label: 'Birth Place (AR)' },
+          { id: 'motherTongue', label: 'Mother Tongue (EN)' },
+          { id: 'motherTongueAr', label: 'Mother Tongue (AR)' }
+        ]
+      },
+      {
+        title: 'Medical & Emergency',
+        fields: [
+          { id: 'medicalAllergy', label: 'Medical Allergy (EN)' },
+          { id: 'medicalAllergyAr', label: 'Medical Allergy (AR)' },
+          { id: 'medication', label: 'Medication (EN)' },
+          { id: 'medicationAr', label: 'Medication (AR)' },
+          { id: 'medicalCondition', label: 'Medical Condition (EN)' },
+          { id: 'medicalConditionAr', label: 'Medical Condition (AR)' },
+          { id: 'emergencyContactName', label: 'Emergency Contact (EN)' },
+          { id: 'emergencyContactNameAr', label: 'Emergency Contact (AR)' },
+          { id: 'emergencyContactPhone', label: 'Emergency Contact Phone' },
+          { id: 'biometricId', label: 'Biometric ID' }
+        ]
+      }
+    ]
+  },
+  { 
+    title: 'Files & Media', 
+    subTabs: [
+      {
+        title: 'File Information',
+        fields: [
+          { id: 'fileName', label: 'File Name (EN)' },
+          { id: 'fileNameAr', label: 'File Name (AR)' },
+          { id: 'fileExtension', label: 'File Extension' },
+          { id: 'fileType', label: 'File Type' },
+          { id: 'mimeType', label: 'MIME Type' },
+          { id: 'fileSize', label: 'File Size' },
+          { id: 'fileSizeBytes', label: 'File Size (Bytes)' },
+          { id: 'documentPath', label: 'Document Path (EN)' },
+          { id: 'documentPathAr', label: 'Document Path (AR)' }
+        ]
+      },
+      {
+        title: 'Document Management',
+        fields: [
+          { id: 'documentType', label: 'Document Type (EN)' },
+          { id: 'documentTypeAr', label: 'Document Type (AR)' },
+          { id: 'documentCategory', label: 'Document Category' },
+          { id: 'documentNumber', label: 'Document Number' },
+          { id: 'referenceNumber', label: 'Reference Number' },
+          { id: 'documentVersion', label: 'Document Version' },
+          { id: 'documentStatus', label: 'Document Status (EN)' },
+          { id: 'documentStatusAr', label: 'Document Status (AR)' },
+          { id: 'documentPriority', label: 'Document Priority (EN)' },
+          { id: 'documentPriorityAr', label: 'Document Priority (AR)' }
+        ]
+      },
+      {
+        title: 'Document Details',
+        fields: [
+          { id: 'documentTitle', label: 'Document Title (EN)' },
+          { id: 'documentTitleAr', label: 'Document Title (AR)' },
+          { id: 'documentFileName', label: 'Document File Name (EN)' },
+          { id: 'documentFileNameAr', label: 'Document File Name (AR)' },
+          { id: 'documentAuthor', label: 'Document Author (EN)' },
+          { id: 'documentAuthorAr', label: 'Document Author (AR)' },
+          { id: 'pageCount', label: 'Page Count' },
+          { id: 'wordCount', label: 'Word Count' },
+          { id: 'createdDate', label: 'Created Date' },
+          { id: 'modifiedDate', label: 'Modified Date' }
+        ]
+      },
+      {
+        title: 'Media URLs',
+        fields: [
+          { id: 'downloadUrl', label: 'Download URL' },
+          { id: 'thumbnailUrl', label: 'Thumbnail URL' },
+          { id: 'cloudStorageUrl', label: 'Cloud Storage URL' },
+          { id: 'mediaFormat', label: 'Media Format' },
+          { id: 'resolution', label: 'Resolution' },
+          { id: 'colorDepth', label: 'Color Depth' },
+          { id: 'compressionRatio', label: 'Compression Ratio' },
+          { id: 'metadata', label: 'Metadata' }
+        ]
+      },
+    ]
+  },
+  { 
+    title: 'Images & Avatars', 
+    subTabs: [
+      {
+        title: 'Placeholder Images',
+        fields: [
+          { id: 'imageDimensions', label: 'Current Dimensions' },
+          { id: 'imageWidth', label: 'Width (px)' },
+          { id: 'imageHeight', label: 'Height (px)' },
+          { id: 'imageAspectRatio', label: 'Aspect Ratio' },
+          { id: 'placeholderImage', label: 'Placeholder Image' },
+          { id: 'placeholderImageWithText', label: 'Placeholder with Text' },
+          { id: 'placeholderImageColored', label: 'Colored Placeholder' },
+          { id: 'placeholderCom', label: 'Placeholder.com' },
+          { id: 'dummyImage', label: 'DummyImage.com' },
+          { id: 'fakeImg', label: 'FakeImg.pl' }
+        ]
+      },
+      {
+        title: 'Real Photos',
+        fields: [
+          { id: 'loremPicsumImage', label: 'Lorem Picsum Image' },
+          { id: 'loremPicsumImageWithId', label: 'Lorem Picsum with ID' },
+          { id: 'loremPicsumGrayscale', label: 'Lorem Picsum Grayscale' },
+          { id: 'loremPicsumBlurred', label: 'Lorem Picsum Blurred' },
+          { id: 'unsplashImage', label: 'Unsplash Image' },
+          { id: 'unsplashFeaturedImage', label: 'Unsplash Featured' },
+          { id: 'unsplashDailyImage', label: 'Unsplash Daily' },
+          { id: 'imageUrl', label: 'Random Image URL' }
+        ]
+      },
+      {
+        title: 'Avatar Generators',
+        fields: [
+          { id: 'avatarUrl', label: 'Avatar URL' },
+          { id: 'avatarDiceBear', label: 'DiceBear Avatar' },
+          { id: 'avatarRobohash', label: 'Robohash Avatar' },
+          { id: 'avatarPravatar', label: 'Pravatar Avatar' },
+          { id: 'uiAvatar', label: 'UI Avatar' },
+          { id: 'uiAvatarRounded', label: 'UI Avatar Rounded' },
+          { id: 'gravatar', label: 'Gravatar' },
+          { id: 'facebookProfileImage', label: 'Facebook Profile' },
+          { id: 'twitterProfileImage', label: 'Twitter Profile' },
+          { id: 'linkedinProfileImage', label: 'LinkedIn Profile' }
+        ]
+      },
+      {
+        title: 'Media & Graphics',
+        fields: [
+          { id: 'sampleVideoUrl', label: 'Sample Video URL' },
+          { id: 'youtubeVideoUrl', label: 'YouTube Video URL' },
+          { id: 'youtubeThumbnail', label: 'YouTube Thumbnail' },
+          { id: 'youtubeThumbnailCustom', label: 'YouTube Thumbnail Custom' },
+          { id: 'vimeoVideoUrl', label: 'Vimeo Video URL' },
+          { id: 'sampleAudioUrl', label: 'Sample Audio URL' },
+          { id: 'qrCodeUrl', label: 'QR Code URL' },
+          { id: 'qrCodeColored', label: 'QR Code Colored' },
+          { id: 'chartUrl', label: 'Chart URL' },
+          { id: 'chartBarUrl', label: 'Bar Chart URL' },
+          { id: 'chartPieUrl', label: 'Pie Chart URL' },
+          { id: 'mapImage', label: 'Map Image' },
+          { id: 'mapImageSatellite', label: 'Satellite Map' },
+          { id: 'iconUrl', label: 'Icon URL' },
+          { id: 'iconUrlColored', label: 'Colored Icon URL' },
+          { id: 'countryFlag', label: 'Country Flag' },
+          { id: 'countryFlagRounded', label: 'Country Flag Rounded' },
+          { id: 'cdnImageUrl', label: 'CDN Image URL' },
+          { id: 'stockPhotoUrl', label: 'Stock Photo URL' }
+        ]
+      }
+    ]
+  },
+  { 
     title: 'Testing', 
     subTabs: [
       {
@@ -395,56 +593,6 @@ const categoriesWithSubTabs = [
           { id: 'voiceCommandAr', label: 'Voice Command (AR)' },
           { id: 'alertType', label: 'Alert Type (EN)' },
           { id: 'alertTypeAr', label: 'Alert Type (AR)' }
-        ]
-      }
-    ]
-  },
-  { 
-    title: 'Testing', 
-    subTabs: [
-      {
-        title: 'Email Testing',
-        fields: [
-          { id: 'validEmail', label: 'Valid Email' },
-          { id: 'invalidEmail', label: 'Invalid Email' },
-          { id: 'disposableEmail', label: 'Disposable Email' },
-          { id: 'corporateEmail', label: 'Corporate Email' },
-          { id: 'personalEmail', label: 'Personal Email' },
-          { id: 'longEmail', label: 'Long Email' },
-          { id: 'shortEmail', label: 'Short Email' },
-          { id: 'specialCharEmail', label: 'Special Char Email' },
-          { id: 'unicodeEmail', label: 'Unicode Email' },
-          { id: 'customEmail', label: 'Custom Email' }
-        ]
-      },
-      {
-        title: 'Phone Testing',
-        fields: [
-          { id: 'customPhone', label: 'Custom Phone' },
-          { id: 'mobileNumber', label: 'Mobile (05X)' },
-          { id: 'landlineNumber', label: 'Landline (01X)' },
-          { id: 'shortMobile', label: 'Short Mobile (5X)' },
-          { id: 'shortLandline', label: 'Short Landline (1X)' },
-          { id: 'invalidPhone', label: 'Invalid Phone' },
-          { id: 'wrongLengthPhone', label: 'Wrong Length' },
-          { id: 'internationalPhone', label: 'International (+966)' },
-          { id: 'formattedPhone', label: 'Formatted Phone' },
-          { id: 'unformattedPhone', label: 'Unformatted Phone' }
-        ]
-      },
-      {
-        title: 'Password Testing',
-        fields: [
-          { id: 'customPassword', label: 'Custom Password' },
-          { id: 'strongPassword', label: 'Strong Password' },
-          { id: 'weakPassword', label: 'Weak Password' },
-          { id: 'numericPassword', label: 'Numeric Password' },
-          { id: 'alphaPassword', label: 'Alpha Password' },
-          { id: 'specialCharPassword', label: 'Special Char Password' },
-          { id: 'longPassword', label: 'Long Password' },
-          { id: 'shortPassword', label: 'Short Password' },
-          { id: 'commonPassword', label: 'Common Password' },
-          { id: 'unicodePassword', label: 'Unicode Password' }
         ]
       }
     ]

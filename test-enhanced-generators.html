@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Enhanced Generators Test - Image Dimensions</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .category { margin-bottom: 30px; border: 1px solid #ddd; padding: 15px; }
+        .category h2 { color: #333; margin-top: 0; }
+        .field { margin: 5px 0; padding: 5px; background: #f9f9f9; }
+        .field strong { color: #666; }
+        .generate-btn { background: #007bff; color: white; padding: 10px 20px; border: none; cursor: pointer; margin: 10px 0; }
+        .generate-btn:hover { background: #0056b3; }
+        .dimension-controls { background: #f0f9ff; padding: 15px; border: 1px solid #0ea5e9; border-radius: 6px; margin-bottom: 20px; }
+        .dimension-input { margin: 5px; padding: 5px; border: 1px solid #0ea5e9; border-radius: 3px; width: 80px; }
+        .preset-btn { margin: 2px; padding: 4px 8px; border: 1px solid #0ea5e9; background: white; color: #0c4a6e; border-radius: 3px; cursor: pointer; }
+        .preset-btn:hover { background: #0ea5e9; color: white; }
+        .image-preview { margin: 10px 0; }
+        .image-preview img { max-width: 300px; max-height: 200px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <h1>Enhanced Generators Test - Image Dimensions</h1>
+    
+    <div class="dimension-controls">
+        <h3>Image Dimension Controls</h3>
+        <label>Width: <input type="number" id="widthInput" class="dimension-input" value="400" min="50" max="2000"></label>
+        <label>Height: <input type="number" id="heightInput" class="dimension-input" value="300" min="50" max="2000"></label>
+        <button class="generate-btn" onclick="updateDimensions()">Update Dimensions</button>
+        <br><br>
+        <strong>Presets:</strong>
+        <button class="preset-btn" onclick="setPreset(150, 150)">150×150</button>
+        <button class="preset-btn" onclick="setPreset(300, 200)">300×200</button>
+        <button class="preset-btn" onclick="setPreset(400, 300)">400×300</button>
+        <button class="preset-btn" onclick="setPreset(600, 400)">600×400</button>
+        <button class="preset-btn" onclick="setPreset(800, 600)">800×600</button>
+        <button class="preset-btn" onclick="setPreset(1024, 768)">1024×768</button>
+        <button class="preset-btn" onclick="setPreset(1200, 800)">1200×800</button>
+        <button class="preset-btn" onclick="setPreset(1920, 1080)">1920×1080</button>
+    </div>
+    
+    <button class="generate-btn" onclick="generateAllData()">Generate All Data</button>
+    
+    <div class="category">
+        <h2>Image Dimension Info</h2>
+        <div id="dimension-info"></div>
+    </div>
+    
+    <div class="category">
+        <h2>Placeholder Images (Exact Dimensions)</h2>
+        <div id="placeholder-images"></div>
+    </div>
+    
+    <div class="category">
+        <h2>Real Photos (Exact Dimensions)</h2>
+        <div id="real-photos"></div>
+    </div>
+    
+    <div class="category">
+        <h2>Avatar Generators (Custom Sizes)</h2>
+        <div id="avatar-generators"></div>
+    </div>
+    
+    <div class="category">
+        <h2>Charts & Graphics (Exact Dimensions)</h2>
+        <div id="charts-graphics"></div>
+    </div>
+
+    <!-- Include all necessary scripts -->
+    <script src="utils/helpers.js"></script>
+    <script src="data/names-data.js"></script>
+    <script src="data/saudi-data.js"></script>
+    <script src="generators/personal-generators.js"></script>
+    <script src="generators/enhanced-personal-generators.js"></script>
+    <script src="generators/file-media-generators.js"></script>
+    <script src="generators/document-types-generators.js"></script>
+    <script src="generators/image-url-generators.js"></script>
+
+    <script>
+        function updateDimensions() {
+            const width = parseInt(document.getElementById('widthInput').value) || 400;
+            const height = parseInt(document.getElementById('heightInput').value) || 300;
+            
+            if (typeof setImageDimensions === 'function') {
+                setImageDimensions(width, height);
+                generateAllData();
+            }
+        }
+        
+        function setPreset(width, height) {
+            document.getElementById('widthInput').value = width;
+            document.getElementById('heightInput').value = height;
+            updateDimensions();
+        }
+        
+        function generateAllData() {
+            // Reset shared data for fresh generation
+            if (typeof resetSharedData === 'function') {
+                resetSharedData();
+            }
+            
+            // Get current dimensions
+            const dimensions = getImageDimensions();
+            
+            // Dimension Info
+            const dimensionInfoHtml = `
+                <div class="field"><strong>Current Dimensions:</strong> ${imageUrlGenerators.imageDimensions()}</div>
+                <div class="field"><strong>Width:</strong> ${imageUrlGenerators.imageWidth()} px</div>
+                <div class="field"><strong>Height:</strong> ${imageUrlGenerators.imageHeight()} px</div>
+                <div class="field"><strong>Aspect Ratio:</strong> ${imageUrlGenerators.imageAspectRatio()}</div>
+            `;
+            document.getElementById('dimension-info').innerHTML = dimensionInfoHtml;
+            
+            // Placeholder Images
+            const placeholderHtml = `
+                <div class="field">
+                    <strong>Via Placeholder:</strong> 
+                    <a href="${imageUrlGenerators.placeholderImage()}" target="_blank">${imageUrlGenerators.placeholderImage()}</a>
+                    <div class="image-preview"><img src="${imageUrlGenerators.placeholderImage()}" alt="Placeholder"></div>
+                </div>
+                <div class="field">
+                    <strong>Placeholder with Text:</strong> 
+                    <a href="${imageUrlGenerators.placeholderImageWithText()}" target="_blank">${imageUrlGenerators.placeholderImageWithText()}</a>
+                    <div class="image-preview"><img src="${imageUrlGenerators.placeholderImageWithText()}" alt="Placeholder with Text"></div>
+                </div>
+                <div class="field">
+                    <strong>Colored Placeholder:</strong> 
+                    <a href="${imageUrlGenerators.placeholderImageColored()}" target="_blank">${imageUrlGenerators.placeholderImageColored()}</a>
+                    <div class="image-preview"><img src="${imageUrlGenerators.placeholderImageColored()}" alt="Colored Placeholder"></div>
+                </div>
+                <div class="field">
+                    <strong>DummyImage.com:</strong> 
+                    <a href="${imageUrlGenerators.dummyImage()}" target="_blank">${imageUrlGenerators.dummyImage()}</a>
+                    <div class="image-preview"><img src="${imageUrlGenerators.dummyImage()}" alt="Dummy Image"></div>
+                </div>
+            `;
+            document.getElementById('placeholder-images').innerHTML = placeholderHtml;
+            
+            // Real Photos
+            const realPhotosHtml = `
+                <div class="field">
+                    <strong>Lorem Picsum:</strong> 
+                    <a href="${imageUrlGenerators.loremPicsumImage()}" target="_blank">${imageUrlGenerators.loremPicsumImage()}</a>
+                    <div class="image-preview"><img src="${imageUrlGenerators.loremPicsumImage()}" alt="Lorem Picsum"></div>
+                </div>
+                <div class="field">
+                    <strong>Lorem Picsum with ID:</strong> 
+                    <a href="${imageUrlGenerators.loremPicsumImageWithId()}" target="_blank">${imageUrlGenerators.loremPicsumImageWithId()}</a>
+                    <div class="image-preview"><img src="${imageUrlGenerators.loremPicsumImageWithId()}" alt="Lorem Picsum with ID"></div>
+                </div>
+                <div class="field">
+                    <strong>Lorem Picsum Grayscale:</strong> 
+                    <a href="${imageUrlGenerators.loremPicsumGrayscale()}" target="_blank">${imageUrlGenerators.loremPicsumGrayscale()}</a>
+                    <div class="image-preview"><img src="${imageUrlGenerators.loremPicsumGrayscale()}" alt="Lorem Picsum Grayscale"></div>
+                </div>
+                <div class="field">
+                    <strong>Unsplash Image:</strong> 
+                    <a href="${imageUrlGenerators.unsplashImage()}" target="_blank">${imageUrlGenerators.unsplashImage()}</a>
+                    <div class="image-preview"><img src="${imageUrlGenerators.unsplashImage()}" alt="Unsplash"></div>
+                </div>
+            `;
+            document.getElementById('real-photos').innerHTML = realPhotosHtml;
+            
+            // Avatar Generators
+            const avatarHtml = `
+                <div class="field">
+                    <strong>DiceBear Avatar:</strong> 
+                    <a href="${imageUrlGenerators.avatarDiceBear()}" target="_blank">${imageUrlGenerators.avatarDiceBear()}</a>
+                    <div class="image-preview"><img src="${imageUrlGenerators.avatarDiceBear()}" alt="DiceBear Avatar"></div>
+                </div>
+                <div class="field">
+                    <strong>Robohash Avatar:</strong> 
+                    <a href="${imageUrlGenerators.avatarRobohash()}" target="_blank">${imageUrlGenerators.avatarRobohash()}</a>
+                    <div class="image-preview"><img src="${imageUrlGenerators.avatarRobohash()}" alt="Robohash Avatar"></div>
+                </div>
+                <div class="field">
+                    <strong>UI Avatar:</strong> 
+                    <a href="${imageUrlGenerators.uiAvatar()}" target="_blank">${imageUrlGenerators.uiAvatar()}</a>
+                    <div class="image-preview"><img src="${imageUrlGenerators.uiAvatar()}" alt="UI Avatar"></div>
+                </div>
+                <div class="field">
+                    <strong>UI Avatar Rounded:</strong> 
+                    <a href="${imageUrlGenerators.uiAvatarRounded()}" target="_blank">${imageUrlGenerators.uiAvatarRounded()}</a>
+                    <div class="image-preview"><img src="${imageUrlGenerators.uiAvatarRounded()}" alt="UI Avatar Rounded"></div>
+                </div>
+            `;
+            document.getElementById('avatar-generators').innerHTML = avatarHtml;
+            
+            // Charts & Graphics
+            const chartsHtml = `
+                <div class="field">
+                    <strong>QR Code:</strong> 
+                    <a href="${imageUrlGenerators.qrCodeUrl()}" target="_blank">${imageUrlGenerators.qrCodeUrl()}</a>
+                    <div class="image-preview"><img src="${imageUrlGenerators.qrCodeUrl()}" alt="QR Code"></div>
+                </div>
+                <div class="field">
+                    <strong>Colored QR Code:</strong> 
+                    <a href="${imageUrlGenerators.qrCodeColored()}" target="_blank">${imageUrlGenerators.qrCodeColored()}</a>
+                    <div class="image-preview"><img src="${imageUrlGenerators.qrCodeColored()}" alt="Colored QR Code"></div>
+                </div>
+                <div class="field">
+                    <strong>Chart:</strong> 
+                    <a href="${imageUrlGenerators.chartUrl()}" target="_blank">${imageUrlGenerators.chartUrl()}</a>
+                    <div class="image-preview"><img src="${imageUrlGenerators.chartUrl()}" alt="Chart"></div>
+                </div>
+                <div class="field">
+                    <strong>Bar Chart:</strong> 
+                    <a href="${imageUrlGenerators.chartBarUrl()}" target="_blank">${imageUrlGenerators.chartBarUrl()}</a>
+                    <div class="image-preview"><img src="${imageUrlGenerators.chartBarUrl()}" alt="Bar Chart"></div>
+                </div>
+                <div class="field">
+                    <strong>Country Flag:</strong> 
+                    <a href="${imageUrlGenerators.countryFlag()}" target="_blank">${imageUrlGenerators.countryFlag()}</a>
+                    <div class="image-preview"><img src="${imageUrlGenerators.countryFlag()}" alt="Country Flag"></div>
+                </div>
+            `;
+            document.getElementById('charts-graphics').innerHTML = chartsHtml;
+        }
+        
+        // Generate initial data on page load
+        window.onload = function() {
+            generateAllData();
+        };
+    </script>
+</body>
+</html>

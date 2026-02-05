@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Image Dimensions Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; }
+        .controls { background: #f0f9ff; padding: 10px; margin: 10px 0; }
+        .controls input { margin: 5px; padding: 5px; width: 80px; }
+        .controls button { margin: 5px; padding: 5px 10px; }
+        .result { margin: 10px 0; padding: 10px; background: #f9f9f9; }
+        .image-preview { margin: 10px 0; }
+        .image-preview img { border: 1px solid #ccc; max-width: 100%; }
+    </style>
+</head>
+<body>
+    <h1>Image Dimensions Test</h1>
+    
+    <div class="test-section">
+        <h2>Dimension Controls</h2>
+        <div class="controls">
+            <label>Width: <input type="number" id="width" value="400" min="50" max="2000"></label>
+            <label>Height: <input type="number" id="height" value="300" min="50" max="2000"></label>
+            <button onclick="updateDimensions()">Update</button>
+            <button onclick="setDimensions(200, 200)">200×200</button>
+            <button onclick="setDimensions(600, 400)">600×400</button>
+            <button onclick="setDimensions(800, 600)">800×600</button>
+        </div>
+        <div class="result" id="current-dimensions"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Generated Images</h2>
+        <div id="image-results"></div>
+    </div>
+
+    <!-- Include scripts -->
+    <script src="utils/helpers.js"></script>
+    <script src="data/names-data.js"></script>
+    <script src="data/saudi-data.js"></script>
+    <script src="generators/personal-generators.js"></script>
+    <script src="generators/image-url-generators.js"></script>
+
+    <script>
+        function updateDimensions() {
+            const width = parseInt(document.getElementById('width').value) || 400;
+            const height = parseInt(document.getElementById('height').value) || 300;
+            
+            console.log('Setting dimensions to:', width, 'x', height);
+            
+            if (typeof setImageDimensions === 'function') {
+                setImageDimensions(width, height);
+            }
+            
+            displayCurrentDimensions();
+            generateImages();
+        }
+        
+        function setDimensions(width, height) {
+            document.getElementById('width').value = width;
+            document.getElementById('height').value = height;
+            updateDimensions();
+        }
+        
+        function displayCurrentDimensions() {
+            const dimensions = getImageDimensions();
+            document.getElementById('current-dimensions').innerHTML = `
+                <strong>Current Dimensions:</strong> ${dimensions.width} × ${dimensions.height}<br>
+                <strong>Aspect Ratio:</strong> ${imageUrlGenerators.imageAspectRatio()}
+            `;
+        }
+        
+        function generateImages() {
+            const imageResults = document.getElementById('image-results');
+            
+            // Generate fresh image data
+            if (typeof resetSharedData === 'function') {
+                resetSharedData();
+            }
+            
+            const images = [
+                { name: 'Via Placeholder', url: imageUrlGenerators.placeholderImage() },
+                { name: 'Placeholder with Text', url: imageUrlGenerators.placeholderImageWithText() },
+                { name: 'Colored Placeholder', url: imageUrlGenerators.placeholderImageColored() },
+                { name: 'Lorem Picsum', url: imageUrlGenerators.loremPicsumImage() },
+                { name: 'Unsplash Image', url: imageUrlGenerators.unsplashImage() },
+                { name: 'QR Code', url: imageUrlGenerators.qrCodeUrl() },
+                { name: 'Chart', url: imageUrlGenerators.chartUrl() },
+                { name: 'Country Flag', url: imageUrlGenerators.countryFlag() }
+            ];
+            
+            let html = '';
+            images.forEach(img => {
+                html += `
+                    <div class="result">
+                        <strong>${img.name}:</strong><br>
+                        <a href="${img.url}" target="_blank">${img.url}</a>
+                        <div class="image-preview">
+                            <img src="${img.url}" alt="${img.name}" onload="console.log('${img.name} loaded:', this.naturalWidth + 'x' + this.naturalHeight)">
+                        </div>
+                    </div>
+                `;
+            });
+            
+            imageResults.innerHTML = html;
+        }
+        
+        // Initialize on page load
+        window.onload = function() {
+            updateDimensions();
+        };
+    </script>
+</body>
+</html>
