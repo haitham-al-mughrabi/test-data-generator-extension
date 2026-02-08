@@ -82,11 +82,11 @@ function createDataGeneratorUI(containerId) {
     .dg-tab-controls .dg-btn:hover { background: #94a3b8 !important; }
     .dg-tab-controls .dg-btn.unselect { background: #ef4444 !important; color: white !important; }
     .dg-tab-controls .dg-btn.unselect:hover { background: #dc2626 !important; }
-    .dg-fields-wrapper { display: flex; flex-direction: column; gap: 8px; }
-    .dg-checkbox { display: inline-flex; align-items: center; gap: 8px; padding: 12px 14px; cursor: pointer; font-size: 12px; background: white; border: 2px solid #e2e8f0; border-radius: 8px; transition: all 0.3s; width: 100%; box-sizing: border-box; color: #334155; margin-bottom: 6px; }
+    .dg-fields-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .dg-checkbox { display: inline-flex; align-items: center; gap: 8px; padding: 10px 12px; cursor: pointer; font-size: 11px; background: white; border: 2px solid #e2e8f0; border-radius: 8px; transition: all 0.3s; width: 100%; box-sizing: border-box; color: #334155; margin-bottom: 0; word-wrap: break-word; white-space: normal; }
     .dg-checkbox:hover { background: white; border-color: #667eea; box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15); transform: translateX(2px); }
-    .dg-checkbox input { width: 18px; height: 18px; cursor: pointer; accent-color: #667eea; }
-    .dg-checkbox span { color: #334155; font-weight: 500; }
+    .dg-checkbox input { flex-shrink: 0; }
+    .dg-checkbox span { word-wrap: break-word; white-space: normal; }
     .dg-right-sidebar { display: flex; flex-direction: column; flex: 1; background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%); border-left: 2px solid #e2e8f0; box-shadow: -2px 0 8px rgba(0,0,0,0.05); min-height: 0; overflow: hidden; padding-bottom: 40px; }
     .dg-right-sidebar-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 14px 16px; border-bottom: 2px solid #e2e8f0; font-size: 13px; font-weight: 700; color: white; }
     .dg-right-sidebar-content { flex: 1; overflow-y: auto; display: flex; flex-direction: column; min-height: 0; }
