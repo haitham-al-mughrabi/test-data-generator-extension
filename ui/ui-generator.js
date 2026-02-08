@@ -62,7 +62,7 @@ function createDataGeneratorUI(containerId) {
     .dg-sub-tab:hover { display: none; }
     .dg-sub-tab.active { display: none; }
     .dg-main { display: flex; flex-direction: column; min-height: 0; overflow: hidden; width: 280px; flex-shrink: 0; }
-    .dg-content { flex: 1; overflow-y: auto; min-height: 0; background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%); min-width: 0; }
+    .dg-content { flex: 1; overflow-y: auto; min-height: 0; background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%); min-width: 0; padding-bottom: 40px; }
     .dg-field-section { margin-bottom: 16px; padding: 16px; background: white; border-radius: 10px; border: 1px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
     .dg-field-section:first-child { padding-top: 16px; }
     .dg-section-title { font-size: 13px; font-weight: 800; color: #667eea; margin-bottom: 14px; padding-bottom: 0; border-bottom: none; letter-spacing: -0.3px; text-transform: uppercase; }
