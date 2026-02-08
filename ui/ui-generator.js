@@ -83,9 +83,9 @@ function createDataGeneratorUI(containerId) {
     .dg-checkbox:hover { background: #e0e7ff; border-color: #667eea; }
     .dg-checkbox input { margin: 0; cursor: pointer; }
     .dg-checkbox span { color: #334155; }
-    .dg-right-sidebar { display: flex; flex-direction: column; flex: 1; background: white; border-left: 2px solid #e2e8f0; box-shadow: -2px 0 3px rgba(0,0,0,0.05); min-height: 0; overflow: hidden; }
+    .dg-right-sidebar { display: flex; flex-direction: column; flex: 1; background: white; border-left: 2px solid #e2e8f0; box-shadow: -2px 0 3px rgba(0,0,0,0.05); min-height: 0; overflow: hidden; padding-bottom: 40px; }
     .dg-right-sidebar-header { background: #f8fafc; padding: 12px 16px; border-bottom: 2px solid #e2e8f0; font-size: 13px; font-weight: 700; color: #334155; }
-    .dg-right-sidebar-content { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
+    .dg-right-sidebar-content { flex: 1; overflow-y: auto; display: flex; flex-direction: column; min-height: 0; }
     .dg-controls { background: white; border-bottom: 1px solid #e2e8f0; flex-shrink: 0; transition: all 0.3s ease; }
     .dg-controls.collapsed .dg-controls-content { display: none; }
     .dg-controls-header { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-bottom: 1px solid #f1f5f9; cursor: pointer; user-select: none; }
@@ -102,7 +102,7 @@ function createDataGeneratorUI(containerId) {
     .dg-btn-primary:hover { background: #5a67d8; box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3); }
     .dg-btn-secondary { background: #e2e8f0; color: #334155; }
     .dg-btn-secondary:hover { background: #cbd5e1; }
-    .dg-results { flex: 1; overflow-y: auto; font-size: 11px; background: #f8fafc; padding: 12px; display: flex; flex-direction: column; min-width: 0; }
+    .dg-results { flex: 1; overflow-y: auto; font-size: 11px; background: #f8fafc; padding: 0; display: flex; flex-direction: column; min-width: 0; }
     .dg-record-tabs { display: flex; background: white; border-bottom: 1px solid #e2e8f0; overflow-x: auto; flex-shrink: 0; }
     .dg-record-tab { padding: 8px 12px; border: none; background: none; cursor: pointer; font-size: 11px; font-weight: 600; color: #64748b; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.2s; }
     .dg-record-tab:hover { color: #667eea; }
@@ -114,12 +114,12 @@ function createDataGeneratorUI(containerId) {
     .dg-category-tab { padding: 6px 10px; border: none; background: none; cursor: pointer; font-size: 10px; font-weight: 600; color: #64748b; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.2s; }
     .dg-category-tab:hover { color: #667eea; }
     .dg-category-tab.active { color: #667eea; border-bottom-color: #667eea; }
-    .dg-category-contents { flex: 1; overflow-y: auto; padding: 8px; }
+    .dg-category-contents { flex: 1; overflow-y: auto; padding: 0; }
     .dg-category-content { display: none; }
     .dg-category-content.active { display: block; }
-    .dg-record-field { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 4px; font-size: 10px; }
-    .dg-record-label { font-weight: 500; color: #64748b; }
-    .dg-field-value { color: #334155; word-break: break-all; cursor: pointer; padding: 3px 6px; border-radius: 3px; background: #f1f5f9; transition: all 0.2s; }
+    .dg-record-field { display: flex; justify-content: space-between; gap: 8px; padding: 10px 12px; font-size: 10px; border-bottom: 1px solid #e2e8f0; }
+    .dg-record-label { font-weight: 600; color: #475569; min-width: 100px; }
+    .dg-field-value { color: #334155; word-break: break-all; cursor: pointer; padding: 0; border-radius: 0; background: transparent; transition: all 0.2s; flex: 1; text-align: right; }
     .dg-field-value:hover { background: #e0e7ff; color: #667eea; }
     .dg-footer { font-size: 9px; color: #94a3b8; text-align: center; padding: 8px; border-top: 1px solid #e2e8f0; background: white; width: 100%; position: absolute; bottom: 0; left: 0; right: 0; }
     .dg-file-controls { display: none; margin-top: 10px; padding: 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; }
