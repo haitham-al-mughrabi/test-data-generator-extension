@@ -53,7 +53,7 @@ function createDataGeneratorUI(containerId) {
     .dg-search-field { color: #334155; margin-left: 8px; }
     .dg-search-highlight { background: #fef3c7; padding: 1px 2px; border-radius: 2px; }
     .dg-body { flex: 1; display: flex; min-height: 0; overflow: hidden; width: 100%; }
-    .dg-tabs { display: flex; flex-direction: column; background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%); border-right: 2px solid #e2e8f0; overflow-y: auto; flex-shrink: 0; width: 150px; box-shadow: 2px 0 8px rgba(0,0,0,0.05); }
+    .dg-tabs { display: flex; flex-direction: column; background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%); border-right: 2px solid #e2e8f0; overflow-y: auto; flex-shrink: 0; width: 150px; box-shadow: 2px 0 8px rgba(0,0,0,0.05); padding-bottom: 40px; }
     .dg-tab { padding: 14px 16px; border: none; background: none; cursor: pointer; font-size: 13px; font-weight: 900; color: #64748b; border-left: 4px solid transparent; white-space: normal; transition: all 0.3s; text-align: left; position: relative; word-wrap: break-word; }
     .dg-tab:hover { color: #667eea; background: #f0f4ff; border-left-color: #667eea; transform: translateX(2px); }
     .dg-tab.active { color: white; border-left-color: #667eea; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2); }
@@ -2369,8 +2369,13 @@ function createDataGeneratorUI(containerId) {
     .forEach((btn) => {
       btn.addEventListener("click", () => {
         document
-          .querySelectorAll(".dg-checkbox input")
-          .forEach((c) => (c.checked = true));
+          .querySelectorAll(".dg-tab-content")
+          .forEach((tabContent) => {
+            const tabBtn = document.querySelector(`.dg-tab[data-tab="${tabContent.dataset.content}"]`);
+            if (tabBtn && !tabBtn.textContent.includes("Files")) {
+              tabContent.querySelectorAll(".dg-checkbox input").forEach((c) => (c.checked = true));
+            }
+          });
       });
     });
 
@@ -2379,8 +2384,13 @@ function createDataGeneratorUI(containerId) {
     .forEach((btn) => {
       btn.addEventListener("click", () => {
         document
-          .querySelectorAll(".dg-checkbox input")
-          .forEach((c) => (c.checked = false));
+          .querySelectorAll(".dg-tab-content")
+          .forEach((tabContent) => {
+            const tabBtn = document.querySelector(`.dg-tab[data-tab="${tabContent.dataset.content}"]`);
+            if (tabBtn && !tabBtn.textContent.includes("Files")) {
+              tabContent.querySelectorAll(".dg-checkbox input").forEach((c) => (c.checked = false));
+            }
+          });
       });
     });
 
