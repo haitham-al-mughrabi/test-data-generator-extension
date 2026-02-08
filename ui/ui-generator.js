@@ -54,7 +54,7 @@ function createDataGeneratorUI(containerId) {
     .dg-search-highlight { background: #fef3c7; padding: 1px 2px; border-radius: 2px; }
     .dg-body { flex: 1; display: flex; min-height: 0; overflow: hidden; width: 100%; }
     .dg-tabs { display: flex; flex-direction: column; background: white; border-right: 2px solid #e2e8f0; overflow-y: auto; flex-shrink: 0; width: 150px; box-shadow: 2px 0 3px rgba(0,0,0,0.05); }
-    .dg-tab { padding: 12px 16px; border: none; background: none; cursor: pointer; font-size: 12px; font-weight: 600; color: #64748b; border-left: 3px solid transparent; white-space: nowrap; transition: all 0.2s; text-align: left; }
+    .dg-tab { padding: 12px 16px; border: none; background: none; cursor: pointer; font-size: 12px; font-weight: 700; color: #64748b; border-left: 3px solid transparent; white-space: nowrap; transition: all 0.2s; text-align: left; }
     .dg-tab:hover { color: #667eea; background: #f8fafc; }
     .dg-tab.active { color: #667eea; border-left-color: #667eea; background: #f0f4ff; }
     .dg-sub-tabs { display: none; }
@@ -67,7 +67,7 @@ function createDataGeneratorUI(containerId) {
     .dg-field-section:first-child { padding-top: 14px; }
     .dg-section-title { font-size: 13px; font-weight: 700; color: #667eea; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid #e0e7ff; }
     .dg-top-controls { display: flex; background: #f8fafc; border-bottom: 1px solid #e2e8f0; overflow-x: auto; flex-shrink: 0; padding: 0 14px; }
-    .dg-top-controls .dg-btn { padding: 8px 12px; border: none; background: none; cursor: pointer; font-size: 11px; font-weight: 500; color: #64748b; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.2s; margin-right: 4px; }
+    .dg-top-controls .dg-btn { padding: 10px 12px; border: none; background: none; cursor: pointer; font-size: 11px; font-weight: 700; color: #64748b; border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.2s; margin-right: 4px; }
     .dg-top-controls .dg-btn:hover { color: #667eea; }
     .dg-tab-content { display: none; height: 100%; overflow-y: auto; }
     .dg-tab-content.active { display: flex; flex-direction: column; }
@@ -84,43 +84,44 @@ function createDataGeneratorUI(containerId) {
     .dg-checkbox input { margin: 0; cursor: pointer; }
     .dg-checkbox span { color: #334155; }
     .dg-right-sidebar { display: flex; flex-direction: column; flex: 1; background: white; border-left: 2px solid #e2e8f0; box-shadow: -2px 0 3px rgba(0,0,0,0.05); min-height: 0; overflow: hidden; padding-bottom: 40px; }
-    .dg-right-sidebar-header { background: #f8fafc; padding: 12px 16px; border-bottom: 2px solid #e2e8f0; font-size: 13px; font-weight: 700; color: #334155; }
+    .dg-right-sidebar-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 14px 16px; border-bottom: 2px solid #e2e8f0; font-size: 13px; font-weight: 700; color: white; }
     .dg-right-sidebar-content { flex: 1; overflow-y: auto; display: flex; flex-direction: column; min-height: 0; }
     .dg-controls { background: white; border-bottom: 1px solid #e2e8f0; flex-shrink: 0; transition: all 0.3s ease; }
     .dg-controls.collapsed .dg-controls-content { display: none; }
-    .dg-controls-header { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-bottom: 1px solid #f1f5f9; cursor: pointer; user-select: none; }
+    .dg-controls-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; border-bottom: 1px solid #e2e8f0; cursor: pointer; user-select: none; background: #f8fafc; }
     .dg-controls-header:hover { background: #f8fafc; }
     .dg-controls-header span { font-size: 12px; font-weight: 600; color: #64748b; }
     .dg-controls-toggle { font-size: 14px; transition: transform 0.3s ease; }
     .dg-controls.collapsed .dg-controls-toggle { transform: rotate(180deg); }
-    .dg-controls-content { padding: 12px; }
-    .dg-count-control { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; font-size: 12px; font-weight: 500; }
+    .dg-controls-content { padding: 14px; }
+    .dg-count-control { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; font-size: 12px; font-weight: 600; }
     .dg-count-control input { width: 60px; padding: 6px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; }
-    .dg-buttons { display: flex; gap: 8px; }
+    .dg-buttons { display: flex; gap: 8px; padding: 12px 14px; border-top: 1px solid #e2e8f0; }
     .dg-btn { padding: 8px 14px; border: none; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: 600; transition: all 0.2s; }
     .dg-btn-primary { background: #667eea; color: white; }
     .dg-btn-primary:hover { background: #5a67d8; box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3); }
     .dg-btn-secondary { background: #e2e8f0; color: #334155; }
     .dg-btn-secondary:hover { background: #cbd5e1; }
     .dg-results { flex: 1; overflow-y: auto; font-size: 11px; background: #f8fafc; padding: 0; display: flex; flex-direction: column; min-width: 0; }
-    .dg-record-tabs { display: flex; background: white; border-bottom: 1px solid #e2e8f0; overflow-x: auto; flex-shrink: 0; }
-    .dg-record-tab { padding: 8px 12px; border: none; background: none; cursor: pointer; font-size: 11px; font-weight: 600; color: #64748b; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.2s; }
+    .dg-record-tabs { display: flex; background: white; border-bottom: 2px solid #e2e8f0; overflow-x: auto; flex-shrink: 0; }
+    .dg-record-tab { padding: 10px 12px; border: none; background: none; cursor: pointer; font-size: 11px; font-weight: 700; color: #64748b; border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.2s; }
     .dg-record-tab:hover { color: #667eea; }
     .dg-record-tab.active { color: #667eea; border-bottom-color: #667eea; }
     .dg-record-contents { flex: 1; overflow-y: auto; padding: 0; min-width: 0; }
     .dg-record-content { display: none; height: 100%; min-width: 0; }
     .dg-record-content.active { display: flex; flex-direction: column; min-width: 0; }
-    .dg-category-tabs { display: flex; background: #f1f5f9; border-bottom: 1px solid #e2e8f0; overflow-x: auto; flex-shrink: 0; }
-    .dg-category-tab { padding: 6px 10px; border: none; background: none; cursor: pointer; font-size: 10px; font-weight: 600; color: #64748b; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.2s; }
+    .dg-category-tabs { display: flex; background: white; border-bottom: 2px solid #e2e8f0; overflow-x: auto; flex-shrink: 0; }
+    .dg-category-tab { padding: 10px 12px; border: none; background: none; cursor: pointer; font-size: 10px; font-weight: 700; color: #64748b; border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.2s; }
     .dg-category-tab:hover { color: #667eea; }
     .dg-category-tab.active { color: #667eea; border-bottom-color: #667eea; }
     .dg-category-contents { flex: 1; overflow-y: auto; padding: 0; }
     .dg-category-content { display: none; }
     .dg-category-content.active { display: block; }
-    .dg-record-field { display: flex; justify-content: space-between; gap: 8px; padding: 10px 12px; font-size: 10px; border-bottom: 1px solid #e2e8f0; }
-    .dg-record-label { font-weight: 600; color: #475569; min-width: 100px; }
-    .dg-field-value { color: #334155; word-break: break-all; cursor: pointer; padding: 0; border-radius: 0; background: transparent; transition: all 0.2s; flex: 1; text-align: right; }
-    .dg-field-value:hover { background: #e0e7ff; color: #667eea; }
+    .dg-record-field { display: flex; justify-content: space-between; gap: 8px; padding: 12px 14px; font-size: 10px; border-bottom: 1px solid #e2e8f0; background: white; transition: all 0.2s; }
+    .dg-record-field:hover { background: #f8fafc; }
+    .dg-record-label { font-weight: 700; color: #475569; min-width: 90px; }
+    .dg-field-value { color: #334155; word-break: break-all; cursor: pointer; padding: 0; border-radius: 0; background: transparent; transition: all 0.2s; flex: 1; text-align: right; font-family: 'Monaco', 'Courier New', monospace; font-size: 9px; }
+    .dg-field-value:hover { color: #667eea; font-weight: 600; }
     .dg-footer { font-size: 9px; color: #94a3b8; text-align: center; padding: 8px; border-top: 1px solid #e2e8f0; background: white; width: 100%; position: absolute; bottom: 0; left: 0; right: 0; }
     .dg-file-controls { display: none; margin-top: 10px; padding: 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; }
     .dg-file-controls.active { display: block; }
