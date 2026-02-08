@@ -54,9 +54,9 @@ function createDataGeneratorUI(containerId) {
     .dg-search-highlight { background: #fef3c7; padding: 1px 2px; border-radius: 2px; }
     .dg-body { flex: 1; display: flex; min-height: 0; overflow: hidden; width: 100%; }
     .dg-tabs { display: flex; flex-direction: column; background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%); border-right: 2px solid #e2e8f0; overflow-y: auto; flex-shrink: 0; width: 150px; box-shadow: 2px 0 8px rgba(0,0,0,0.05); }
-    .dg-tab { padding: 12px 16px; border: none; background: none; cursor: pointer; font-size: 12px; font-weight: 700; color: #64748b; border-left: 3px solid transparent; white-space: nowrap; transition: all 0.2s; text-align: left; }
-    .dg-tab:hover { color: #667eea; background: #f8fafc; }
-    .dg-tab.active { color: #667eea; border-left-color: #667eea; background: #f0f4ff; }
+    .dg-tab { padding: 14px 16px; border: none; background: none; cursor: pointer; font-size: 12px; font-weight: 800; color: #64748b; border-left: 4px solid transparent; white-space: nowrap; transition: all 0.3s; text-align: left; position: relative; }
+    .dg-tab:hover { color: #667eea; background: #f0f4ff; border-left-color: #667eea; transform: translateX(2px); }
+    .dg-tab.active { color: white; border-left-color: #667eea; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2); }
     .dg-sub-tabs { display: none; }
     .dg-sub-tab { display: none; }
     .dg-sub-tab:hover { display: none; }
@@ -66,9 +66,13 @@ function createDataGeneratorUI(containerId) {
     .dg-field-section { margin-bottom: 16px; padding: 16px; background: white; border-radius: 10px; border: 1px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
     .dg-field-section:first-child { padding-top: 16px; }
     .dg-section-title { font-size: 13px; font-weight: 800; color: #667eea; margin-bottom: 14px; padding-bottom: 0; border-bottom: none; letter-spacing: -0.3px; text-transform: uppercase; }
-    .dg-top-controls { display: flex; background: #f8fafc; border-bottom: 1px solid #e2e8f0; overflow-x: auto; flex-shrink: 0; padding: 0 14px; }
-    .dg-top-controls .dg-btn { padding: 10px 12px; border: none; background: none; cursor: pointer; font-size: 11px; font-weight: 700; color: #64748b; border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.2s; margin-right: 4px; }
-    .dg-top-controls .dg-btn:hover { color: #667eea; }
+    .dg-top-controls { display: flex; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-bottom: 2px solid #e2e8f0; overflow-x: auto; flex-shrink: 0; padding: 8px 12px; justify-content: center; gap: 4px; }
+    .dg-top-controls .dg-btn { padding: 8px 12px; border: 2px solid white; background: rgba(255,255,255,0.2); cursor: pointer; font-size: 10px; font-weight: 800; color: white; border-radius: 6px; white-space: nowrap; transition: all 0.3s; margin: 0 2px; }
+    .dg-top-controls .dg-btn:hover { color: white; border-color: white; background: rgba(255,255,255,0.3); box-shadow: 0 4px 12px rgba(0,0,0,0.2); transform: translateY(-2px); }
+    .dg-top-controls .dg-btn.unselect { border-color: #ff6b6b; color: #ff6b6b; background: rgba(255,107,107,0.1); }
+    .dg-top-controls .dg-btn.unselect:hover { background: rgba(255,107,107,0.3); color: white; border-color: white; }
+    .dg-top-controls .dg-btn.select-all { border-color: #51cf66; color: #51cf66; background: rgba(81,207,102,0.1); }
+    .dg-top-controls .dg-btn.select-all:hover { background: rgba(81,207,102,0.3); color: white; border-color: white; }
     .dg-tab-content { display: none; height: 100%; overflow-y: auto; }
     .dg-tab-content.active { display: flex; flex-direction: column; }
     .dg-sub-tab-content { display: none; }
@@ -80,7 +84,7 @@ function createDataGeneratorUI(containerId) {
     .dg-tab-controls .dg-btn.unselect:hover { background: #dc2626 !important; }
     .dg-fields-wrapper { display: flex; flex-direction: column; gap: 8px; }
     .dg-checkbox { display: inline-flex; align-items: center; gap: 8px; padding: 12px 14px; cursor: pointer; font-size: 12px; background: white; border: 2px solid #e2e8f0; border-radius: 8px; transition: all 0.3s; width: 100%; box-sizing: border-box; color: #334155; margin-bottom: 6px; }
-    .dg-checkbox:hover { background: #f0f4ff; border-color: #667eea; box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15); transform: translateX(2px); }
+    .dg-checkbox:hover { background: white; border-color: #667eea; box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15); transform: translateX(2px); }
     .dg-checkbox input { width: 18px; height: 18px; cursor: pointer; accent-color: #667eea; }
     .dg-checkbox span { color: #334155; font-weight: 500; }
     .dg-right-sidebar { display: flex; flex-direction: column; flex: 1; background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%); border-left: 2px solid #e2e8f0; box-shadow: -2px 0 8px rgba(0,0,0,0.05); min-height: 0; overflow: hidden; padding-bottom: 40px; }
