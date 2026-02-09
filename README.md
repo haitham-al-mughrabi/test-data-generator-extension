@@ -5,30 +5,244 @@ A comprehensive Chrome extension for generating realistic test data across 50+ c
 ## 🚀 Features
 
 ### 📊 50+ Data Categories
-- **Enhanced Personal**: Personality traits, hobbies, skills, languages, medical info, emergency contacts
-- **Files & Media**: File types, extensions, MIME types, sizes, metadata, document management
-- **Images & Avatars**: Placeholder images, avatar generators, media URLs, QR codes, charts
-- **Contact**: Email, Phone, Address, Social Media
-- **Work**: Company, Job Title, Department, Salary
-- **Finance**: IBAN, Credit Cards, Banking, Insurance
-- **Healthcare**: Medical Records, Prescriptions, Appointments
-- **Government**: Saudi Government Services, Legal Documents
-- **E-commerce**: Products, Orders, Reviews, Inventory
-- **Technology**: APIs, Databases, Software Testing
-- **Travel**: Hotels, Flights, Bookings, Destinations
-- **Education**: Students, Courses, Grades, Institutions
-- **Real Estate**: Properties, Mortgages, Rentals
-- **Entertainment**: Movies, Music, Games, Events
-- **Sports**: Teams, Players, Matches, Statistics
-- **Food & Restaurant**: Menus, Orders, Reviews, Recipes
-- **Agriculture**: Crops, Livestock, Equipment, Weather
-- **Manufacturing**: Products, Quality Control, Supply Chain
-- **Testing & QA**: Edge Cases, Performance Data, Security Testing
-- **Media & Entertainment**: Movies, TV Shows, Music, Books, Games, Social Media
-- **Automotive**: Vehicle Information, Insurance, Services, Traffic Violations
-- **Weather & Environment**: Weather Data, Air Quality, Wildlife, Climate
-- **Cryptocurrency**: Digital Assets, Wallets, Trading, DeFi Protocols
-- **IoT & Smart Home**: Connected Devices, Automation, Sensors, Controls
+
+**Personal Data**
+- Names (First, Last, Full - EN/AR)
+- Demographics (Gender, Birthdate, Age, Nationality, Blood Type)
+- IDs & Documents (Saudi ID, Iqama, Border Number, Passport)
+- Status (Marital Status, Religion)
+- Enhanced Personal (Personality Traits, Hobbies, Skills, Languages, Medical Info, Emergency Contacts)
+
+**Contact Information**
+- Email addresses
+- Phone numbers (Saudi formatted)
+- Physical addresses
+- Social media handles
+
+**Work & Professional**
+- Company names
+- Job titles
+- Departments
+- Salary information
+- Work experience
+
+**Finance & Banking**
+- IBAN numbers
+- Credit card numbers
+- Bank names
+- Account types
+- Insurance information
+
+**Healthcare**
+- Medical records
+- Prescriptions
+- Appointments
+- Medical conditions
+- Blood types
+
+**Government & Legal**
+- Saudi government services
+- Legal documents
+- License numbers
+- Court information
+- Case details
+
+**E-commerce**
+- Products
+- Orders
+- Reviews
+- Inventory
+- Pricing
+
+**Technology**
+- APIs
+- Databases
+- Software testing data
+- UUIDs & IDs
+- Passwords
+
+**Travel & Tourism**
+- Hotels
+- Flights
+- Bookings
+- Destinations
+- Travel dates
+
+**Education**
+- Students
+- Courses
+- Grades
+- Institutions
+- Departments
+
+**Real Estate**
+- Properties
+- Mortgages
+- Rentals
+- Locations
+- Prices
+
+**Entertainment**
+- Movies
+- Music
+- Games
+- Events
+- Shows
+
+**Sports & Fitness**
+- Teams
+- Players
+- Matches
+- Statistics
+- Scores
+
+**Food & Restaurant**
+- Menus
+- Orders
+- Reviews
+- Recipes
+- Cuisines
+
+**Agriculture**
+- Crops
+- Livestock
+- Equipment
+- Weather
+- Farming methods
+
+**Manufacturing**
+- Products
+- Quality control
+- Supply chain
+- Equipment
+- Processes
+
+**Testing & QA**
+- Edge cases
+- Performance data
+- Security testing
+- Validation data
+- Error scenarios
+
+**Media & Entertainment**
+- Movies
+- TV Shows
+- Music
+- Books
+- Games
+- Social media content
+
+**Automotive**
+- Vehicle information
+- Insurance
+- Services
+- Traffic violations
+- Maintenance
+
+**Weather & Environment**
+- Weather data
+- Air quality
+- Wildlife
+- Climate
+- Natural disasters
+
+**Cryptocurrency**
+- Digital assets
+- Wallets
+- Trading data
+- DeFi protocols
+- Blockchain data
+
+**IoT & Smart Home**
+- Connected devices
+- Automation
+- Sensors
+- Controls
+- Smart home data
+
+**Files & Media**
+- File types (50+ extensions)
+- MIME types
+- File sizes
+- Metadata
+- Document management
+
+**Date & Time**
+- Gregorian dates
+- Hijri dates
+- Date ranges
+- Time formats
+- Timezones
+
+**Random Values**
+- Random numbers
+- Random letters
+- Random text
+- Alphanumeric
+- Special characters
+
+**Banking & Finance**
+- Account numbers
+- Routing numbers
+- Transaction IDs
+- Payment methods
+
+**Insurance**
+- Policy numbers
+- Coverage types
+- Claims
+- Premiums
+
+**Telecommunications**
+- Phone numbers
+- Network data
+- Service plans
+- Billing
+
+**Construction**
+- Projects
+- Materials
+- Equipment
+- Contractors
+
+**Energy & Utilities**
+- Power plants
+- Consumption data
+- Billing
+- Services
+
+**Logistics & Shipping**
+- Shipment tracking
+- Carriers
+- Delivery status
+- Locations
+
+**Fashion & Beauty**
+- Brands
+- Designers
+- Products
+- Sizes
+- Colors
+
+**Legal & Law**
+- Law firms
+- Lawyers
+- Cases
+- Courts
+- Documents
+
+**Science & Research**
+- Research data
+- Experiments
+- Publications
+- Institutions
+
+**Document Types**
+- 40+ professional document types
+- Legal documents
+- Business documents
+- Academic documents
+- Technical documents
 
 ### 🎯 Access Methods
 1. **Extension Popup**: Click extension icon in Chrome toolbar
@@ -39,6 +253,11 @@ A comprehensive Chrome extension for generating realistic test data across 50+ c
 - Arabic and English data generation
 - Saudi-specific formats and cultural context
 - International standards compliance
+
+### 💾 Export Options
+- Copy to clipboard
+- Download as JSON
+- Download as ZIP (with actual binary files)
 
 ## 📦 Installation
 
@@ -57,11 +276,13 @@ A comprehensive Chrome extension for generating realistic test data across 50+ c
 
 ### Extension Popup
 1. Click the Test Data Generator icon in Chrome toolbar
-2. Browse categories using the tabbed interface
-3. Select desired data types with checkboxes
+2. Browse categories using the left sidebar tabs
+3. Select desired data types with checkboxes (2 per row)
 4. Set the number of records to generate (1-100)
-5. Click "Generate" to create test data
-6. Export options: Copy to clipboard or Download as JSON
+5. Configure image dimensions if needed
+6. Click "Generate" to create test data
+7. View results in the right panel
+8. Export options: Copy to clipboard or Download
 
 ### Web Page Integration
 1. Visit any website
@@ -82,6 +303,9 @@ A comprehensive Chrome extension for generating realistic test data across 50+ c
 - **Export Formats**: JSON, CSV, and clipboard copy
 - **Persistent Settings**: Remembers your preferences
 - **Responsive Design**: Works on all screen sizes
+- **File Generation**: Create actual binary files with specified sizes
+- **Image Dimensions**: Customize image sizes with preset options
+- **Date Conversion**: Convert between Gregorian and Hijri calendars
 
 ## 🧪 Testing & Development
 
@@ -117,6 +341,7 @@ test-data-generator/
 │   └── names-data.js          # Name databases
 ├── generators/                # Data generators (50+ files)
 │   ├── personal-generators.js
+│   ├── enhanced-personal-generators.js
 │   ├── contact-generators.js
 │   ├── work-generators.js
 │   ├── finance-generators.js
@@ -125,15 +350,54 @@ test-data-generator/
 │   ├── ecommerce-generators.js
 │   ├── technology-generators.js
 │   ├── testing-qa-generators.js
-│   └── ... (30+ more generators)
+│   ├── travel-generators.js
+│   ├── education-generators.js
+│   ├── real-estate-generators.js
+│   ├── entertainment-generators.js
+│   ├── sports-fitness-generators.js
+│   ├── food-restaurant-generators.js
+│   ├── agriculture-generators.js
+│   ├── manufacturing-generators.js
+│   ├── construction-generators.js
+│   ├── telecommunications-generators.js
+│   ├── insurance-generators.js
+│   ├── banking-finance-generators.js
+│   ├── energy-utilities-generators.js
+│   ├── logistics-shipping-generators.js
+│   ├── fashion-beauty-generators.js
+│   ├── legal-law-generators.js
+│   ├── science-research-generators.js
+│   ├── document-types-generators.js
+│   ├── file-media-generators.js
+│   ├── image-url-generators.js
+│   ├── datetime-generators.js
+│   ├── random-text-generators.js
+│   ├── random-values-generators.js
+│   ├── uuid-id-generators.js
+│   ├── password-testing-generators.js
+│   ├── phone-testing-generators.js
+│   ├── email-testing-generators.js
+│   ├── edge-cases-generators.js
+│   ├── performance-testing-generators.js
+│   ├── security-testing-generators.js
+│   ├── vehicle-generators.js
+│   ├── saudi-government-generators.js
+│   ├── media-entertainment-generators.js
+│   ├── automotive-generators.js
+│   ├── weather-environment-generators.js
+│   ├── cryptocurrency-generators.js
+│   ├── iot-smarthome-generators.js
+│   └── other-generators.js
 ├── ui/                        # UI components
-│   └── ui-generator.js        # Dynamic UI generation
+│   ├── ui-generator.js        # Dynamic UI generation
+│   └── categories-structure.js # Category definitions
 ├── utils/                     # Utility functions
 │   └── helpers.js             # Helper functions
-└── test-files/                # Testing resources
-    ├── test.html
-    ├── debug.html
-    └── context-menu-test.html
+└── icons/                     # Extension icons
+    ├── icon16.png
+    ├── icon32.png
+    ├── icon48.png
+    └── icon128.png
 ```
 
 ## 📋 Data Examples
@@ -210,6 +474,9 @@ This extension prioritizes user privacy:
 - [x] Documentation and user guides
 - [x] Privacy policy compliance
 - [x] Chrome Web Store submission preparation
+- [x] Modern UI/UX design
+- [x] File generation with accurate sizes
+- [x] Bilingual support
 
 ## 🤝 Contributing
 
@@ -231,14 +498,23 @@ MIT License - See [LICENSE](LICENSE) file for details.
 
 ## 🔄 Version History
 
-### v1.1.0 (Latest - Enhanced Version)
-- **Enhanced Personal Details**: Added 40+ new personal data fields including personality traits, hobbies, skills, languages, medical information, and emergency contacts
-- **File Types & Media**: Comprehensive file type support with 50+ extensions, MIME types, file sizes, and metadata
-- **Document Management**: 40+ professional document types across legal, business, academic, technical, and medical categories
-- **Image & Media URLs**: 25+ image services including placeholder generators, avatar creators, and media URLs
-- **Expanded Name Database**: 150+ names (75+ male, 75+ female) and 60+ family names
-- **Data Stability**: Improved consistency with shared data contexts ensuring related fields use the same underlying person/document
-- **New Test Files**: Added comprehensive test files for validating all new generators
+### v2.0.0 (Latest - Modern UI Redesign)
+- **Complete UI Redesign**: Modern card-based layout with gradients
+- **Improved Typography**: Larger, clearer fonts with better contrast
+- **Enhanced Colors**: Vibrant, colorful design with smooth animations
+- **Better Organization**: Two checkboxes per row for efficient browsing
+- **File Generation**: Create actual binary files with specified sizes
+- **ZIP Export**: Download multiple files as ZIP archive
+- **Responsive Layout**: Three-column design (tabs, content, results)
+- **Performance**: Optimized for faster data generation
+
+### v1.1.0 (Enhanced Version)
+- **Enhanced Personal Details**: Added 40+ new personal data fields
+- **File Types & Media**: Comprehensive file type support
+- **Document Management**: 40+ professional document types
+- **Image & Media URLs**: 25+ image services
+- **Expanded Name Database**: 150+ names and 60+ family names
+- **Data Stability**: Improved consistency with shared data contexts
 
 ### v1.0.0
 - Initial release with 50+ data generators
@@ -247,8 +523,6 @@ MIT License - See [LICENSE](LICENSE) file for details.
 - Context menu integration
 - Web page floating button
 - Export functionality (JSON/CSV/Clipboard)
-- New categories: Media & Entertainment, Automotive, Weather & Environment, Cryptocurrency, IoT & Smart Home
-- Expanded existing data sets with more names, cities, companies, and job titles
 
 ---
 
