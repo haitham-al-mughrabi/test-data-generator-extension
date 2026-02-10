@@ -118,6 +118,37 @@ const edgeCasesGenerators = {
     'abc123!@#$%^&*()'
   ]),
 
+  invalidEmail: () => randomChoice([
+    'plainaddress',
+    '@missing-local.org',
+    'user@.com',
+    'user@com',
+    'user@@domain.com',
+    'user@domain..com',
+    'user name@domain.com',
+    'user@domain',
+    'user@domain,com',
+    'user@domain#com'
+  ]),
+
+  invalidDate: () => randomChoice([
+    '32/01/2024',
+    '2024-13-01',
+    '2024-00-00',
+    '31-02-2024',
+    '99/99/9999',
+    '2024-02-30'
+  ]),
+
+  boundaryString: () => randomChoice([
+    '',
+    'a',
+    'a'.repeat(255),
+    'a'.repeat(256),
+    'a'.repeat(1024),
+    'a'.repeat(4096)
+  ]),
+
   boundaryValue: () => randomChoice([
     255, // 8-bit boundary
     256,

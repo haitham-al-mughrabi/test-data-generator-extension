@@ -169,6 +169,14 @@ const personalGenerators = {
     return `${sharedNameData.firstName.ar} ${sharedNameData.lastName.ar}`;
   },
 
+  namePrefix: () => randomChoice(['Mr.', 'Mrs.', 'Ms.', 'Dr.', 'Prof.']),
+  nameSuffix: () => randomChoice(['Jr.', 'Sr.', 'II', 'III', 'PhD', 'MD']),
+  preferredName: () => {
+    if (!sharedNameData) generateSharedNameData();
+    return randomChoice([sharedNameData.firstName.en, sharedNameData.middleName.en]);
+  },
+  nickname: () => randomChoice(['Ace', 'Sunny', 'Nova', 'Skye', 'Dash', 'Jay', 'Leo', 'Mimi']),
+
   fullNameWithMiddle: () => {
     if (!sharedNameData) generateSharedNameData();
     return `${sharedNameData.firstName.en} ${sharedNameData.middleName.en} ${sharedNameData.lastName.en}`;

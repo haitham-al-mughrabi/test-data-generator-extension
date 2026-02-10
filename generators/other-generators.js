@@ -351,6 +351,28 @@ const otherGenerators = {
     const paths = ['home', 'about', 'contact', 'products', 'services'];
     return `https://www.${randomChoice(domains)}/${randomChoice(paths)}`;
   },
+
+  urlPath: () => {
+    const segments = ['home', 'about', 'contact', 'products', 'services', 'blog', 'docs', 'support'];
+    const depth = randomNum(1, 3);
+    const parts = Array.from({ length: depth }, () => randomChoice(segments));
+    return `/${parts.join('/')}`;
+  },
+
+  queryString: () => {
+    const params = [
+      `q=${randomChoice(['test', 'demo', 'sample'])}`,
+      `page=${randomNum(1, 20)}`,
+      `sort=${randomChoice(['asc', 'desc'])}`,
+      `filter=${randomChoice(['all', 'active', 'archived'])}`
+    ];
+    return `?${randomChoice(params)}&${randomChoice(params)}`;
+  },
+
+  slug: () => {
+    const words = ['fresh', 'modern', 'quick', 'smart', 'clean', 'simple', 'secure', 'fast'];
+    return `${randomChoice(words)}-${randomChoice(words)}-${randomNum(1, 999)}`;
+  },
   
   ip: () => `${randomNum(1, 255)}.${randomNum(0, 255)}.${randomNum(0, 255)}.${randomNum(1, 255)}`,
   
@@ -408,10 +430,26 @@ const otherGenerators = {
     return key;
   },
 
+  userAgentMobile: () => randomChoice([
+    'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15',
+    'Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36',
+    'Mozilla/5.0 (Linux; Android 13; SM-S918B) AppleWebKit/537.36'
+  ]),
+
+  userAgentDesktop: () => randomChoice([
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
+    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36'
+  ]),
+
   domain: () => `${randomChoice(['example', 'test', 'demo', 'sample'])}-${randomNum(1, 999)}.com`,
+  domainTld: () => randomChoice(['.com', '.org', '.net', '.co', '.io', '.dev', '.sa', '.ae']),
   subdomain: () => `${randomChoice(['www', 'api', 'admin', 'blog', 'shop'])}.example.com`,
   port: () => randomChoice([80, 443, 8080, 3000, 5000, 8000]),
+  portRange: () => `${randomNum(1024, 40000)}-${randomNum(40001, 65535)}`,
   protocol: () => randomChoice(['HTTP', 'HTTPS', 'FTP', 'SSH', 'SMTP']),
+  cidr: () => `${randomNum(10, 223)}.${randomNum(0, 255)}.${randomNum(0, 255)}.0/${randomNum(16, 28)}`,
+  httpStatus: () => randomChoice([200, 201, 204, 301, 302, 400, 401, 403, 404, 409, 422, 429, 500, 502, 503]),
 
   // Social Data
   username: () => `${randomChoice(names.firstNames.male.concat(names.firstNames.female)).en.toLowerCase()}${randomNum(1, 9999)}`,

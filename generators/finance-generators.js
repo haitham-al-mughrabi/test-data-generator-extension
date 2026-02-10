@@ -45,6 +45,12 @@ const financeGenerators = {
   visaCard: () => generatePaymentCard('visa'),
   masterCard: () => generatePaymentCard('mastercard'),
   madaCard: () => generatePaymentCard('mada'),
+  cardType: () => randomChoice(['Visa', 'Mastercard', 'Mada', 'Amex']),
+  cardIssuer: () => randomChoice([
+    'Saudi National Bank', 'Al Rajhi Bank', 'Riyad Bank', 'SABB',
+    'Bank AlJazira', 'SAIB', 'Arab National Bank', 'Banque Saudi Fransi'
+  ]),
+  cardLast4: () => randomNum(1000, 9999).toString(),
 
   cardExpiry: () => {
     const month = randomNum(1, 12).toString().padStart(2, '0');
@@ -53,6 +59,11 @@ const financeGenerators = {
   },
 
   cvv: () => randomNum(100, 999).toString(),
+  accountBalance: () => `${randomNum(0, 500000).toLocaleString()} SAR`,
+  merchantName: () => randomChoice([
+    'Almarai', 'STC', 'Noon', 'Jarir', 'Extra', 'Careem', 'HungerStation',
+    'Panda', 'Danube', 'Lulu Hypermarket', 'IKEA', 'Amazon.sa'
+  ]),
 
   currency: () => randomChoice(['SAR', 'USD', 'EUR', 'GBP', 'AED', 'KWD', 'QAR', 'BHD']),
   exchangeRate: () => (randomNum(100, 500) / 100).toFixed(4),
@@ -67,6 +78,7 @@ const financeGenerators = {
   },
 
   swiftCode: () => `RIBL${randomChoice(['SA', 'RY'])}${randomNum(10, 99)}`,
+  ibanCountry: () => randomChoice(['SA', 'AE', 'KW', 'BH', 'QA', 'OM', 'GB', 'DE', 'FR', 'US']),
   
   currencyAr: () => {
     const currencies = ['ريال سعودي', 'دولار أمريكي', 'يورو', 'جنيه إسترليني', 'درهم إماراتي'];

@@ -187,7 +187,25 @@ const contactGenerators = {
 
   latitude: () => (randomNum(1600, 3200) / 100).toFixed(6),
   longitude: () => (randomNum(3400, 5500) / 100).toFixed(6),
+  lat: () => (randomNum(1600, 3200) / 100).toFixed(6),
+  lng: () => (randomNum(3400, 5500) / 100).toFixed(6),
   coordinates: () => `${(randomNum(1600, 3200) / 100).toFixed(6)}, ${(randomNum(3400, 5500) / 100).toFixed(6)}`,
+  geoHash: () => {
+    const chars = '0123456789bcdefghjkmnpqrstuvwxyz';
+    let hash = '';
+    for (let i = 0; i < 8; i++) {
+      hash += chars[randomNum(0, chars.length - 1)];
+    }
+    return hash;
+  },
+  plusCode: () => {
+    const chars = '23456789CFGHJMPQRVWX';
+    let code = '';
+    for (let i = 0; i < 8; i++) {
+      code += chars[randomNum(0, chars.length - 1)];
+    }
+    return `${code.substring(0, 4)}+${code.substring(4)}`;
+  },
   timezone: () => randomChoice(['Asia/Riyadh', 'Asia/Kuwait', 'Asia/Bahrain', 'Asia/Qatar']),
   building: () => `Building ${randomChoice(['A', 'B', 'C', 'D'])}`,
   floor: () => `Floor ${randomNum(1, 50)}`,

@@ -189,10 +189,14 @@ function createDataGeneratorUI(containerId) {
         {
           title: "Names",
           fields: [
+            { id: "namePrefix", label: "Name Prefix" },
             { id: "firstName", label: "First Name (EN)" },
             { id: "firstNameAr", label: "First Name (AR)" },
+            { id: "preferredName", label: "Preferred Name" },
+            { id: "nickname", label: "Nickname" },
             { id: "lastName", label: "Last Name (EN)" },
             { id: "lastNameAr", label: "Last Name (AR)" },
+            { id: "nameSuffix", label: "Name Suffix" },
             { id: "fullName", label: "Full Name (EN)" },
             { id: "fullNameAr", label: "Full Name (AR)" },
           ]
@@ -264,6 +268,10 @@ function createDataGeneratorUI(containerId) {
             { id: "additionalNumber", label: "Additional Number" },
             { id: "country", label: "Country (EN)" },
             { id: "countryAr", label: "Country (AR)" },
+            { id: "lat", label: "Latitude" },
+            { id: "lng", label: "Longitude" },
+            { id: "geoHash", label: "GeoHash" },
+            { id: "plusCode", label: "Plus Code" },
           ]
         }
       ]
@@ -403,9 +411,11 @@ function createDataGeneratorUI(containerId) {
           title: "Banking",
           fields: [
             { id: "iban", label: "IBAN" },
+            { id: "ibanCountry", label: "IBAN Country" },
             { id: "bankName", label: "Bank Name (EN)" },
             { id: "bankNameAr", label: "Bank Name (AR)" },
             { id: "accountNumber", label: "Account Number" },
+            { id: "accountBalance", label: "Account Balance" },
             { id: "swiftCode", label: "SWIFT Code" },
           ]
         },
@@ -413,7 +423,12 @@ function createDataGeneratorUI(containerId) {
           title: "Cards & Payment",
           fields: [
             { id: "creditCard", label: "Credit Card" },
+            { id: "cardType", label: "Card Type" },
+            { id: "cardIssuer", label: "Card Issuer" },
+            { id: "cardLast4", label: "Card Last 4" },
+            { id: "cardExpiry", label: "Card Expiry" },
             { id: "cvv", label: "CVV" },
+            { id: "merchantName", label: "Merchant Name" },
           ]
         },
         {
@@ -1600,6 +1615,7 @@ function createDataGeneratorUI(containerId) {
             { id: "minValue", label: "Minimum Value" },
             { id: "maxValue", label: "Maximum Value" },
             { id: "boundaryValue", label: "Boundary Value" },
+            { id: "boundaryString", label: "Boundary String" },
             { id: "negativeNumber", label: "Negative Number" },
             { id: "floatingPoint", label: "Floating Point" },
           ]
@@ -1611,6 +1627,8 @@ function createDataGeneratorUI(containerId) {
             { id: "unicodeChars", label: "Unicode Characters" },
             { id: "longText", label: "Very Long Text" },
             { id: "invalidFormat", label: "Invalid Format" },
+            { id: "invalidEmail", label: "Invalid Email" },
+            { id: "invalidDate", label: "Invalid Date" },
           ]
         },
         {
@@ -1878,7 +1896,6 @@ function createDataGeneratorUI(containerId) {
             { id: "blockchainNetwork", label: "Blockchain Network" },
             { id: "boolean", label: "Boolean" },
             { id: "building", label: "Building" },
-            { id: "cardExpiry", label: "Card Expiry" },
             { id: "cfg", label: "CFG" },
             { id: "chartBarUrl", label: "Chart Bar URL" },
             { id: "chartPieUrl", label: "Chart Pie URL" },
@@ -1936,7 +1953,6 @@ function createDataGeneratorUI(containerId) {
             { id: "documentType", label: "Document Type" },
             { id: "documentTypeAr", label: "Document Type (AR)" },
             { id: "documentVersion", label: "Document Version" },
-            { id: "domain", label: "Domain" },
             { id: "door", label: "Door" },
             { id: "downloadUrl", label: "Download URL" },
             { id: "education", label: "Education" },
@@ -2042,11 +2058,9 @@ function createDataGeneratorUI(containerId) {
             { id: "placeholderImage", label: "Placeholder Image" },
             { id: "placeholderImageColored", label: "Placeholder Image Colored" },
             { id: "placeholderImageWithText", label: "Placeholder Image With Text" },
-            { id: "port", label: "Port" },
             { id: "ppt", label: "Ppt" },
             { id: "pptx", label: "Pptx" },
             { id: "productCode", label: "Product Code" },
-            { id: "protocol", label: "Protocol" },
             { id: "psd", label: "Psd" },
             { id: "qrCodeColored", label: "Qr Code Colored" },
             { id: "qrCodeUrl", label: "Qr Code URL" },
@@ -2068,7 +2082,6 @@ function createDataGeneratorUI(containerId) {
             { id: "streetName", label: "Street Name" },
             { id: "streetNameAr", label: "Street Name (AR)" },
             { id: "streetNumber", label: "Street Number" },
-            { id: "subdomain", label: "Subdomain" },
             { id: "taxId", label: "Tax ID" },
             { id: "thumbnailUrl", label: "Thumbnail URL" },
             { id: "time12", label: "Time12" },
@@ -2099,12 +2112,25 @@ function createDataGeneratorUI(containerId) {
           title: "Network & Web",
           fields: [
             { id: "url", label: "URL" },
+            { id: "urlPath", label: "URL Path" },
+            { id: "queryString", label: "Query String" },
+            { id: "slug", label: "Slug" },
             { id: "ip", label: "IP Address" },
             { id: "ipv6", label: "IPv6 Address" },
+            { id: "cidr", label: "CIDR" },
             { id: "macAddress", label: "MAC Address" },
             { id: "userAgent", label: "User Agent" },
+            { id: "userAgentMobile", label: "User Agent (Mobile)" },
+            { id: "userAgentDesktop", label: "User Agent (Desktop)" },
             { id: "sessionId", label: "Session ID" },
             { id: "apiKey", label: "API Key" },
+            { id: "domain", label: "Domain" },
+            { id: "domainTld", label: "Domain TLD" },
+            { id: "subdomain", label: "Subdomain" },
+            { id: "port", label: "Port" },
+            { id: "portRange", label: "Port Range" },
+            { id: "protocol", label: "Protocol" },
+            { id: "httpStatus", label: "HTTP Status" },
           ]
         },
         {
