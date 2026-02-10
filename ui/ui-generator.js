@@ -69,7 +69,7 @@ function createDataGeneratorUI(containerId) {
     .dg-search-field { color: var(--muted); margin-left: 8px; }
     .dg-search-highlight { background: #fff1c2; padding: 1px 3px; border-radius: 3px; }
     .dg-body { flex: 1; display: flex; min-height: 0; overflow: hidden; width: 100%; }
-    .dg-tabs { display: flex; flex-direction: column; background: linear-gradient(180deg, #ffffff 0%, #f6f7fb 100%); border-right: 1px solid var(--line); overflow-y: auto; flex-shrink: 0; width: 155px; box-shadow: 2px 0 12px rgba(15, 23, 42, 0.06); padding-bottom: 40px; }
+    .dg-tabs { display: flex; flex-direction: column; background: linear-gradient(180deg, #ffffff 0%, #f6f7fb 100%); border-right: 1px solid var(--line); overflow-y: auto; flex-shrink: 0; width: 155px; box-shadow: 2px 0 12px rgba(15, 23, 42, 0.06); padding-bottom: 56px; }
     .dg-tab { padding: 17px 16px; border: none; background: none; cursor: pointer; font-size: 12px; font-weight: 800; color: #5b6b7f; border-left: 4px solid transparent; white-space: normal; transition: all 0.25s ease; text-align: left; position: relative; word-wrap: break-word; text-transform: uppercase; letter-spacing: 0.4px; }
     .dg-tab:hover { color: var(--brand-1); background: rgba(91, 124, 250, 0.08); border-left-color: var(--brand-1); transform: translateX(2px); box-shadow: inset 0 0 0 1px rgba(91, 124, 250, 0.12), 0 6px 16px rgba(15, 23, 42, 0.06); }
     .dg-tab.active { color: white; border-left-color: #ffffff; background: linear-gradient(135deg, rgba(91, 124, 250, 0.95) 0%, rgba(127, 86, 217, 0.95) 100%); box-shadow: var(--shadow-2); }
@@ -79,7 +79,7 @@ function createDataGeneratorUI(containerId) {
     .dg-sub-tab:hover { display: none; }
     .dg-sub-tab.active { display: none; }
     .dg-main { display: flex; flex-direction: column; min-height: 0; overflow: hidden; width: 315px; flex-shrink: 0; margin-right: 0; }
-    .dg-content { flex: 1; overflow-y: auto; min-height: 0; background: linear-gradient(180deg, #ffffff 0%, #f6f7fb 100%); min-width: 0; padding: 0; }
+    .dg-content { flex: 1; overflow-y: auto; min-height: 0; background: linear-gradient(180deg, #ffffff 0%, #f6f7fb 100%); min-width: 0; padding: 0 0 56px; }
     .dg-field-section { margin-bottom: 16px; padding: 16px; background: white; border-radius: 14px; border: 1px solid rgba(91, 124, 250, 0.08); box-shadow: var(--shadow-3); animation: dgFadeUp 0.45s ease; }
     .dg-field-section:first-child { padding-top: 16px; }
     .dg-section-title { font-size: 12px; font-weight: 900; color: var(--brand-2); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid rgba(91, 124, 250, 0.12); letter-spacing: 0.8px; text-transform: uppercase; position: relative; }
@@ -107,7 +107,7 @@ function createDataGeneratorUI(containerId) {
     .dg-checkbox:hover { background: #ffffff; border-color: rgba(91, 124, 250, 0.4); box-shadow: var(--shadow-3); transform: translateY(-1px); }
     .dg-checkbox input { flex-shrink: 0; }
     .dg-checkbox span { word-wrap: break-word; white-space: normal; }
-    .dg-right-sidebar { display: flex; flex-direction: column; flex: 1; background: linear-gradient(180deg, #ffffff 0%, #f6f7fb 100%); border-left: 1px solid var(--line); box-shadow: -2px 0 12px rgba(15, 23, 42, 0.06); min-height: 0; overflow: hidden; padding-bottom: 40px; }
+    .dg-right-sidebar { display: flex; flex-direction: column; flex: 1; background: linear-gradient(180deg, #ffffff 0%, #f6f7fb 100%); border-left: 1px solid var(--line); box-shadow: -2px 0 12px rgba(15, 23, 42, 0.06); min-height: 0; overflow: hidden; padding-bottom: 56px; }
     .dg-right-sidebar-header { background: linear-gradient(135deg, rgba(91, 124, 250, 0.98) 0%, rgba(24, 161, 205, 0.95) 100%); padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.2); font-size: 12px; font-weight: 800; color: white; text-transform: uppercase; letter-spacing: 0.5px; }
     .dg-right-sidebar-content { flex: 1; overflow-y: auto; display: flex; flex-direction: column; min-height: 0; }
     .dg-controls { background: white; border-bottom: 1px solid var(--line); flex-shrink: 0; transition: all 0.3s ease; }
@@ -126,27 +126,27 @@ function createDataGeneratorUI(containerId) {
     .dg-btn-primary:hover { box-shadow: 0 10px 20px rgba(91, 124, 250, 0.3); transform: translateY(-1px); }
     .dg-btn-secondary { background: #e7ebf4; color: #334155; }
     .dg-btn-secondary:hover { background: #d5dcee; transform: translateY(-1px); box-shadow: var(--shadow-3); }
-    .dg-results { flex: 1; overflow-y: auto; font-size: 12px; background: #f4f6fb; padding: 0; display: flex; flex-direction: column; min-width: 0; box-shadow: inset 0 1px 0 rgba(15, 23, 42, 0.06), inset 0 8px 24px rgba(15, 23, 42, 0.04); }
-    .dg-record-tabs { display: flex; background: white; border-bottom: 1px solid var(--line); overflow-x: auto; flex-shrink: 0; padding: 0 12px; }
-    .dg-record-tab { padding: 12px 14px; border: none; background: none; cursor: pointer; font-size: 11px; font-weight: 800; color: #6b7280; border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.25s ease; letter-spacing: 0.6px; text-transform: uppercase; }
-    .dg-record-tab:hover { color: var(--brand-1); }
-    .dg-record-tab.active { color: var(--brand-1); border-bottom-color: var(--brand-1); }
-    .dg-record-contents { flex: 1; overflow-y: auto; padding: 0; min-width: 0; }
+    .dg-results { flex: 1; overflow-y: auto; font-size: 12px; background: linear-gradient(180deg, #f8faff 0%, #f1f4fb 100%); padding: 0 0 56px; display: flex; flex-direction: column; min-width: 0; box-shadow: inset 0 1px 0 rgba(15, 23, 42, 0.06), inset 0 8px 24px rgba(15, 23, 42, 0.04); }
+    .dg-record-tabs { display: flex; background: rgba(255,255,255,0.95); border-bottom: 1px solid var(--line); overflow-x: auto; flex-shrink: 0; padding: 6px 10px; gap: 6px; backdrop-filter: blur(8px); }
+    .dg-record-tab { padding: 8px 12px; border: 1px solid transparent; background: rgba(91, 124, 250, 0.06); cursor: pointer; font-size: 10px; font-weight: 800; color: #5b6b7f; border-radius: 999px; white-space: nowrap; transition: all 0.25s ease; letter-spacing: 0.6px; text-transform: uppercase; }
+    .dg-record-tab:hover { color: var(--brand-1); border-color: rgba(91, 124, 250, 0.25); background: rgba(91, 124, 250, 0.12); }
+    .dg-record-tab.active { color: white; border-color: transparent; background: linear-gradient(135deg, var(--brand-1) 0%, var(--brand-2) 100%); box-shadow: 0 8px 16px rgba(91, 124, 250, 0.25); }
+    .dg-record-contents { flex: 1; overflow-y: auto; padding: 8px 10px 0; min-width: 0; }
     .dg-record-content { display: none; height: 100%; min-width: 0; }
     .dg-record-content.active { display: flex; flex-direction: column; min-width: 0; }
-    .dg-category-tabs { display: flex; background: white; border-bottom: 1px solid var(--line); overflow-x: auto; flex-shrink: 0; padding: 0 12px; }
-    .dg-category-tab { padding: 12px 14px; border: none; background: none; cursor: pointer; font-size: 10px; font-weight: 800; color: #6b7280; border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.25s ease; text-transform: uppercase; letter-spacing: 0.6px; }
-    .dg-category-tab:hover { color: var(--brand-1); }
-    .dg-category-tab.active { color: var(--brand-1); border-bottom-color: var(--brand-1); }
-    .dg-category-contents { flex: 1; overflow-y: auto; padding: 0; }
+    .dg-category-tabs { display: flex; background: rgba(255,255,255,0.95); border-bottom: 1px solid var(--line); overflow-x: auto; flex-shrink: 0; padding: 6px 10px; gap: 6px; backdrop-filter: blur(8px); }
+    .dg-category-tab { padding: 7px 10px; border: 1px solid transparent; background: rgba(24, 161, 205, 0.08); cursor: pointer; font-size: 9px; font-weight: 800; color: #5b6b7f; border-radius: 999px; white-space: nowrap; transition: all 0.25s ease; text-transform: uppercase; letter-spacing: 0.6px; }
+    .dg-category-tab:hover { color: var(--brand-1); border-color: rgba(24, 161, 205, 0.35); background: rgba(24, 161, 205, 0.18); }
+    .dg-category-tab.active { color: white; border-color: transparent; background: linear-gradient(135deg, #18a1cd 0%, #5b7cfa 100%); box-shadow: 0 8px 16px rgba(24, 161, 205, 0.25); }
+    .dg-category-contents { flex: 1; overflow-y: auto; padding: 8px 10px 0; }
     .dg-category-content { display: none; }
     .dg-category-content.active { display: block; }
-    .dg-record-field { display: flex; justify-content: space-between; gap: 12px; padding: 16px 18px; font-size: 11px; border-bottom: 1px solid #eceff5; background: white; transition: all 0.2s ease; }
+    .dg-record-field { display: flex; justify-content: space-between; gap: 12px; padding: 14px 16px; font-size: 11px; border: 1px solid rgba(91, 124, 250, 0.08); background: white; transition: all 0.2s ease; border-radius: 12px; margin: 8px 0; box-shadow: 0 6px 16px rgba(15, 23, 42, 0.04); }
     .dg-record-field:nth-child(odd) { background: #ffffff; }
-    .dg-record-field:nth-child(even) { background: #f6f7fb; }
-    .dg-record-field:hover { background: #eef3ff !important; border-left: 4px solid var(--brand-1); padding-left: 14px; }
-    .dg-record-label { font-weight: 800; color: var(--brand-2); min-width: 90px; text-transform: uppercase; font-size: 10px; letter-spacing: 0.8px; }
-    .dg-field-value { color: #1f2937; word-break: break-all; cursor: pointer; padding: 6px 10px; border-radius: 8px; background: #eef2f8; transition: all 0.2s ease; flex: 1; text-align: right; font-family: "SFMono-Regular", "Menlo", "Monaco", "Courier New", monospace; font-size: 12px; font-weight: 700; }
+    .dg-record-field:nth-child(even) { background: #f8f9fe; }
+    .dg-record-field:hover { background: #eef3ff !important; border-color: rgba(91, 124, 250, 0.35); box-shadow: 0 10px 20px rgba(91, 124, 250, 0.12); transform: translateY(-1px); }
+    .dg-record-label { font-weight: 800; color: var(--brand-2); min-width: 90px; text-transform: uppercase; font-size: 9px; letter-spacing: 0.9px; }
+    .dg-field-value { color: #1f2937; word-break: break-all; cursor: pointer; padding: 6px 10px; border-radius: 10px; background: #eef2f8; transition: all 0.2s ease; flex: 1; text-align: right; font-family: "SFMono-Regular", "Menlo", "Monaco", "Courier New", monospace; font-size: 12px; font-weight: 700; }
     .dg-field-value:hover { background: #e2e8ff; color: var(--brand-1); box-shadow: 0 4px 10px rgba(91, 124, 250, 0.2); }
     .dg-footer { font-size: 9px; color: #8a94a6; text-align: center; padding: 10px; border-top: 1px solid var(--line); background: linear-gradient(180deg, #ffffff 0%, #f6f7fb 100%); width: 100%; position: absolute; bottom: 0; left: 0; right: 0; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase; }
     .dg-file-controls { display: none; margin-top: 10px; padding: 12px; background: #f6f7fb; border: 1px solid var(--line); border-radius: 10px; }
@@ -426,6 +426,61 @@ function createDataGeneratorUI(containerId) {
       ]
     },
     {
+      title: "Crypto",
+      subTabs: [
+        {
+          title: "Market",
+          fields: [
+            { id: "cryptoSymbol", label: "Symbol" },
+            { id: "cryptoName", label: "Name" },
+            { id: "cryptoPrice", label: "Price (USD)" },
+            { id: "cryptoPriceSAR", label: "Price (SAR)" },
+            { id: "marketCap", label: "Market Cap" },
+            { id: "volume24h", label: "24h Volume" },
+            { id: "priceChange24h", label: "24h Change" }
+          ]
+        },
+        {
+          title: "Addresses",
+          fields: [
+            { id: "walletAddress", label: "Wallet Address" },
+            { id: "ethereumAddress", label: "Ethereum Address" },
+            { id: "transactionHash", label: "Transaction Hash" },
+            { id: "smartContractAddress", label: "Smart Contract Address" },
+            { id: "blockHeight", label: "Block Height" }
+          ]
+        },
+        {
+          title: "Trading",
+          fields: [
+            { id: "tradingPair", label: "Trading Pair" },
+            { id: "orderType", label: "Order Type" },
+            { id: "orderSide", label: "Order Side" },
+            { id: "orderAmount", label: "Order Amount" },
+            { id: "cryptoExchange", label: "Exchange" },
+            { id: "portfolioValue", label: "Portfolio Value (USD)" },
+            { id: "portfolioValueSAR", label: "Portfolio Value (SAR)" },
+            { id: "roi", label: "ROI" }
+          ]
+        },
+        {
+          title: "DeFi & NFTs",
+          fields: [
+            { id: "tokenStandard", label: "Token Standard" },
+            { id: "dexName", label: "DEX Name" },
+            { id: "liquidityPool", label: "Liquidity Pool" },
+            { id: "defiProtocol", label: "DeFi Protocol" },
+            { id: "stakingReward", label: "Staking Reward" },
+            { id: "stakingPeriod", label: "Staking Period" },
+            { id: "yieldFarming", label: "Yield Farming" },
+            { id: "nftCollection", label: "NFT Collection" },
+            { id: "nftPrice", label: "NFT Price" },
+            { id: "nftRarity", label: "NFT Rarity" }
+          ]
+        }
+      ]
+    },
+    {
       title: "Healthcare",
       subTabs: [
         {
@@ -481,6 +536,45 @@ function createDataGeneratorUI(containerId) {
             { id: "vin", label: "VIN Number" },
             { id: "engineNumber", label: "Engine Number" },
             { id: "vehicleRegistration", label: "Vehicle Registration (Istimara)" },
+          ]
+        }
+      ]
+    },
+    {
+      title: "Automotive",
+      subTabs: [
+        {
+          title: "Specs & Usage",
+          fields: [
+            { id: "engineSize", label: "Engine Size" },
+            { id: "fuelType", label: "Fuel Type (EN)" },
+            { id: "fuelTypeAr", label: "Fuel Type (AR)" },
+            { id: "transmission", label: "Transmission (EN)" },
+            { id: "transmissionAr", label: "Transmission (AR)" },
+            { id: "mileage", label: "Mileage" },
+            { id: "price", label: "Price" }
+          ]
+        },
+        {
+          title: "Insurance & Service",
+          fields: [
+            { id: "insuranceCompany", label: "Insurance Company" },
+            { id: "insuranceType", label: "Insurance Type (EN)" },
+            { id: "insuranceTypeAr", label: "Insurance Type (AR)" },
+            { id: "dealership", label: "Dealership" },
+            { id: "serviceType", label: "Service Type (EN)" },
+            { id: "serviceTypeAr", label: "Service Type (AR)" }
+          ]
+        },
+        {
+          title: "Parts & IDs",
+          fields: [
+            { id: "partName", label: "Part Name (EN)" },
+            { id: "partNameAr", label: "Part Name (AR)" },
+            { id: "licensePlateEn", label: "License Plate (EN)" },
+            { id: "drivingLicenseNumber", label: "Driving License Number" },
+            { id: "licenseCategory", label: "License Category (EN)" },
+            { id: "licenseCategoryAr", label: "License Category (AR)" }
           ]
         }
       ]
@@ -579,6 +673,53 @@ function createDataGeneratorUI(containerId) {
             { id: "databaseName", label: "Database Name" },
             { id: "deviceType", label: "Device Type (EN)" },
             { id: "deviceTypeAr", label: "Device Type (AR)" },
+          ]
+        }
+      ]
+    },
+    {
+      title: "IoT & Smart Home",
+      subTabs: [
+        {
+          title: "Devices",
+          fields: [
+            { id: "deviceBrand", label: "Device Brand" },
+            { id: "deviceModel", label: "Device Model" },
+            { id: "firmwareVersion", label: "Firmware Version" },
+            { id: "roomLocation", label: "Room Location (EN)" },
+            { id: "roomLocationAr", label: "Room Location (AR)" }
+          ]
+        },
+        {
+          title: "Network & Power",
+          fields: [
+            { id: "wifiSSID", label: "WiFi SSID" },
+            { id: "signalStrength", label: "Signal Strength" },
+            { id: "batteryLevel", label: "Battery Level" },
+            { id: "powerConsumption", label: "Power Consumption" },
+            { id: "dataUsage", label: "Data Usage" }
+          ]
+        },
+        {
+          title: "Automation",
+          fields: [
+            { id: "sensorReading", label: "Sensor Reading" },
+            { id: "automationRule", label: "Automation Rule (EN)" },
+            { id: "automationRuleAr", label: "Automation Rule (AR)" },
+            { id: "sceneMode", label: "Scene Mode (EN)" },
+            { id: "sceneModeAr", label: "Scene Mode (AR)" },
+            { id: "voiceCommand", label: "Voice Command (EN)" },
+            { id: "voiceCommandAr", label: "Voice Command (AR)" }
+          ]
+        },
+        {
+          title: "Platform & Ops",
+          fields: [
+            { id: "appName", label: "App Name" },
+            { id: "cloudService", label: "Cloud Service" },
+            { id: "updateFrequency", label: "Update Frequency" },
+            { id: "dataRetention", label: "Data Retention" },
+            { id: "maintenanceSchedule", label: "Maintenance Schedule" }
           ]
         }
       ]
@@ -782,6 +923,49 @@ function createDataGeneratorUI(containerId) {
             { id: "cinemaNameAr", label: "Cinema Name (AR)" },
             { id: "showTime", label: "Show Time" },
             { id: "ticketPrice", label: "Ticket Price" },
+          ]
+        }
+      ]
+    },
+    {
+      title: "Media & Streaming",
+      subTabs: [
+        {
+          title: "Movies & TV",
+          fields: [
+            { id: "movieGenre", label: "Movie Genre" },
+            { id: "movieRating", label: "Movie Rating" },
+            { id: "movieDuration", label: "Movie Duration" },
+            { id: "tvShow", label: "TV Show" },
+            { id: "episodeNumber", label: "Episode Number" }
+          ]
+        },
+        {
+          title: "Music & Audio",
+          fields: [
+            { id: "musicGenre", label: "Music Genre" },
+            { id: "artist", label: "Artist" },
+            { id: "songTitle", label: "Song Title" },
+            { id: "albumTitle", label: "Album Title" },
+            { id: "podcastTitle", label: "Podcast Title" }
+          ]
+        },
+        {
+          title: "Books & Content",
+          fields: [
+            { id: "bookTitle", label: "Book Title" },
+            { id: "author", label: "Author" },
+            { id: "contentType", label: "Content Type" },
+            { id: "viewCount", label: "View Count" },
+            { id: "streamingService", label: "Streaming Service" }
+          ]
+        },
+        {
+          title: "Platforms",
+          fields: [
+            { id: "gamePlatform", label: "Game Platform" },
+            { id: "socialMediaPlatform", label: "Social Media Platform" },
+            { id: "influencerHandle", label: "Influencer Handle" }
           ]
         }
       ]
@@ -1000,6 +1184,76 @@ function createDataGeneratorUI(containerId) {
       ]
     },
     {
+      title: "Weather & Environment",
+      subTabs: [
+        {
+          title: "Conditions",
+          fields: [
+            { id: "temperature", label: "Temperature (C)" },
+            { id: "temperatureFahrenheit", label: "Temperature (F)" },
+            { id: "humidity", label: "Humidity" },
+            { id: "windSpeed", label: "Wind Speed" },
+            { id: "windDirection", label: "Wind Direction (EN)" },
+            { id: "windDirectionAr", label: "Wind Direction (AR)" },
+            { id: "weatherCondition", label: "Condition (EN)" },
+            { id: "weatherConditionAr", label: "Condition (AR)" },
+            { id: "precipitation", label: "Precipitation" },
+            { id: "visibility", label: "Visibility" }
+          ]
+        },
+        {
+          title: "Air & Sun",
+          fields: [
+            { id: "uvIndex", label: "UV Index" },
+            { id: "airQualityIndex", label: "Air Quality Index" },
+            { id: "airQuality", label: "Air Quality (EN)" },
+            { id: "airQualityAr", label: "Air Quality (AR)" },
+            { id: "pollutant", label: "Pollutant" },
+            { id: "pollutantLevel", label: "Pollutant Level" },
+            { id: "sunrise", label: "Sunrise" },
+            { id: "sunset", label: "Sunset" }
+          ]
+        },
+        {
+          title: "Climate & Alerts",
+          fields: [
+            { id: "climateZone", label: "Climate Zone (EN)" },
+            { id: "climateZoneAr", label: "Climate Zone (AR)" },
+            { id: "moonPhase", label: "Moon Phase (EN)" },
+            { id: "moonPhaseAr", label: "Moon Phase (AR)" },
+            { id: "barometricPressure", label: "Barometric Pressure" },
+            { id: "dewPoint", label: "Dew Point" },
+            { id: "heatIndex", label: "Heat Index" },
+            { id: "windChill", label: "Wind Chill" },
+            { id: "naturalDisaster", label: "Natural Disaster (EN)" },
+            { id: "naturalDisasterAr", label: "Natural Disaster (AR)" },
+            { id: "environmentalAlert", label: "Environmental Alert (EN)" },
+            { id: "environmentalAlertAr", label: "Environmental Alert (AR)" }
+          ]
+        },
+        {
+          title: "Ecosystem",
+          fields: [
+            { id: "ecosystemType", label: "Ecosystem Type (EN)" },
+            { id: "ecosystemTypeAr", label: "Ecosystem Type (AR)" },
+            { id: "wildlifeSpecies", label: "Wildlife Species (EN)" },
+            { id: "wildlifeSpeciesAr", label: "Wildlife Species (AR)" },
+            { id: "plantSpecies", label: "Plant Species (EN)" },
+            { id: "plantSpeciesAr", label: "Plant Species (AR)" },
+            { id: "waterSource", label: "Water Source (EN)" },
+            { id: "waterSourceAr", label: "Water Source (AR)" },
+            { id: "renewableEnergy", label: "Renewable Energy (EN)" },
+            { id: "renewableEnergyAr", label: "Renewable Energy (AR)" },
+            { id: "carbonFootprint", label: "Carbon Footprint" },
+            { id: "energyConsumption", label: "Energy Consumption" },
+            { id: "waterConsumption", label: "Water Consumption" },
+            { id: "wasteGeneration", label: "Waste Generation" },
+            { id: "recyclingRate", label: "Recycling Rate" }
+          ]
+        }
+      ]
+    },
+    {
       title: "Random Values",
       subTabs: [
         {
@@ -1025,6 +1279,54 @@ function createDataGeneratorUI(containerId) {
             { id: "randomArabicLetters", label: "Random Arabic Letters" },
             { id: "randomSpecialChars", label: "Random Special Chars" },
             { id: "randomHex", label: "Random Hex" },
+          ]
+        }
+      ]
+    },
+    {
+      title: "IDs & Keys",
+      subTabs: [
+        {
+          title: "UUIDs",
+          fields: [
+            { id: "uuid", label: "UUID v4" },
+            { id: "uuidV1", label: "UUID v1" },
+            { id: "uuidV3", label: "UUID v3" },
+            { id: "uuidV5", label: "UUID v5" },
+            { id: "guid", label: "GUID" },
+            { id: "shortUuid", label: "Short UUID" },
+            { id: "uuidNoDashes", label: "UUID (No Dashes)" }
+          ]
+        },
+        {
+          title: "Sortable IDs",
+          fields: [
+            { id: "ulid", label: "ULID" },
+            { id: "ksuid", label: "KSUID" },
+            { id: "snowflakeId", label: "Snowflake ID" },
+            { id: "mongoObjectId", label: "Mongo ObjectId" },
+            { id: "xid", label: "XID" }
+          ]
+        },
+        {
+          title: "Tokens & Hashes",
+          fields: [
+            { id: "nanoid", label: "Nano ID" },
+            { id: "cuid", label: "CUID" },
+            { id: "jwtToken", label: "JWT Token" },
+            { id: "hash", label: "Hash (SHA-256)" },
+            { id: "randomSeed", label: "Random Seed" }
+          ]
+        },
+        {
+          title: "Generic IDs",
+          fields: [
+            { id: "alphanumericId", label: "Alphanumeric ID" },
+            { id: "numericId", label: "Numeric ID" },
+            { id: "hexId", label: "Hex ID" },
+            { id: "base64Id", label: "Base64 ID" },
+            { id: "prefixedId", label: "Prefixed ID" },
+            { id: "timestampId", label: "Timestamp ID" }
           ]
         }
       ]
@@ -1556,6 +1858,241 @@ function createDataGeneratorUI(containerId) {
             { id: "base64Id", label: "Base64 ID" },
             { id: "prefixedId", label: "Prefixed ID" },
             { id: "timestampId", label: "Timestamp ID" },
+          ]
+        },
+        {
+          title: "Additional Generators",
+          fields: [
+            { id: "ai", label: "AI" },
+            { id: "airdropAmount", label: "Airdrop Amount" },
+            { id: "alertType", label: "Alert Type" },
+            { id: "alertTypeAr", label: "Alert Type (AR)" },
+            { id: "avatarDiceBear", label: "Avatar Dice Bear" },
+            { id: "avatarPravatar", label: "Avatar Pravatar" },
+            { id: "avatarRobohash", label: "Avatar Robohash" },
+            { id: "avatarUrl", label: "Avatar URL" },
+            { id: "barcode", label: "Barcode" },
+            { id: "biometricId", label: "Biometric ID" },
+            { id: "birthPlace", label: "Birth Place" },
+            { id: "birthPlaceAr", label: "Birth Place (AR)" },
+            { id: "blockchainNetwork", label: "Blockchain Network" },
+            { id: "boolean", label: "Boolean" },
+            { id: "building", label: "Building" },
+            { id: "cardExpiry", label: "Card Expiry" },
+            { id: "cfg", label: "CFG" },
+            { id: "chartBarUrl", label: "Chart Bar URL" },
+            { id: "chartPieUrl", label: "Chart Pie URL" },
+            { id: "chartUrl", label: "Chart URL" },
+            { id: "cloudStorageUrl", label: "Cloud Storage URL" },
+            { id: "colorDepth", label: "Color Depth" },
+            { id: "communicationProtocol", label: "Communication Protocol" },
+            { id: "companyId", label: "Company ID" },
+            { id: "compressionRatio", label: "Compression Ratio" },
+            { id: "conf", label: "Conf" },
+            { id: "consensusMechanism", label: "Consensus Mechanism" },
+            { id: "coordinates", label: "Coordinates" },
+            { id: "costSavings", label: "Cost Savings" },
+            { id: "countryCode", label: "Country Code" },
+            { id: "countryFlag", label: "Country Flag" },
+            { id: "createdDate", label: "Created Date" },
+            { id: "cryptoNews", label: "Crypto News" },
+            { id: "dateFuture", label: "Date Future" },
+            { id: "dateGregorian", label: "Date Gregorian" },
+            { id: "dateGregorianAr", label: "Date Gregorian (AR)" },
+            { id: "dateHijri", label: "Date Hijri" },
+            { id: "dateHijriAr", label: "Date Hijri (AR)" },
+            { id: "datePast", label: "Date Past" },
+            { id: "datePresent", label: "Date Present" },
+            { id: "datetimeAr", label: "Datetime (AR)" },
+            { id: "datetimeLocal", label: "Datetime Local" },
+            { id: "db", label: "DB" },
+            { id: "deviceStatus", label: "Device Status" },
+            { id: "deviceStatusAr", label: "Device Status (AR)" },
+            { id: "distance", label: "Distance" },
+            { id: "documentApprover", label: "Document Approver" },
+            { id: "documentApproverAr", label: "Document Approver (AR)" },
+            { id: "documentAuthor", label: "Document Author" },
+            { id: "documentAuthorAr", label: "Document Author (AR)" },
+            { id: "documentCategory", label: "Document Category" },
+            { id: "documentChecksum", label: "Document Checksum" },
+            { id: "documentFileName", label: "Document File Name" },
+            { id: "documentFileNameAr", label: "Document File Name (AR)" },
+            { id: "documentFormat", label: "Document Format" },
+            { id: "documentLanguage", label: "Document Language" },
+            { id: "documentNumber", label: "Document Number" },
+            { id: "documentOrientation", label: "Document Orientation" },
+            { id: "documentPath", label: "Document Path" },
+            { id: "documentPathAr", label: "Document Path (AR)" },
+            { id: "documentPriority", label: "Document Priority" },
+            { id: "documentPriorityAr", label: "Document Priority (AR)" },
+            { id: "documentSecurity", label: "Document Security" },
+            { id: "documentSecurityAr", label: "Document Security (AR)" },
+            { id: "documentSignature", label: "Document Signature" },
+            { id: "documentStatus", label: "Document Status" },
+            { id: "documentStatusAr", label: "Document Status (AR)" },
+            { id: "documentTemplate", label: "Document Template" },
+            { id: "documentTitle", label: "Document Title" },
+            { id: "documentTitleAr", label: "Document Title (AR)" },
+            { id: "documentType", label: "Document Type" },
+            { id: "documentTypeAr", label: "Document Type (AR)" },
+            { id: "documentVersion", label: "Document Version" },
+            { id: "domain", label: "Domain" },
+            { id: "door", label: "Door" },
+            { id: "downloadUrl", label: "Download URL" },
+            { id: "education", label: "Education" },
+            { id: "educationAr", label: "Education (AR)" },
+            { id: "emergencyContactName", label: "Emergency Contact Name" },
+            { id: "emergencyContactNameAr", label: "Emergency Contact Name (AR)" },
+            { id: "emergencyContactPhone", label: "Emergency Contact Phone" },
+            { id: "energyUsage", label: "Energy Usage" },
+            { id: "eps", label: "Eps" },
+            { id: "exp", label: "Exp" },
+            { id: "experience", label: "Experience" },
+            { id: "experienceAr", label: "Experience (AR)" },
+            { id: "eyeColor", label: "Eye Color" },
+            { id: "eyeColorAr", label: "Eye Color (AR)" },
+            { id: "favoriteColor", label: "Favorite Color" },
+            { id: "favoriteColorAr", label: "Favorite Color (AR)" },
+            { id: "favoriteFood", label: "Favorite Food" },
+            { id: "favoriteFoodAr", label: "Favorite Food (AR)" },
+            { id: "favoriteMusic", label: "Favorite Music" },
+            { id: "favoriteMusicAr", label: "Favorite Music (AR)" },
+            { id: "fig", label: "Fig" },
+            { id: "fileExtension", label: "File Extension" },
+            { id: "fileName", label: "File Name" },
+            { id: "fileNameAr", label: "File Name (AR)" },
+            { id: "fileSize", label: "File Size" },
+            { id: "fileSizeBytes", label: "File Size Bytes" },
+            { id: "fileType", label: "File Type" },
+            { id: "fineAmount", label: "Fine Amount" },
+            { id: "flac", label: "Flac" },
+            { id: "floor", label: "Floor" },
+            { id: "fuelStation", label: "Fuel Station" },
+            { id: "fullNameWithMiddle", label: "Full Name With Middle" },
+            { id: "fullNameWithMiddleAr", label: "Full Name With Middle (AR)" },
+            { id: "gameGenre", label: "Game Genre" },
+            { id: "garageLocation", label: "Garage Location" },
+            { id: "gasLimit", label: "Gas Limit" },
+            { id: "gasPrice", label: "Gas Price" },
+            { id: "gravatar", label: "Gravatar" },
+            { id: "hairColor", label: "Hair Color" },
+            { id: "hairColorAr", label: "Hair Color (AR)" },
+            { id: "hashRate", label: "Hash Rate" },
+            { id: "height", label: "Height" },
+            { id: "hobbiesList", label: "Hobbies List" },
+            { id: "hobbiesListAr", label: "Hobbies List (AR)" },
+            { id: "hobby", label: "Hobby" },
+            { id: "hobbyAr", label: "Hobby (AR)" },
+            { id: "iat", label: "Iat" },
+            { id: "iconUrl", label: "Icon URL" },
+            { id: "imageAspectRatio", label: "Image Aspect Ratio" },
+            { id: "imageDimensions", label: "Image Dimensions" },
+            { id: "imageHeight", label: "Image Height" },
+            { id: "imageUrl", label: "Image URL" },
+            { id: "imageWidth", label: "Image Width" },
+            { id: "includeArabicLetters", label: "Include Arabic Letters" },
+            { id: "includeLowercase", label: "Include Lowercase" },
+            { id: "includeNumbers", label: "Include Numbers" },
+            { id: "includeSpecialChars", label: "Include Special Chars" },
+            { id: "includeUppercase", label: "Include Uppercase" },
+            { id: "ini", label: "INI" },
+            { id: "invoice", label: "Invoice" },
+            { id: "landline", label: "Landline" },
+            { id: "language", label: "Language" },
+            { id: "languageAr", label: "Language (AR)" },
+            { id: "languagesList", label: "Languages List" },
+            { id: "latitude", label: "Latitude" },
+            { id: "level", label: "Level" },
+            { id: "lifestyleChoice", label: "Lifestyle Choice" },
+            { id: "lifestyleChoiceAr", label: "Lifestyle Choice (AR)" },
+            { id: "lockupPeriod", label: "Lockup Period" },
+            { id: "log", label: "Log" },
+            { id: "longitude", label: "Longitude" },
+            { id: "loremPicsumBlurred", label: "Lorem Picsum Blurred" },
+            { id: "loremPicsumGrayscale", label: "Lorem Picsum Grayscale" },
+            { id: "loremPicsumImage", label: "Lorem Picsum Image" },
+            { id: "loremPicsumImageWithId", label: "Lorem Picsum Image With ID" },
+            { id: "madaCard", label: "Mada Card" },
+            { id: "masterCard", label: "Master Card" },
+            { id: "mediaFormat", label: "Media Format" },
+            { id: "medicalAllergy", label: "Medical Allergy" },
+            { id: "medicalAllergyAr", label: "Medical Allergy (AR)" },
+            { id: "medicalCondition", label: "Medical Condition" },
+            { id: "medicalConditionAr", label: "Medical Condition (AR)" },
+            { id: "metadata", label: "Metadata" },
+            { id: "middleName", label: "Middle Name" },
+            { id: "middleNameAr", label: "Middle Name (AR)" },
+            { id: "mimeType", label: "Mime Type" },
+            { id: "miningDifficulty", label: "Mining Difficulty" },
+            { id: "mkv", label: "Mkv" },
+            { id: "modifiedDate", label: "Modified Date" },
+            { id: "motherTongue", label: "Mother Tongue" },
+            { id: "motherTongueAr", label: "Mother Tongue (AR)" },
+            { id: "motion", label: "Motion" },
+            { id: "mov", label: "Mov" },
+            { id: "name", label: "Name" },
+            { id: "number", label: "Number" },
+            { id: "pageCount", label: "Page Count" },
+            { id: "parkingType", label: "Parking Type" },
+            { id: "parkingTypeAr", label: "Parking Type (AR)" },
+            { id: "personalityScore", label: "Personality Score" },
+            { id: "personalityTrait", label: "Personality Trait" },
+            { id: "personalityTraitAr", label: "Personality Trait (AR)" },
+            { id: "phone", label: "Phone" },
+            { id: "placeholderImage", label: "Placeholder Image" },
+            { id: "placeholderImageColored", label: "Placeholder Image Colored" },
+            { id: "placeholderImageWithText", label: "Placeholder Image With Text" },
+            { id: "port", label: "Port" },
+            { id: "ppt", label: "Ppt" },
+            { id: "pptx", label: "Pptx" },
+            { id: "productCode", label: "Product Code" },
+            { id: "protocol", label: "Protocol" },
+            { id: "psd", label: "Psd" },
+            { id: "qrCodeColored", label: "Qr Code Colored" },
+            { id: "qrCodeUrl", label: "Qr Code URL" },
+            { id: "referenceNumber", label: "Reference Number" },
+            { id: "resolution", label: "Resolution" },
+            { id: "room", label: "Room" },
+            { id: "saudiAddress", label: "Saudi Address" },
+            { id: "saudiAddressAr", label: "Saudi Address (AR)" },
+            { id: "score", label: "Score" },
+            { id: "serialNumber", label: "Serial Number" },
+            { id: "sketch", label: "Sketch" },
+            { id: "skill", label: "Skill" },
+            { id: "skillAr", label: "Skill (AR)" },
+            { id: "skillsList", label: "Skills List" },
+            { id: "smartHomeHub", label: "Smart Home Hub" },
+            { id: "socialSecurityNumber", label: "Social Security Number" },
+            { id: "speed", label: "Speed" },
+            { id: "stockSymbol", label: "Stock Symbol" },
+            { id: "streetName", label: "Street Name" },
+            { id: "streetNameAr", label: "Street Name (AR)" },
+            { id: "streetNumber", label: "Street Number" },
+            { id: "subdomain", label: "Subdomain" },
+            { id: "taxId", label: "Tax ID" },
+            { id: "thumbnailUrl", label: "Thumbnail URL" },
+            { id: "time12", label: "Time12" },
+            { id: "time12Ar", label: "Time12 (AR)" },
+            { id: "timeZone", label: "Time Zone" },
+            { id: "timezone", label: "Timezone" },
+            { id: "trafficViolation", label: "Traffic Violation" },
+            { id: "trafficViolationAr", label: "Traffic Violation (AR)" },
+            { id: "transactionFee", label: "Transaction Fee" },
+            { id: "transactionFeeSAR", label: "Transaction Fee SAR" },
+            { id: "uiAvatar", label: "Ui Avatar" },
+            { id: "uiAvatarRounded", label: "Ui Avatar Rounded" },
+            { id: "unsplashDailyImage", label: "Unsplash Daily Image" },
+            { id: "unsplashFeaturedImage", label: "Unsplash Featured Image" },
+            { id: "unsplashImage", label: "Unsplash Image" },
+            { id: "vatNumber", label: "Vat Number" },
+            { id: "vestingPeriod", label: "Vesting Period" },
+            { id: "visaCard", label: "Visa Card" },
+            { id: "visaNumber", label: "Visa Number" },
+            { id: "water", label: "Water" },
+            { id: "weight", label: "Weight" },
+            { id: "wmv", label: "Wmv" },
+            { id: "wordCount", label: "Word Count" },
+
           ]
         },
         {

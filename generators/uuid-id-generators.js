@@ -223,3 +223,36 @@ function generateHash() {
 function generateRandomSeed() {
   return Math.floor(Math.random() * 2147483647);
 }
+
+const uuidIdGenerators = {
+  uuid: generateUuid,
+  uuidV1: generateUuidv1,
+  uuidV3: generateUuidv3,
+  uuidV5: generateUuidv5,
+  guid: generateGuid,
+  shortUuid: generateShortUuid,
+  uuidNoDashes: generateUuidNoDashes,
+  mongoObjectId: generateMongoObjectId,
+  snowflakeId: generateSnowflakeId,
+  ulid: generateUlid,
+  ksuid: generateKsuid,
+  cuid: generateCuid,
+  nanoid: generateNanoid,
+  xid: generateXid,
+  alphanumericId: generateAlphanumericId,
+  numericId: generateNumericId,
+  hexId: generateHexId,
+  base64Id: generateBase64Id,
+  prefixedId: generatePrefixedId,
+  timestampId: generateTimestampId,
+  sessionId: generateSessionId,
+  jwtToken: generateJwt,
+  hash: generateHash,
+  randomSeed: generateRandomSeed
+};
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { uuidIdGenerators };
+} else if (typeof window !== 'undefined') {
+  window.uuidIdGenerators = uuidIdGenerators;
+}
