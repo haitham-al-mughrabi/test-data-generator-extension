@@ -853,18 +853,21 @@
         categories.forEach(cat => cat.style.display = 'block');
       } else {
         // Filter items
-        let visibleCategories = new Set();
+        const visibleCategories = new Set();
         
         generatorItems.forEach(item => {
-          const searchText = item.dataset.searchText;
-          if (searchText.includes(query)) {
+          const searchText = item.dataset.searchText || item.textContent.toLowerCase();
+          const label = item.textContent.toLowerCase();
+          
+          if (searchText.includes(query) || label.includes(query)) {
             item.style.display = 'block';
-            // Find which category this item belongs to
-            const categoryElement = item.previousElementSibling?.className === 'menu-category' ? 
-              item.previousElementSibling : 
-              findPreviousCategory(item);
-            if (categoryElement) {
-              visibleCategories.add(categoryElement);
+            // Find parent category
+            let parent = item.parentElement;
+            while (parent && !parent.classList.contains('menu-category')) {
+              parent = parent.parentElement;
+            }
+            if (parent) {
+              visibleCategories.add(parent);
             }
           } else {
             item.style.display = 'none';
@@ -873,7 +876,10 @@
         
         // Show/hide categories based on visible items
         categories.forEach(cat => {
-          cat.style.display = visibleCategories.has(cat) ? 'block' : 'none';
+          const hasVisibleItems = Array.from(cat.querySelectorAll('.generator-item')).some(
+            item => item.style.display !== 'none'
+          );
+          cat.style.display = hasVisibleItems ? 'block' : 'none';
         });
       }
     });
@@ -1198,11 +1204,15 @@
   // Add event listeners
   document.addEventListener('contextmenu', (e) => {
     const target = e.target;
-    if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
-      e.preventDefault(); // Only prevent default on input fields
+    const isEditable = target.tagName === 'INPUT' || 
+                       target.tagName === 'TEXTAREA' || 
+                       target.contentEditable === 'true' ||
+                       target.isContentEditable;
+    
+    if (isEditable) {
+      e.preventDefault();
       showContextMenu(e, target);
     }
-    // Let other elements show normal context menu
   });
 
   document.addEventListener('click', (e) => {
