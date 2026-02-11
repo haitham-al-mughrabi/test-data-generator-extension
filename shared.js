@@ -31,6 +31,7 @@ function initGenerators() {
   if (window.scienceResearchGenerators) Object.assign(window.generators, window.scienceResearchGenerators);
   if (window.legalLawGenerators) Object.assign(window.generators, window.legalLawGenerators);
   if (window.fashionBeautyGenerators) Object.assign(window.generators, window.fashionBeautyGenerators);
+  if (window.emojiGenerators) Object.assign(window.generators, window.emojiGenerators);
   if (window.weatherEnvironmentGenerators) Object.assign(window.generators, window.weatherEnvironmentGenerators);
   if (window.agricultureGenerators) Object.assign(window.generators, window.agricultureGenerators);
   if (window.logisticsShippingGenerators) Object.assign(window.generators, window.logisticsShippingGenerators);

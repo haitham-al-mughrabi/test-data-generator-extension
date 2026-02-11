@@ -1199,6 +1199,72 @@ function createDataGeneratorUI(containerId) {
       ]
     },
     {
+      title: "Emojis",
+      subTabs: [
+        {
+          title: "Categories",
+          fields: [
+            { id: "emojiCategory", label: "Emoji Category" },
+            { id: "emojiRandom", label: "Random Emoji" }
+          ]
+        },
+        {
+          title: "Smileys",
+          fields: [
+            { id: "emojiSmileys", label: "Smileys & Emotions" }
+          ]
+        },
+        {
+          title: "People",
+          fields: [
+            { id: "emojiPeople", label: "People & Body" }
+          ]
+        },
+        {
+          title: "Animals",
+          fields: [
+            { id: "emojiAnimals", label: "Animals & Nature" }
+          ]
+        },
+        {
+          title: "Food",
+          fields: [
+            { id: "emojiFood", label: "Food & Drink" }
+          ]
+        },
+        {
+          title: "Travel",
+          fields: [
+            { id: "emojiTravel", label: "Travel & Places" }
+          ]
+        },
+        {
+          title: "Activities",
+          fields: [
+            { id: "emojiActivities", label: "Activities" }
+          ]
+        },
+        {
+          title: "Objects",
+          fields: [
+            { id: "emojiObjects", label: "Objects" }
+          ]
+        },
+        {
+          title: "Symbols",
+          fields: [
+            { id: "emojiSymbols", label: "Symbols" }
+          ]
+        },
+        {
+          title: "Flags",
+          fields: [
+            { id: "emojiFlags", label: "Flags" }
+          ]
+        }
+      ]
+    },
+    {
       title: "Weather & Environment",
       subTabs: [
         {
@@ -1817,7 +1883,15 @@ function createDataGeneratorUI(containerId) {
           fields: [
             { id: "date", label: "Date" },
             { id: "time", label: "Time" },
+            { id: "time12", label: "Time (12h)" },
+            { id: "time12Ar", label: "Time (12h) AR" },
+            { id: "time24", label: "Time (24h)" },
             { id: "datetime", label: "DateTime" },
+            { id: "datetimeIso", label: "DateTime (ISO)" },
+            { id: "datetimeRfc3339", label: "DateTime (RFC3339)" },
+            { id: "datetimeUnix", label: "DateTime (Unix)" },
+            { id: "datetimeLocal", label: "DateTime (Local)" },
+            { id: "dateIso", label: "Date (ISO)" },
             { id: "timestamp", label: "Timestamp" },
           ]
         },
@@ -1836,6 +1910,8 @@ function createDataGeneratorUI(containerId) {
             { id: "dayOfWeekAr", label: "Day of Week (AR)" },
             { id: "month", label: "Month (EN)" },
             { id: "monthAr", label: "Month (AR)" },
+            { id: "timeZone", label: "Time Zone" },
+            { id: "utcOffset", label: "UTC Offset" },
           ]
         }
       ]
@@ -1921,7 +1997,6 @@ function createDataGeneratorUI(containerId) {
             { id: "datePast", label: "Date Past" },
             { id: "datePresent", label: "Date Present" },
             { id: "datetimeAr", label: "Datetime (AR)" },
-            { id: "datetimeLocal", label: "Datetime Local" },
             { id: "db", label: "DB" },
             { id: "deviceStatus", label: "Device Status" },
             { id: "deviceStatusAr", label: "Device Status (AR)" },
@@ -1974,12 +2049,6 @@ function createDataGeneratorUI(containerId) {
             { id: "favoriteMusic", label: "Favorite Music" },
             { id: "favoriteMusicAr", label: "Favorite Music (AR)" },
             { id: "fig", label: "Fig" },
-            { id: "fileExtension", label: "File Extension" },
-            { id: "fileName", label: "File Name" },
-            { id: "fileNameAr", label: "File Name (AR)" },
-            { id: "fileSize", label: "File Size" },
-            { id: "fileSizeBytes", label: "File Size Bytes" },
-            { id: "fileType", label: "File Type" },
             { id: "fineAmount", label: "Fine Amount" },
             { id: "flac", label: "Flac" },
             { id: "floor", label: "Floor" },
@@ -2038,7 +2107,6 @@ function createDataGeneratorUI(containerId) {
             { id: "metadata", label: "Metadata" },
             { id: "middleName", label: "Middle Name" },
             { id: "middleNameAr", label: "Middle Name (AR)" },
-            { id: "mimeType", label: "Mime Type" },
             { id: "miningDifficulty", label: "Mining Difficulty" },
             { id: "mkv", label: "Mkv" },
             { id: "modifiedDate", label: "Modified Date" },
@@ -2084,9 +2152,6 @@ function createDataGeneratorUI(containerId) {
             { id: "streetNumber", label: "Street Number" },
             { id: "taxId", label: "Tax ID" },
             { id: "thumbnailUrl", label: "Thumbnail URL" },
-            { id: "time12", label: "Time12" },
-            { id: "time12Ar", label: "Time12 (AR)" },
-            { id: "timeZone", label: "Time Zone" },
             { id: "timezone", label: "Timezone" },
             { id: "trafficViolation", label: "Traffic Violation" },
             { id: "trafficViolationAr", label: "Traffic Violation (AR)" },
@@ -2148,6 +2213,19 @@ function createDataGeneratorUI(containerId) {
     {
       title: "Files",
       subTabs: [
+        {
+          title: "File Info",
+          fields: [
+            { id: "fileName", label: "File Name" },
+            { id: "fileNameAr", label: "File Name (AR)" },
+            { id: "fileExtension", label: "File Extension" },
+            { id: "fileType", label: "File Type" },
+            { id: "mimeType", label: "MIME Type" },
+            { id: "fileSize", label: "File Size" },
+            { id: "fileSizeBytes", label: "File Size (Bytes)" },
+            { id: "fileSizeHuman", label: "File Size (Human)" },
+          ]
+        },
         {
           title: "Documents",
           fields: [

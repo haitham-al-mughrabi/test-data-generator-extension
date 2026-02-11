@@ -65,6 +65,32 @@ function generateSharedFileData() {
   };
 }
 
+function getActualSizeKb(extension) {
+  // Make file sizes more realistic based on file type
+  if (['jpg', 'jpeg', 'png', 'gif', 'bmp'].includes(extension)) {
+    return randomNum(50, 5000); // Images: 50KB to 5MB
+  }
+  if (['mp4', 'avi', 'mov', 'wmv'].includes(extension)) {
+    return randomNum(1000, 500000); // Videos: 1MB to 500MB
+  }
+  if (['mp3', 'wav', 'flac', 'aac'].includes(extension)) {
+    return randomNum(1000, 50000); // Audio: 1MB to 50MB
+  }
+  if (['pdf', 'doc', 'docx'].includes(extension)) {
+    return randomNum(10, 10000); // Documents: 10KB to 10MB
+  }
+  if (['zip', 'rar', '7z'].includes(extension)) {
+    return randomNum(100, 100000); // Archives: 100KB to 100MB
+  }
+  return randomNum(1, 1000); // Other files: 1KB to 1MB
+}
+
+function formatSizeFromKb(sizeKb) {
+  if (sizeKb < 1024) return `${sizeKb} KB`;
+  if (sizeKb < 1024 * 1024) return `${(sizeKb / 1024).toFixed(1)} MB`;
+  return `${(sizeKb / (1024 * 1024)).toFixed(1)} GB`;
+}
+
 const fileMediaGenerators = {
   fileName: () => {
     if (!sharedFileData) generateSharedFileData();
@@ -93,46 +119,27 @@ const fileMediaGenerators = {
 
   fileSize: () => {
     if (!sharedFileData) generateSharedFileData();
-    const size = sharedFileData.size;
-    
-    // Make file sizes more realistic based on file type
-    let actualSize = size;
     const extension = sharedFileData.extension.toLowerCase();
-    
-    // Adjust size based on file type for realism
-    if (['jpg', 'jpeg', 'png', 'gif', 'bmp'].includes(extension)) {
-      // Images: 50KB to 5MB
-      actualSize = randomNum(50, 5000);
-    } else if (['mp4', 'avi', 'mov', 'wmv'].includes(extension)) {
-      // Videos: 1MB to 500MB
-      actualSize = randomNum(1000, 500000);
-    } else if (['mp3', 'wav', 'flac', 'aac'].includes(extension)) {
-      // Audio: 1MB to 50MB
-      actualSize = randomNum(1000, 50000);
-    } else if (['pdf', 'doc', 'docx'].includes(extension)) {
-      // Documents: 10KB to 10MB
-      actualSize = randomNum(10, 10000);
-    } else if (['zip', 'rar', '7z'].includes(extension)) {
-      // Archives: 100KB to 100MB
-      actualSize = randomNum(100, 100000);
-    } else {
-      // Other files: 1KB to 1MB
-      actualSize = randomNum(1, 1000);
-    }
-    
+    const actualSizeKb = getActualSizeKb(extension);
     // Store the actual size for consistency
-    sharedFileData.actualSize = actualSize;
-    
-    if (actualSize < 1024) return `${actualSize} KB`;
-    if (actualSize < 1024 * 1024) return `${(actualSize / 1024).toFixed(1)} MB`;
-    return `${(actualSize / (1024 * 1024)).toFixed(1)} GB`;
+    sharedFileData.actualSize = actualSizeKb;
+    return formatSizeFromKb(actualSizeKb);
   },
 
   fileSizeBytes: () => {
     if (!sharedFileData) generateSharedFileData();
-    // Use the actual size if it was calculated, otherwise use the original size
-    const actualSize = sharedFileData.actualSize || sharedFileData.size;
-    return (actualSize * 1024).toString();
+    const extension = sharedFileData.extension.toLowerCase();
+    const actualSizeKb = sharedFileData.actualSize || getActualSizeKb(extension);
+    sharedFileData.actualSize = actualSizeKb;
+    return (actualSizeKb * 1024).toString();
+  },
+
+  fileSizeHuman: () => {
+    if (!sharedFileData) generateSharedFileData();
+    const extension = sharedFileData.extension.toLowerCase();
+    const actualSizeKb = sharedFileData.actualSize || getActualSizeKb(extension);
+    sharedFileData.actualSize = actualSizeKb;
+    return formatSizeFromKb(actualSizeKb);
   },
 
   imageUrl: () => {

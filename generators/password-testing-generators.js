@@ -25,33 +25,53 @@ function getPasswordSettings() {
 
 function generateCustomPassword() {
   const settings = getPasswordSettings();
-  
-  let charset = '';
-  if (settings.includeUppercase) charset += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  if (settings.includeLowercase) charset += 'abcdefghijklmnopqrstuvwxyz';
-  if (settings.includeNumbers) charset += '0123456789';
-  if (settings.includeSpecialChars) charset += '!@#$%^&*()_+-=[]{}|;:,.<>?';
-  if (settings.includeArabicChars) charset += 'ابتثجحخدذرزسشصضطظعغفقكلمنهوي';
-  
-  if (!charset) charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  
-  let password = '';
+
+  const sets = [];
+  if (settings.includeUppercase) sets.push('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+  if (settings.includeLowercase) sets.push('abcdefghijklmnopqrstuvwxyz');
+  if (settings.includeNumbers) sets.push('0123456789');
+  if (settings.includeSpecialChars) sets.push('!@#$%^&*()_+-=[]{}|;:,.<>?');
+  if (settings.includeArabicChars) sets.push('ابتثجحخدذرزسشصضطظعغفقكلمنهوي');
+
+  const fallback = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charset = sets.length ? sets.join('') : fallback;
+
+  const minLength = Math.max(settings.length, sets.length || 1);
+  const length = minLength;
+
   let attempts = 0;
   const maxAttempts = 100;
-  
+  let password = '';
+
   do {
-    password = '';
-    
-    // Generate password
-    for (let i = 0; i < settings.length; i++) {
-      let char;
-      do {
-        char = charset.charAt(Math.floor(Math.random() * charset.length));
-      } while (settings.noRepeating && password.includes(char));
-      
-      password += char;
+    const chars = [];
+    const used = new Set();
+
+    // Ensure at least one from each selected set
+    for (const set of (sets.length ? sets : [fallback])) {
+      let ch = set.charAt(Math.floor(Math.random() * set.length));
+      if (settings.noRepeating && used.has(ch)) {
+        let guard = 0;
+        while (used.has(ch) && guard < 50) {
+          ch = set.charAt(Math.floor(Math.random() * set.length));
+          guard++;
+        }
+      }
+      chars.push(ch);
+      used.add(ch);
     }
-    
+
+    // Fill the remaining length
+    while (chars.length < length) {
+      let ch = charset.charAt(Math.floor(Math.random() * charset.length));
+      if (settings.noRepeating && used.has(ch)) continue;
+      chars.push(ch);
+      used.add(ch);
+    }
+
+    // Shuffle
+    password = chars.sort(() => Math.random() - 0.5).join('');
+
     // Apply start/end requirements
     if (settings.mustStartWith && password.length > 0) {
       const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
@@ -59,17 +79,17 @@ function generateCustomPassword() {
         password = letters.charAt(Math.floor(Math.random() * letters.length)) + password.slice(1);
       }
     }
-    
+
     if (settings.mustEndWith && password.length > 0) {
       const numbers = '0123456789';
       if (!numbers.includes(password[password.length - 1])) {
         password = password.slice(0, -1) + numbers.charAt(Math.floor(Math.random() * numbers.length));
       }
     }
-    
+
     attempts++;
   } while (settings.noRepeating && hasDuplicates(password) && attempts < maxAttempts);
-  
+
   return password;
 }
 

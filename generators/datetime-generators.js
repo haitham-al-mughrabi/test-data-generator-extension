@@ -57,6 +57,39 @@ function formatCustomDate(date) {
   }
 }
 
+function pad2(value) {
+  return value.toString().padStart(2, '0');
+}
+
+function getRandomDateInRange() {
+  const range = getCustomDateRange();
+  return randomDate(range.start, range.end);
+}
+
+function getRandomTimeInRange() {
+  const range = getCustomTimeRange();
+  const startParts = range.start.split(':');
+  const endParts = range.end.split(':');
+  const startMinutes = parseInt(startParts[0]) * 60 + parseInt(startParts[1]);
+  const endMinutes = parseInt(endParts[0]) * 60 + parseInt(endParts[1]);
+  const randomMinutes = randomNum(startMinutes, endMinutes);
+  const hour = Math.floor(randomMinutes / 60);
+  const minute = randomMinutes % 60;
+  return { hour, minute };
+}
+
+function formatIsoDate(date) {
+  return date.toISOString().split('T')[0];
+}
+
+function formatIsoDateTime(date) {
+  return date.toISOString();
+}
+
+function formatRfc3339(date) {
+  return date.toISOString();
+}
+
 // Simple Hijri conversion (approximation)
 function gregorianToHijri(gregorianDate) {
   const gYear = gregorianDate.getFullYear();
@@ -136,61 +169,38 @@ const dateTimeGenerators = {
   },
 
   dateGregorian: () => {
-    const start = new Date(2020, 0, 1);
-    const end = new Date(2030, 11, 31);
-    const date = randomDate(start, end);
+    const date = getRandomDateInRange();
     return date.toLocaleDateString('en-GB');
   },
 
   dateGregorianAr: () => {
-    const start = new Date(2020, 0, 1);
-    const end = new Date(2030, 11, 31);
-    const date = randomDate(start, end);
+    const date = getRandomDateInRange();
     const months = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
     return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
   },
 
   dateHijri: () => {
-    const start = new Date(2020, 0, 1);
-    const end = new Date(2030, 11, 31);
-    const date = randomDate(start, end);
+    const date = getRandomDateInRange();
     const hijriDate = gregorianToHijri(date);
     return `${hijriDate.day}/${hijriDate.month}/${hijriDate.year}`;
   },
 
   dateHijriAr: () => {
-    const start = new Date(2020, 0, 1);
-    const end = new Date(2030, 11, 31);
-    const date = randomDate(start, end);
+    const date = getRandomDateInRange();
     const hijriDate = gregorianToHijri(date);
     const hijriMonths = ['محرم', 'صفر', 'ربيع الأول', 'ربيع الثاني', 'جمادى الأولى', 'جمادى الثانية', 'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة'];
     return `${hijriDate.day} ${hijriMonths[hijriDate.month - 1]} ${hijriDate.year}`;
   },
 
   time: () => {
-    const range = getCustomTimeRange();
-    const startParts = range.start.split(':');
-    const endParts = range.end.split(':');
-    const startMinutes = parseInt(startParts[0]) * 60 + parseInt(startParts[1]);
-    const endMinutes = parseInt(endParts[0]) * 60 + parseInt(endParts[1]);
-    const randomMinutes = randomNum(startMinutes, endMinutes);
-    const hour = Math.floor(randomMinutes / 60).toString().padStart(2, '0');
-    const minute = (randomMinutes % 60).toString().padStart(2, '0');
-    return `${hour}:${minute}`;
+    const { hour, minute } = getRandomTimeInRange();
+    return `${pad2(hour)}:${pad2(minute)}`;
   },
 
   datetime: () => {
-    const range = getCustomDateRange();
-    const date = randomDate(range.start, range.end);
-    const timeRange = getCustomTimeRange();
-    const startParts = timeRange.start.split(':');
-    const endParts = timeRange.end.split(':');
-    const startMinutes = parseInt(startParts[0]) * 60 + parseInt(startParts[1]);
-    const endMinutes = parseInt(endParts[0]) * 60 + parseInt(endParts[1]);
-    const randomMinutes = randomNum(startMinutes, endMinutes);
-    const hour = Math.floor(randomMinutes / 60).toString().padStart(2, '0');
-    const minute = (randomMinutes % 60).toString().padStart(2, '0');
-    return `${formatDateWithSettings(date)} ${hour}:${minute}`;
+    const date = getRandomDateInRange();
+    const { hour, minute } = getRandomTimeInRange();
+    return `${formatDateWithSettings(date)} ${pad2(hour)}:${pad2(minute)}`;
   },
 
   hijriToGregorian: () => {
@@ -226,24 +236,38 @@ const dateTimeGenerators = {
     return `${hour}:${minute} ${ampm}`;
   },
 
-  datetime: () => {
-    const start = new Date(2020, 0, 1);
-    const end = new Date(2030, 11, 31);
-    const date = randomDate(start, end);
-    return date.toISOString().replace('T', ' ').split('.')[0];
+  time24: () => {
+    const { hour, minute } = getRandomTimeInRange();
+    return `${pad2(hour)}:${pad2(minute)}`;
+  },
+
+  dateIso: () => {
+    const date = getRandomDateInRange();
+    return formatIsoDate(date);
+  },
+
+  datetimeIso: () => {
+    const date = getRandomDateInRange();
+    return formatIsoDateTime(date);
+  },
+
+  datetimeRfc3339: () => {
+    const date = getRandomDateInRange();
+    return formatRfc3339(date);
+  },
+
+  datetimeUnix: () => {
+    const date = getRandomDateInRange();
+    return Math.floor(date.getTime() / 1000);
   },
 
   datetimeLocal: () => {
-    const start = new Date(2020, 0, 1);
-    const end = new Date(2030, 11, 31);
-    const date = randomDate(start, end);
+    const date = getRandomDateInRange();
     return date.toLocaleString('en-GB');
   },
 
   datetimeAr: () => {
-    const start = new Date(2020, 0, 1);
-    const end = new Date(2030, 11, 31);
-    const date = randomDate(start, end);
+    const date = getRandomDateInRange();
     const months = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
     const hour = date.getHours();
     const minute = date.getMinutes().toString().padStart(2, '0');
@@ -254,6 +278,7 @@ const dateTimeGenerators = {
 
   timestamp: () => new Date().toISOString(),
   timeZone: () => randomChoice(['UTC+3', 'UTC+2', 'UTC+1', 'UTC+0', 'UTC-5']),
+  utcOffset: () => randomChoice(['+00:00', '+01:00', '+02:00', '+03:00', '+04:00', '-04:00', '-05:00', '-08:00']),
   dayOfWeek: () => randomChoice(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']),
   month: () => randomChoice(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']),
 
