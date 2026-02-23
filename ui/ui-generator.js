@@ -1484,6 +1484,19 @@ function createDataGeneratorUI(containerId) {
             { id: "tailwindColor", label: "Tailwind CSS" },
             { id: "bootstrapColor", label: "Bootstrap Color" }
           ]
+        },
+        {
+          title: "Color Converters",
+          fields: [
+            { id: "colorAllFormats", label: "All Formats (JSON)" },
+            { id: "hexToRgbConverter", label: "HEX → RGB" },
+            { id: "hexToHslConverter", label: "HEX → HSL" },
+            { id: "hexToCmykConverter", label: "HEX → CMYK" },
+            { id: "rgbToHexConverter", label: "RGB → HEX" },
+            { id: "rgbToHslConverter", label: "RGB → HSL" },
+            { id: "hslToRgbConverter", label: "HSL → RGB" },
+            { id: "hslToHexConverter", label: "HSL → HEX" }
+          ]
         }
       ]
     },
@@ -2363,6 +2376,35 @@ function createDataGeneratorUI(containerId) {
                 <button class="dg-btn dg-btn-secondary dg-select-all" data-tab="current">✓ Tab</button>
                 <button class="dg-btn dg-btn-secondary dg-select-all-categories">✓ All</button>
               </div>
+              ${
+                cat.title === "Colors"
+                  ? `
+                <div class="dg-file-controls active" id="colorControls">
+                  <div class="dg-file-control-group">
+                    <label>Input Color:</label>
+                    <input type="text" id="colorInput" placeholder="#FF5733 or rgb(255,87,51)" value="#FF5733" style="flex: 1;">
+                  </div>
+                  <div class="dg-file-control-group">
+                    <label>Convert To:</label>
+                    <select id="colorOutputType" style="flex: 1; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                      <option value="all">All Formats</option>
+                      <option value="hex">HEX</option>
+                      <option value="rgb">RGB</option>
+                      <option value="rgba">RGBA</option>
+                      <option value="hsl">HSL</option>
+                      <option value="hsla">HSLA</option>
+                      <option value="hsv">HSV</option>
+                      <option value="cmyk">CMYK</option>
+                    </select>
+                  </div>
+                  <div class="dg-file-control-group">
+                    <button id="convertColorBtn" class="dg-btn dg-btn-primary" style="width: 100%;">🎨 Convert Color</button>
+                  </div>
+                  <div id="colorConversionResult" style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 13px; line-height: 1.8; min-height: 50px;"></div>
+                </div>
+              `
+                  : ""
+              }
               ${
                 cat.title === "Files"
                   ? `
@@ -3464,6 +3506,64 @@ function createDataGeneratorUI(containerId) {
     imageHeightEl.addEventListener("input", updateFileSizeFromDimensions);
     fileSizeEl.addEventListener("input", updateDimensionsFromFileSize);
     fileSizeUnitEl.addEventListener("change", updateDimensionsFromFileSize);
+  }
+
+  // Color converter functionality
+  const convertColorBtn = document.getElementById("convertColorBtn");
+  if (convertColorBtn) {
+    convertColorBtn.addEventListener("click", () => {
+      const colorInput = document.getElementById("colorInput").value.trim();
+      const outputType = document.getElementById("colorOutputType").value;
+      const resultDiv = document.getElementById("colorConversionResult");
+      
+      if (!colorInput) {
+        resultDiv.innerHTML = '<div style="color: #ef4444;">❌ Please enter a color value</div>';
+        return;
+      }
+
+      if (!window.colorConverter) {
+        resultDiv.innerHTML = '<div style="color: #ef4444;">❌ Color converter not loaded</div>';
+        return;
+      }
+
+      try {
+        const converted = window.colorConverter.convertColor(colorInput);
+        if (!converted) {
+          resultDiv.innerHTML = '<div style="color: #ef4444;">❌ Invalid color format. Try: #FF5733, rgb(255,87,51), or hsl(9,100%,60%)</div>';
+          return;
+        }
+
+        let resultHTML = '';
+        
+        if (outputType === 'all') {
+          resultHTML = `
+            <div style="font-weight: 600; margin-bottom: 8px; color: #1e293b;">✅ All Formats:</div>
+            <div style="display: grid; gap: 6px;">
+              <div><strong>HEX:</strong> <code style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; cursor: pointer;" onclick="navigator.clipboard.writeText('${converted.hex}')">${converted.hex}</code></div>
+              <div><strong>RGB:</strong> <code style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; cursor: pointer;" onclick="navigator.clipboard.writeText('${converted.rgb}')">${converted.rgb}</code></div>
+              <div><strong>RGBA:</strong> <code style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; cursor: pointer;" onclick="navigator.clipboard.writeText('${converted.rgba}')">${converted.rgba}</code></div>
+              <div><strong>HSL:</strong> <code style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; cursor: pointer;" onclick="navigator.clipboard.writeText('${converted.hsl}')">${converted.hsl}</code></div>
+              <div><strong>HSLA:</strong> <code style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; cursor: pointer;" onclick="navigator.clipboard.writeText('${converted.hsla}')">${converted.hsla}</code></div>
+              <div><strong>HSV:</strong> <code style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; cursor: pointer;" onclick="navigator.clipboard.writeText('${converted.hsv}')">${converted.hsv}</code></div>
+              <div><strong>CMYK:</strong> <code style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; cursor: pointer;" onclick="navigator.clipboard.writeText('${converted.cmyk}')">${converted.cmyk}</code></div>
+              <div style="margin-top: 8px; padding: 20px; background: ${converted.hex}; border-radius: 6px; text-align: center; color: white; text-shadow: 0 1px 2px rgba(0,0,0,0.3); font-weight: 600;">Color Preview</div>
+            </div>
+          `;
+        } else {
+          const value = converted[outputType];
+          resultHTML = `
+            <div style="font-weight: 600; margin-bottom: 8px; color: #1e293b;">✅ Converted to ${outputType.toUpperCase()}:</div>
+            <div style="font-size: 18px; font-weight: 600; padding: 12px; background: #e2e8f0; border-radius: 6px; cursor: pointer; text-align: center;" onclick="navigator.clipboard.writeText('${value}')">${value}</div>
+            <div style="margin-top: 8px; padding: 20px; background: ${converted.hex}; border-radius: 6px; text-align: center; color: white; text-shadow: 0 1px 2px rgba(0,0,0,0.3); font-weight: 600;">Color Preview</div>
+            <div style="margin-top: 8px; font-size: 11px; color: #64748b; text-align: center;">💡 Click values to copy</div>
+          `;
+        }
+        
+        resultDiv.innerHTML = resultHTML;
+      } catch (error) {
+        resultDiv.innerHTML = `<div style="color: #ef4444;">❌ Error: ${error.message}</div>`;
+      }
+    });
   }
 
   document.getElementById("generateBtn").addEventListener("click", () => {

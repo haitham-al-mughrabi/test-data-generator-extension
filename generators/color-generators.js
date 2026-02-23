@@ -1,4 +1,144 @@
 // Color generators - All formats
+
+// Color conversion utilities
+const colorConverter = {
+  // HEX to RGB
+  hexToRgb: (hex) => {
+    hex = hex.replace('#', '');
+    if (hex.length === 3) {
+      hex = hex.split('').map(c => c + c).join('');
+    }
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+    return { r, g, b };
+  },
+
+  // RGB to HEX
+  rgbToHex: (r, g, b) => {
+    return '#' + [r, g, b].map(x => {
+      const hex = x.toString(16);
+      return hex.length === 1 ? '0' + hex : hex;
+    }).join('');
+  },
+
+  // RGB to HSL
+  rgbToHsl: (r, g, b) => {
+    r /= 255; g /= 255; b /= 255;
+    const max = Math.max(r, g, b), min = Math.min(r, g, b);
+    let h, s, l = (max + min) / 2;
+
+    if (max === min) {
+      h = s = 0;
+    } else {
+      const d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch (max) {
+        case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
+        case g: h = ((b - r) / d + 2) / 6; break;
+        case b: h = ((r - g) / d + 4) / 6; break;
+      }
+    }
+    return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) };
+  },
+
+  // HSL to RGB
+  hslToRgb: (h, s, l) => {
+    h /= 360; s /= 100; l /= 100;
+    let r, g, b;
+
+    if (s === 0) {
+      r = g = b = l;
+    } else {
+      const hue2rgb = (p, q, t) => {
+        if (t < 0) t += 1;
+        if (t > 1) t -= 1;
+        if (t < 1/6) return p + (q - p) * 6 * t;
+        if (t < 1/2) return q;
+        if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+        return p;
+      };
+      const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+      const p = 2 * l - q;
+      r = hue2rgb(p, q, h + 1/3);
+      g = hue2rgb(p, q, h);
+      b = hue2rgb(p, q, h - 1/3);
+    }
+    return { r: Math.round(r * 255), g: Math.round(g * 255), b: Math.round(b * 255) };
+  },
+
+  // RGB to HSV
+  rgbToHsv: (r, g, b) => {
+    r /= 255; g /= 255; b /= 255;
+    const max = Math.max(r, g, b), min = Math.min(r, g, b);
+    let h, s, v = max;
+    const d = max - min;
+    s = max === 0 ? 0 : d / max;
+
+    if (max === min) {
+      h = 0;
+    } else {
+      switch (max) {
+        case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
+        case g: h = ((b - r) / d + 2) / 6; break;
+        case b: h = ((r - g) / d + 4) / 6; break;
+      }
+    }
+    return { h: Math.round(h * 360), s: Math.round(s * 100), v: Math.round(v * 100) };
+  },
+
+  // RGB to CMYK
+  rgbToCmyk: (r, g, b) => {
+    let c = 1 - (r / 255);
+    let m = 1 - (g / 255);
+    let y = 1 - (b / 255);
+    let k = Math.min(c, m, y);
+    
+    if (k === 1) {
+      c = m = y = 0;
+    } else {
+      c = Math.round(((c - k) / (1 - k)) * 100);
+      m = Math.round(((m - k) / (1 - k)) * 100);
+      y = Math.round(((y - k) / (1 - k)) * 100);
+      k = Math.round(k * 100);
+    }
+    return { c, m, y, k };
+  },
+
+  // Convert any color to all formats
+  convertColor: (color) => {
+    let rgb;
+    
+    // Parse input color
+    if (color.startsWith('#')) {
+      rgb = colorConverter.hexToRgb(color);
+    } else if (color.startsWith('rgb')) {
+      const match = color.match(/\d+/g);
+      rgb = { r: parseInt(match[0]), g: parseInt(match[1]), b: parseInt(match[2]) };
+    } else if (color.startsWith('hsl')) {
+      const match = color.match(/\d+/g);
+      rgb = colorConverter.hslToRgb(parseInt(match[0]), parseInt(match[1]), parseInt(match[2]));
+    } else {
+      return null;
+    }
+
+    const hsl = colorConverter.rgbToHsl(rgb.r, rgb.g, rgb.b);
+    const hsv = colorConverter.rgbToHsv(rgb.r, rgb.g, rgb.b);
+    const cmyk = colorConverter.rgbToCmyk(rgb.r, rgb.g, rgb.b);
+    const hex = colorConverter.rgbToHex(rgb.r, rgb.g, rgb.b);
+
+    return {
+      hex: hex,
+      rgb: `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`,
+      rgba: `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 1)`,
+      hsl: `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`,
+      hsla: `hsla(${hsl.h}, ${hsl.s}%, ${hsl.l}%, 1)`,
+      hsv: `hsv(${hsv.h}, ${hsv.s}%, ${hsv.v}%)`,
+      cmyk: `cmyk(${cmyk.c}%, ${cmyk.m}%, ${cmyk.y}%, ${cmyk.k}%)`
+    };
+  }
+};
+
 const colorGenerators = {
   // HEX Color
   hexColor: () => {
@@ -176,11 +316,72 @@ const colorGenerators = {
     const color2 = colorGenerators.hexColor();
     const angle = randomNum(0, 360);
     return `linear-gradient(${angle}deg, ${color1}, ${color2})`;
+  },
+
+  // Color Converters (generate a color and show all formats)
+  colorAllFormats: () => {
+    const hex = colorGenerators.hexColor();
+    const converted = colorConverter.convertColor(hex);
+    return JSON.stringify(converted, null, 2);
+  },
+
+  hexToRgbConverter: () => {
+    const hex = colorGenerators.hexColor();
+    const rgb = colorConverter.hexToRgb(hex);
+    return `${hex} → rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+  },
+
+  hexToHslConverter: () => {
+    const hex = colorGenerators.hexColor();
+    const rgb = colorConverter.hexToRgb(hex);
+    const hsl = colorConverter.rgbToHsl(rgb.r, rgb.g, rgb.b);
+    return `${hex} → hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
+  },
+
+  hexToCmykConverter: () => {
+    const hex = colorGenerators.hexColor();
+    const rgb = colorConverter.hexToRgb(hex);
+    const cmyk = colorConverter.rgbToCmyk(rgb.r, rgb.g, rgb.b);
+    return `${hex} → cmyk(${cmyk.c}%, ${cmyk.m}%, ${cmyk.y}%, ${cmyk.k}%)`;
+  },
+
+  rgbToHexConverter: () => {
+    const r = randomNum(0, 255);
+    const g = randomNum(0, 255);
+    const b = randomNum(0, 255);
+    const hex = colorConverter.rgbToHex(r, g, b);
+    return `rgb(${r}, ${g}, ${b}) → ${hex}`;
+  },
+
+  rgbToHslConverter: () => {
+    const r = randomNum(0, 255);
+    const g = randomNum(0, 255);
+    const b = randomNum(0, 255);
+    const hsl = colorConverter.rgbToHsl(r, g, b);
+    return `rgb(${r}, ${g}, ${b}) → hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
+  },
+
+  hslToRgbConverter: () => {
+    const h = randomNum(0, 360);
+    const s = randomNum(0, 100);
+    const l = randomNum(0, 100);
+    const rgb = colorConverter.hslToRgb(h, s, l);
+    return `hsl(${h}, ${s}%, ${l}%) → rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+  },
+
+  hslToHexConverter: () => {
+    const h = randomNum(0, 360);
+    const s = randomNum(0, 100);
+    const l = randomNum(0, 100);
+    const rgb = colorConverter.hslToRgb(h, s, l);
+    const hex = colorConverter.rgbToHex(rgb.r, rgb.g, rgb.b);
+    return `hsl(${h}, ${s}%, ${l}%) → ${hex}`;
   }
 };
 
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { colorGenerators };
+  module.exports = { colorGenerators, colorConverter };
 } else {
   window.colorGenerators = colorGenerators;
+  window.colorConverter = colorConverter;
 }
