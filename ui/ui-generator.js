@@ -111,11 +111,58 @@ function createDataGeneratorUI(containerId) {
     .dg-search-field { color: var(--muted); margin-left: 8px; }
     .dg-search-highlight { background: #fff1c2; padding: 1px 3px; border-radius: 3px; }
     .dg-body { flex: 1; display: flex; min-height: 0; overflow: hidden; width: 100%; }
-    .dg-tabs { display: flex; flex-direction: column; background: linear-gradient(180deg, #ffffff 0%, #f6f7fb 100%); border-right: 1px solid var(--line); overflow-y: auto; flex-shrink: 0; width: 155px; box-shadow: 2px 0 12px rgba(15, 23, 42, 0.06); padding-bottom: 56px; }
-    .dg-tab { padding: 17px 16px; border: none; background: none; cursor: pointer; font-size: 12px; font-weight: 800; color: #5b6b7f; border-left: 4px solid transparent; white-space: normal; transition: all 0.25s ease; text-align: left; position: relative; word-wrap: break-word; text-transform: uppercase; letter-spacing: 0.4px; }
-    .dg-tab:hover { color: var(--brand-1); background: rgba(91, 124, 250, 0.08); border-left-color: var(--brand-1); transform: translateX(2px); box-shadow: inset 0 0 0 1px rgba(91, 124, 250, 0.12), 0 6px 16px rgba(15, 23, 42, 0.06); }
-    .dg-tab.active { color: white; border-left-color: #ffffff; background: linear-gradient(135deg, rgba(91, 124, 250, 0.95) 0%, rgba(127, 86, 217, 0.95) 100%); box-shadow: var(--shadow-2); }
-    .dg-tab.active::after { content: ""; position: absolute; right: 12px; top: 50%; width: 6px; height: 6px; transform: translateY(-50%); border-radius: 50%; background: rgba(255,255,255,0.9); box-shadow: 0 0 0 3px rgba(255,255,255,0.15); }
+    .dg-tabs { 
+      display: flex; 
+      flex-direction: column; 
+      background: linear-gradient(180deg, #ffffff 0%, #f6f7fb 100%);
+      border-right: 1px solid var(--line);
+      overflow-y: auto; 
+      flex-shrink: 0; 
+      width: 200px; 
+      padding: 16px 8px 60px 8px;
+      gap: 4px;
+    }
+    .dg-tab { 
+      padding: 12px 16px; 
+      border: none; 
+      background: transparent;
+      cursor: pointer; 
+      font-size: 13px; 
+      font-weight: 600; 
+      color: #5b6b7f;
+      border-radius: 10px;
+      white-space: normal; 
+      transition: all 0.2s ease; 
+      text-align: left; 
+      position: relative; 
+      word-wrap: break-word; 
+      letter-spacing: 0.2px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .dg-tab:hover { 
+      color: var(--brand-1);
+      background: rgba(91, 124, 250, 0.08);
+      transform: translateX(4px);
+    }
+    .dg-tab.active { 
+      color: white;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+      transform: translateX(4px);
+    }
+    .dg-tab.active::before {
+      content: "";
+      position: absolute;
+      left: -8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 60%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 0 4px 4px 0;
+    }
     .dg-sub-tabs { display: none; }
     .dg-sub-tab { display: none; }
     .dg-sub-tab:hover { display: none; }
@@ -2388,13 +2435,89 @@ function createDataGeneratorUI(containerId) {
     },
   ];
 
-  const tabsHTML = categories
+  // Tab icons mapping
+  const tabIcons = {
+    'Personal': '👤',
+    'Contact': '📧',
+    'Work': '💼',
+    'Finance': '💳',
+    'Healthcare': '🏥',
+    'Government': '🏛️',
+    'E-commerce': '🛒',
+    'Technology': '💻',
+    'Testing & QA': '🧪',
+    'Travel': '✈️',
+    'Education': '🎓',
+    'Real Estate': '🏠',
+    'Entertainment': '🎬',
+    'Sports': '⚽',
+    'Food': '🍽️',
+    'Agriculture': '🌾',
+    'Manufacturing': '🏭',
+    'Construction': '🏗️',
+    'Telecom': '📱',
+    'Insurance': '🛡️',
+    'Banking': '🏦',
+    'Energy': '⚡',
+    'Logistics': '📦',
+    'Fashion': '👗',
+    'Legal': '⚖️',
+    'Science': '🔬',
+    'Documents': '📄',
+    'Files': '📁',
+    'Images': '🖼️',
+    'Date & Time': '📅',
+    'Random Text': '📝',
+    'Random Values': '🎲',
+    'UUIDs': '🔑',
+    'Passwords': '🔒',
+    'Phone Testing': '☎️',
+    'Email Testing': '✉️',
+    'Edge Cases': '⚠️',
+    'Performance': '⚡',
+    'Security': '🔐',
+    'Vehicles': '🚗',
+    'Saudi Services': '🇸🇦',
+    'Media': '📺',
+    'Automotive': '🚙',
+    'Weather': '🌤️',
+    'Crypto': '₿',
+    'IoT': '🔌',
+    'Colors': '🎨',
+    'Other': '📋'
+  };
+
+  // Reorder categories by usage priority
+  const categoryOrder = [
+    'Personal', 'Contact', 'Work', 'Finance', 'Saudi Services',
+    'Date & Time', 'Random Values', 'Random Text', 'UUIDs', 'Passwords',
+    'Phone Testing', 'Email Testing', 'Colors', 'Files', 'Images',
+    'Testing & QA', 'Edge Cases', 'Performance', 'Security',
+    'Technology', 'E-commerce', 'Healthcare', 'Government',
+    'Education', 'Travel', 'Real Estate', 'Vehicles', 'Automotive',
+    'Banking', 'Insurance', 'Telecom', 'Energy', 'Logistics',
+    'Food', 'Entertainment', 'Media', 'Sports', 'Fashion',
+    'Construction', 'Manufacturing', 'Agriculture', 'Legal', 'Science',
+    'Documents', 'Weather', 'Crypto', 'IoT', 'Other'
+  ];
+
+  const sortedCategories = [...categories].sort((a, b) => {
+    const indexA = categoryOrder.indexOf(a.title);
+    const indexB = categoryOrder.indexOf(b.title);
+    if (indexA === -1) return 1;
+    if (indexB === -1) return -1;
+    return indexA - indexB;
+  });
+
+  const tabsHTML = sortedCategories
     .map(
-      (cat, idx) =>
-        `<button class="dg-tab ${idx === 0 ? "active" : ""}" data-tab="${idx}">${cat.title}</button>`,
+      (cat, idx) => {
+        const icon = tabIcons[cat.title] || '📋';
+        return `<button class="dg-tab ${idx === 0 ? "active" : ""}" data-tab="${idx}"><span style="font-size: 18px;">${icon}</span><span>${cat.title}</span></button>`;
+      }
     )
     .join("");
-  const contentHTML = categories
+  const contentHTML = sortedCategories
     .map(
       (cat, idx) => {
         // Check if category has sub-tabs
@@ -3046,7 +3169,7 @@ function createDataGeneratorUI(containerId) {
         .classList.add("active");
 
       // Show/hide file controls and download button based on Files tab
-      const category = categories[tabIdx];
+      const category = sortedCategories[tabIdx];
       const isFilesTab = category.title === "Files";
       const isDateTimeTab = category.title === "Date & Time";
       const isRandomValuesTab = category.title === "Random Values";
@@ -3417,7 +3540,7 @@ function createDataGeneratorUI(containerId) {
 
   function createSearchIndex() {
     const searchIndex = [];
-    categories.forEach((category, categoryIndex) => {
+    sortedCategories.forEach((category, categoryIndex) => {
       if (category.subTabs) {
         // Handle categories with sub-tabs
         category.subTabs.forEach((subTab, subTabIndex) => {
