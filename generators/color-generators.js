@@ -343,29 +343,74 @@ const colorGenerators = {
 
   // Color Converters (generate a color and show all formats)
   colorAllFormats: () => {
-    const hex = colorGenerators.hexColor();
+    const hex = '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
     const converted = colorConverter.convertColor(hex);
     return JSON.stringify(converted, null, 2);
   },
 
   hexToRgbConverter: () => {
-    const hex = colorGenerators.hexColor();
+    const hex = '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
     const rgb = colorConverter.hexToRgb(hex);
-    return `${hex} → rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+    const rgbValue = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+    return `<div style="display: flex; flex-direction: column; gap: 8px;">
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <span style="font-weight: 600; font-size: 12px; color: #64748b;">Input:</span>
+        <span style="display: inline-flex; align-items: center; gap: 8px;">
+          <span style="display: inline-block; width: 24px; height: 24px; background: ${hex}; border: 1px solid #ccc; border-radius: 4px;"></span>
+          <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; flex: 1;" onclick="navigator.clipboard.writeText('${hex}')">${hex}</code>
+        </span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <span style="font-weight: 600; font-size: 12px; color: #64748b;">Output:</span>
+        <span style="display: inline-flex; align-items: center; gap: 8px;">
+          <span style="display: inline-block; width: 24px; height: 24px; background: ${rgbValue}; border: 1px solid #ccc; border-radius: 4px;"></span>
+          <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; flex: 1;" onclick="navigator.clipboard.writeText('${rgbValue}')">${rgbValue}</code>
+        </span>
+      </div>
+    </div>`;
   },
 
   hexToHslConverter: () => {
-    const hex = colorGenerators.hexColor();
+    const hex = '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
     const rgb = colorConverter.hexToRgb(hex);
     const hsl = colorConverter.rgbToHsl(rgb.r, rgb.g, rgb.b);
-    return `${hex} → hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
+    const hslValue = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
+    return `<div style="display: flex; flex-direction: column; gap: 8px;">
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <span style="font-weight: 600; font-size: 12px; color: #64748b;">Input:</span>
+        <span style="display: inline-flex; align-items: center; gap: 8px;">
+          <span style="display: inline-block; width: 24px; height: 24px; background: ${hex}; border: 1px solid #ccc; border-radius: 4px;"></span>
+          <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; flex: 1;" onclick="navigator.clipboard.writeText('${hex}')">${hex}</code>
+        </span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <span style="font-weight: 600; font-size: 12px; color: #64748b;">Output:</span>
+        <span style="display: inline-flex; align-items: center; gap: 8px;">
+          <span style="display: inline-block; width: 24px; height: 24px; background: ${hslValue}; border: 1px solid #ccc; border-radius: 4px;"></span>
+          <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; flex: 1;" onclick="navigator.clipboard.writeText('${hslValue}')">${hslValue}</code>
+        </span>
+      </div>
+    </div>`;
   },
 
   hexToCmykConverter: () => {
-    const hex = colorGenerators.hexColor();
+    const hex = '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
     const rgb = colorConverter.hexToRgb(hex);
     const cmyk = colorConverter.rgbToCmyk(rgb.r, rgb.g, rgb.b);
-    return `${hex} → cmyk(${cmyk.c}%, ${cmyk.m}%, ${cmyk.y}%, ${cmyk.k}%)`;
+    const cmykValue = `cmyk(${cmyk.c}%, ${cmyk.m}%, ${cmyk.y}%, ${cmyk.k}%)`;
+    return `<div style="display: flex; flex-direction: column; gap: 8px;">
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <span style="font-weight: 600; font-size: 12px; color: #64748b;">Input:</span>
+        <span style="display: inline-flex; align-items: center; gap: 8px;">
+          <span style="display: inline-block; width: 24px; height: 24px; background: ${hex}; border: 1px solid #ccc; border-radius: 4px;"></span>
+          <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; flex: 1;" onclick="navigator.clipboard.writeText('${hex}')">${hex}</code>
+        </span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <span style="font-weight: 600; font-size: 12px; color: #64748b;">Output:</span>
+        <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; display: block;" onclick="navigator.clipboard.writeText('${cmykValue}')">${cmykValue}</code>
+      </div>
+    </div>`;
   },
 
   rgbToHexConverter: () => {
@@ -373,7 +418,23 @@ const colorGenerators = {
     const g = randomNum(0, 255);
     const b = randomNum(0, 255);
     const hex = colorConverter.rgbToHex(r, g, b);
-    return `rgb(${r}, ${g}, ${b}) → ${hex}`;
+    const rgbValue = `rgb(${r}, ${g}, ${b})`;
+    return `<div style="display: flex; flex-direction: column; gap: 8px;">
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <span style="font-weight: 600; font-size: 12px; color: #64748b;">Input:</span>
+        <span style="display: inline-flex; align-items: center; gap: 8px;">
+          <span style="display: inline-block; width: 24px; height: 24px; background: ${rgbValue}; border: 1px solid #ccc; border-radius: 4px;"></span>
+          <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; flex: 1;" onclick="navigator.clipboard.writeText('${rgbValue}')">${rgbValue}</code>
+        </span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <span style="font-weight: 600; font-size: 12px; color: #64748b;">Output:</span>
+        <span style="display: inline-flex; align-items: center; gap: 8px;">
+          <span style="display: inline-block; width: 24px; height: 24px; background: ${hex}; border: 1px solid #ccc; border-radius: 4px;"></span>
+          <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; flex: 1;" onclick="navigator.clipboard.writeText('${hex}')">${hex}</code>
+        </span>
+      </div>
+    </div>`;
   },
 
   rgbToHslConverter: () => {
@@ -381,7 +442,24 @@ const colorGenerators = {
     const g = randomNum(0, 255);
     const b = randomNum(0, 255);
     const hsl = colorConverter.rgbToHsl(r, g, b);
-    return `rgb(${r}, ${g}, ${b}) → hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
+    const rgbValue = `rgb(${r}, ${g}, ${b})`;
+    const hslValue = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
+    return `<div style="display: flex; flex-direction: column; gap: 8px;">
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <span style="font-weight: 600; font-size: 12px; color: #64748b;">Input:</span>
+        <span style="display: inline-flex; align-items: center; gap: 8px;">
+          <span style="display: inline-block; width: 24px; height: 24px; background: ${rgbValue}; border: 1px solid #ccc; border-radius: 4px;"></span>
+          <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; flex: 1;" onclick="navigator.clipboard.writeText('${rgbValue}')">${rgbValue}</code>
+        </span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <span style="font-weight: 600; font-size: 12px; color: #64748b;">Output:</span>
+        <span style="display: inline-flex; align-items: center; gap: 8px;">
+          <span style="display: inline-block; width: 24px; height: 24px; background: ${hslValue}; border: 1px solid #ccc; border-radius: 4px;"></span>
+          <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; flex: 1;" onclick="navigator.clipboard.writeText('${hslValue}')">${hslValue}</code>
+        </span>
+      </div>
+    </div>`;
   },
 
   hslToRgbConverter: () => {
@@ -389,7 +467,24 @@ const colorGenerators = {
     const s = randomNum(0, 100);
     const l = randomNum(0, 100);
     const rgb = colorConverter.hslToRgb(h, s, l);
-    return `hsl(${h}, ${s}%, ${l}%) → rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+    const hslValue = `hsl(${h}, ${s}%, ${l}%)`;
+    const rgbValue = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+    return `<div style="display: flex; flex-direction: column; gap: 8px;">
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <span style="font-weight: 600; font-size: 12px; color: #64748b;">Input:</span>
+        <span style="display: inline-flex; align-items: center; gap: 8px;">
+          <span style="display: inline-block; width: 24px; height: 24px; background: ${hslValue}; border: 1px solid #ccc; border-radius: 4px;"></span>
+          <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; flex: 1;" onclick="navigator.clipboard.writeText('${hslValue}')">${hslValue}</code>
+        </span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <span style="font-weight: 600; font-size: 12px; color: #64748b;">Output:</span>
+        <span style="display: inline-flex; align-items: center; gap: 8px;">
+          <span style="display: inline-block; width: 24px; height: 24px; background: ${rgbValue}; border: 1px solid #ccc; border-radius: 4px;"></span>
+          <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; flex: 1;" onclick="navigator.clipboard.writeText('${rgbValue}')">${rgbValue}</code>
+        </span>
+      </div>
+    </div>`;
   },
 
   hslToHexConverter: () => {
@@ -398,7 +493,23 @@ const colorGenerators = {
     const l = randomNum(0, 100);
     const rgb = colorConverter.hslToRgb(h, s, l);
     const hex = colorConverter.rgbToHex(rgb.r, rgb.g, rgb.b);
-    return `hsl(${h}, ${s}%, ${l}%) → ${hex}`;
+    const hslValue = `hsl(${h}, ${s}%, ${l}%)`;
+    return `<div style="display: flex; flex-direction: column; gap: 8px;">
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <span style="font-weight: 600; font-size: 12px; color: #64748b;">Input:</span>
+        <span style="display: inline-flex; align-items: center; gap: 8px;">
+          <span style="display: inline-block; width: 24px; height: 24px; background: ${hslValue}; border: 1px solid #ccc; border-radius: 4px;"></span>
+          <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; flex: 1;" onclick="navigator.clipboard.writeText('${hslValue}')">${hslValue}</code>
+        </span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <span style="font-weight: 600; font-size: 12px; color: #64748b;">Output:</span>
+        <span style="display: inline-flex; align-items: center; gap: 8px;">
+          <span style="display: inline-block; width: 24px; height: 24px; background: ${hex}; border: 1px solid #ccc; border-radius: 4px;"></span>
+          <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; flex: 1;" onclick="navigator.clipboard.writeText('${hex}')">${hex}</code>
+        </span>
+      </div>
+    </div>`;
   }
 };
 
