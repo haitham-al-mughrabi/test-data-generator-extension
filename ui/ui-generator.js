@@ -2359,10 +2359,13 @@ function createDataGeneratorUI(containerId) {
         if (cat.subTabs) {
           // Flatten all fields from sub-tabs into sections
           const allFieldsHTML = cat.subTabs
-            .map((subTab) => `
+            .map((subTab, subIdx) => `
               <div class="dg-field-section">
-                <div class="dg-section-title">${subTab.title}</div>
-                <div class="dg-fields-wrapper">
+                <div class="dg-section-title" style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                  <input type="checkbox" class="dg-section-checkbox" data-section="${idx}-${subIdx}" style="cursor: pointer;">
+                  <span>${subTab.title}</span>
+                </div>
+                <div class="dg-fields-wrapper" data-section-fields="${idx}-${subIdx}">
                   ${subTab.fields.map((field) => `<label class="dg-checkbox"><input type="checkbox" value="${field.id}"><span>${field.label}</span></label>`).join("")}
                 </div>
               </div>
@@ -3130,6 +3133,36 @@ function createDataGeneratorUI(containerId) {
   const searchResults = document.getElementById("searchResults");
   const searchClear = document.getElementById("searchClear");
   const searchIcon = document.getElementById("searchIcon");
+
+  // Section checkbox functionality
+  document.querySelectorAll(".dg-section-checkbox").forEach((checkbox) => {
+    checkbox.addEventListener("change", function(e) {
+      e.stopPropagation();
+      const sectionId = this.dataset.section;
+      const fieldsWrapper = document.querySelector(`[data-section-fields="${sectionId}"]`);
+      if (fieldsWrapper) {
+        fieldsWrapper.querySelectorAll(".dg-checkbox input").forEach((input) => {
+          input.checked = this.checked;
+        });
+      }
+    });
+  });
+
+  // Update section checkbox when individual checkboxes change
+  document.querySelectorAll(".dg-fields-wrapper").forEach((wrapper) => {
+    const sectionId = wrapper.dataset.sectionFields;
+    if (sectionId) {
+      wrapper.addEventListener("change", function() {
+        const sectionCheckbox = document.querySelector(`.dg-section-checkbox[data-section="${sectionId}"]`);
+        if (sectionCheckbox) {
+          const allCheckboxes = wrapper.querySelectorAll(".dg-checkbox input");
+          const checkedCount = wrapper.querySelectorAll(".dg-checkbox input:checked").length;
+          sectionCheckbox.checked = checkedCount === allCheckboxes.length;
+          sectionCheckbox.indeterminate = checkedCount > 0 && checkedCount < allCheckboxes.length;
+        }
+      });
+    }
+  });
 
   function createSearchIndex() {
     const searchIndex = [];
