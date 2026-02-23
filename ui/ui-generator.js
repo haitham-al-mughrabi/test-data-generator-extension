@@ -3384,31 +3384,19 @@ function createDataGeneratorUI(containerId) {
     const selectedFileTypes = checked.filter((field) =>
       fileTypes.includes(field),
     );
+    const regularFields = checked.filter((field) =>
+      !fileTypes.includes(field),
+    );
 
-    if (selectedFileTypes.length > 0) {
-      // Handle file generation
-      const fileName = document.getElementById("fileName").value || "test-file";
-      const fileSize =
-        parseInt(document.getElementById("fileSize").value) || 10;
-      const fileSizeUnit = document.getElementById("fileSizeUnit").value;
-
-      generatedData = [];
-      selectedFileTypes.forEach((fileType) => {
-        const record = {
-          fileName: `${fileName}.${fileType}`,
-          fileType: fileType,
-          fileSize: `${fileSize} ${fileSizeUnit}`,
-          generated: new Date().toISOString(),
-        };
-        generatedData.push(record);
-      });
-    } else {
-      // Handle regular data generation
-      generatedData = [];
+    // Generate regular data
+    generatedData = [];
+    let generatedFiles = [];
+    
+    if (regularFields.length > 0) {
       for (let i = 0; i < count; i++) {
         if (window.resetSharedData) window.resetSharedData();
         const record = {};
-        checked.forEach((fieldId) => {
+        regularFields.forEach((fieldId) => {
           if (window.generators[fieldId]) {
             try {
               record[fieldId] = window.generators[fieldId]();
@@ -3421,7 +3409,27 @@ function createDataGeneratorUI(containerId) {
       }
     }
 
+    // Generate files separately
+    if (selectedFileTypes.length > 0) {
+      const fileName = document.getElementById("fileName")?.value || "test-file";
+      const fileSize = parseInt(document.getElementById("fileSize")?.value) || 10;
+      const fileSizeUnit = document.getElementById("fileSizeUnit")?.value || "KB";
+
+      selectedFileTypes.forEach((fileType) => {
+        generatedFiles.push({
+          fileName: `${fileName}.${fileType}`,
+          fileType: fileType,
+          fileSize: `${fileSize} ${fileSizeUnit}`,
+          generated: new Date().toISOString(),
+        });
+      });
+    }
+
     const resultsDiv = document.getElementById("results");
+    let resultsHTML = "";
+
+    // Show regular data section
+    if (generatedData.length > 0) {
     const recordTabs = generatedData
       .map(
         (_, idx) =>
@@ -3469,7 +3477,34 @@ function createDataGeneratorUI(containerId) {
       })
       .join("");
 
-    resultsDiv.innerHTML = `<div class="dg-record-tabs">${recordTabs}</div><div class="dg-record-contents">${recordContents}</div>`;
+    resultsHTML = `<div class="dg-record-tabs">${recordTabs}</div><div class="dg-record-contents">${recordContents}</div>`;
+    }
+
+    // Show files section
+    if (generatedFiles.length > 0) {
+      const filesHTML = `
+        <div class="dg-files-section" style="margin-top: ${generatedData.length > 0 ? '20px' : '0'}; padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px;">
+          <h3 style="color: white; margin: 0 0 15px 0; font-size: 18px;">📁 Generated Files</h3>
+          <div class="dg-files-list">
+            ${generatedFiles.map((file, idx) => `
+              <div class="dg-file-item" style="background: rgba(255,255,255,0.95); padding: 12px; margin-bottom: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <div style="font-weight: 600; color: #333; margin-bottom: 4px;">${file.fileName}</div>
+                  <div style="font-size: 13px; color: #666;">Type: ${file.fileType.toUpperCase()} • Size: ${file.fileSize}</div>
+                </div>
+                <button class="dg-download-file-btn" data-file-idx="${idx}" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600;">Download</button>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+      resultsHTML += filesHTML;
+    }
+
+    resultsDiv.innerHTML = resultsHTML;
+
+    // Add event listeners for regular data tabs
+    if (generatedData.length > 0) {
 
     document.querySelectorAll(".dg-record-tab").forEach((tab) => {
       tab.addEventListener("click", () => {
@@ -3522,6 +3557,59 @@ function createDataGeneratorUI(containerId) {
         });
       });
     });
+    }
+
+    // Helper function to download a single file
+    function downloadSingleFile(file) {
+      const fileSizeBytes = parseInt(file.fileSize) * (file.fileSize.includes('KB') ? 1024 : file.fileSize.includes('MB') ? 1024*1024 : 1);
+      let content = "";
+      let mimeType = "text/plain";
+
+      const fileType = file.fileType;
+      if (fileType === "json") {
+        content = JSON.stringify({ message: "Test JSON file", generated: file.generated }, null, 2);
+        mimeType = "application/json";
+      } else if (fileType === "csv") {
+        content = "Name,Email,Phone\nJohn Doe,john@example.com,+1234567890";
+        mimeType = "text/csv";
+      } else if (fileType === "xml") {
+        content = `<?xml version="1.0" encoding="UTF-8"?>\n<data>\n  <message>Test XML file</message>\n  <generated>${file.generated}</generated>\n</data>`;
+        mimeType = "application/xml";
+      } else if (fileType === "html") {
+        content = `<!DOCTYPE html><html><head><title>Test</title></head><body><h1>Test HTML</h1><p>Generated: ${file.generated}</p></body></html>`;
+        mimeType = "text/html";
+      } else if (fileType === "txt") {
+        content = `Test text file\nGenerated: ${file.generated}`;
+        mimeType = "text/plain";
+      } else {
+        content = `Binary file placeholder for ${fileType}`;
+      }
+
+      // Pad content to match file size
+      while (content.length < fileSizeBytes) {
+        content += content;
+      }
+      content = content.substring(0, fileSizeBytes);
+
+      const blob = new Blob([content], { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = file.fileName;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // Add event listeners for file downloads
+    if (generatedFiles.length > 0) {
+      document.querySelectorAll(".dg-download-file-btn").forEach((btn) => {
+        btn.addEventListener("click", function () {
+          const fileIdx = parseInt(this.getAttribute("data-file-idx"));
+          const file = generatedFiles[fileIdx];
+          downloadSingleFile(file);
+        });
+      });
+    }
   });
 
   document.getElementById("copyBtn").addEventListener("click", () => {
