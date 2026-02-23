@@ -2905,6 +2905,7 @@ function createDataGeneratorUI(containerId) {
           <button class="dg-search-clear" id="searchClear">✕</button>
           <div class="dg-search-results" id="searchResults"></div>
         </div>
+        <button id="resetAllBtn" class="dg-btn dg-btn-secondary" style="margin-left: auto;">🔄 Reset All</button>
       </div>
       <div class="dg-body">
         <div class="dg-tabs">${tabsHTML}</div>
@@ -3055,6 +3056,214 @@ function createDataGeneratorUI(containerId) {
   });
 
   // Sub-tab event handlers removed - no longer needed with flattened structure
+
+  // Save and restore checkbox state
+  function saveCheckboxState() {
+    const checkedValues = Array.from(document.querySelectorAll(".dg-checkbox input:checked"))
+      .map(cb => cb.value);
+    chrome.storage.local.set({ selectedFields: checkedValues });
+  }
+
+  function restoreCheckboxState() {
+    chrome.storage.local.get(['selectedFields'], (result) => {
+      if (result.selectedFields && result.selectedFields.length > 0) {
+        document.querySelectorAll(".dg-checkbox input").forEach((cb) => {
+          if (result.selectedFields.includes(cb.value)) {
+            cb.checked = true;
+          }
+        });
+        // Update section checkboxes after restoring
+        document.querySelectorAll(".dg-fields-wrapper").forEach((wrapper) => {
+          const sectionId = wrapper.dataset.sectionFields;
+          if (sectionId) {
+            const sectionCheckbox = document.querySelector(`.dg-section-checkbox[data-section="${sectionId}"]`);
+            if (sectionCheckbox) {
+              const allCheckboxes = wrapper.querySelectorAll(".dg-checkbox input");
+              const checkedCount = wrapper.querySelectorAll(".dg-checkbox input:checked").length;
+              sectionCheckbox.checked = checkedCount === allCheckboxes.length;
+              sectionCheckbox.indeterminate = checkedCount > 0 && checkedCount < allCheckboxes.length;
+            }
+          }
+        });
+      }
+    });
+  }
+
+  // Save and restore generated data
+  function saveGeneratedData(data, files) {
+    chrome.storage.local.set({ 
+      generatedData: data,
+      generatedFiles: files || []
+    });
+  }
+
+  function restoreGeneratedData() {
+    chrome.storage.local.get(['generatedData', 'generatedFiles'], (result) => {
+      if (result.generatedData && result.generatedData.length > 0) {
+        generatedData = result.generatedData;
+        const generatedFiles = result.generatedFiles || [];
+        displayGeneratedData(generatedData, generatedFiles);
+      }
+    });
+  }
+
+  function displayGeneratedData(data, files) {
+    const resultsDiv = document.getElementById("results");
+    let resultsHTML = "";
+
+    // Show regular data section
+    if (data.length > 0) {
+      const recordTabs = data.map((_, idx) =>
+        `<button class="dg-record-tab ${idx === 0 ? "active" : ""}" data-record="${idx}">Record ${idx + 1}</button>`
+      ).join("");
+      
+      const recordContents = data.map((record, recordIdx) => {
+        const grouped = {};
+        Object.entries(record).forEach(([key, value]) => {
+          const category = categories.find((cat) => {
+            if (cat.subTabs) {
+              return cat.subTabs.some(subTab => subTab.fields.some(f => f.id === key));
+            } else {
+              return cat.fields && cat.fields.some((f) => f.id === key);
+            }
+          });
+          const catName = category ? category.title : "Other";
+          if (!grouped[catName]) grouped[catName] = [];
+          grouped[catName].push({ key, value });
+        });
+
+        const catTabs = Object.keys(grouped).map((cat, idx) =>
+          `<button class="dg-category-tab ${idx === 0 ? "active" : ""}" data-category="${recordIdx}-${cat}">${cat}</button>`
+        ).join("");
+        
+        const catContents = Object.entries(grouped).map(([cat, fields], idx) => {
+          const plainValue = typeof fields[0].value === 'string' ? fields[0].value.replace(/<[^>]*>/g, '').trim() : fields[0].value;
+          return `
+            <div class="dg-category-content ${idx === 0 ? "active" : ""}" data-category-content="${recordIdx}-${cat}">
+              ${fields.map(({ key, value }) => {
+                const plainValue = typeof value === 'string' ? value.replace(/<[^>]*>/g, '').trim() : value;
+                return `<div class="dg-record-field"><span class="dg-record-label">${key}</span><span class="dg-field-value" data-value="${plainValue}">${value}</span></div>`;
+              }).join("")}
+            </div>
+          `;
+        }).join("");
+
+        return `
+          <div class="dg-record-content ${recordIdx === 0 ? "active" : ""}" data-record-content="${recordIdx}">
+            <div class="dg-category-tabs">${catTabs}</div>
+            <div class="dg-category-contents">${catContents}</div>
+          </div>
+        `;
+      }).join("");
+
+      resultsHTML = `<div class="dg-record-tabs">${recordTabs}</div><div class="dg-record-contents">${recordContents}</div>`;
+    }
+
+    // Show files section
+    if (files && files.length > 0) {
+      const filesHTML = `
+        <div class="dg-files-section" style="margin-top: ${data.length > 0 ? '20px' : '0'}; padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px;">
+          <h3 style="color: white; margin: 0 0 15px 0; font-size: 18px;">📁 Generated Files</h3>
+          <div class="dg-files-list">
+            ${files.map((file, idx) => `
+              <div class="dg-file-item" style="background: rgba(255,255,255,0.95); padding: 12px; margin-bottom: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <div style="font-weight: 600; color: #333; margin-bottom: 4px;">${file.fileName}</div>
+                  <div style="font-size: 13px; color: #666;">Type: ${file.fileType.toUpperCase()} • Size: ${file.fileSize}${file.dimensions ? ` • ${file.dimensions}` : ''}</div>
+                </div>
+                <button class="dg-download-file-btn" data-file-idx="${idx}" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600;">Download</button>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+      resultsHTML += filesHTML;
+    }
+
+    resultsDiv.innerHTML = resultsHTML;
+    attachResultsEventListeners();
+  }
+
+  function attachResultsEventListeners() {
+    // Record tabs
+    document.querySelectorAll(".dg-record-tab").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const recordIdx = tab.dataset.record;
+        document.querySelectorAll(".dg-record-tab").forEach((t) => t.classList.remove("active"));
+        document.querySelectorAll(".dg-record-content").forEach((c) => c.classList.remove("active"));
+        tab.classList.add("active");
+        document.querySelector(`.dg-record-content[data-record-content="${recordIdx}"]`).classList.add("active");
+      });
+    });
+
+    // Category tabs
+    document.querySelectorAll(".dg-category-tab").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const catKey = tab.dataset.category;
+        const recordIdx = catKey.split("-")[0];
+        document.querySelectorAll(`.dg-record-content[data-record-content="${recordIdx}"] .dg-category-tab`).forEach((t) => t.classList.remove("active"));
+        document.querySelectorAll(`.dg-record-content[data-record-content="${recordIdx}"] .dg-category-content`).forEach((c) => c.classList.remove("active"));
+        tab.classList.add("active");
+        document.querySelector(`.dg-category-content[data-category-content="${catKey}"]`).classList.add("active");
+      });
+    });
+
+    // Field values
+    document.querySelectorAll(".dg-field-value").forEach((el) => {
+      el.addEventListener("click", function (e) {
+        if (e.target.tagName === 'CODE') return;
+        const value = this.getAttribute("data-value");
+        navigator.clipboard.writeText(value).then(() => {
+          const original = this.textContent;
+          this.textContent = "Copied!";
+          setTimeout(() => (this.textContent = original), 800);
+        });
+      });
+    });
+
+    // Code blocks
+    document.querySelectorAll(".dg-field-value code").forEach((codeEl) => {
+      codeEl.addEventListener("click", function (e) {
+        e.stopPropagation();
+        const textContent = this.textContent.trim();
+        navigator.clipboard.writeText(textContent).then(() => {
+          const original = this.textContent;
+          this.textContent = "Copied!";
+          setTimeout(() => (this.textContent = original), 500);
+        });
+      });
+    });
+  }
+
+  // Reset all button
+  document.getElementById("resetAllBtn").addEventListener("click", () => {
+    if (confirm("Reset all data? This will clear selections and generated data.")) {
+      // Clear checkboxes
+      document.querySelectorAll(".dg-checkbox input").forEach((cb) => cb.checked = false);
+      document.querySelectorAll(".dg-section-checkbox").forEach((cb) => {
+        cb.checked = false;
+        cb.indeterminate = false;
+      });
+      // Clear results
+      document.getElementById("results").innerHTML = "";
+      generatedData = [];
+      // Clear storage
+      chrome.storage.local.clear();
+    }
+  });
+
+  // Restore state on load
+  restoreCheckboxState();
+  restoreGeneratedData();
+
+  // Save state whenever checkboxes change
+  document.querySelectorAll(".dg-checkbox input").forEach((cb) => {
+    cb.addEventListener("change", saveCheckboxState);
+  });
+
+  document.querySelectorAll(".dg-section-checkbox").forEach((cb) => {
+    cb.addEventListener("change", saveCheckboxState);
+  });
 
   document
     .querySelectorAll(".dg-select-all-categories")
@@ -3758,6 +3967,9 @@ function createDataGeneratorUI(containerId) {
     }
 
     resultsDiv.innerHTML = resultsHTML;
+
+    // Save generated data
+    saveGeneratedData(generatedData, generatedFiles);
 
     // Add event listeners for regular data tabs
     if (generatedData.length > 0) {
