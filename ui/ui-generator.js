@@ -54,13 +54,55 @@ function createDataGeneratorUI(containerId) {
     }
     .dg-app { height: 100%; width: 100%; display: flex; flex-direction: column; background: radial-gradient(circle at 12% 8%, rgba(123, 92, 255, 0.12), transparent 42%), radial-gradient(circle at 88% 12%, rgba(24, 161, 205, 0.12), transparent 46%), linear-gradient(180deg, #fbfbff 0%, #f2f4fb 100%); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif; position: relative; color: var(--ink); animation: dgFadeUp 0.5s ease; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
     @keyframes dgFadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-    .dg-header { background: linear-gradient(135deg, var(--brand-1) 0%, var(--brand-2) 52%, #4ecdc4 100%); color: white; padding: 18px 16px; text-align: center; flex-shrink: 0; box-shadow: var(--shadow-1); border-bottom: 1px solid rgba(255,255,255,0.2); }
-    .dg-header h1 { font-size: 16px; font-weight: 800; margin: 0 0 8px 0; letter-spacing: -0.4px; text-transform: uppercase; }
-    .dg-search { position: relative; max-width: 300px; margin: 0 auto; }
-    .dg-search input { width: 100%; padding: 9px 34px 9px 12px; border: 1px solid rgba(255,255,255,0.4); border-radius: 999px; font-size: 12px; background: rgba(255,255,255,0.96); box-shadow: 0 6px 18px rgba(15, 23, 42, 0.15); transition: box-shadow 0.2s ease, transform 0.2s ease; }
+    .dg-header { 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+      color: white; 
+      padding: 20px 24px; 
+      flex-shrink: 0; 
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .dg-header h1 { 
+      font-size: 20px; 
+      font-weight: 700; 
+      margin: 0; 
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      white-space: nowrap;
+    }
+    .dg-search { 
+      position: relative; 
+      flex: 1;
+      max-width: 400px;
+    }
+    .dg-search input { 
+      width: 100%; 
+      padding: 10px 40px 10px 16px; 
+      border: 2px solid rgba(255,255,255,0.2); 
+      border-radius: 12px; 
+      font-size: 14px; 
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      color: white;
+      transition: all 0.2s ease;
+    }
+    .dg-search input::placeholder {
+      color: rgba(255,255,255,0.7);
+    }
+    .dg-search input:focus {
+      background: rgba(255,255,255,0.25);
+      border-color: rgba(255,255,255,0.4);
+      outline: none;
+    }
     .dg-search input:focus { outline: none; background: white; box-shadow: 0 10px 26px rgba(15, 23, 42, 0.2); transform: translateY(-1px); }
-    .dg-search-icon { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #475569; font-size: 12px; }
-    .dg-search-clear { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #475569; cursor: pointer; font-size: 14px; display: none; }
+    .dg-search-icon { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.8); font-size: 16px; pointer-events: none; }
+    .dg-search-clear { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.2); border: none; color: white; cursor: pointer; font-size: 12px; display: none; width: 20px; height: 20px; border-radius: 50%; transition: all 0.2s ease; }
+    .dg-search-clear:hover { background: rgba(255,255,255,0.3); }
     .dg-search-results { position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1px solid var(--line); border-radius: 10px; max-height: 200px; overflow-y: auto; z-index: 1000; display: none; box-shadow: var(--shadow-2); }
     .dg-search-result { padding: 10px 12px; cursor: pointer; font-size: 11px; border-bottom: 1px solid #f0f2f8; transition: background 0.2s ease; }
     .dg-search-result:hover { background: #f3f6ff; }
@@ -2905,7 +2947,7 @@ function createDataGeneratorUI(containerId) {
           <button class="dg-search-clear" id="searchClear">✕</button>
           <div class="dg-search-results" id="searchResults"></div>
         </div>
-        <button id="resetAllBtn" class="dg-btn dg-btn-secondary" style="margin-left: auto;">🔄 Reset All</button>
+        <button id="resetAllBtn" class="dg-btn dg-btn-secondary" style="margin-left: auto; background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3); backdrop-filter: blur(10px); font-weight: 600; padding: 10px 20px; border-radius: 10px; transition: all 0.2s ease;">🔄 Reset All</button>
       </div>
       <div class="dg-body">
         <div class="dg-tabs">${tabsHTML}</div>
