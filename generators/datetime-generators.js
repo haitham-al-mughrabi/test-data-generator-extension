@@ -210,7 +210,18 @@ const dateTimeGenerators = {
     const hDay = randomNum(1, 29);
     const gregorianDate = hijriToGregorian(hYear, hMonth, hDay);
     const hijriMonths = ['محرم', 'صفر', 'ربيع الأول', 'ربيع الثاني', 'جمادى الأولى', 'جمادى الثانية', 'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة'];
-    return `${hDay} ${hijriMonths[hMonth - 1]} ${hYear}هـ → ${formatCustomDate(gregorianDate)}`;
+    const hijriValue = `${hDay} ${hijriMonths[hMonth - 1]} ${hYear}هـ`;
+    const gregorianValue = formatCustomDate(gregorianDate);
+    return `<div style="display: flex; flex-direction: column; gap: 8px;">
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <span style="font-weight: 600; font-size: 12px; color: #64748b;">Input (Hijri):</span>
+        <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; display: block;">${hijriValue}</code>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <span style="font-weight: 600; font-size: 12px; color: #64748b;">Output (Gregorian):</span>
+        <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; display: block;">${gregorianValue}</code>
+      </div>
+    </div>`;
   },
 
   gregorianToHijri: () => {
@@ -219,7 +230,18 @@ const dateTimeGenerators = {
     const gregorianDate = randomDate(range.start, range.end);
     const hijri = gregorianToHijri(gregorianDate);
     const hijriMonths = ['محرم', 'صفر', 'ربيع الأول', 'ربيع الثاني', 'جمادى الأولى', 'جمادى الثانية', 'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة'];
-    return `${formatCustomDate(gregorianDate)} → ${hijri.day} ${hijriMonths[hijri.month - 1]} ${hijri.year}هـ`;
+    const gregorianValue = formatCustomDate(gregorianDate);
+    const hijriValue = `${hijri.day} ${hijriMonths[hijri.month - 1]} ${hijri.year}هـ`;
+    return `<div style="display: flex; flex-direction: column; gap: 8px;">
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <span style="font-weight: 600; font-size: 12px; color: #64748b;">Input (Gregorian):</span>
+        <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; display: block;">${gregorianValue}</code>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <span style="font-weight: 600; font-size: 12px; color: #64748b;">Output (Hijri):</span>
+        <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; display: block;">${hijriValue}</code>
+      </div>
+    </div>`;
   },
 
   time12: () => {
