@@ -107,6 +107,7 @@ function initGenerators() {
   if (window.fileMediaGenerators) Object.assign(window.generators, window.fileMediaGenerators);
   if (window.documentTypesGenerators) Object.assign(window.generators, window.documentTypesGenerators);
   if (window.imageUrlGenerators) Object.assign(window.generators, window.imageUrlGenerators);
+  if (window.colorGenerators) Object.assign(window.generators, window.colorGenerators);
   
   // Missing generators
   if (window.missingGenerators) Object.assign(window.generators, window.missingGenerators);

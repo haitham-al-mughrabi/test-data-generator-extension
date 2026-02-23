@@ -1446,6 +1446,48 @@ function createDataGeneratorUI(containerId) {
       ]
     },
     {
+      title: "Colors",
+      subTabs: [
+        {
+          title: "Web Colors",
+          fields: [
+            { id: "hexColor", label: "HEX Color (#RRGGBB)" },
+            { id: "hexColorShort", label: "HEX Short (#RGB)" },
+            { id: "rgbColor", label: "RGB Color" },
+            { id: "rgbaColor", label: "RGBA Color" },
+            { id: "cssColorName", label: "CSS Color Name" },
+            { id: "cssGradient", label: "CSS Gradient" }
+          ]
+        },
+        {
+          title: "Design Colors",
+          fields: [
+            { id: "hslColor", label: "HSL Color" },
+            { id: "hslaColor", label: "HSLA Color" },
+            { id: "hsvColor", label: "HSV Color" },
+            { id: "hwbColor", label: "HWB Color" },
+            { id: "labColor", label: "LAB Color" }
+          ]
+        },
+        {
+          title: "Print & Industry",
+          fields: [
+            { id: "cmykColor", label: "CMYK Color" },
+            { id: "pantoneColor", label: "Pantone Color" },
+            { id: "ralColor", label: "RAL Color" }
+          ]
+        },
+        {
+          title: "Framework Colors",
+          fields: [
+            { id: "materialColor", label: "Material Design" },
+            { id: "tailwindColor", label: "Tailwind CSS" },
+            { id: "bootstrapColor", label: "Bootstrap Color" }
+          ]
+        }
+      ]
+    },
+    {
       title: "Banking & Finance",
       subTabs: [
         {
