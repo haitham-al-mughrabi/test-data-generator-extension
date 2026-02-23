@@ -3681,7 +3681,11 @@ function createDataGeneratorUI(containerId) {
           .map(
             ([cat, fields], idx) => `
         <div class="dg-category-content ${idx === 0 ? "active" : ""}" data-category-content="${recordIdx}-${cat}">
-          ${fields.map(({ key, value }) => `<div class="dg-record-field"><span class="dg-record-label">${key}</span><span class="dg-field-value" data-value="${value}">${value}</span></div>`).join("")}
+          ${fields.map(({ key, value }) => {
+            // Extract plain text from HTML for data-value attribute
+            const plainValue = typeof value === 'string' ? value.replace(/<[^>]*>/g, '').trim() : value;
+            return `<div class="dg-record-field"><span class="dg-record-label">${key}</span><span class="dg-field-value" data-value="${plainValue}">${value}</span></div>`;
+          }).join("")}
         </div>
       `,
           )

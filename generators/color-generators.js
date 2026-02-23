@@ -143,12 +143,14 @@ const colorGenerators = {
   // HEX Color
   hexColor: () => {
     const hex = Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
-    return `#${hex}`;
+    const color = `#${hex}`;
+    return `<span style="display: inline-flex; align-items: center; gap: 8px;"><span style="display: inline-block; width: 20px; height: 20px; background: ${color}; border: 1px solid #ccc; border-radius: 4px;"></span>${color}</span>`;
   },
 
   hexColorShort: () => {
     const hex = Math.floor(Math.random() * 4096).toString(16).padStart(3, '0');
-    return `#${hex}`;
+    const color = `#${hex}`;
+    return `<span style="display: inline-flex; align-items: center; gap: 8px;"><span style="display: inline-block; width: 20px; height: 20px; background: ${color}; border: 1px solid #ccc; border-radius: 4px;"></span>${color}</span>`;
   },
 
   // RGB Color
@@ -156,7 +158,8 @@ const colorGenerators = {
     const r = randomNum(0, 255);
     const g = randomNum(0, 255);
     const b = randomNum(0, 255);
-    return `rgb(${r}, ${g}, ${b})`;
+    const color = `rgb(${r}, ${g}, ${b})`;
+    return `<span style="display: inline-flex; align-items: center; gap: 8px;"><span style="display: inline-block; width: 20px; height: 20px; background: ${color}; border: 1px solid #ccc; border-radius: 4px;"></span>${color}</span>`;
   },
 
   rgbaColor: () => {
@@ -164,7 +167,8 @@ const colorGenerators = {
     const g = randomNum(0, 255);
     const b = randomNum(0, 255);
     const a = (Math.random()).toFixed(2);
-    return `rgba(${r}, ${g}, ${b}, ${a})`;
+    const color = `rgba(${r}, ${g}, ${b}, ${a})`;
+    return `<span style="display: inline-flex; align-items: center; gap: 8px;"><span style="display: inline-block; width: 20px; height: 20px; background: ${color}; border: 1px solid #ccc; border-radius: 4px;"></span>${color}</span>`;
   },
 
   // HSL Color
@@ -172,7 +176,8 @@ const colorGenerators = {
     const h = randomNum(0, 360);
     const s = randomNum(0, 100);
     const l = randomNum(0, 100);
-    return `hsl(${h}, ${s}%, ${l}%)`;
+    const color = `hsl(${h}, ${s}%, ${l}%)`;
+    return `<span style="display: inline-flex; align-items: center; gap: 8px;"><span style="display: inline-block; width: 20px; height: 20px; background: ${color}; border: 1px solid #ccc; border-radius: 4px;"></span>${color}</span>`;
   },
 
   hslaColor: () => {
@@ -180,7 +185,8 @@ const colorGenerators = {
     const s = randomNum(0, 100);
     const l = randomNum(0, 100);
     const a = (Math.random()).toFixed(2);
-    return `hsla(${h}, ${s}%, ${l}%, ${a})`;
+    const color = `hsla(${h}, ${s}%, ${l}%, ${a})`;
+    return `<span style="display: inline-flex; align-items: center; gap: 8px;"><span style="display: inline-block; width: 20px; height: 20px; background: ${color}; border: 1px solid #ccc; border-radius: 4px;"></span>${color}</span>`;
   },
 
   // HSV/HSB Color
@@ -188,7 +194,10 @@ const colorGenerators = {
     const h = randomNum(0, 360);
     const s = randomNum(0, 100);
     const v = randomNum(0, 100);
-    return `hsv(${h}, ${s}%, ${v}%)`;
+    const color = `hsv(${h}, ${s}%, ${v}%)`;
+    // Convert HSV to HSL for preview
+    const hslColor = `hsl(${h}, ${s}%, ${v/2}%)`;
+    return `<span style="display: inline-flex; align-items: center; gap: 8px;"><span style="display: inline-block; width: 20px; height: 20px; background: ${hslColor}; border: 1px solid #ccc; border-radius: 4px;"></span>${color}</span>`;
   },
 
   // CMYK Color
@@ -197,7 +206,13 @@ const colorGenerators = {
     const m = randomNum(0, 100);
     const y = randomNum(0, 100);
     const k = randomNum(0, 100);
-    return `cmyk(${c}%, ${m}%, ${y}%, ${k}%)`;
+    const color = `cmyk(${c}%, ${m}%, ${y}%, ${k}%)`;
+    // Approximate CMYK to RGB for preview
+    const r = Math.round(255 * (1 - c/100) * (1 - k/100));
+    const g = Math.round(255 * (1 - m/100) * (1 - k/100));
+    const b = Math.round(255 * (1 - y/100) * (1 - k/100));
+    const rgbColor = `rgb(${r}, ${g}, ${b})`;
+    return `<span style="display: inline-flex; align-items: center; gap: 8px;"><span style="display: inline-block; width: 20px; height: 20px; background: ${rgbColor}; border: 1px solid #ccc; border-radius: 4px;"></span>${color}</span>`;
   },
 
   // LAB Color
@@ -205,7 +220,8 @@ const colorGenerators = {
     const l = randomNum(0, 100);
     const a = randomNum(-128, 127);
     const b = randomNum(-128, 127);
-    return `lab(${l}%, ${a}, ${b})`;
+    const color = `lab(${l}%, ${a}, ${b})`;
+    return `<span style="display: inline-flex; align-items: center; gap: 8px;"><span style="display: inline-block; width: 20px; height: 20px; background: hsl(${(a+128)*360/256}, 50%, ${l}%); border: 1px solid #ccc; border-radius: 4px;"></span>${color}</span>`;
   },
 
   // HWB Color
@@ -213,7 +229,9 @@ const colorGenerators = {
     const h = randomNum(0, 360);
     const w = randomNum(0, 100);
     const b = randomNum(0, 100);
-    return `hwb(${h} ${w}% ${b}%)`;
+    const color = `hwb(${h} ${w}% ${b}%)`;
+    const hslColor = `hsl(${h}, 50%, ${50 - (w-b)/2}%)`;
+    return `<span style="display: inline-flex; align-items: center; gap: 8px;"><span style="display: inline-block; width: 20px; height: 20px; background: ${hslColor}; border: 1px solid #ccc; border-radius: 4px;"></span>${color}</span>`;
   },
 
   // Pantone Color
@@ -275,7 +293,8 @@ const colorGenerators = {
       'Tan', 'Teal', 'Thistle', 'Tomato', 'Turquoise',
       'Violet', 'Wheat', 'White', 'WhiteSmoke', 'Yellow', 'YellowGreen'
     ];
-    return randomChoice(colors);
+    const color = randomChoice(colors);
+    return `<span style="display: inline-flex; align-items: center; gap: 8px;"><span style="display: inline-block; width: 20px; height: 20px; background: ${color}; border: 1px solid #ccc; border-radius: 4px;"></span>${color}</span>`;
   },
 
   // Material Design Colors
@@ -286,7 +305,8 @@ const colorGenerators = {
       '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800',
       '#FF5722', '#795548', '#9E9E9E', '#607D8B'
     ];
-    return randomChoice(colors);
+    const color = randomChoice(colors);
+    return `<span style="display: inline-flex; align-items: center; gap: 8px;"><span style="display: inline-block; width: 20px; height: 20px; background: ${color}; border: 1px solid #ccc; border-radius: 4px;"></span>${color}</span>`;
   },
 
   // Tailwind CSS Colors
@@ -312,10 +332,13 @@ const colorGenerators = {
 
   // Gradient
   cssGradient: () => {
-    const color1 = colorGenerators.hexColor();
-    const color2 = colorGenerators.hexColor();
+    const hex1 = Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+    const hex2 = Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+    const color1 = `#${hex1}`;
+    const color2 = `#${hex2}`;
     const angle = randomNum(0, 360);
-    return `linear-gradient(${angle}deg, ${color1}, ${color2})`;
+    const gradient = `linear-gradient(${angle}deg, ${color1}, ${color2})`;
+    return `<span style="display: inline-flex; align-items: center; gap: 8px;"><span style="display: inline-block; width: 40px; height: 20px; background: ${gradient}; border: 1px solid #ccc; border-radius: 4px;"></span>${gradient}</span>`;
   },
 
   // Color Converters (generate a color and show all formats)
