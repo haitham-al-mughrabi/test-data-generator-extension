@@ -354,18 +354,18 @@ const colorGenerators = {
     const rgbValue = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
     return `<div style="display: flex; flex-direction: column; gap: 8px;">
       <div style="display: flex; flex-direction: column; gap: 4px;">
-        <span style="font-weight: 600; font-size: 12px; color: #64748b;">Input:</span>
-        <span style="display: inline-flex; align-items: center; gap: 8px;">
-          <span style="display: inline-block; width: 24px; height: 24px; background: ${hex}; border: 1px solid #ccc; border-radius: 4px;"></span>
-          <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; flex: 1;" onclick="navigator.clipboard.writeText('${hex}')">${hex}</code>
-        </span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-weight: 600; font-size: 12px; color: #64748b;">Input:</span>
+          <span style="display: inline-block; width: 32px; height: 32px; background: ${hex}; border: 1px solid #ccc; border-radius: 4px;"></span>
+        </div>
+        <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; display: block;">${hex}</code>
       </div>
       <div style="display: flex; flex-direction: column; gap: 4px;">
-        <span style="font-weight: 600; font-size: 12px; color: #64748b;">Output:</span>
-        <span style="display: inline-flex; align-items: center; gap: 8px;">
-          <span style="display: inline-block; width: 24px; height: 24px; background: ${rgbValue}; border: 1px solid #ccc; border-radius: 4px;"></span>
-          <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; flex: 1;" onclick="navigator.clipboard.writeText('${rgbValue}')">${rgbValue}</code>
-        </span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-weight: 600; font-size: 12px; color: #64748b;">Output:</span>
+          <span style="display: inline-block; width: 32px; height: 32px; background: ${rgbValue}; border: 1px solid #ccc; border-radius: 4px;"></span>
+        </div>
+        <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; display: block;">${rgbValue}</code>
       </div>
     </div>`;
   },
@@ -377,18 +377,18 @@ const colorGenerators = {
     const hslValue = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
     return `<div style="display: flex; flex-direction: column; gap: 8px;">
       <div style="display: flex; flex-direction: column; gap: 4px;">
-        <span style="font-weight: 600; font-size: 12px; color: #64748b;">Input:</span>
-        <span style="display: inline-flex; align-items: center; gap: 8px;">
-          <span style="display: inline-block; width: 24px; height: 24px; background: ${hex}; border: 1px solid #ccc; border-radius: 4px;"></span>
-          <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; flex: 1;" onclick="navigator.clipboard.writeText('${hex}')">${hex}</code>
-        </span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-weight: 600; font-size: 12px; color: #64748b;">Input:</span>
+          <span style="display: inline-block; width: 32px; height: 32px; background: ${hex}; border: 1px solid #ccc; border-radius: 4px;"></span>
+        </div>
+        <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; display: block;">${hex}</code>
       </div>
       <div style="display: flex; flex-direction: column; gap: 4px;">
-        <span style="font-weight: 600; font-size: 12px; color: #64748b;">Output:</span>
-        <span style="display: inline-flex; align-items: center; gap: 8px;">
-          <span style="display: inline-block; width: 24px; height: 24px; background: ${hslValue}; border: 1px solid #ccc; border-radius: 4px;"></span>
-          <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; flex: 1;" onclick="navigator.clipboard.writeText('${hslValue}')">${hslValue}</code>
-        </span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-weight: 600; font-size: 12px; color: #64748b;">Output:</span>
+          <span style="display: inline-block; width: 32px; height: 32px; background: ${hslValue}; border: 1px solid #ccc; border-radius: 4px;"></span>
+        </div>
+        <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; display: block;">${hslValue}</code>
       </div>
     </div>`;
   },
@@ -400,15 +400,15 @@ const colorGenerators = {
     const cmykValue = `cmyk(${cmyk.c}%, ${cmyk.m}%, ${cmyk.y}%, ${cmyk.k}%)`;
     return `<div style="display: flex; flex-direction: column; gap: 8px;">
       <div style="display: flex; flex-direction: column; gap: 4px;">
-        <span style="font-weight: 600; font-size: 12px; color: #64748b;">Input:</span>
-        <span style="display: inline-flex; align-items: center; gap: 8px;">
-          <span style="display: inline-block; width: 24px; height: 24px; background: ${hex}; border: 1px solid #ccc; border-radius: 4px;"></span>
-          <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; flex: 1;" onclick="navigator.clipboard.writeText('${hex}')">${hex}</code>
-        </span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-weight: 600; font-size: 12px; color: #64748b;">Input:</span>
+          <span style="display: inline-block; width: 32px; height: 32px; background: ${hex}; border: 1px solid #ccc; border-radius: 4px;"></span>
+        </div>
+        <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; display: block;">${hex}</code>
       </div>
       <div style="display: flex; flex-direction: column; gap: 4px;">
         <span style="font-weight: 600; font-size: 12px; color: #64748b;">Output:</span>
-        <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; display: block;" onclick="navigator.clipboard.writeText('${cmykValue}')">${cmykValue}</code>
+        <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; display: block;">${cmykValue}</code>
       </div>
     </div>`;
   },
@@ -421,18 +421,18 @@ const colorGenerators = {
     const rgbValue = `rgb(${r}, ${g}, ${b})`;
     return `<div style="display: flex; flex-direction: column; gap: 8px;">
       <div style="display: flex; flex-direction: column; gap: 4px;">
-        <span style="font-weight: 600; font-size: 12px; color: #64748b;">Input:</span>
-        <span style="display: inline-flex; align-items: center; gap: 8px;">
-          <span style="display: inline-block; width: 24px; height: 24px; background: ${rgbValue}; border: 1px solid #ccc; border-radius: 4px;"></span>
-          <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; flex: 1;" onclick="navigator.clipboard.writeText('${rgbValue}')">${rgbValue}</code>
-        </span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-weight: 600; font-size: 12px; color: #64748b;">Input:</span>
+          <span style="display: inline-block; width: 32px; height: 32px; background: ${rgbValue}; border: 1px solid #ccc; border-radius: 4px;"></span>
+        </div>
+        <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; display: block;">${rgbValue}</code>
       </div>
       <div style="display: flex; flex-direction: column; gap: 4px;">
-        <span style="font-weight: 600; font-size: 12px; color: #64748b;">Output:</span>
-        <span style="display: inline-flex; align-items: center; gap: 8px;">
-          <span style="display: inline-block; width: 24px; height: 24px; background: ${hex}; border: 1px solid #ccc; border-radius: 4px;"></span>
-          <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; flex: 1;" onclick="navigator.clipboard.writeText('${hex}')">${hex}</code>
-        </span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-weight: 600; font-size: 12px; color: #64748b;">Output:</span>
+          <span style="display: inline-block; width: 32px; height: 32px; background: ${hex}; border: 1px solid #ccc; border-radius: 4px;"></span>
+        </div>
+        <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; display: block;">${hex}</code>
       </div>
     </div>`;
   },
@@ -446,18 +446,18 @@ const colorGenerators = {
     const hslValue = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
     return `<div style="display: flex; flex-direction: column; gap: 8px;">
       <div style="display: flex; flex-direction: column; gap: 4px;">
-        <span style="font-weight: 600; font-size: 12px; color: #64748b;">Input:</span>
-        <span style="display: inline-flex; align-items: center; gap: 8px;">
-          <span style="display: inline-block; width: 24px; height: 24px; background: ${rgbValue}; border: 1px solid #ccc; border-radius: 4px;"></span>
-          <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; flex: 1;" onclick="navigator.clipboard.writeText('${rgbValue}')">${rgbValue}</code>
-        </span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-weight: 600; font-size: 12px; color: #64748b;">Input:</span>
+          <span style="display: inline-block; width: 32px; height: 32px; background: ${rgbValue}; border: 1px solid #ccc; border-radius: 4px;"></span>
+        </div>
+        <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; display: block;">${rgbValue}</code>
       </div>
       <div style="display: flex; flex-direction: column; gap: 4px;">
-        <span style="font-weight: 600; font-size: 12px; color: #64748b;">Output:</span>
-        <span style="display: inline-flex; align-items: center; gap: 8px;">
-          <span style="display: inline-block; width: 24px; height: 24px; background: ${hslValue}; border: 1px solid #ccc; border-radius: 4px;"></span>
-          <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; flex: 1;" onclick="navigator.clipboard.writeText('${hslValue}')">${hslValue}</code>
-        </span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-weight: 600; font-size: 12px; color: #64748b;">Output:</span>
+          <span style="display: inline-block; width: 32px; height: 32px; background: ${hslValue}; border: 1px solid #ccc; border-radius: 4px;"></span>
+        </div>
+        <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; display: block;">${hslValue}</code>
       </div>
     </div>`;
   },
@@ -471,18 +471,18 @@ const colorGenerators = {
     const rgbValue = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
     return `<div style="display: flex; flex-direction: column; gap: 8px;">
       <div style="display: flex; flex-direction: column; gap: 4px;">
-        <span style="font-weight: 600; font-size: 12px; color: #64748b;">Input:</span>
-        <span style="display: inline-flex; align-items: center; gap: 8px;">
-          <span style="display: inline-block; width: 24px; height: 24px; background: ${hslValue}; border: 1px solid #ccc; border-radius: 4px;"></span>
-          <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; flex: 1;" onclick="navigator.clipboard.writeText('${hslValue}')">${hslValue}</code>
-        </span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-weight: 600; font-size: 12px; color: #64748b;">Input:</span>
+          <span style="display: inline-block; width: 32px; height: 32px; background: ${hslValue}; border: 1px solid #ccc; border-radius: 4px;"></span>
+        </div>
+        <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; display: block;">${hslValue}</code>
       </div>
       <div style="display: flex; flex-direction: column; gap: 4px;">
-        <span style="font-weight: 600; font-size: 12px; color: #64748b;">Output:</span>
-        <span style="display: inline-flex; align-items: center; gap: 8px;">
-          <span style="display: inline-block; width: 24px; height: 24px; background: ${rgbValue}; border: 1px solid #ccc; border-radius: 4px;"></span>
-          <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; flex: 1;" onclick="navigator.clipboard.writeText('${rgbValue}')">${rgbValue}</code>
-        </span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-weight: 600; font-size: 12px; color: #64748b;">Output:</span>
+          <span style="display: inline-block; width: 32px; height: 32px; background: ${rgbValue}; border: 1px solid #ccc; border-radius: 4px;"></span>
+        </div>
+        <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; display: block;">${rgbValue}</code>
       </div>
     </div>`;
   },
@@ -496,18 +496,18 @@ const colorGenerators = {
     const hslValue = `hsl(${h}, ${s}%, ${l}%)`;
     return `<div style="display: flex; flex-direction: column; gap: 8px;">
       <div style="display: flex; flex-direction: column; gap: 4px;">
-        <span style="font-weight: 600; font-size: 12px; color: #64748b;">Input:</span>
-        <span style="display: inline-flex; align-items: center; gap: 8px;">
-          <span style="display: inline-block; width: 24px; height: 24px; background: ${hslValue}; border: 1px solid #ccc; border-radius: 4px;"></span>
-          <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; flex: 1;" onclick="navigator.clipboard.writeText('${hslValue}')">${hslValue}</code>
-        </span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-weight: 600; font-size: 12px; color: #64748b;">Input:</span>
+          <span style="display: inline-block; width: 32px; height: 32px; background: ${hslValue}; border: 1px solid #ccc; border-radius: 4px;"></span>
+        </div>
+        <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; display: block;">${hslValue}</code>
       </div>
       <div style="display: flex; flex-direction: column; gap: 4px;">
-        <span style="font-weight: 600; font-size: 12px; color: #64748b;">Output:</span>
-        <span style="display: inline-flex; align-items: center; gap: 8px;">
-          <span style="display: inline-block; width: 24px; height: 24px; background: ${hex}; border: 1px solid #ccc; border-radius: 4px;"></span>
-          <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; flex: 1;" onclick="navigator.clipboard.writeText('${hex}')">${hex}</code>
-        </span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-weight: 600; font-size: 12px; color: #64748b;">Output:</span>
+          <span style="display: inline-block; width: 32px; height: 32px; background: ${hex}; border: 1px solid #ccc; border-radius: 4px;"></span>
+        </div>
+        <code style="background: #e2e8f0; padding: 6px 10px; border-radius: 4px; cursor: pointer; display: block;">${hex}</code>
       </div>
     </div>`;
   }

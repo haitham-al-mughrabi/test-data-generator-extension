@@ -141,12 +141,12 @@ function createDataGeneratorUI(containerId) {
     .dg-category-contents { flex: 1; overflow-y: auto; padding: 8px 10px 0; }
     .dg-category-content { display: none; }
     .dg-category-content.active { display: block; }
-    .dg-record-field { display: flex; justify-content: space-between; gap: 12px; padding: 14px 16px; font-size: 11px; border: 1px solid rgba(91, 124, 250, 0.08); background: white; transition: all 0.2s ease; border-radius: 12px; margin: 8px 0; box-shadow: 0 6px 16px rgba(15, 23, 42, 0.04); }
+    .dg-record-field { display: flex; flex-direction: column; gap: 12px; padding: 14px 16px; font-size: 11px; border: 1px solid rgba(91, 124, 250, 0.08); background: white; transition: all 0.2s ease; border-radius: 12px; margin: 8px 0; box-shadow: 0 6px 16px rgba(15, 23, 42, 0.04); }
     .dg-record-field:nth-child(odd) { background: #ffffff; }
     .dg-record-field:nth-child(even) { background: #f8f9fe; }
     .dg-record-field:hover { background: #eef3ff !important; border-color: rgba(91, 124, 250, 0.35); box-shadow: 0 10px 20px rgba(91, 124, 250, 0.12); transform: translateY(-1px); }
     .dg-record-label { font-weight: 800; color: var(--brand-2); min-width: 90px; text-transform: uppercase; font-size: 9px; letter-spacing: 0.9px; }
-    .dg-field-value { color: #1f2937; word-break: break-all; cursor: pointer; padding: 6px 10px; border-radius: 10px; background: #eef2f8; transition: all 0.2s ease; flex: 1; text-align: right; font-family: "SFMono-Regular", "Menlo", "Monaco", "Courier New", monospace; font-size: 12px; font-weight: 700; }
+    .dg-field-value { color: #1f2937; word-break: break-all; cursor: pointer; padding: 6px 10px; border-radius: 10px; background: #eef2f8; transition: all 0.2s ease; flex: 1; text-align: left; font-family: "SFMono-Regular", "Menlo", "Monaco", "Courier New", monospace; font-size: 12px; font-weight: 700; }
     .dg-field-value:hover { background: #e2e8ff; color: var(--brand-1); box-shadow: 0 4px 10px rgba(91, 124, 250, 0.2); }
     .dg-footer { font-size: 9px; color: #8a94a6; text-align: center; padding: 10px; border-top: 1px solid var(--line); background: linear-gradient(180deg, #ffffff 0%, #f6f7fb 100%); width: 100%; position: absolute; bottom: 0; left: 0; right: 0; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase; }
     .dg-file-controls { display: none; margin-top: 10px; padding: 12px; background: #f6f7fb; border: 1px solid var(--line); border-radius: 10px; }
@@ -3771,12 +3771,30 @@ function createDataGeneratorUI(containerId) {
     });
 
     document.querySelectorAll(".dg-field-value").forEach((el) => {
-      el.addEventListener("click", function () {
+      el.addEventListener("click", function (e) {
+        // Don't copy if clicking on a code element (color converter values)
+        if (e.target.tagName === 'CODE') {
+          return;
+        }
+        
         const value = this.getAttribute("data-value");
         navigator.clipboard.writeText(value).then(() => {
           const original = this.textContent;
           this.textContent = "Copied!";
           setTimeout(() => (this.textContent = original), 800);
+        });
+      });
+    });
+
+    // Add click handlers for color converter code blocks
+    document.querySelectorAll(".dg-field-value code").forEach((codeEl) => {
+      codeEl.addEventListener("click", function (e) {
+        e.stopPropagation();
+        const textContent = this.textContent.trim();
+        navigator.clipboard.writeText(textContent).then(() => {
+          const original = this.textContent;
+          this.textContent = "Copied!";
+          setTimeout(() => (this.textContent = original), 500);
         });
       });
     });
