@@ -2341,6 +2341,14 @@ function createDataGeneratorUI(containerId) {
                       </select>
                     </div>
                   </div>
+                  <div class="dg-file-control-group">
+                    <label>Image Dimensions:</label>
+                    <div class="dg-file-size-group">
+                      <input type="number" id="imageWidth" placeholder="Width" value="800" min="1" style="width: 80px;">
+                      <span style="margin: 0 5px;">×</span>
+                      <input type="number" id="imageHeight" placeholder="Height" value="600" min="1" style="width: 80px;">
+                    </div>
+                  </div>
                 </div>
               `
                   : ""
@@ -2689,6 +2697,14 @@ function createDataGeneratorUI(containerId) {
                         <option value="MB">MB</option>
                         <option value="GB">GB</option>
                       </select>
+                    </div>
+                  </div>
+                  <div class="dg-file-control-group">
+                    <label>Image Dimensions:</label>
+                    <div class="dg-file-size-group">
+                      <input type="number" id="imageWidth" placeholder="Width" value="800" min="1" style="width: 80px;">
+                      <span style="margin: 0 5px;">×</span>
+                      <input type="number" id="imageHeight" placeholder="Height" value="600" min="1" style="width: 80px;">
                     </div>
                   </div>
                 </div>
@@ -3351,6 +3367,63 @@ function createDataGeneratorUI(containerId) {
     });
   });
 
+  // Dynamic file size calculation based on image dimensions
+  function calculateFileSizeFromDimensions(width, height) {
+    // Rough estimate: ~3 bytes per pixel for compressed images
+    const pixels = width * height;
+    const bytes = pixels * 3;
+    const kb = Math.round(bytes / 1024);
+    return kb;
+  }
+
+  function calculateDimensionsFromFileSize(sizeKB) {
+    // Rough estimate: assuming square image at ~3 bytes per pixel
+    const bytes = sizeKB * 1024;
+    const pixels = bytes / 3;
+    const dimension = Math.round(Math.sqrt(pixels));
+    return dimension;
+  }
+
+  // Add event listeners for dynamic updates
+  const imageWidthEl = document.getElementById("imageWidth");
+  const imageHeightEl = document.getElementById("imageHeight");
+  const fileSizeEl = document.getElementById("fileSize");
+  const fileSizeUnitEl = document.getElementById("fileSizeUnit");
+
+  if (imageWidthEl && imageHeightEl && fileSizeEl) {
+    // Update file size when dimensions change
+    function updateFileSizeFromDimensions() {
+      const width = parseInt(imageWidthEl.value) || 800;
+      const height = parseInt(imageHeightEl.value) || 600;
+      const estimatedKB = calculateFileSizeFromDimensions(width, height);
+      
+      if (fileSizeUnitEl.value === "KB") {
+        fileSizeEl.value = estimatedKB;
+      } else if (fileSizeUnitEl.value === "MB") {
+        fileSizeEl.value = (estimatedKB / 1024).toFixed(2);
+      }
+    }
+
+    // Update dimensions when file size changes
+    function updateDimensionsFromFileSize() {
+      let sizeKB = parseInt(fileSizeEl.value) || 10;
+      if (fileSizeUnitEl.value === "MB") {
+        sizeKB = sizeKB * 1024;
+      } else if (fileSizeUnitEl.value === "GB") {
+        sizeKB = sizeKB * 1024 * 1024;
+      }
+      
+      const dimension = calculateDimensionsFromFileSize(sizeKB);
+      imageWidthEl.value = dimension;
+      imageHeightEl.value = dimension;
+    }
+
+    imageWidthEl.addEventListener("input", updateFileSizeFromDimensions);
+    imageHeightEl.addEventListener("input", updateFileSizeFromDimensions);
+    fileSizeEl.addEventListener("input", updateDimensionsFromFileSize);
+    fileSizeUnitEl.addEventListener("change", updateDimensionsFromFileSize);
+  }
+
   document.getElementById("generateBtn").addEventListener("click", () => {
     if (!window.generators || Object.keys(window.generators).length === 0) {
       alert("Generators not loaded");
@@ -3369,17 +3442,12 @@ function createDataGeneratorUI(containerId) {
 
     // Check if any file types are selected
     const fileTypes = [
-      "txt",
-      "json",
-      "csv",
-      "xml",
-      "html",
-      "pdf",
-      "doc",
-      "xlsx",
-      "jpg",
-      "png",
-      "zip",
+      "txt", "pdf", "doc", "docx", "rtf", "md",
+      "xlsx", "xls", "csv", "json", "xml", "yaml", "yml", "toml",
+      "html", "css", "js", "py", "java", "cpp", "sql",
+      "jpg", "png", "gif", "svg", "bmp", "webp", "ico",
+      "zip", "rar", "tar", "gz",
+      "mp4", "avi", "mov", "mp3", "wav"
     ];
     const selectedFileTypes = checked.filter((field) =>
       fileTypes.includes(field),
@@ -3414,12 +3482,21 @@ function createDataGeneratorUI(containerId) {
       const fileName = document.getElementById("fileName")?.value || "test-file";
       const fileSize = parseInt(document.getElementById("fileSize")?.value) || 10;
       const fileSizeUnit = document.getElementById("fileSizeUnit")?.value || "KB";
+      const imageWidth = parseInt(document.getElementById("imageWidth")?.value) || 800;
+      const imageHeight = parseInt(document.getElementById("imageHeight")?.value) || 600;
+
+      // Set image dimensions for generators
+      if (window.setImageDimensions) {
+        window.setImageDimensions(imageWidth, imageHeight);
+      }
 
       selectedFileTypes.forEach((fileType) => {
+        const isImage = ['jpg', 'png', 'gif', 'webp', 'svg', 'bmp', 'ico'].includes(fileType);
         generatedFiles.push({
           fileName: `${fileName}.${fileType}`,
           fileType: fileType,
           fileSize: `${fileSize} ${fileSizeUnit}`,
+          dimensions: isImage ? `${imageWidth}×${imageHeight}` : null,
           generated: new Date().toISOString(),
         });
       });
@@ -3490,7 +3567,7 @@ function createDataGeneratorUI(containerId) {
               <div class="dg-file-item" style="background: rgba(255,255,255,0.95); padding: 12px; margin-bottom: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
                 <div>
                   <div style="font-weight: 600; color: #333; margin-bottom: 4px;">${file.fileName}</div>
-                  <div style="font-size: 13px; color: #666;">Type: ${file.fileType.toUpperCase()} • Size: ${file.fileSize}</div>
+                  <div style="font-size: 13px; color: #666;">Type: ${file.fileType.toUpperCase()} • Size: ${file.fileSize}${file.dimensions ? ` • ${file.dimensions}` : ''}</div>
                 </div>
                 <button class="dg-download-file-btn" data-file-idx="${idx}" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600;">Download</button>
               </div>
@@ -3561,11 +3638,73 @@ function createDataGeneratorUI(containerId) {
 
     // Helper function to download a single file
     function downloadSingleFile(file) {
+      const fileType = file.fileType;
+      const isImage = ['jpg', 'png', 'gif', 'webp', 'bmp', 'ico'].includes(fileType);
+
+      // Handle image files
+      if (isImage && file.dimensions) {
+        const [width, height] = file.dimensions.split('×').map(d => parseInt(d));
+        const targetSize = parseInt(file.fileSize) * (file.fileSize.includes('KB') ? 1024 : file.fileSize.includes('MB') ? 1024*1024 : 1);
+        
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        
+        // Create gradient background
+        const gradient = ctx.createLinearGradient(0, 0, width, height);
+        gradient.addColorStop(0, '#667eea');
+        gradient.addColorStop(1, '#764ba2');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, width, height);
+        
+        // Add text
+        ctx.fillStyle = 'white';
+        ctx.font = `${Math.min(width, height) / 10}px Arial`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(`${width}×${height}`, width / 2, height / 2);
+        
+        // Export and pad to exact size
+        const mimeType = `image/${fileType === 'jpg' ? 'jpeg' : fileType}`;
+        canvas.toBlob((imageBlob) => {
+          // Pad the blob to match target size
+          const reader = new FileReader();
+          reader.onload = function() {
+            const imageBytes = new Uint8Array(reader.result);
+            let finalBytes;
+            
+            if (imageBlob.size < targetSize) {
+              // Pad with random data to reach target size
+              finalBytes = new Uint8Array(targetSize);
+              finalBytes.set(imageBytes, 0);
+              // Fill rest with random bytes
+              for (let i = imageBytes.length; i < targetSize; i++) {
+                finalBytes[i] = Math.floor(Math.random() * 256);
+              }
+            } else {
+              // Truncate if too large
+              finalBytes = imageBytes.slice(0, targetSize);
+            }
+            
+            const finalBlob = new Blob([finalBytes], { type: mimeType });
+            const url = URL.createObjectURL(finalBlob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = file.fileName;
+            a.click();
+            URL.revokeObjectURL(url);
+          };
+          reader.readAsArrayBuffer(imageBlob);
+        }, mimeType, 0.92);
+        return;
+      }
+
+      // Handle text files
       const fileSizeBytes = parseInt(file.fileSize) * (file.fileSize.includes('KB') ? 1024 : file.fileSize.includes('MB') ? 1024*1024 : 1);
       let content = "";
       let mimeType = "text/plain";
 
-      const fileType = file.fileType;
       if (fileType === "json") {
         content = JSON.stringify({ message: "Test JSON file", generated: file.generated }, null, 2);
         mimeType = "application/json";
