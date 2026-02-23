@@ -202,6 +202,12 @@ const enhancedPersonalGenerators = {
     return `${contact.name.en} (${contact.relation.en})`;
   },
 
+  emergencyContact: () => {
+    if (!sharedEnhancedPersonalData) generateSharedEnhancedPersonalData();
+    const contact = sharedEnhancedPersonalData.emergencyContact;
+    return `${contact.name.en} (${contact.relation.en})`;
+  },
+
   emergencyContactNameAr: () => {
     if (!sharedEnhancedPersonalData) generateSharedEnhancedPersonalData();
     const contact = sharedEnhancedPersonalData.emergencyContact;

@@ -231,6 +231,16 @@ const passwordTestingGenerators = {
     
     // Shuffle
     return password.split('').sort(() => Math.random() - 0.5).join('');
+  },
+
+  alphaPassword: () => {
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    const length = randomNum(8, 16);
+    let password = '';
+    for (let i = 0; i < length; i++) {
+      password += letters.charAt(Math.floor(Math.random() * letters.length));
+    }
+    return password;
   }
 };
 

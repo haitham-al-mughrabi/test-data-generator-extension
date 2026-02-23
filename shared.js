@@ -1,3 +1,55 @@
+// Utility functions
+if (typeof window.randomChoice === 'undefined') {
+  window.randomChoice = function(array) {
+    return array[Math.floor(Math.random() * array.length)];
+  };
+}
+
+if (typeof window.randomInt === 'undefined') {
+  window.randomInt = function(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
+}
+
+if (typeof window.randomNum === 'undefined') {
+  window.randomNum = function(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
+}
+
+if (typeof window.randomFloat === 'undefined') {
+  window.randomFloat = function(min, max, decimals = 2) {
+    return (Math.random() * (max - min) + min).toFixed(decimals);
+  };
+}
+
+if (typeof window.randomDate === 'undefined') {
+  window.randomDate = function(startYear, endYear) {
+    // Handle both Date objects and year numbers
+    let start, end;
+    if (startYear instanceof Date) {
+      start = startYear;
+      end = endYear;
+    } else {
+      start = new Date(startYear, 0, 1);
+      end = new Date(endYear, 11, 31);
+    }
+    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+  };
+}
+
+if (typeof window.generatePaymentCard === 'undefined') {
+  window.generatePaymentCard = function() {
+    const prefixes = ['4', '5', '6'];
+    const prefix = window.randomChoice(prefixes);
+    let card = prefix;
+    for (let i = 0; i < 15; i++) {
+      card += window.randomNum(0, 9);
+    }
+    return card.match(/.{1,4}/g).join(' ');
+  };
+}
+
 // Combine all modular generators into one object
 window.generators = {};
 
@@ -55,6 +107,9 @@ function initGenerators() {
   if (window.fileMediaGenerators) Object.assign(window.generators, window.fileMediaGenerators);
   if (window.documentTypesGenerators) Object.assign(window.generators, window.documentTypesGenerators);
   if (window.imageUrlGenerators) Object.assign(window.generators, window.imageUrlGenerators);
+  
+  // Missing generators
+  if (window.missingGenerators) Object.assign(window.generators, window.missingGenerators);
 }
 
 // Initialize immediately

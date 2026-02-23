@@ -217,6 +217,23 @@ const emailTestingGenerators = {
     console.log('Email settings:', settings);
     
     return `${name}@${customDomain}`;
+  },
+
+  corporateEmail: () => {
+    const corporateDomains = [
+      'aramco.com', 'sabic.com', 'stc.com.sa', 'alrajhibank.com.sa',
+      'samba.com', 'riyad.bank', 'bupa.com.sa', 'mobily.com.sa'
+    ];
+    const name = generateEmailName('short');
+    const domain = randomChoice(corporateDomains);
+    return `${name}@${domain}`;
+  },
+
+  personalEmail: () => {
+    const personalDomains = ['gmail.com', 'hotmail.com', 'yahoo.com', 'outlook.com'];
+    const name = generateEmailName('medium');
+    const domain = randomChoice(personalDomains);
+    return `${name}@${domain}`;
   }
 };
 

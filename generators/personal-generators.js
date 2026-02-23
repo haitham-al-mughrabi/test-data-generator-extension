@@ -203,9 +203,7 @@ const personalGenerators = {
   },
 
   birthdate: () => {
-    const start = new Date(1970, 0, 1);
-    const end = new Date(2005, 11, 31);
-    return randomDate(start, end).toISOString().split('T')[0];
+    return randomDate(1970, 2005).toISOString().split('T')[0];
   },
 
   nationality: () => {

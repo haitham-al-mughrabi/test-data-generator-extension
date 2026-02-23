@@ -248,7 +248,9 @@ const uuidIdGenerators = {
   sessionId: generateSessionId,
   jwtToken: generateJwt,
   hash: generateHash,
-  randomSeed: generateRandomSeed
+  randomSeed: generateRandomSeed,
+  token: generateHash,
+  deviceId: generateAlphanumericId
 };
 
 if (typeof module !== 'undefined' && module.exports) {

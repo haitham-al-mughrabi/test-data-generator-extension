@@ -513,6 +513,209 @@ const categoriesWithSubTabs = [
     ]
   },
   { 
+    title: 'Saudi Services', 
+    subTabs: [
+      {
+        title: 'Hajj & Umrah',
+        fields: [
+          { id: 'hajjId', label: 'Hajj ID' },
+          { id: 'umrahId', label: 'Umrah ID' }
+        ]
+      },
+      {
+        title: 'Work & Residency',
+        fields: [
+          { id: 'workPermit', label: 'Work Permit' },
+          { id: 'residencyId', label: 'Residency ID' },
+          { id: 'drivingLicense', label: 'Driving License' }
+        ]
+      },
+      {
+        title: 'Vehicle Services',
+        fields: [
+          { id: 'vehicleRegistration', label: 'Vehicle Registration' },
+          { id: 'istmara', label: 'Istmara' },
+          { id: 'trafficViolation', label: 'Traffic Violation' }
+        ]
+      },
+      {
+        title: 'Health Services',
+        fields: [
+          { id: 'healthCard', label: 'Health Card' },
+          { id: 'vaccinationCertificate', label: 'Vaccination Certificate' },
+          { id: 'covidCertificate', label: 'COVID Certificate' }
+        ]
+      }
+    ]
+  },
+  { 
+    title: 'Healthcare Extended', 
+    subTabs: [
+      {
+        title: 'Medical Data',
+        fields: [
+          { id: 'allergies', label: 'Allergies' },
+          { id: 'bloodPressure', label: 'Blood Pressure' },
+          { id: 'heartRate', label: 'Heart Rate' }
+        ]
+      }
+    ]
+  },
+  { 
+    title: 'Travel & Tourism', 
+    subTabs: [
+      {
+        title: 'Flight Info',
+        fields: [
+          { id: 'flightNumber', label: 'Flight Number' },
+          { id: 'airline', label: 'Airline' },
+          { id: 'airportCode', label: 'Airport Code' },
+          { id: 'seatNumber', label: 'Seat Number' }
+        ]
+      },
+      {
+        title: 'Accommodation',
+        fields: [
+          { id: 'hotelName', label: 'Hotel Name' },
+          { id: 'bookingReference', label: 'Booking Reference' }
+        ]
+      }
+    ]
+  },
+  { 
+    title: 'Entertainment & Media', 
+    subTabs: [
+      {
+        title: 'Movies & Shows',
+        fields: [
+          { id: 'movieTitle', label: 'Movie Title' },
+          { id: 'actorName', label: 'Actor Name' },
+          { id: 'director', label: 'Director' },
+          { id: 'genre', label: 'Genre' },
+          { id: 'rating', label: 'Rating' },
+          { id: 'review', label: 'Review' }
+        ]
+      }
+    ]
+  },
+  { 
+    title: 'Sports & Fitness', 
+    subTabs: [
+      {
+        title: 'Sports Data',
+        fields: [
+          { id: 'teamName', label: 'Team Name' },
+          { id: 'playerName', label: 'Player Name' },
+          { id: 'sportType', label: 'Sport Type' },
+          { id: 'score', label: 'Score' },
+          { id: 'stadium', label: 'Stadium' },
+          { id: 'league', label: 'League' }
+        ]
+      }
+    ]
+  },
+  { 
+    title: 'Food & Restaurant', 
+    subTabs: [
+      {
+        title: 'Menu Items',
+        fields: [
+          { id: 'dishName', label: 'Dish Name (EN)' },
+          { id: 'dishNameAr', label: 'Dish Name (AR)' },
+          { id: 'restaurantName', label: 'Restaurant Name' },
+          { id: 'cuisineType', label: 'Cuisine Type' },
+          { id: 'menuItem', label: 'Menu Item' },
+          { id: 'recipe', label: 'Recipe' }
+        ]
+      }
+    ]
+  },
+  { 
+    title: 'Social Media', 
+    subTabs: [
+      {
+        title: 'Profile Data',
+        fields: [
+          { id: 'username', label: 'Username' },
+          { id: 'handle', label: 'Handle' },
+          { id: 'bio', label: 'Bio' },
+          { id: 'hashtag', label: 'Hashtag' },
+          { id: 'postContent', label: 'Post Content' },
+          { id: 'comment', label: 'Comment' }
+        ]
+      }
+    ]
+  },
+  { 
+    title: 'Gaming', 
+    subTabs: [
+      {
+        title: 'Game Data',
+        fields: [
+          { id: 'gamerTag', label: 'Gamer Tag' },
+          { id: 'gameTitle', label: 'Game Title' },
+          { id: 'highScore', label: 'High Score' },
+          { id: 'level', label: 'Level' },
+          { id: 'achievement', label: 'Achievement' },
+          { id: 'guildName', label: 'Guild Name' }
+        ]
+      }
+    ]
+  },
+  { 
+    title: 'Technology Extended', 
+    subTabs: [
+      {
+        title: 'Server & Network',
+        fields: [
+          { id: 'portNumber', label: 'Port Number' },
+          { id: 'version', label: 'Version' },
+          { id: 'buildNumber', label: 'Build Number' }
+        ]
+      }
+    ]
+  },
+  { 
+    title: 'Email Testing', 
+    subTabs: [
+      {
+        title: 'Email Variants',
+        fields: [
+          { id: 'validEmail', label: 'Valid Email' },
+          { id: 'invalidEmail', label: 'Invalid Email' },
+          { id: 'disposableEmail', label: 'Disposable Email' },
+          { id: 'corporateEmail', label: 'Corporate Email' },
+          { id: 'personalEmail', label: 'Personal Email' },
+          { id: 'longEmail', label: 'Long Email' },
+          { id: 'shortEmail', label: 'Short Email' },
+          { id: 'specialCharEmail', label: 'Special Char Email' },
+          { id: 'unicodeEmail', label: 'Unicode Email' },
+          { id: 'customEmail', label: 'Custom Email' }
+        ]
+      }
+    ]
+  },
+  { 
+    title: 'Password Testing', 
+    subTabs: [
+      {
+        title: 'Password Variants',
+        fields: [
+          { id: 'customPassword', label: 'Custom Password' },
+          { id: 'strongPassword', label: 'Strong Password' },
+          { id: 'weakPassword', label: 'Weak Password' },
+          { id: 'numericPassword', label: 'Numeric Password' },
+          { id: 'alphaPassword', label: 'Alpha Password' },
+          { id: 'specialCharPassword', label: 'Special Char Password' },
+          { id: 'longPassword', label: 'Long Password' },
+          { id: 'shortPassword', label: 'Short Password' },
+          { id: 'commonPassword', label: 'Common Password' },
+          { id: 'unicodePassword', label: 'Unicode Password' }
+        ]
+      }
+    ]
+  },
+  { 
     title: 'Cryptocurrency', 
     subTabs: [
       {

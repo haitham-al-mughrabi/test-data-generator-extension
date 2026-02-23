@@ -95,7 +95,15 @@
       font-size: 12px;
       outline: none;
       box-sizing: border-box;
+      pointer-events: auto;
     `;
+    
+    // Prevent menu from closing when clicking/interacting with search
+    searchInput.addEventListener('mousedown', (e) => e.stopPropagation());
+    searchInput.addEventListener('click', (e) => e.stopPropagation());
+    searchInput.addEventListener('focus', (e) => e.stopPropagation());
+    searchInput.addEventListener('keydown', (e) => e.stopPropagation());
+    
     searchContainer.appendChild(searchInput);
     menu.appendChild(searchContainer);
     
@@ -1160,6 +1168,41 @@
       const newCursorPos = start + value.length;
       targetInput.setSelectionRange(newCursorPos, newCursorPos);
       
+      // Mark input as filled by extension to prevent clearing
+      targetInput.dataset.dgFilled = 'true';
+      
+      // Protect value from being cleared by page scripts
+      const protectedValue = newValue;
+      const originalValueSetter = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(targetInput), 'value').set;
+      
+      Object.defineProperty(targetInput, 'value', {
+        get() {
+          return this.getAttribute('value') || protectedValue;
+        },
+        set(val) {
+          // Allow setting if it's not empty or if enough time has passed
+          if (val !== '' || !this.dataset.dgFilled) {
+            originalValueSetter.call(this, val);
+            this.setAttribute('value', val);
+          }
+        },
+        configurable: true
+      });
+      
+      // Remove protection after 2 seconds
+      setTimeout(() => {
+        delete targetInput.dataset.dgFilled;
+        Object.defineProperty(targetInput, 'value', {
+          get() {
+            return originalValueSetter.call(this);
+          },
+          set(val) {
+            originalValueSetter.call(this, val);
+          },
+          configurable: true
+        });
+      }, 2000);
+      
       // Trigger input events
       targetInput.dispatchEvent(new Event('input', { bubbles: true }));
       targetInput.dispatchEvent(new Event('change', { bubbles: true }));
@@ -1198,7 +1241,10 @@
     if (contextMenu) {
       contextMenu.style.display = 'none';
     }
-    targetInput = null;
+    // Don't clear targetInput immediately - let it persist for the click handler
+    setTimeout(() => {
+      targetInput = null;
+    }, 100);
   }
 
   // Add event listeners
@@ -1219,7 +1265,7 @@
     if (contextMenu && !contextMenu.contains(e.target)) {
       hideContextMenu();
     }
-  });
+  }, true); // Use capture phase to handle before menu item clicks
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {

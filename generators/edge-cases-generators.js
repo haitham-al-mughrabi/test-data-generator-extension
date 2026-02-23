@@ -1,8 +1,8 @@
 // Edge Cases generators
 const edgeCasesGenerators = {
-  nullValue: () => null,
+  nullValue: () => 'null',
   
-  emptyString: () => '',
+  emptyString: () => '""',
   
   whitespace: () => randomChoice([
     '   ',
