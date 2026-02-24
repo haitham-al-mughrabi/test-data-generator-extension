@@ -182,7 +182,7 @@
     const suggestions = detectFieldType(targetInput);
     if (suggestions.length > 0) {
       const suggestionsHeader = document.createElement('div');
-      suggestionsHeader.className = 'menu-header';
+      suggestionsHeader.className = 'menu-header suggestions-header';
       suggestionsHeader.style.cssText = `
         padding: 6px 12px;
         background: #e0f2fe;
@@ -227,7 +227,7 @@
 
       // Add separator after suggestions
       const suggestionsSeparator = document.createElement('div');
-      suggestionsSeparator.className = 'menu-separator';
+      suggestionsSeparator.className = 'menu-separator suggestions-separator';
       suggestionsSeparator.style.cssText = `
         height: 2px;
         background: #e2e8f0;
@@ -873,34 +873,134 @@
       });
     }
 
+    function getCategoryIcon(title) {
+      const titleIcons = {
+        'Personal': '👤',
+        'Contact': '📧',
+        'Business': '💼',
+        'Work': '💼',
+        'Finance': '💳',
+        'Healthcare': '🏥',
+        'Saudi Government': '🏛️',
+        'Government': '🏛️',
+        'E-commerce': '🛒',
+        'Technology': '💻',
+        'Testing & QA': '🧪',
+        'Advanced Testing': '🧪',
+        'Travel': '✈️',
+        'Education': '🎓',
+        'Real Estate': '🏠',
+        'Entertainment': '🎬',
+        'Sports': '⚽',
+        'Sports & Fitness': '⚽',
+        'Food': '🍽️',
+        'Agriculture': '🌾',
+        'Manufacturing': '🏭',
+        'Construction': '🏗️',
+        'Telecommunications': '📱',
+        'Telecom': '📱',
+        'Insurance': '🛡️',
+        'Banking': '🏦',
+        'Banking Extended': '🏦',
+        'Banking & Finance Extended': '🏦',
+        'Energy': '⚡',
+        'Energy & Utilities': '⚡',
+        'Logistics': '📦',
+        'Fashion': '👗',
+        'Legal': '⚖️',
+        'Science': '🔬',
+        'Documents': '📄',
+        'Files': '📁',
+        'Images': '🖼️',
+        'Date & Time': '📅',
+        'Random Text': '📝',
+        'Random Text Extended': '📝',
+        'Random Values': '🎲',
+        'Password Testing': '🔒',
+        'Phone Testing': '☎️',
+        'Email Testing': '✉️',
+        'Edge Cases': '⚠️',
+        'Performance': '⚡',
+        'Security': '🔐',
+        'Other': '📋',
+        'Saudi Services': '🇸🇦',
+        'Media': '📺',
+        'Automotive': '🚙',
+        'Weather': '🌤️',
+        'Crypto': '₿',
+        'IoT': '🔌',
+        'All Generators (Auto)': '📋'
+      };
+      return titleIcons[title] || '📋';
+    }
+
+    function setSectionExpanded(section, expanded) {
+      section.body.style.display = expanded ? 'block' : 'none';
+      section.chevron.textContent = expanded ? '▾' : '▸';
+      section.header.style.background = expanded ? '#eef7ff' : '#f8fafc';
+    }
+
+    const categorySections = [];
     categories.forEach(category => {
-      const categoryDiv = document.createElement('div');
-      categoryDiv.className = 'menu-category';
-      categoryDiv.style.cssText = `
-        padding: 6px 12px;
-        background: #f8fafc;
+      const sectionWrapper = document.createElement('div');
+      sectionWrapper.className = 'menu-category-section';
+      sectionWrapper.style.cssText = `
         border-bottom: 1px solid #e2e8f0;
-        font-size: 10px;
+      `;
+
+      const categoryHeader = document.createElement('div');
+      categoryHeader.className = 'menu-category';
+      categoryHeader.style.cssText = `
+        padding: 7px 12px;
+        background: #f8fafc;
+        font-size: 11px;
         font-weight: 600;
         color: #64748b;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.2px;
+        cursor: pointer;
+        user-select: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
       `;
-      categoryDiv.textContent = category.title;
-      contentArea.appendChild(categoryDiv);
 
+      const categoryLeft = document.createElement('span');
+      categoryLeft.style.cssText = `
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      `;
+      categoryLeft.textContent = `${getCategoryIcon(category.title)} ${category.title}`;
+
+      const chevron = document.createElement('span');
+      chevron.style.cssText = `
+        color: #94a3b8;
+        font-size: 12px;
+      `;
+      chevron.textContent = '▸';
+
+      categoryHeader.appendChild(categoryLeft);
+      categoryHeader.appendChild(chevron);
+
+      const categoryBody = document.createElement('div');
+      categoryBody.className = 'menu-category-items';
+      categoryBody.style.display = 'none';
+
+      const sectionItems = [];
       category.items.forEach(item => {
         const itemDiv = document.createElement('div');
         itemDiv.className = 'menu-item generator-item';
         itemDiv.dataset.searchText = `${category.title} ${item.label}`.toLowerCase();
         itemDiv.dataset.generator = item.generator;
         itemDiv.style.cssText = `
-          padding: 8px 12px;
+          padding: 8px 12px 8px 18px;
           cursor: pointer;
           font-size: 12px;
           color: #374151;
-          border-bottom: 1px solid #f1f5f9;
+          border-top: 1px solid #f1f5f9;
           transition: background 0.2s;
+          background: white;
         `;
         itemDiv.textContent = item.label;
         itemDiv.addEventListener('mouseenter', () => {
@@ -913,65 +1013,85 @@
           fillInput(item.generator);
           hideContextMenu();
         });
-        contentArea.appendChild(itemDiv);
+        categoryBody.appendChild(itemDiv);
+        sectionItems.push(itemDiv);
       });
+
+      const section = {
+        title: category.title,
+        wrapper: sectionWrapper,
+        header: categoryHeader,
+        body: categoryBody,
+        chevron,
+        items: sectionItems
+      };
+
+      categoryHeader.addEventListener('click', () => {
+        const isExpanded = section.body.style.display !== 'none';
+        setSectionExpanded(section, !isExpanded);
+      });
+
+      setSectionExpanded(section, false);
+      sectionWrapper.appendChild(categoryHeader);
+      sectionWrapper.appendChild(categoryBody);
+      contentArea.appendChild(sectionWrapper);
+      categorySections.push(section);
     });
 
     // Add search functionality
     searchInput.addEventListener('input', (e) => {
       const query = e.target.value.toLowerCase().trim();
-      const generatorItems = contentArea.querySelectorAll('.generator-item');
-      const categories = contentArea.querySelectorAll('.menu-category');
-      
+      const smartSuggestionItems = Array.from(contentArea.querySelectorAll('.smart-suggestion'));
+      const suggestionsHeaderEl = contentArea.querySelector('.suggestions-header');
+      const suggestionsSeparatorEl = contentArea.querySelector('.suggestions-separator');
+
       if (!query) {
-        // Show all items
-        generatorItems.forEach(item => item.style.display = 'block');
-        categories.forEach(cat => cat.style.display = 'block');
+        smartSuggestionItems.forEach(item => { item.style.display = 'block'; });
+        if (suggestionsHeaderEl) suggestionsHeaderEl.style.display = smartSuggestionItems.length ? 'block' : 'none';
+        if (suggestionsSeparatorEl) suggestionsSeparatorEl.style.display = smartSuggestionItems.length ? 'block' : 'none';
+
+        categorySections.forEach(section => {
+          section.wrapper.style.display = 'block';
+          section.items.forEach(item => {
+            item.style.display = 'block';
+          });
+          setSectionExpanded(section, false);
+        });
       } else {
-        // Filter items
-        const visibleCategories = new Set();
-        
-        generatorItems.forEach(item => {
+        let visibleSuggestionCount = 0;
+        smartSuggestionItems.forEach(item => {
           const searchText = item.dataset.searchText || item.textContent.toLowerCase();
           const label = item.textContent.toLowerCase();
-          
-          if (searchText.includes(query) || label.includes(query)) {
-            item.style.display = 'block';
-            // Find parent category
-            let parent = item.parentElement;
-            while (parent && !parent.classList.contains('menu-category')) {
-              parent = parent.parentElement;
-            }
-            if (parent) {
-              visibleCategories.add(parent);
-            }
-          } else {
-            item.style.display = 'none';
-          }
+          const isMatch = searchText.includes(query) || label.includes(query);
+          item.style.display = isMatch ? 'block' : 'none';
+          if (isMatch) visibleSuggestionCount++;
         });
-        
-        // Show/hide categories based on visible items
-        categories.forEach(cat => {
-          const hasVisibleItems = Array.from(cat.querySelectorAll('.generator-item')).some(
-            item => item.style.display !== 'none'
-          );
-          cat.style.display = hasVisibleItems ? 'block' : 'none';
+        if (suggestionsHeaderEl) suggestionsHeaderEl.style.display = visibleSuggestionCount ? 'block' : 'none';
+        if (suggestionsSeparatorEl) suggestionsSeparatorEl.style.display = visibleSuggestionCount ? 'block' : 'none';
+
+        categorySections.forEach(section => {
+          const categoryMatch = section.title.toLowerCase().includes(query);
+          let visibleItems = 0;
+
+          section.items.forEach(item => {
+            const searchText = item.dataset.searchText || item.textContent.toLowerCase();
+            const label = item.textContent.toLowerCase();
+            const isMatch = categoryMatch || searchText.includes(query) || label.includes(query);
+            item.style.display = isMatch ? 'block' : 'none';
+            if (isMatch) visibleItems++;
+          });
+
+          if (visibleItems > 0) {
+            section.wrapper.style.display = 'block';
+            setSectionExpanded(section, true);
+          } else {
+            section.wrapper.style.display = 'none';
+            setSectionExpanded(section, false);
+          }
         });
       }
     });
     
-    // Helper function to find previous category
-    function findPreviousCategory(element) {
-      let prev = element.previousElementSibling;
-      while (prev) {
-        if (prev.className === 'menu-category') {
-          return prev;
-        }
-        prev = prev.previousElementSibling;
-      }
-      return null;
-    }
-
     document.body.appendChild(menu);
     return menu;
   }
@@ -1280,6 +1400,13 @@
     
     if (!contextMenu) {
       contextMenu = createContextMenu();
+    }
+
+    // Reset search and collapse all sections on each open.
+    const searchInput = contextMenu.querySelector('input[type="text"]');
+    if (searchInput) {
+      searchInput.value = '';
+      searchInput.dispatchEvent(new Event('input'));
     }
     
     contextMenu.style.display = 'block';
