@@ -307,6 +307,19 @@ function generateContentWithSize(baseContent, targetSize) {
   return content.substring(0, targetSize);
 }
 
+function generatePassportWithoutPrefixEn() {
+  let passport = '';
+  for (let i = 0; i < 8; i++) {
+    passport += randomNum(0, 9);
+  }
+  return passport;
+}
+
+function toArabicIndicDigits(value) {
+  const map = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+  return String(value).replace(/\d/g, (d) => map[parseInt(d, 10)]);
+}
+
 const otherGenerators = {
   number: () => randomNum(1, 10000),
   boolean: () => Math.random() > 0.5,
@@ -397,6 +410,16 @@ const otherGenerators = {
     }
     return passport;
   },
+  passportWithPrefixEn: () => {
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    return `${letters[randomNum(0, 25)]}${generatePassportWithoutPrefixEn()}`;
+  },
+  passportWithoutPrefixEn: () => generatePassportWithoutPrefixEn(),
+  passportWithPrefixAr: () => {
+    const arabicLetters = ['أ', 'ب', 'ج', 'د', 'ر', 'س', 'ص', 'ط', 'ع', 'ف', 'ق', 'ل', 'م', 'ن', 'هـ', 'و', 'ي'];
+    return `${randomChoice(arabicLetters)}${toArabicIndicDigits(generatePassportWithoutPrefixEn())}`;
+  },
+  passportWithoutPrefixAr: () => toArabicIndicDigits(generatePassportWithoutPrefixEn()),
   
   visaNumber: () => `V${randomNum(10000000, 99999999)}`,
   taxId: () => `TAX${randomNum(1000000, 9999999)}`,

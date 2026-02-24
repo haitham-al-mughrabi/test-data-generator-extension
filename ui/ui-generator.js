@@ -234,6 +234,9 @@ function createDataGeneratorUI(containerId) {
     .dg-record-field:nth-child(odd) { background: #ffffff; }
     .dg-record-field:nth-child(even) { background: #f8f9fe; }
     .dg-record-field:hover { background: #eef3ff !important; border-color: rgba(91, 124, 250, 0.35); box-shadow: 0 10px 20px rgba(91, 124, 250, 0.12); transform: translateY(-1px); }
+    .dg-subsection-group { margin-bottom: 12px; padding: 10px; border: 1px dashed rgba(91, 124, 250, 0.22); border-radius: 10px; background: rgba(255, 255, 255, 0.7); }
+    .dg-subsection-title { font-size: 10px; font-weight: 900; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+    .dg-record-key { font-size: 10px; color: #64748b; font-weight: 700; }
     .dg-record-label { font-weight: 800; color: var(--brand-2); min-width: 90px; text-transform: uppercase; font-size: 9px; letter-spacing: 0.9px; }
     .dg-field-value { color: #1f2937; word-break: break-all; cursor: pointer; padding: 6px 10px; border-radius: 10px; background: #eef2f8; transition: all 0.2s ease; flex: 1; text-align: left; font-family: "SFMono-Regular", "Menlo", "Monaco", "Courier New", monospace; font-size: 12px; font-weight: 700; }
     .dg-field-value:hover { background: #e2e8ff; color: var(--brand-1); box-shadow: 0 4px 10px rgba(91, 124, 250, 0.2); }
@@ -309,6 +312,10 @@ function createDataGeneratorUI(containerId) {
             { id: "iqamaNumber", label: "Iqama Number" },
             { id: "borderNumber", label: "Border Number" },
             { id: "passportNumber", label: "Passport Number" },
+            { id: "passportWithPrefixEn", label: "Passport (EN, With Prefix)" },
+            { id: "passportWithoutPrefixEn", label: "Passport (EN, Without Prefix)" },
+            { id: "passportWithPrefixAr", label: "Passport (AR, With Prefix)" },
+            { id: "passportWithoutPrefixAr", label: "Passport (AR, Without Prefix)" },
           ]
         },
         {
@@ -3292,6 +3299,99 @@ function createDataGeneratorUI(containerId) {
     });
   }
 
+  function buildFieldMetadataMap() {
+    const metadataMap = {};
+
+    categories.forEach((category) => {
+      if (category.subTabs && Array.isArray(category.subTabs)) {
+        category.subTabs.forEach((subTab) => {
+          subTab.fields.forEach((field) => {
+            metadataMap[field.id] = {
+              categoryTitle: category.title,
+              subSectionTitle: subTab.title,
+              fieldLabel: field.label
+            };
+          });
+        });
+      } else if (category.fields && Array.isArray(category.fields)) {
+        category.fields.forEach((field) => {
+          metadataMap[field.id] = {
+            categoryTitle: category.title,
+            subSectionTitle: 'General',
+            fieldLabel: field.label
+          };
+        });
+      }
+    });
+
+    return metadataMap;
+  }
+
+  const fieldMetadataMap = buildFieldMetadataMap();
+
+  function getFieldMetadata(fieldId) {
+    return fieldMetadataMap[fieldId] || {
+      categoryTitle: 'Other',
+      subSectionTitle: 'General',
+      fieldLabel: fieldId
+    };
+  }
+
+  function getPlainFieldValue(value) {
+    return typeof value === 'string' ? value.replace(/<[^>]*>/g, '').trim() : value;
+  }
+
+  function buildRecordContentsHTML(data) {
+    return data
+      .map((record, recordIdx) => {
+        const grouped = {};
+
+        Object.entries(record).forEach(([fieldId, value]) => {
+          const meta = getFieldMetadata(fieldId);
+          if (!grouped[meta.categoryTitle]) grouped[meta.categoryTitle] = {};
+          if (!grouped[meta.categoryTitle][meta.subSectionTitle]) grouped[meta.categoryTitle][meta.subSectionTitle] = [];
+          grouped[meta.categoryTitle][meta.subSectionTitle].push({
+            fieldId,
+            fieldLabel: meta.fieldLabel,
+            value
+          });
+        });
+
+        const catTabs = Object.keys(grouped)
+          .map(
+            (cat, idx) =>
+              `<button class="dg-category-tab ${idx === 0 ? "active" : ""}" data-category="${recordIdx}-${cat}">${cat}</button>`,
+          )
+          .join("");
+
+        const catContents = Object.entries(grouped)
+          .map(
+            ([cat, subSections], idx) => `
+        <div class="dg-category-content ${idx === 0 ? "active" : ""}" data-category-content="${recordIdx}-${cat}">
+          ${Object.entries(subSections).map(([subSection, fields]) => `
+            <div class="dg-subsection-group">
+              <div class="dg-subsection-title">${subSection}</div>
+              ${fields.map(({ fieldId, fieldLabel, value }) => {
+                const plainValue = getPlainFieldValue(value);
+                return `<div class="dg-record-field"><span class="dg-record-label">${fieldLabel} <span class="dg-record-key">[${fieldId}]</span></span><span class="dg-field-value" data-value="${plainValue}">${value}</span></div>`;
+              }).join("")}
+            </div>
+          `).join("")}
+        </div>
+      `,
+          )
+          .join("");
+
+        return `
+        <div class="dg-record-content ${recordIdx === 0 ? "active" : ""}" data-record-content="${recordIdx}">
+          <div class="dg-category-tabs">${catTabs}</div>
+          <div class="dg-category-contents">${catContents}</div>
+        </div>
+      `;
+      })
+      .join("");
+  }
+
   function displayGeneratedData(data, files) {
     const resultsDiv = document.getElementById("results");
     let resultsHTML = "";
@@ -3302,44 +3402,7 @@ function createDataGeneratorUI(containerId) {
         `<button class="dg-record-tab ${idx === 0 ? "active" : ""}" data-record="${idx}">Record ${idx + 1}</button>`
       ).join("");
       
-      const recordContents = data.map((record, recordIdx) => {
-        const grouped = {};
-        Object.entries(record).forEach(([key, value]) => {
-          const category = categories.find((cat) => {
-            if (cat.subTabs) {
-              return cat.subTabs.some(subTab => subTab.fields.some(f => f.id === key));
-            } else {
-              return cat.fields && cat.fields.some((f) => f.id === key);
-            }
-          });
-          const catName = category ? category.title : "Other";
-          if (!grouped[catName]) grouped[catName] = [];
-          grouped[catName].push({ key, value });
-        });
-
-        const catTabs = Object.keys(grouped).map((cat, idx) =>
-          `<button class="dg-category-tab ${idx === 0 ? "active" : ""}" data-category="${recordIdx}-${cat}">${cat}</button>`
-        ).join("");
-        
-        const catContents = Object.entries(grouped).map(([cat, fields], idx) => {
-          const plainValue = typeof fields[0].value === 'string' ? fields[0].value.replace(/<[^>]*>/g, '').trim() : fields[0].value;
-          return `
-            <div class="dg-category-content ${idx === 0 ? "active" : ""}" data-category-content="${recordIdx}-${cat}">
-              ${fields.map(({ key, value }) => {
-                const plainValue = typeof value === 'string' ? value.replace(/<[^>]*>/g, '').trim() : value;
-                return `<div class="dg-record-field"><span class="dg-record-label">${key}</span><span class="dg-field-value" data-value="${plainValue}">${value}</span></div>`;
-              }).join("")}
-            </div>
-          `;
-        }).join("");
-
-        return `
-          <div class="dg-record-content ${recordIdx === 0 ? "active" : ""}" data-record-content="${recordIdx}">
-            <div class="dg-category-tabs">${catTabs}</div>
-            <div class="dg-category-contents">${catContents}</div>
-          </div>
-        `;
-      }).join("");
+      const recordContents = buildRecordContentsHTML(data);
 
       resultsHTML = `<div class="dg-record-tabs">${recordTabs}</div><div class="dg-record-contents">${recordContents}</div>`;
     }
@@ -4082,50 +4145,7 @@ function createDataGeneratorUI(containerId) {
           `<button class="dg-record-tab ${idx === 0 ? "active" : ""}" data-record="${idx}">Record ${idx + 1}</button>`,
       )
       .join("");
-    const recordContents = generatedData
-      .map((record, recordIdx) => {
-        const grouped = {};
-        Object.entries(record).forEach(([key, value]) => {
-          const category = categories.find((cat) => {
-            if (cat.subTabs) {
-              return cat.subTabs.some(subTab => subTab.fields.some(f => f.id === key));
-            } else {
-              return cat.fields && cat.fields.some((f) => f.id === key);
-            }
-          });
-          const catName = category ? category.title : "Other";
-          if (!grouped[catName]) grouped[catName] = [];
-          grouped[catName].push({ key, value });
-        });
-
-        const catTabs = Object.keys(grouped)
-          .map(
-            (cat, idx) =>
-              `<button class="dg-category-tab ${idx === 0 ? "active" : ""}" data-category="${recordIdx}-${cat}">${cat}</button>`,
-          )
-          .join("");
-        const catContents = Object.entries(grouped)
-          .map(
-            ([cat, fields], idx) => `
-        <div class="dg-category-content ${idx === 0 ? "active" : ""}" data-category-content="${recordIdx}-${cat}">
-          ${fields.map(({ key, value }) => {
-            // Extract plain text from HTML for data-value attribute
-            const plainValue = typeof value === 'string' ? value.replace(/<[^>]*>/g, '').trim() : value;
-            return `<div class="dg-record-field"><span class="dg-record-label">${key}</span><span class="dg-field-value" data-value="${plainValue}">${value}</span></div>`;
-          }).join("")}
-        </div>
-      `,
-          )
-          .join("");
-
-        return `
-        <div class="dg-record-content ${recordIdx === 0 ? "active" : ""}" data-record-content="${recordIdx}">
-          <div class="dg-category-tabs">${catTabs}</div>
-          <div class="dg-category-contents">${catContents}</div>
-        </div>
-      `;
-      })
-      .join("");
+    const recordContents = buildRecordContentsHTML(generatedData);
 
     resultsHTML = `<div class="dg-record-tabs">${recordTabs}</div><div class="dg-record-contents">${recordContents}</div>`;
     }
