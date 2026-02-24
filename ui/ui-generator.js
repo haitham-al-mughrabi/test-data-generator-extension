@@ -111,16 +111,39 @@ function createDataGeneratorUI(containerId) {
     .dg-search-field { color: var(--muted); margin-left: 8px; }
     .dg-search-highlight { background: #fff1c2; padding: 1px 3px; border-radius: 3px; }
     .dg-body { flex: 1; display: flex; min-height: 0; overflow: hidden; width: 100%; }
+    .dg-tabs-panel {
+      display: flex;
+      flex-direction: column;
+      width: 200px;
+      flex-shrink: 0;
+      border-right: 1px solid var(--line);
+      background: linear-gradient(180deg, #ffffff 0%, #f6f7fb 100%);
+      min-height: 0;
+      overflow: hidden;
+    }
+    .dg-tabs-header {
+      background: linear-gradient(135deg, rgba(91, 124, 250, 0.98) 0%, rgba(24, 161, 205, 0.95) 100%);
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      font-size: 12px;
+      font-weight: 800;
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
     .dg-tabs { 
       display: flex; 
       flex-direction: column; 
-      background: linear-gradient(180deg, #ffffff 0%, #f6f7fb 100%);
-      border-right: 1px solid var(--line);
+      background: transparent;
       overflow-y: auto; 
-      flex-shrink: 0; 
-      width: 200px; 
+      flex-shrink: 1; 
+      width: 100%; 
       padding: 16px 8px 60px 8px;
       gap: 4px;
+      min-height: 0;
     }
     .dg-tab { 
       padding: 12px 16px; 
@@ -3100,7 +3123,10 @@ function createDataGeneratorUI(containerId) {
         <button id="resetAllBtn" class="dg-btn dg-btn-secondary" style="margin-left: auto; background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3); backdrop-filter: blur(10px); font-weight: 600; padding: 10px 20px; border-radius: 10px; transition: all 0.2s ease;">🔄 Reset All</button>
       </div>
       <div class="dg-body">
-        <div class="dg-tabs">${tabsHTML}</div>
+        <div class="dg-tabs-panel">
+          <div class="dg-tabs-header">🗂️ Tabs</div>
+          <div class="dg-tabs">${tabsHTML}</div>
+        </div>
         <div class="dg-main">
           <div class="dg-content">
             ${contentHTML}
