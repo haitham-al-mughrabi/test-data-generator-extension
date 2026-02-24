@@ -4,14 +4,59 @@ const scripts = [
   'data/saudi-data.js',
   'data/names-data.js',
   'utils/helpers.js',
-  'shared.js',
   'generators/personal-generators.js',
+  'generators/enhanced-personal-generators.js',
+  'generators/file-media-generators.js',
+  'generators/document-types-generators.js',
+  'generators/image-url-generators.js',
+  'generators/color-generators.js',
   'generators/contact-generators.js',
   'generators/work-generators.js',
+  'generators/cryptocurrency-generators.js',
   'generators/finance-generators.js',
-  'generators/other-generators.js',
   'generators/datetime-generators.js',
+  'generators/other-generators.js',
+  'generators/education-generators.js',
+  'generators/healthcare-generators.js',
+  'generators/vehicle-generators.js',
+  'generators/automotive-generators.js',
+  'generators/saudi-government-generators.js',
+  'generators/ecommerce-generators.js',
+  'generators/social-media-generators.js',
+  'generators/technology-generators.js',
+  'generators/iot-smarthome-generators.js',
+  'generators/gaming-generators.js',
+  'generators/travel-generators.js',
+  'generators/food-restaurant-generators.js',
+  'generators/sports-fitness-generators.js',
+  'generators/real-estate-generators.js',
+  'generators/entertainment-generators.js',
+  'generators/media-entertainment-generators.js',
+  'generators/science-research-generators.js',
+  'generators/legal-law-generators.js',
+  'generators/fashion-beauty-generators.js',
+  'generators/agriculture-generators.js',
+  'generators/logistics-shipping-generators.js',
+  'generators/energy-utilities-generators.js',
+  'generators/emoji-generators.js',
+  'generators/weather-environment-generators.js',
+  'generators/random-text-generators.js',
   'generators/random-values-generators.js',
+  'generators/uuid-id-generators.js',
+  'generators/banking-finance-generators.js',
+  'generators/insurance-generators.js',
+  'generators/manufacturing-generators.js',
+  'generators/telecommunications-generators.js',
+  'generators/construction-generators.js',
+  'generators/testing-qa-generators.js',
+  'generators/edge-cases-generators.js',
+  'generators/performance-testing-generators.js',
+  'generators/security-testing-generators.js',
+  'generators/email-testing-generators.js',
+  'generators/password-testing-generators.js',
+  'generators/phone-testing-generators.js',
+  'generators/missing-generators.js',
+  'shared.js',
   'ui/ui-generator.js',
   'injected.js',
   'context-menu.js'
@@ -66,18 +111,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           const value = window.generators[message.dataType]();
           
           if (lastClickedElement.tagName === 'INPUT' || lastClickedElement.tagName === 'TEXTAREA') {
-            // Insert at cursor position without removing existing content
-            const start = lastClickedElement.selectionStart || 0;
-            const end = lastClickedElement.selectionEnd || 0;
-            const currentValue = lastClickedElement.value || '';
-            
-            // Insert the new value at cursor position
-            const newValue = currentValue.substring(0, start) + value + currentValue.substring(end);
+            // Replace entire field value for generator actions.
+            const newValue = String(value ?? '');
             lastClickedElement.value = newValue;
-            
-            // Set cursor position after inserted text
-            const newCursorPos = start + value.length;
-            lastClickedElement.setSelectionRange(newCursorPos, newCursorPos);
+            lastClickedElement.setSelectionRange(newValue.length, newValue.length);
             
             lastClickedElement.dispatchEvent(new Event('input', { bubbles: true }));
             lastClickedElement.dispatchEvent(new Event('change', { bubbles: true }));

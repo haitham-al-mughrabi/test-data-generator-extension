@@ -236,6 +236,15 @@
       contentArea.appendChild(suggestionsSeparator);
     }
     
+    function formatGeneratorLabel(generatorName) {
+      return generatorName
+        .replace(/([a-z])([A-Z])/g, '$1 $2')
+        .replace(/[_-]+/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .replace(/^./, str => str.toUpperCase());
+    }
+
     // Common data categories
     const categories = [
       { title: 'Personal', items: [
@@ -842,6 +851,28 @@
       ]}
     ];
 
+    // Auto-include newly added generators that are not listed above.
+    const manualGeneratorNames = new Set();
+    categories.forEach(category => {
+      category.items.forEach(item => manualGeneratorNames.add(item.generator));
+    });
+
+    const availableGeneratorNames = Object.keys(window.generators || {}).filter(
+      name => typeof window.generators[name] === 'function'
+    );
+
+    const autoItems = availableGeneratorNames
+      .filter(name => !manualGeneratorNames.has(name))
+      .sort((a, b) => a.localeCompare(b))
+      .map(name => ({ label: formatGeneratorLabel(name), generator: name }));
+
+    if (autoItems.length > 0) {
+      categories.push({
+        title: 'All Generators (Auto)',
+        items: autoItems
+      });
+    }
+
     categories.forEach(category => {
       const categoryDiv = document.createElement('div');
       categoryDiv.className = 'menu-category';
@@ -1192,18 +1223,10 @@
     }
 
     try {
-      // Insert at cursor position without removing existing content
-      const start = targetInput.selectionStart || 0;
-      const end = targetInput.selectionEnd || 0;
-      const currentValue = targetInput.value || '';
-      
-      // Insert the new value at cursor position
-      const newValue = currentValue.substring(0, start) + value + currentValue.substring(end);
+      // Replace current field value for generator actions to avoid concatenated outputs.
+      const newValue = String(value ?? '');
       targetInput.value = newValue;
-      
-      // Set cursor position after inserted text
-      const newCursorPos = start + value.length;
-      targetInput.setSelectionRange(newCursorPos, newCursorPos);
+      targetInput.setSelectionRange(newValue.length, newValue.length);
       
       // Mark input as filled by extension to prevent clearing
       targetInput.dataset.dgFilled = 'true';
