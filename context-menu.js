@@ -2,6 +2,7 @@
 (function() {
   let contextMenu = null;
   let targetInput = null;
+  let generatedDataCache = {};
 
   // Smart field detection
   function detectFieldType(input) {
@@ -104,7 +105,48 @@
     searchInput.addEventListener('focus', (e) => e.stopPropagation());
     searchInput.addEventListener('keydown', (e) => e.stopPropagation());
     
-    searchContainer.appendChild(searchInput);
+    const resetCacheButton = document.createElement('button');
+    resetCacheButton.type = 'button';
+    resetCacheButton.textContent = 'Reset';
+    resetCacheButton.title = 'Flush cached generated values';
+    resetCacheButton.style.cssText = `
+      margin-left: 6px;
+      padding: 6px 8px;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      background: white;
+      color: #334155;
+      font-size: 11px;
+      cursor: pointer;
+      flex-shrink: 0;
+    `;
+    resetCacheButton.addEventListener('mouseenter', () => {
+      resetCacheButton.style.background = '#f1f5f9';
+    });
+    resetCacheButton.addEventListener('mouseleave', () => {
+      resetCacheButton.style.background = 'white';
+    });
+    resetCacheButton.addEventListener('mousedown', (e) => e.stopPropagation());
+    resetCacheButton.addEventListener('click', (e) => {
+      e.stopPropagation();
+      generatedDataCache = {};
+      resetCacheButton.textContent = 'Flushed';
+      setTimeout(() => {
+        resetCacheButton.textContent = 'Reset';
+      }, 900);
+    });
+
+    const searchRow = document.createElement('div');
+    searchRow.style.cssText = `
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    `;
+    searchInput.style.width = 'auto';
+    searchInput.style.flex = '1';
+    searchRow.appendChild(searchInput);
+    searchRow.appendChild(resetCacheButton);
+    searchContainer.appendChild(searchRow);
     menu.appendChild(searchContainer);
     
     // Create scrollable content area
@@ -126,115 +168,7 @@
       { label: '✂️ Select All & Cut', action: 'selectAllAndCut' },
       { label: '🗑️ Select All & Remove', action: 'selectAllAndRemove' }
     ];
-
-    standardActions.forEach(item => {
-      const itemDiv = document.createElement('div');
-      itemDiv.className = 'menu-item standard-action';
-      itemDiv.style.cssText = `
-        padding: 8px 12px;
-        cursor: pointer;
-        font-size: 12px;
-        color: #374151;
-        border-bottom: 1px solid #f1f5f9;
-        transition: background 0.2s;
-      `;
-      itemDiv.textContent = item.label;
-      itemDiv.addEventListener('mouseenter', () => {
-        itemDiv.style.background = '#f0f9ff';
-      });
-      itemDiv.addEventListener('mouseleave', () => {
-        itemDiv.style.background = 'white';
-      });
-      itemDiv.addEventListener('click', () => {
-        executeStandardAction(item.action);
-        hideContextMenu();
-      });
-      contentArea.appendChild(itemDiv);
-    });
-
-    // Add separator
-    const separator = document.createElement('div');
-    separator.className = 'menu-separator';
-    separator.style.cssText = `
-      height: 1px;
-      background: #e2e8f0;
-      margin: 4px 0;
-    `;
-    contentArea.appendChild(separator);
-
-    // Add "Generate Data" header
-    const generateHeader = document.createElement('div');
-    generateHeader.className = 'menu-header';
-    generateHeader.style.cssText = `
-      padding: 8px 12px;
-      background: #f8fafc;
-      border-bottom: 1px solid #e2e8f0;
-      font-size: 11px;
-      font-weight: 600;
-      color: #64748b;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    `;
-    generateHeader.textContent = '🎲 Generate Data';
-    contentArea.appendChild(generateHeader);
-    
-    // Add smart suggestions if available
     const suggestions = detectFieldType(targetInput);
-    if (suggestions.length > 0) {
-      const suggestionsHeader = document.createElement('div');
-      suggestionsHeader.className = 'menu-header suggestions-header';
-      suggestionsHeader.style.cssText = `
-        padding: 6px 12px;
-        background: #e0f2fe;
-        border-bottom: 1px solid #b3e5fc;
-        font-size: 10px;
-        font-weight: 600;
-        color: #0277bd;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-      `;
-      suggestionsHeader.textContent = '💡 Smart Suggestions';
-      contentArea.appendChild(suggestionsHeader);
-
-      suggestions.forEach(generatorName => {
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'menu-item generator-item smart-suggestion';
-        itemDiv.dataset.searchText = generatorName.toLowerCase();
-        itemDiv.dataset.generator = generatorName;
-        itemDiv.style.cssText = `
-          padding: 8px 12px;
-          cursor: pointer;
-          font-size: 12px;
-          color: #0277bd;
-          background: #f0f9ff;
-          border-bottom: 1px solid #e0f2fe;
-          transition: background 0.2s;
-          font-weight: 500;
-        `;
-        itemDiv.textContent = `⭐ ${generatorName.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}`;
-        itemDiv.addEventListener('mouseenter', () => {
-          itemDiv.style.background = '#e0f2fe';
-        });
-        itemDiv.addEventListener('mouseleave', () => {
-          itemDiv.style.background = '#f0f9ff';
-        });
-        itemDiv.addEventListener('click', () => {
-          fillInput(generatorName);
-          hideContextMenu();
-        });
-        contentArea.appendChild(itemDiv);
-      });
-
-      // Add separator after suggestions
-      const suggestionsSeparator = document.createElement('div');
-      suggestionsSeparator.className = 'menu-separator suggestions-separator';
-      suggestionsSeparator.style.cssText = `
-        height: 2px;
-        background: #e2e8f0;
-        margin: 4px 0;
-      `;
-      contentArea.appendChild(suggestionsSeparator);
-    }
     
     function formatGeneratorLabel(generatorName) {
       return generatorName
@@ -934,163 +868,293 @@
       return titleIcons[title] || '📋';
     }
 
-    function setSectionExpanded(section, expanded) {
-      section.body.style.display = expanded ? 'block' : 'none';
-      section.chevron.textContent = expanded ? '▾' : '▸';
-      section.header.style.background = expanded ? '#eef7ff' : '#f8fafc';
+    const flyoutMenu = document.createElement('div');
+    flyoutMenu.id = 'dg-context-submenu';
+    flyoutMenu.style.cssText = `
+      position: fixed;
+      background: white;
+      border: 1px solid #dbe4f0;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.16);
+      z-index: 10001;
+      display: none;
+      min-width: 260px;
+      max-width: 320px;
+      max-height: 380px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    `;
+    document.body.appendChild(flyoutMenu);
+    menu._flyout = flyoutMenu;
+
+    const topEntries = [];
+
+    function toSubmenuItems(items, type, prefix = '') {
+      return items.map(item => {
+        if (type === 'action') {
+          return {
+            label: item.label,
+            searchText: `${prefix} ${item.label}`.toLowerCase(),
+            onSelect: () => {
+              executeStandardAction(item.action);
+              hideContextMenu();
+            }
+          };
+        }
+        if (type === 'generatorName') {
+          const label = `⭐ ${formatGeneratorLabel(item)}`;
+          return {
+            label,
+            searchText: `${prefix} ${label} ${item}`.toLowerCase(),
+            onSelect: () => {
+              fillInput(item);
+              hideContextMenu();
+            }
+          };
+        }
+        return {
+          label: item.label,
+          searchText: `${prefix} ${item.label} ${item.generator}`.toLowerCase(),
+          onSelect: () => {
+            fillInput(item.generator);
+            hideContextMenu();
+          }
+        };
+      });
     }
 
-    const categorySections = [];
-    categories.forEach(category => {
-      const sectionWrapper = document.createElement('div');
-      sectionWrapper.className = 'menu-category-section';
-      sectionWrapper.style.cssText = `
-        border-bottom: 1px solid #e2e8f0;
-      `;
+    topEntries.push({
+      label: '⚙️ Actions',
+      searchText: 'actions',
+      items: toSubmenuItems(standardActions, 'action', 'actions')
+    });
 
-      const categoryHeader = document.createElement('div');
-      categoryHeader.className = 'menu-category';
-      categoryHeader.style.cssText = `
-        padding: 7px 12px;
+    if (suggestions.length > 0) {
+      topEntries.push({
+        label: '💡 Smart Suggestions',
+        searchText: 'smart suggestions',
+        items: toSubmenuItems(suggestions, 'generatorName', 'smart suggestions')
+      });
+    }
+
+    categories.forEach(category => {
+      topEntries.push({
+        label: `${getCategoryIcon(category.title)} ${category.title}`,
+        searchText: category.title.toLowerCase(),
+        items: toSubmenuItems(category.items, 'generatorItem', category.title)
+      });
+    });
+
+    const mainRows = [];
+    let activeRow = null;
+    let hideTimer = null;
+
+    function clearHideTimer() {
+      if (hideTimer) {
+        clearTimeout(hideTimer);
+        hideTimer = null;
+      }
+    }
+
+    function hideFlyout() {
+      flyoutMenu.style.display = 'none';
+      flyoutMenu.innerHTML = '';
+      if (activeRow) {
+        activeRow.style.background = 'white';
+      }
+      activeRow = null;
+    }
+
+    function scheduleHideFlyout() {
+      clearHideTimer();
+      hideTimer = setTimeout(() => {
+        hideFlyout();
+      }, 160);
+    }
+
+    function renderFlyout(entry, row, query) {
+      clearHideTimer();
+      flyoutMenu.innerHTML = '';
+
+      const header = document.createElement('div');
+      header.style.cssText = `
+        padding: 7px 10px;
         background: #f8fafc;
+        border-bottom: 1px solid #e2e8f0;
         font-size: 11px;
         font-weight: 600;
         color: #64748b;
-        letter-spacing: 0.2px;
+      `;
+      header.textContent = entry.label;
+      flyoutMenu.appendChild(header);
+
+      const visibleItems = entry.items.filter(item => !query || item.searchText.includes(query));
+      if (visibleItems.length === 0) {
+        const empty = document.createElement('div');
+        empty.style.cssText = `
+          padding: 10px;
+          font-size: 12px;
+          color: #94a3b8;
+        `;
+        empty.textContent = 'No matching items';
+        flyoutMenu.appendChild(empty);
+      } else {
+        visibleItems.forEach(item => {
+          const itemDiv = document.createElement('div');
+          itemDiv.className = 'menu-item submenu-item';
+          itemDiv.style.cssText = `
+            padding: 8px 10px;
+            cursor: pointer;
+            font-size: 12px;
+            color: #374151;
+            border-bottom: 1px solid #f1f5f9;
+            transition: background 0.15s;
+          `;
+          itemDiv.textContent = item.label;
+          itemDiv.addEventListener('mouseenter', () => {
+            itemDiv.style.background = '#f0f9ff';
+          });
+          itemDiv.addEventListener('mouseleave', () => {
+            itemDiv.style.background = 'white';
+          });
+          itemDiv.addEventListener('click', (e) => {
+            e.stopPropagation();
+            item.onSelect();
+          });
+          flyoutMenu.appendChild(itemDiv);
+        });
+      }
+
+      const rowRect = row.getBoundingClientRect();
+      let left = rowRect.right - 2;
+      let top = rowRect.top;
+      flyoutMenu.style.left = `${left}px`;
+      flyoutMenu.style.top = `${top}px`;
+      flyoutMenu.style.display = 'block';
+
+      const rect = flyoutMenu.getBoundingClientRect();
+      if (rect.right > window.innerWidth - 4) {
+        left = rowRect.left - rect.width + 2;
+      }
+      if (rect.bottom > window.innerHeight - 4) {
+        top = Math.max(4, window.innerHeight - rect.height - 4);
+      }
+      flyoutMenu.style.left = `${Math.max(4, left)}px`;
+      flyoutMenu.style.top = `${Math.max(4, top)}px`;
+    }
+
+    function setActiveRow(row) {
+      if (activeRow && activeRow !== row) {
+        activeRow.style.background = 'white';
+      }
+      activeRow = row;
+      if (activeRow) {
+        activeRow.style.background = '#eaf4ff';
+      }
+    }
+
+    function matchesEntry(entry, query) {
+      if (!query) return true;
+      if (entry.searchText.includes(query) || entry.label.toLowerCase().includes(query)) return true;
+      return entry.items.some(item => item.searchText.includes(query));
+    }
+
+    function renderMainRows(query) {
+      let visibleRows = 0;
+      mainRows.forEach(({ row, entry }) => {
+        const show = matchesEntry(entry, query);
+        row.style.display = show ? 'flex' : 'none';
+        if (show) visibleRows++;
+      });
+
+      if (activeRow && activeRow.style.display === 'none') {
+        hideFlyout();
+      }
+
+      if (visibleRows === 0) {
+        if (!contentArea.querySelector('.menu-empty-state')) {
+          const empty = document.createElement('div');
+          empty.className = 'menu-empty-state';
+          empty.style.cssText = `
+            padding: 10px 12px;
+            font-size: 12px;
+            color: #94a3b8;
+          `;
+          empty.textContent = 'No matching menu items';
+          contentArea.appendChild(empty);
+        }
+      } else {
+        const empty = contentArea.querySelector('.menu-empty-state');
+        if (empty) empty.remove();
+      }
+    }
+
+    topEntries.forEach(entry => {
+      const row = document.createElement('div');
+      row.className = 'menu-item top-entry';
+      row.style.cssText = `
+        padding: 8px 12px;
         cursor: pointer;
-        user-select: none;
+        font-size: 12px;
+        color: #374151;
+        border-bottom: 1px solid #f1f5f9;
+        transition: background 0.15s;
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 8px;
       `;
 
-      const categoryLeft = document.createElement('span');
-      categoryLeft.style.cssText = `
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-      `;
-      categoryLeft.textContent = `${getCategoryIcon(category.title)} ${category.title}`;
+      const labelSpan = document.createElement('span');
+      labelSpan.textContent = entry.label;
+      const arrowSpan = document.createElement('span');
+      arrowSpan.textContent = '▸';
+      arrowSpan.style.cssText = 'color: #94a3b8; font-size: 12px;';
 
-      const chevron = document.createElement('span');
-      chevron.style.cssText = `
-        color: #94a3b8;
-        font-size: 12px;
-      `;
-      chevron.textContent = '▸';
+      row.appendChild(labelSpan);
+      row.appendChild(arrowSpan);
 
-      categoryHeader.appendChild(categoryLeft);
-      categoryHeader.appendChild(chevron);
-
-      const categoryBody = document.createElement('div');
-      categoryBody.className = 'menu-category-items';
-      categoryBody.style.display = 'none';
-
-      const sectionItems = [];
-      category.items.forEach(item => {
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'menu-item generator-item';
-        itemDiv.dataset.searchText = `${category.title} ${item.label}`.toLowerCase();
-        itemDiv.dataset.generator = item.generator;
-        itemDiv.style.cssText = `
-          padding: 8px 12px 8px 18px;
-          cursor: pointer;
-          font-size: 12px;
-          color: #374151;
-          border-top: 1px solid #f1f5f9;
-          transition: background 0.2s;
-          background: white;
-        `;
-        itemDiv.textContent = item.label;
-        itemDiv.addEventListener('mouseenter', () => {
-          itemDiv.style.background = '#f0f9ff';
-        });
-        itemDiv.addEventListener('mouseleave', () => {
-          itemDiv.style.background = 'white';
-        });
-        itemDiv.addEventListener('click', () => {
-          fillInput(item.generator);
-          hideContextMenu();
-        });
-        categoryBody.appendChild(itemDiv);
-        sectionItems.push(itemDiv);
+      row.addEventListener('mouseenter', () => {
+        const query = searchInput.value.toLowerCase().trim();
+        setActiveRow(row);
+        renderFlyout(entry, row, query);
+      });
+      row.addEventListener('mouseleave', () => {
+        scheduleHideFlyout();
+      });
+      row.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const query = searchInput.value.toLowerCase().trim();
+        setActiveRow(row);
+        renderFlyout(entry, row, query);
       });
 
-      const section = {
-        title: category.title,
-        wrapper: sectionWrapper,
-        header: categoryHeader,
-        body: categoryBody,
-        chevron,
-        items: sectionItems
-      };
-
-      categoryHeader.addEventListener('click', () => {
-        const isExpanded = section.body.style.display !== 'none';
-        setSectionExpanded(section, !isExpanded);
-      });
-
-      setSectionExpanded(section, false);
-      sectionWrapper.appendChild(categoryHeader);
-      sectionWrapper.appendChild(categoryBody);
-      contentArea.appendChild(sectionWrapper);
-      categorySections.push(section);
+      contentArea.appendChild(row);
+      mainRows.push({ row, entry });
     });
 
-    // Add search functionality
+    flyoutMenu.addEventListener('mouseenter', () => {
+      clearHideTimer();
+    });
+    flyoutMenu.addEventListener('mouseleave', () => {
+      scheduleHideFlyout();
+    });
+
     searchInput.addEventListener('input', (e) => {
       const query = e.target.value.toLowerCase().trim();
-      const smartSuggestionItems = Array.from(contentArea.querySelectorAll('.smart-suggestion'));
-      const suggestionsHeaderEl = contentArea.querySelector('.suggestions-header');
-      const suggestionsSeparatorEl = contentArea.querySelector('.suggestions-separator');
-
-      if (!query) {
-        smartSuggestionItems.forEach(item => { item.style.display = 'block'; });
-        if (suggestionsHeaderEl) suggestionsHeaderEl.style.display = smartSuggestionItems.length ? 'block' : 'none';
-        if (suggestionsSeparatorEl) suggestionsSeparatorEl.style.display = smartSuggestionItems.length ? 'block' : 'none';
-
-        categorySections.forEach(section => {
-          section.wrapper.style.display = 'block';
-          section.items.forEach(item => {
-            item.style.display = 'block';
-          });
-          setSectionExpanded(section, false);
-        });
-      } else {
-        let visibleSuggestionCount = 0;
-        smartSuggestionItems.forEach(item => {
-          const searchText = item.dataset.searchText || item.textContent.toLowerCase();
-          const label = item.textContent.toLowerCase();
-          const isMatch = searchText.includes(query) || label.includes(query);
-          item.style.display = isMatch ? 'block' : 'none';
-          if (isMatch) visibleSuggestionCount++;
-        });
-        if (suggestionsHeaderEl) suggestionsHeaderEl.style.display = visibleSuggestionCount ? 'block' : 'none';
-        if (suggestionsSeparatorEl) suggestionsSeparatorEl.style.display = visibleSuggestionCount ? 'block' : 'none';
-
-        categorySections.forEach(section => {
-          const categoryMatch = section.title.toLowerCase().includes(query);
-          let visibleItems = 0;
-
-          section.items.forEach(item => {
-            const searchText = item.dataset.searchText || item.textContent.toLowerCase();
-            const label = item.textContent.toLowerCase();
-            const isMatch = categoryMatch || searchText.includes(query) || label.includes(query);
-            item.style.display = isMatch ? 'block' : 'none';
-            if (isMatch) visibleItems++;
-          });
-
-          if (visibleItems > 0) {
-            section.wrapper.style.display = 'block';
-            setSectionExpanded(section, true);
-          } else {
-            section.wrapper.style.display = 'none';
-            setSectionExpanded(section, false);
-          }
-        });
+      renderMainRows(query);
+      if (activeRow) {
+        const active = mainRows.find(item => item.row === activeRow);
+        if (active && active.row.style.display !== 'none') {
+          renderFlyout(active.entry, active.row, query);
+        } else {
+          hideFlyout();
+        }
       }
     });
+
+    renderMainRows('');
     
     document.body.appendChild(menu);
     return menu;
@@ -1199,7 +1263,22 @@
       return;
     }
 
-    let value = '';
+    const hasCachedValue = Object.prototype.hasOwnProperty.call(generatedDataCache, generatorName);
+    let value = hasCachedValue ? generatedDataCache[generatorName] : '';
+
+    if (hasCachedValue) {
+      try {
+        // Replace current field value for generator actions to avoid concatenated outputs.
+        const newValue = String(value ?? '');
+        targetInput.value = newValue;
+        targetInput.setSelectionRange(newValue.length, newValue.length);
+        targetInput.dispatchEvent(new Event('input', { bubbles: true }));
+        targetInput.dispatchEvent(new Event('change', { bubbles: true }));
+      } catch (error) {
+        console.error('Error filling input:', error);
+      }
+      return;
+    }
     
     // Simple fallback generators if main generators not loaded
     switch(generatorName) {
@@ -1342,6 +1421,8 @@
         }
     }
 
+    generatedDataCache[generatorName] = value;
+
     try {
       // Replace current field value for generator actions to avoid concatenated outputs.
       const newValue = String(value ?? '');
@@ -1402,11 +1483,14 @@
       contextMenu = createContextMenu();
     }
 
-    // Reset search and collapse all sections on each open.
+    // Reset search and return to top-level categories on each open.
     const searchInput = contextMenu.querySelector('input[type="text"]');
     if (searchInput) {
       searchInput.value = '';
       searchInput.dispatchEvent(new Event('input'));
+    }
+    if (contextMenu._flyout) {
+      contextMenu._flyout.style.display = 'none';
     }
     
     contextMenu.style.display = 'block';
@@ -1427,6 +1511,9 @@
   function hideContextMenu() {
     if (contextMenu) {
       contextMenu.style.display = 'none';
+      if (contextMenu._flyout) {
+        contextMenu._flyout.style.display = 'none';
+      }
     }
     // Don't clear targetInput immediately - let it persist for the click handler
     setTimeout(() => {
@@ -1449,7 +1536,8 @@
   });
 
   document.addEventListener('click', (e) => {
-    if (contextMenu && !contextMenu.contains(e.target)) {
+    const clickInsideFlyout = contextMenu && contextMenu._flyout && contextMenu._flyout.contains(e.target);
+    if (contextMenu && !contextMenu.contains(e.target) && !clickInsideFlyout) {
       hideContextMenu();
     }
   }, true); // Use capture phase to handle before menu item clicks
