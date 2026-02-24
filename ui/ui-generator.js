@@ -192,12 +192,12 @@ function createDataGeneratorUI(containerId) {
     .dg-sub-tab.active { display: none; }
     .dg-main { display: flex; flex-direction: column; min-height: 0; overflow: hidden; width: 315px; flex-shrink: 0; margin-right: 0; }
     .dg-content { flex: 1; overflow-y: auto; min-height: 0; background: linear-gradient(180deg, #ffffff 0%, #f6f7fb 100%); min-width: 0; padding: 0 0 56px; }
-    .dg-field-section { margin-bottom: 16px; padding: 16px; background: white; border-radius: 14px; border: 1px solid rgba(91, 124, 250, 0.08); box-shadow: var(--shadow-3); animation: dgFadeUp 0.45s ease; }
+    .dg-field-section { margin-bottom: 16px; padding: 16px; background: white; border-radius: 0; border: 1px solid rgba(91, 124, 250, 0.08); box-shadow: var(--shadow-3); animation: dgFadeUp 0.45s ease; }
     .dg-field-section:first-child { padding-top: 16px; }
     .dg-section-title { font-size: 12px; font-weight: 900; color: var(--brand-2); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid rgba(91, 124, 250, 0.12); letter-spacing: 0.8px; text-transform: uppercase; position: relative; }
     .dg-section-title::after { content: ""; position: absolute; left: 0; bottom: -1px; width: 40px; height: 2px; border-radius: 999px; background: linear-gradient(90deg, var(--brand-1), rgba(127, 86, 217, 0.2)); }
-    .dg-top-controls { display: flex; background: linear-gradient(135deg, rgba(91, 124, 250, 0.98) 0%, rgba(127, 86, 217, 0.98) 100%); border-bottom: 1px solid rgba(255,255,255,0.2); overflow-x: auto; flex-shrink: 0; padding: 9px 6px; justify-content: center; gap: 12px; }
-    .dg-top-controls .dg-btn { padding: 8px 12px; border: 1px solid rgba(255,255,255,0.7); background: rgba(255,255,255,0.15); cursor: pointer; font-size: 10px; font-weight: 800; color: white; border-radius: 8px; white-space: nowrap; transition: all 0.25s ease; margin: 0; }
+    .dg-top-controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); background: linear-gradient(135deg, rgba(91, 124, 250, 0.98) 0%, rgba(127, 86, 217, 0.98) 100%); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; flex-shrink: 0; padding: 10px; gap: 8px; }
+    .dg-top-controls .dg-btn { width: 100%; padding: 9px 10px; border: 1px solid rgba(255,255,255,0.7); background: rgba(255,255,255,0.15); cursor: pointer; font-size: 10px; font-weight: 800; color: white; border-radius: 8px; white-space: nowrap; transition: all 0.25s ease; margin: 0; text-align: center; }
     .dg-top-controls .dg-btn:hover { color: white; border-color: white; background: rgba(255,255,255,0.3); box-shadow: 0 8px 18px rgba(15, 23, 42, 0.2); transform: translateY(-2px); }
     .dg-top-controls .dg-btn.unselect { border-color: #ff7b7b; color: #ffe1e1; background: rgba(255, 107, 107, 0.2); }
     .dg-top-controls .dg-btn.unselect:hover { background: rgba(255,107,107,0.45); color: white; border-color: white; }
@@ -219,17 +219,21 @@ function createDataGeneratorUI(containerId) {
     .dg-checkbox:hover { background: #ffffff; border-color: rgba(91, 124, 250, 0.4); box-shadow: var(--shadow-3); transform: translateY(-1px); }
     .dg-checkbox input { flex-shrink: 0; }
     .dg-checkbox span { word-wrap: break-word; white-space: normal; }
-    .dg-right-sidebar { display: flex; flex-direction: column; flex: 1; background: linear-gradient(180deg, #ffffff 0%, #f6f7fb 100%); border-left: 1px solid var(--line); box-shadow: -2px 0 12px rgba(15, 23, 42, 0.06); min-height: 0; overflow: hidden; padding-bottom: 56px; }
-    .dg-right-sidebar-header { background: linear-gradient(135deg, rgba(91, 124, 250, 0.98) 0%, rgba(24, 161, 205, 0.95) 100%); padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.2); font-size: 12px; font-weight: 800; color: white; text-transform: uppercase; letter-spacing: 0.5px; }
-    .dg-right-sidebar-content { flex: 1; overflow-y: auto; display: flex; flex-direction: column; min-height: 0; }
-    .dg-controls { background: white; border-bottom: 1px solid var(--line); flex-shrink: 0; transition: all 0.3s ease; }
-    .dg-controls.collapsed .dg-controls-content { display: none; }
-    .dg-controls-header { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--line); cursor: pointer; user-select: none; background: linear-gradient(180deg, #ffffff 0%, #f4f6fb 100%); }
-    .dg-controls-header:hover { background: #f0f3fb; }
-    .dg-controls-header span { font-size: 12px; font-weight: 800; color: #334155; letter-spacing: 0.4px; text-transform: uppercase; }
-    .dg-controls-toggle { font-size: 14px; transition: transform 0.3s ease; }
-    .dg-controls.collapsed .dg-controls-toggle { transform: rotate(180deg); }
-    .dg-controls-content { padding: 14px; }
+    .dg-right-sidebar { display: flex; flex-direction: column; flex: 1; background: linear-gradient(180deg, #f8fbff 0%, #eef3fb 100%); border-left: 1px solid var(--line); box-shadow: -2px 0 12px rgba(15, 23, 42, 0.06); min-height: 0; overflow: hidden; padding: 0 0 56px; }
+    .dg-right-sidebar-content { flex: 1; overflow-y: auto; display: flex; flex-direction: column; min-height: 0; gap: 12px; padding: 0; }
+    .dg-panel-section { background: white; border: 1px solid rgba(91, 124, 250, 0.16); border-radius: 0; box-shadow: var(--shadow-3); overflow: hidden; display: flex; flex-direction: column; min-height: 0; }
+    .dg-panel-header { background: linear-gradient(135deg, rgba(91, 124, 250, 0.98) 0%, rgba(24, 161, 205, 0.95) 100%); padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.2); cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; }
+    .dg-panel-header:hover { filter: brightness(1.02); }
+    .dg-panel-title { font-size: 12px; font-weight: 800; color: white; text-transform: uppercase; letter-spacing: 0.5px; }
+    .dg-panel-toggle { color: white; font-size: 13px; line-height: 1; transition: transform 0.25s ease; }
+    .dg-panel-section.collapsed .dg-panel-toggle { transform: rotate(180deg); }
+    .dg-panel-section.collapsed .dg-panel-content { display: none; }
+    .dg-panel-content { min-height: 0; }
+    .dg-controls-section { flex-shrink: 0; }
+    .dg-controls { background: transparent; border: none; }
+    .dg-controls-content { padding: 12px; }
+    .dg-controls-subsection { margin-bottom: 12px; background: linear-gradient(180deg, #f5f8ff 0%, #eef3ff 100%); border: 1px solid rgba(91, 124, 250, 0.2); border-radius: 12px; padding: 12px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.8); }
+    .dg-controls-subtitle { font-size: 10px; font-weight: 900; color: #54627a; text-transform: uppercase; letter-spacing: 0.9px; margin-bottom: 10px; }
     .dg-count-control { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; font-size: 13px; font-weight: 600; color: var(--muted); }
     .dg-count-control input { width: 60px; padding: 6px 8px; border: 1px solid rgba(91, 124, 250, 0.3); border-radius: 6px; font-size: 12px; }
     .dg-buttons { display: flex; gap: 8px; padding: 12px 14px; border-top: 1px solid var(--line); background: #fbfcff; }
@@ -238,27 +242,29 @@ function createDataGeneratorUI(containerId) {
     .dg-btn-primary:hover { box-shadow: 0 10px 20px rgba(91, 124, 250, 0.3); transform: translateY(-1px); }
     .dg-btn-secondary { background: #e7ebf4; color: #334155; }
     .dg-btn-secondary:hover { background: #d5dcee; transform: translateY(-1px); box-shadow: var(--shadow-3); }
-    .dg-results { flex: 1; overflow-y: auto; font-size: 12px; background: linear-gradient(180deg, #f8faff 0%, #f1f4fb 100%); padding: 0 0 56px; display: flex; flex-direction: column; min-width: 0; box-shadow: inset 0 1px 0 rgba(15, 23, 42, 0.06), inset 0 8px 24px rgba(15, 23, 42, 0.04); }
+    .dg-results-section { flex: 1; min-height: 260px; }
+    .dg-panel-content.results-content { flex: 1; display: flex; min-height: 0; background: linear-gradient(180deg, #f8faff 0%, #f1f4fb 100%); }
+    .dg-results { flex: 1; overflow-y: auto; font-size: 12px; background: transparent; padding: 0 0 56px; display: flex; flex-direction: column; min-width: 0; box-shadow: inset 0 1px 0 rgba(15, 23, 42, 0.06), inset 0 8px 24px rgba(15, 23, 42, 0.04); }
     .dg-record-tabs { display: flex; background: rgba(255,255,255,0.95); border-bottom: 1px solid var(--line); overflow-x: auto; flex-shrink: 0; padding: 6px 10px; gap: 6px; backdrop-filter: blur(8px); }
-    .dg-record-tab { padding: 8px 12px; border: 1px solid transparent; background: rgba(91, 124, 250, 0.06); cursor: pointer; font-size: 10px; font-weight: 800; color: #5b6b7f; border-radius: 999px; white-space: nowrap; transition: all 0.25s ease; letter-spacing: 0.6px; text-transform: uppercase; }
+    .dg-record-tab { padding: 8px 12px; border: 1px solid transparent; background: rgba(91, 124, 250, 0.06); cursor: pointer; font-size: 10px; font-weight: 800; color: #5b6b7f; border-radius: 10px; white-space: nowrap; transition: all 0.25s ease; letter-spacing: 0.6px; text-transform: uppercase; }
     .dg-record-tab:hover { color: var(--brand-1); border-color: rgba(91, 124, 250, 0.25); background: rgba(91, 124, 250, 0.12); }
     .dg-record-tab.active { color: white; border-color: transparent; background: linear-gradient(135deg, var(--brand-1) 0%, var(--brand-2) 100%); box-shadow: 0 8px 16px rgba(91, 124, 250, 0.25); }
-    .dg-record-contents { flex: 1; overflow-y: auto; padding: 8px 10px 0; min-width: 0; }
+    .dg-record-contents { flex: 1; overflow-y: auto; padding: 0; min-width: 0; }
     .dg-record-content { display: none; height: 100%; min-width: 0; }
     .dg-record-content.active { display: flex; flex-direction: column; min-width: 0; }
     .dg-category-tabs { display: flex; background: rgba(255,255,255,0.95); border-bottom: 1px solid var(--line); overflow-x: auto; flex-shrink: 0; padding: 6px 10px; gap: 6px; backdrop-filter: blur(8px); }
-    .dg-category-tab { padding: 7px 10px; border: 1px solid transparent; background: rgba(24, 161, 205, 0.08); cursor: pointer; font-size: 9px; font-weight: 800; color: #5b6b7f; border-radius: 999px; white-space: nowrap; transition: all 0.25s ease; text-transform: uppercase; letter-spacing: 0.6px; }
+    .dg-category-tab { padding: 7px 10px; border: 1px solid transparent; background: rgba(24, 161, 205, 0.08); cursor: pointer; font-size: 9px; font-weight: 800; color: #5b6b7f; border-radius: 10px; white-space: nowrap; transition: all 0.25s ease; text-transform: uppercase; letter-spacing: 0.6px; }
     .dg-category-tab:hover { color: var(--brand-1); border-color: rgba(24, 161, 205, 0.35); background: rgba(24, 161, 205, 0.18); }
     .dg-category-tab.active { color: white; border-color: transparent; background: linear-gradient(135deg, #18a1cd 0%, #5b7cfa 100%); box-shadow: 0 8px 16px rgba(24, 161, 205, 0.25); }
-    .dg-category-contents { flex: 1; overflow-y: auto; padding: 8px 10px 0; }
+    .dg-category-contents { flex: 1; overflow-y: auto; padding: 0; }
     .dg-category-content { display: none; }
     .dg-category-content.active { display: block; }
-    .dg-record-field { display: flex; flex-direction: column; gap: 12px; padding: 14px 16px; font-size: 11px; border: 1px solid rgba(91, 124, 250, 0.08); background: white; transition: all 0.2s ease; border-radius: 12px; margin: 8px 0; box-shadow: 0 6px 16px rgba(15, 23, 42, 0.04); }
+    .dg-record-field { display: flex; flex-direction: column; gap: 12px; padding: 14px 16px; font-size: 11px; border: 1px solid rgba(91, 124, 250, 0.08); background: white; transition: all 0.2s ease; border-radius: 0; margin: 8px 0; box-shadow: 0 6px 16px rgba(15, 23, 42, 0.04); }
     .dg-record-field:nth-child(odd) { background: #ffffff; }
     .dg-record-field:nth-child(even) { background: #f8f9fe; }
     .dg-record-field:hover { background: #eef3ff !important; border-color: rgba(91, 124, 250, 0.35); box-shadow: 0 10px 20px rgba(91, 124, 250, 0.12); transform: translateY(-1px); }
-    .dg-subsection-group { margin-bottom: 12px; padding: 10px; border: 1px dashed rgba(91, 124, 250, 0.22); border-radius: 10px; background: rgba(255, 255, 255, 0.7); }
-    .dg-subsection-title { font-size: 10px; font-weight: 900; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+    .dg-subsection-group { margin-bottom: 12px; margin-top: 12px; padding: 0; border: 1px dashed rgba(91, 124, 250, 0.22); border-radius: 10px; background: rgba(255, 255, 255, 0.7); }
+    .dg-subsection-title { font-size: 10px; font-weight: 900; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; padding: 10px; }
     .dg-record-key { font-size: 10px; color: #64748b; font-weight: 700; }
     .dg-record-label { font-weight: 800; color: var(--brand-2); min-width: 90px; text-transform: uppercase; font-size: 9px; letter-spacing: 0.9px; }
     .dg-field-value { color: #1f2937; word-break: break-all; cursor: pointer; padding: 6px 10px; border-radius: 10px; background: #eef2f8; transition: all 0.2s ease; flex: 1; text-align: left; font-family: "SFMono-Regular", "Menlo", "Monaco", "Courier New", monospace; font-size: 12px; font-weight: 700; }
@@ -2588,12 +2594,6 @@ function createDataGeneratorUI(containerId) {
 
           return `
             <div class="dg-tab-content ${idx === 0 ? "active" : ""}" data-content="${idx}">
-              <div class="dg-top-controls">
-                <button class="dg-btn dg-btn-secondary dg-unselect-all-categories">✕ All</button>
-                <button class="dg-btn dg-btn-secondary dg-unselect-all" data-tab="current">✕ Tab</button>
-                <button class="dg-btn dg-btn-secondary dg-select-all" data-tab="current">✓ Tab</button>
-                <button class="dg-btn dg-btn-secondary dg-select-all-categories">✓ All</button>
-              </div>
               ${
                 cat.title === "Colors"
                   ? `
@@ -2969,12 +2969,6 @@ function createDataGeneratorUI(containerId) {
           // Legacy format for categories without sub-tabs
           return `
             <div class="dg-tab-content ${idx === 0 ? "active" : ""}" data-content="${idx}">
-              <div class="dg-top-controls">
-                <button class="dg-btn dg-btn-secondary dg-unselect-all-categories">✕ All</button>
-                <button class="dg-btn dg-btn-secondary dg-unselect-all" data-tab="current">✕ Tab</button>
-                <button class="dg-btn dg-btn-secondary dg-select-all" data-tab="current">✓ Tab</button>
-                <button class="dg-btn dg-btn-secondary dg-select-all-categories">✓ All</button>
-              </div>
               <div class="dg-fields-wrapper">
                 ${cat.fields.map((field) => `<label class="dg-checkbox"><input type="checkbox" value="${field.id}"><span>${field.label}</span></label>`).join("")}
               </div>
@@ -3133,71 +3127,92 @@ function createDataGeneratorUI(containerId) {
           </div>
         </div>
         <div class="dg-right-sidebar">
-          <div class="dg-right-sidebar-header">⚙️ Controls & Results</div>
           <div class="dg-right-sidebar-content">
-            <div class="dg-controls">
-              <div class="dg-controls-header" id="controlsHeader">
-                <span>Generation Controls</span>
-                <div class="dg-controls-toggle">▲</div>
+            <section class="dg-panel-section dg-controls-section" id="controlsSection">
+              <div class="dg-panel-header" id="controlsHeader">
+                <span class="dg-panel-title">⚙️ Controls</span>
+                <div class="dg-panel-toggle">▲</div>
               </div>
-              <div class="dg-controls-content">
-                <div class="dg-count-control">
-                  <label>Records:</label>
-                  <input type="number" id="recordCount" value="1" min="1" max="100">
-                </div>
-                
-                <!-- Image Dimension Controls -->
-                <div class="dg-image-controls" id="imageControls">
-                  <h4>Image Dimensions</h4>
-                  
-                  <div class="dg-current-dimensions" id="currentDimensions">
-                    Current: 400 × 300 px (4:3 ratio)
-                  </div>
-                  
-                <div class="dg-image-control-group">
-                  <label>Custom Size</label>
-                  <div class="dg-image-size-group">
-                    <input type="number" id="imageWidth" value="400" min="50" max="2000" placeholder="Width">
-                    <span>×</span>
-                    <input type="number" id="imageHeight" value="300" min="50" max="2000" placeholder="Height">
-                  </div>
-                </div>
-                
-                <div class="dg-image-control-group">
-                  <label>Popular Sizes</label>
-                  <div class="dg-preset-buttons">
-                    <button class="dg-preset-btn popular" data-size="400,300">400×300</button>
-                    <button class="dg-preset-btn popular" data-size="800,600">800×600</button>
-                    <button class="dg-preset-btn popular" data-size="1200,800">1200×800</button>
-                    <button class="dg-preset-btn" data-size="150,150">150×150</button>
-                    <button class="dg-preset-btn" data-size="300,200">300×200</button>
-                    <button class="dg-preset-btn" data-size="600,400">600×400</button>
-                    <button class="dg-preset-btn" data-size="1024,768">1024×768</button>
-                    <button class="dg-preset-btn" data-size="1920,1080">1920×1080</button>
-                  </div>
-                </div>
-                
-                <div class="dg-image-control-group">
-                  <div class="dg-aspect-ratios">
-                    <label>Common Aspect Ratios</label>
-                    <div>
-                      <button class="dg-aspect-btn" data-ratio="1:1" data-base="400">1:1 Square</button>
-                      <button class="dg-aspect-btn" data-ratio="4:3" data-base="400">4:3 Standard</button>
-                      <button class="dg-aspect-btn" data-ratio="16:9" data-base="400">16:9 Widescreen</button>
-                      <button class="dg-aspect-btn" data-ratio="3:2" data-base="400">3:2 Photo</button>
-                      <button class="dg-aspect-btn" data-ratio="21:9" data-base="400">21:9 Ultrawide</button>
+              <div class="dg-panel-content">
+                <div class="dg-controls">
+                  <div class="dg-controls-content">
+                    <div class="dg-count-control">
+                      <label>Records:</label>
+                      <input type="number" id="recordCount" value="1" min="1" max="100">
+                    </div>
+                    <div class="dg-controls-subsection">
+                      <div class="dg-controls-subtitle">Selection Controls</div>
+                      <div class="dg-top-controls">
+                        <button class="dg-btn dg-btn-secondary dg-unselect-all-categories">✕ All</button>
+                        <button class="dg-btn dg-btn-secondary dg-unselect-all" data-tab="current">✕ Tab</button>
+                        <button class="dg-btn dg-btn-secondary dg-select-all" data-tab="current">✓ Tab</button>
+                        <button class="dg-btn dg-btn-secondary dg-select-all-categories">✓ All</button>
+                      </div>
+                    </div>
+
+                    <!-- Image Dimension Controls -->
+                    <div class="dg-image-controls" id="imageControls">
+                      <h4>Image Dimensions</h4>
+
+                      <div class="dg-current-dimensions" id="currentDimensions">
+                        Current: 400 × 300 px (4:3 ratio)
+                      </div>
+
+                    <div class="dg-image-control-group">
+                      <label>Custom Size</label>
+                      <div class="dg-image-size-group">
+                        <input type="number" id="imageWidth" value="400" min="50" max="2000" placeholder="Width">
+                        <span>×</span>
+                        <input type="number" id="imageHeight" value="300" min="50" max="2000" placeholder="Height">
+                      </div>
+                    </div>
+
+                    <div class="dg-image-control-group">
+                      <label>Popular Sizes</label>
+                      <div class="dg-preset-buttons">
+                        <button class="dg-preset-btn popular" data-size="400,300">400×300</button>
+                        <button class="dg-preset-btn popular" data-size="800,600">800×600</button>
+                        <button class="dg-preset-btn popular" data-size="1200,800">1200×800</button>
+                        <button class="dg-preset-btn" data-size="150,150">150×150</button>
+                        <button class="dg-preset-btn" data-size="300,200">300×200</button>
+                        <button class="dg-preset-btn" data-size="600,400">600×400</button>
+                        <button class="dg-preset-btn" data-size="1024,768">1024×768</button>
+                        <button class="dg-preset-btn" data-size="1920,1080">1920×1080</button>
+                      </div>
+                    </div>
+
+                    <div class="dg-image-control-group">
+                      <div class="dg-aspect-ratios">
+                        <label>Common Aspect Ratios</label>
+                        <div>
+                          <button class="dg-aspect-btn" data-ratio="1:1" data-base="400">1:1 Square</button>
+                          <button class="dg-aspect-btn" data-ratio="4:3" data-base="400">4:3 Standard</button>
+                          <button class="dg-aspect-btn" data-ratio="16:9" data-base="400">16:9 Widescreen</button>
+                          <button class="dg-aspect-btn" data-ratio="3:2" data-base="400">3:2 Photo</button>
+                          <button class="dg-aspect-btn" data-ratio="21:9" data-base="400">21:9 Ultrawide</button>
+                        </div>
+                      </div>
                     </div>
                   </div>
+
+                  <div class="dg-buttons">
+                    <button class="dg-btn dg-btn-primary" id="generateBtn">Generate</button>
+                    <button class="dg-btn dg-btn-secondary" id="copyBtn">Copy</button>
+                    <button class="dg-btn dg-btn-secondary" id="downloadBtn" style="display: none;">💾 Save File</button>
+                  </div>
                 </div>
               </div>
-              
-              <div class="dg-buttons">
-                <button class="dg-btn dg-btn-primary" id="generateBtn">Generate</button>
-                <button class="dg-btn dg-btn-secondary" id="copyBtn">Copy</button>
-                <button class="dg-btn dg-btn-secondary" id="downloadBtn" style="display: none;">💾 Save File</button>
+            </section>
+
+            <section class="dg-panel-section dg-results-section" id="resultsSection">
+              <div class="dg-panel-header" id="resultsHeader">
+                <span class="dg-panel-title">📊 Results</span>
+                <div class="dg-panel-toggle">▲</div>
               </div>
-            </div>
-            <div class="dg-results" id="results"></div>
+              <div class="dg-panel-content results-content">
+                <div class="dg-results" id="results"></div>
+              </div>
+            </section>
           </div>
         </div>
       </div>
@@ -3882,10 +3897,21 @@ function createDataGeneratorUI(containerId) {
     }
   });
 
-  document.getElementById("controlsHeader").addEventListener("click", () => {
-    const controls = document.querySelector(".dg-controls");
-    controls.classList.toggle("collapsed");
-  });
+  const controlsHeaderEl = document.getElementById("controlsHeader");
+  if (controlsHeaderEl) {
+    controlsHeaderEl.addEventListener("click", () => {
+      const controlsSection = document.getElementById("controlsSection");
+      if (controlsSection) controlsSection.classList.toggle("collapsed");
+    });
+  }
+
+  const resultsHeaderEl = document.getElementById("resultsHeader");
+  if (resultsHeaderEl) {
+    resultsHeaderEl.addEventListener("click", () => {
+      const resultsSection = document.getElementById("resultsSection");
+      if (resultsSection) resultsSection.classList.toggle("collapsed");
+    });
+  }
 
   // Image dimension controls event handlers
   const imageWidthInput = document.getElementById("imageWidth");
