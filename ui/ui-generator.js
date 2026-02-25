@@ -347,6 +347,28 @@ function createDataGeneratorUI(containerId) {
     #dateTimeControls .dg-conversion-item { border-radius: 0; border-color: rgba(91, 124, 250, 0.22); }
     #dateTimeControls .dg-conversion-value { border-radius: 0; background: #f8fbff; }
     #dateTimeControls .dg-user-note { border-left: 4px solid #18a1cd; border-radius: 0; background: #f0f8ff; }
+    #securityControls { margin: 0; margin-bottom: 12px; padding: 0; background: linear-gradient(145deg, #f2f7ff 0%, #eaf1ff 100%); border: 1px solid rgba(91, 124, 250, 0.24); box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 6px 18px rgba(15, 23, 42, 0.06); }
+    #securityControls .dg-file-controls-header { margin-bottom: 10px; padding: 10px 12px; border: 1px solid rgba(91, 124, 250, 0.25); background: white; }
+    #securityControls .dg-file-controls-title { color: #334155; }
+    #securityControls .dg-file-controls-hint { color: #64748b; }
+    #securityControls .dg-date-tools-tabs { display: flex; gap: 6px; border: none; margin-bottom: 10px; background: transparent; overflow: visible; }
+    #securityControls .dg-date-tools-tab { border: 1px solid transparent; background: rgba(91, 124, 250, 0.08); color: #5b6b7f; border-radius: 0; padding: 8px 10px; font-size: 9px; letter-spacing: 0.6px; transition: all 0.2s ease; }
+    #securityControls .dg-date-tools-tab + .dg-date-tools-tab { border-left: 1px solid transparent; }
+    #securityControls .dg-date-tools-tab:hover { color: var(--brand-1); border-color: rgba(91, 124, 250, 0.25); background: rgba(91, 124, 250, 0.14); }
+    #securityControls .dg-date-tools-tab.active { background: linear-gradient(135deg, #5b7cfa 0%, #7f56d9 100%); color: white; box-shadow: 0 8px 16px rgba(91, 124, 250, 0.25); }
+    #securityControls .dg-date-tools-panel.active { background: transparent; border: none; padding: 0; }
+    #securityControls .dg-file-controls-sections { gap: 10px; }
+    #securityControls .dg-file-control-section { border: 1px solid rgba(91, 124, 250, 0.18); background: #ffffff; border-radius: 0; box-shadow: none; }
+    #securityControls .dg-file-control-section::before { width: 4px; border-radius: 0; }
+    #securityControls .dg-file-control-group input,
+    #securityControls .dg-file-control-group select,
+    #securityControls .dg-file-control-group textarea { border-radius: 0; background: #fcfdff; border-color: rgba(91, 124, 250, 0.35); }
+    #securityControls .dg-file-control-group textarea { width: 100%; min-height: 72px; resize: vertical; padding: 8px 10px; font-size: 11px; font-weight: 700; color: #0f172a; box-sizing: border-box; }
+    #securityControls .dg-file-control-group input:focus,
+    #securityControls .dg-file-control-group select:focus,
+    #securityControls .dg-file-control-group textarea:focus { outline: none; border-color: #5b7cfa; box-shadow: 0 0 0 3px rgba(91, 124, 250, 0.14); }
+    #securityControls .dg-security-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    #securityControls .dg-user-note { border-left: 4px solid #18a1cd; border-radius: 0; background: #f0f8ff; }
     #randomValuesControls { margin: 0; margin-bottom: 12px; padding: 0; background: linear-gradient(145deg, #f2f7ff 0%, #eaf1ff 100%); border: 1px solid rgba(91, 124, 250, 0.24); box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 6px 18px rgba(15, 23, 42, 0.06); }
     #randomValuesControls .dg-file-controls-header { margin: 0; border-left: none; border-right: none; border-top: none; }
     #randomValuesControls .dg-file-controls-sections { padding: 10px 12px 12px; gap: 10px; }
@@ -2172,11 +2194,126 @@ function createDataGeneratorUI(containerId) {
           title: "Encryption & Access",
           fields: [
             { id: "encryptionType", label: "Encryption Type" },
+            { id: "encryptionMethod", label: "Encryption Method" },
+            { id: "encryptionPayload", label: "Encryption Payload" },
+            { id: "encryptionKey", label: "Encryption Key" },
+            { id: "encryptedText", label: "Encrypted Text" },
+            { id: "decryptedText", label: "Decrypted Text" },
+            { id: "encryptionRoundTrip", label: "Encrypt/Decrypt Round Trip" },
+            { id: "hashAlgorithm", label: "Hash Algorithm" },
+            { id: "hashText", label: "Hash Text" },
             { id: "hashValue", label: "Hash Value" },
+            { id: "hmacValue", label: "HMAC Value" },
+            { id: "passwordHash", label: "Password Hash" },
             { id: "saltValue", label: "Salt Value" },
+            { id: "keyExchangeProtocol", label: "Key Exchange Protocol" },
+            { id: "digitalSignature", label: "Digital Signature" },
+            { id: "ivValue", label: "IV Value" },
+            { id: "nonceValue", label: "Nonce Value" },
+            { id: "secureRandomBytes", label: "Secure Random Bytes" },
             { id: "certificateId", label: "Certificate ID" },
             { id: "permissionLevel", label: "Permission Level" },
             { id: "accessRole", label: "Access Role" },
+          ]
+        },
+        {
+          title: "TLS & PKI",
+          fields: [
+            { id: "tlsVersion", label: "TLS Version" },
+            { id: "tlsCipherSuite", label: "TLS Cipher Suite" },
+            { id: "certificateChainStatus", label: "Certificate Chain Status" },
+            { id: "ocspStatus", label: "OCSP Status" },
+            { id: "crlStatus", label: "CRL Status" },
+            { id: "certificateExpiryWarning", label: "Certificate Expiry Warning" },
+          ]
+        },
+        {
+          title: "AuthN & AuthZ",
+          fields: [
+            { id: "oauthGrantType", label: "OAuth Grant Type" },
+            { id: "oidcClaimSet", label: "OIDC Claim Set" },
+            { id: "mfaResult", label: "MFA Result" },
+            { id: "rbacDecision", label: "RBAC Decision" },
+            { id: "abacDecision", label: "ABAC Decision" },
+            { id: "refreshTokenRotation", label: "Refresh Token Rotation" },
+          ]
+        },
+        {
+          title: "API & Web Security",
+          fields: [
+            { id: "jwtValidationStatus", label: "JWT Validation Status" },
+            { id: "apiRateLimitHeader", label: "API Rate Limit Header" },
+            { id: "apiScopeMismatch", label: "API Scope Mismatch" },
+            { id: "replayAttackIndicator", label: "Replay Attack Indicator" },
+            { id: "cspPolicyStatus", label: "CSP Policy Status" },
+            { id: "corsConfigStatus", label: "CORS Config Status" },
+            { id: "cookieSecurityFlags", label: "Cookie Security Flags" },
+            { id: "ssrfPayload", label: "SSRF Payload" },
+            { id: "openRedirectPayload", label: "Open Redirect Payload" },
+          ]
+        },
+        {
+          title: "Secrets & Key Management",
+          fields: [
+            { id: "kmsKeyId", label: "KMS Key ID" },
+            { id: "keyRotationStatus", label: "Key Rotation Status" },
+            { id: "keyUsageAudit", label: "Key Usage Audit" },
+            { id: "secretLeakPattern", label: "Secret Leak Pattern" },
+          ]
+        },
+        {
+          title: "Network & Detection",
+          fields: [
+            { id: "firewallDecision", label: "Firewall Decision" },
+            { id: "idsAlert", label: "IDS Alert" },
+            { id: "portScanResult", label: "Port Scan Result" },
+            { id: "ipReputation", label: "IP Reputation" },
+          ]
+        },
+        {
+          title: "Data Protection",
+          fields: [
+            { id: "dataMaskingOutput", label: "Data Masking Output" },
+            { id: "piiDetectionLabel", label: "PII Detection Label" },
+            { id: "dlpEventType", label: "DLP Event Type" },
+            { id: "dataResidencyTag", label: "Data Residency Tag" },
+          ]
+        },
+        {
+          title: "Vulnerability Management",
+          fields: [
+            { id: "cvssScore", label: "CVSS Score" },
+            { id: "cvssVector", label: "CVSS Vector" },
+            { id: "cweId", label: "CWE ID" },
+            { id: "exploitabilityRating", label: "Exploitability Rating" },
+            { id: "remediationSla", label: "Remediation SLA" },
+          ]
+        },
+        {
+          title: "Integrity & Signing",
+          fields: [
+            { id: "signatureVerification", label: "Signature Verification" },
+            { id: "checksumValue", label: "Checksum Value" },
+            { id: "tamperEvidence", label: "Tamper Evidence" },
+          ]
+        },
+        {
+          title: "SIEM & Incident Response",
+          fields: [
+            { id: "securityLogEvent", label: "Security Log Event" },
+            { id: "mitreTechniqueId", label: "MITRE Technique ID" },
+            { id: "incidentTriageStatus", label: "Incident Triage Status" },
+            { id: "falsePositiveLikelihood", label: "False Positive Likelihood" },
+          ]
+        },
+        {
+          title: "Cloud & PQC",
+          fields: [
+            { id: "iamMisconfiguration", label: "IAM Misconfiguration" },
+            { id: "storageExposure", label: "Storage Exposure" },
+            { id: "securityGroupDrift", label: "Security Group Drift" },
+            { id: "pqcAlgorithm", label: "PQC Algorithm" },
+            { id: "hybridCryptoMode", label: "Hybrid Crypto Mode" },
           ]
         }
       ]
@@ -3169,6 +3306,141 @@ function createDataGeneratorUI(containerId) {
                   : ""
               }
               ${
+                cat.title === "Security Testing"
+                  ? `
+                <div class="dg-file-controls active" id="securityControls">
+                  <div class="dg-file-controls-header">
+                    <div class="dg-file-controls-title">Security Testing Controls</div>
+                    <div class="dg-file-controls-hint">Encrypt, decrypt, hash, and analyze payloads</div>
+                  </div>
+                  <div class="dg-date-tools-tabs">
+                    <button type="button" class="dg-date-tools-tab active" data-date-tools-tab="generator">Generator</button>
+                    <button type="button" class="dg-date-tools-tab" data-date-tools-tab="crypto">Crypto Tools</button>
+                  </div>
+                  <div class="dg-date-tools-panel active" data-date-tools-panel="generator">
+                    <div class="dg-file-controls-sections">
+                      <div class="dg-file-control-section">
+                        <div class="dg-file-control-section-title">Security Field Scope</div>
+                        <div class="dg-file-control-group">
+                          <label>Encryption Method:</label>
+                          <select id="securityDefaultMethod">
+                            <option value="AES-256">AES-256</option>
+                            <option value="AES-256-GCM">AES-256-GCM</option>
+                            <option value="AES-256-CBC">AES-256-CBC</option>
+                            <option value="AES-CTR">AES-CTR</option>
+                            <option value="AES-128">AES-128</option>
+                            <option value="RSA-2048">RSA-2048</option>
+                            <option value="RSA-3072">RSA-3072</option>
+                            <option value="RSA-4096">RSA-4096</option>
+                            <option value="ECIES">ECIES</option>
+                            <option value="ElGamal">ElGamal</option>
+                            <option value="ChaCha20-Poly1305">ChaCha20-Poly1305</option>
+                            <option value="XChaCha20-Poly1305">XChaCha20-Poly1305</option>
+                            <option value="Camellia-256">Camellia-256</option>
+                            <option value="Serpent">Serpent</option>
+                            <option value="Twofish">Twofish</option>
+                            <option value="ECC-P256">ECC-P256</option>
+                            <option value="ECC-P384">ECC-P384</option>
+                          </select>
+                        </div>
+                        <div class="dg-file-control-group">
+                          <label>Hash Algorithm:</label>
+                          <select id="securityDefaultHash">
+                            <option value="SHA-256">SHA-256</option>
+                            <option value="SHA-512">SHA-512</option>
+                            <option value="SHA3-256">SHA3-256</option>
+                            <option value="SHA3-512">SHA3-512</option>
+                            <option value="BLAKE2b">BLAKE2b</option>
+                            <option value="MD5">MD5</option>
+                          </select>
+                        </div>
+                        <div class="dg-user-note">Note: these defaults are for tools and previewing security payload styles.</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="dg-date-tools-panel" data-date-tools-panel="crypto">
+                    <div class="dg-file-controls-sections">
+                      <div class="dg-file-control-section">
+                        <div class="dg-file-control-section-title">Crypto Tools</div>
+                        <div class="dg-file-control-group">
+                          <label>Method:</label>
+                          <select id="securityCryptoMethod">
+                            <option value="AES-256">AES-256</option>
+                            <option value="AES-256-GCM">AES-256-GCM</option>
+                            <option value="AES-256-CBC">AES-256-CBC</option>
+                            <option value="AES-CTR">AES-CTR</option>
+                            <option value="AES-192">AES-192</option>
+                            <option value="AES-128">AES-128</option>
+                            <option value="RSA-2048">RSA-2048</option>
+                            <option value="RSA-3072">RSA-3072</option>
+                            <option value="RSA-4096">RSA-4096</option>
+                            <option value="ECIES">ECIES</option>
+                            <option value="ElGamal">ElGamal</option>
+                            <option value="ChaCha20-Poly1305">ChaCha20-Poly1305</option>
+                            <option value="XChaCha20-Poly1305">XChaCha20-Poly1305</option>
+                            <option value="Salsa20">Salsa20</option>
+                            <option value="ECC-P256">ECC-P256</option>
+                            <option value="ECC-P384">ECC-P384</option>
+                            <option value="Twofish">Twofish</option>
+                            <option value="Serpent">Serpent</option>
+                            <option value="Camellia-256">Camellia-256</option>
+                            <option value="CAST5">CAST5</option>
+                            <option value="IDEA">IDEA</option>
+                            <option value="RC4">RC4</option>
+                            <option value="RC5">RC5</option>
+                            <option value="RC6">RC6</option>
+                            <option value="SEED">SEED</option>
+                            <option value="ARIA">ARIA</option>
+                            <option value="SM4">SM4</option>
+                            <option value="GOST 28147-89">GOST 28147-89</option>
+                            <option value="Blowfish">Blowfish</option>
+                            <option value="3DES">3DES</option>
+                            <option value="DES">DES</option>
+                            <option value="Base64">Base64</option>
+                          </select>
+                        </div>
+                        <div class="dg-file-control-group">
+                          <label>Key / Secret:</label>
+                          <input type="text" id="securityCryptoKey" placeholder="Enter key or secret (optional)">
+                        </div>
+                        <div class="dg-file-control-group">
+                          <label>Input Text:</label>
+                          <textarea id="securityCryptoInput" placeholder="Type plain text, cipher text, or message to hash..."></textarea>
+                        </div>
+                        <div class="dg-security-actions">
+                          <button type="button" id="securityEncryptBtn" class="dg-mini-btn">Encrypt</button>
+                          <button type="button" id="securityDecryptBtn" class="dg-mini-btn secondary">Decrypt</button>
+                          <button type="button" id="securityHashBtn" class="dg-mini-btn secondary">Hash</button>
+                        </div>
+                        <div id="securityCryptoResult" class="dg-conversion-output">
+                          <div class="dg-conversion-output-header">
+                            <span>Crypto Result</span>
+                          </div>
+                          <div class="dg-conversion-grid">
+                            <div class="dg-conversion-item">
+                              <div class="dg-conversion-item-header">
+                                <span class="dg-conversion-item-label">Input</span>
+                                <button type="button" id="copySecurityInput" class="dg-mini-btn">Copy</button>
+                              </div>
+                              <div id="securityInputText" class="dg-conversion-value"></div>
+                            </div>
+                            <div class="dg-conversion-item">
+                              <div class="dg-conversion-item-header">
+                                <span class="dg-conversion-item-label">Output</span>
+                                <button type="button" id="copySecurityOutput" class="dg-mini-btn secondary">Copy</button>
+                              </div>
+                              <div id="securityOutputText" class="dg-conversion-value"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              `
+                  : ""
+              }
+              ${
                 cat.title === "Random Values"
                   ? `
                 <div class="dg-file-controls active" id="randomValuesControls">
@@ -3893,6 +4165,7 @@ function createDataGeneratorUI(containerId) {
       const isEmailTestingTab = category.title === "Email Testing";
       const isPasswordTestingTab = category.title === "Password Testing";
       const isPhoneTestingTab = category.title === "Phone Testing";
+      const isSecurityTestingTab = category.title === "Security Testing";
       const isImagesTab = category.title === "Images & Avatars";
       const fileControls = document.getElementById("fileControls");
       const dateTimeControls = document.getElementById("dateTimeControls");
@@ -3903,6 +4176,7 @@ function createDataGeneratorUI(containerId) {
       const emailControls = document.getElementById("emailControls");
       const passwordControls = document.getElementById("passwordControls");
       const phoneControls = document.getElementById("phoneControls");
+      const securityControls = document.getElementById("securityControls");
       const imageControls = document.getElementById("imageControls");
       const downloadBtn = document.getElementById("downloadBtn");
 
@@ -3926,6 +4200,9 @@ function createDataGeneratorUI(containerId) {
       }
       if (phoneControls) {
         phoneControls.classList.toggle("active", isPhoneTestingTab);
+      }
+      if (securityControls) {
+        securityControls.classList.toggle("active", isSecurityTestingTab);
       }
       if (imageControls) {
         imageControls.classList.toggle("active", isImagesTab);
@@ -4437,6 +4714,7 @@ function createDataGeneratorUI(containerId) {
       const isEmailTestingTab = categoryTitle === "Email Testing";
       const isPasswordTestingTab = categoryTitle === "Password Testing";
       const isPhoneTestingTab = categoryTitle === "Phone Testing";
+      const isSecurityTestingTab = categoryTitle === "Security Testing";
 
       const fileControls = document.getElementById("fileControls");
       const dateTimeControls = document.getElementById("dateTimeControls");
@@ -4447,6 +4725,7 @@ function createDataGeneratorUI(containerId) {
       const emailControls = document.getElementById("emailControls");
       const passwordControls = document.getElementById("passwordControls");
       const phoneControls = document.getElementById("phoneControls");
+      const securityControls = document.getElementById("securityControls");
       const downloadBtn = document.getElementById("downloadBtn");
 
       if (fileControls) fileControls.classList.toggle("active", isFilesTab);
@@ -4462,6 +4741,8 @@ function createDataGeneratorUI(containerId) {
         passwordControls.classList.toggle("active", isPasswordTestingTab);
       if (phoneControls)
         phoneControls.classList.toggle("active", isPhoneTestingTab);
+      if (securityControls)
+        securityControls.classList.toggle("active", isSecurityTestingTab);
       if (downloadBtn)
         downloadBtn.style.display = isFilesTab ? "inline-block" : "none";
     }
@@ -5400,6 +5681,95 @@ function createDataGeneratorUI(containerId) {
     if (conversionResult) conversionResult.style.display = "block";
   }
 
+  function safeB64Encode(value) {
+    try {
+      return btoa(unescape(encodeURIComponent(value || "")));
+    } catch (e) {
+      return "";
+    }
+  }
+
+  function safeB64Decode(value) {
+    try {
+      return decodeURIComponent(escape(atob(value || "")));
+    } catch (e) {
+      return "";
+    }
+  }
+
+  function pseudoHashHex(input, size) {
+    const text = String(input || "");
+    let state = 2166136261;
+    for (let i = 0; i < text.length; i++) {
+      state ^= text.charCodeAt(i);
+      state = Math.imul(state, 16777619) >>> 0;
+    }
+    let out = "";
+    while (out.length < size) {
+      state = Math.imul(state ^ (state >>> 13), 2246822519) >>> 0;
+      out += state.toString(16).padStart(8, "0");
+    }
+    return out.slice(0, size);
+  }
+
+  function hashOutputByAlgorithm(input, algorithm) {
+    const algo = algorithm || "SHA-256";
+    const sizeMap = {
+      MD5: 32,
+      "SHA-1": 40,
+      "SHA-224": 56,
+      "SHA-256": 64,
+      "SHA-384": 96,
+      "SHA-512": 128,
+      "SHA3-256": 64,
+      "SHA3-512": 128,
+      BLAKE2b: 128,
+      "RIPEMD-160": 40,
+    };
+    const size = sizeMap[algo] || 64;
+    return `${algo}:${pseudoHashHex(input, size)}`;
+  }
+
+  function encryptSecurityText(inputText, method, key) {
+    const algo = method || "AES-256";
+    const payload = JSON.stringify({
+      m: algo,
+      k: key || "",
+      d: inputText || "",
+      t: Date.now(),
+    });
+    if (algo === "Base64") return safeB64Encode(inputText || "");
+    return safeB64Encode(payload);
+  }
+
+  function decryptSecurityText(cipherText, method, key) {
+    const algo = method || "AES-256";
+    if (algo === "Base64") return safeB64Decode(cipherText);
+    const decoded = safeB64Decode(cipherText);
+    if (!decoded) return "";
+    try {
+      const parsed = JSON.parse(decoded);
+      if (parsed && typeof parsed === "object" && "d" in parsed) {
+        if (parsed.k && key && parsed.k !== key) {
+          return "Key mismatch for this cipher payload";
+        }
+        return String(parsed.d || "");
+      }
+      return decoded;
+    } catch (e) {
+      return decoded;
+    }
+  }
+
+  function setSecurityDisplay(inputText, outputText) {
+    const resultEl = document.getElementById("securityCryptoResult");
+    const inputEl = document.getElementById("securityInputText");
+    const outputEl = document.getElementById("securityOutputText");
+    if (inputEl) inputEl.textContent = inputText || "";
+    if (outputEl) outputEl.textContent = outputText || "";
+    if (resultEl) resultEl.style.display = "block";
+  }
+
   function setMonthMode(calendar, mode) {
     const modeInput = document.getElementById(
       calendar === "gregorian" ? "gregorianMonthMode" : "hijriMonthMode",
@@ -5564,6 +5934,76 @@ function createDataGeneratorUI(containerId) {
           gregorianOutputFormat,
         );
         setConversionDisplay(inputText, outputText);
+      }
+    });
+  }
+
+  // Security Testing tools
+  const securityEncryptBtn = document.getElementById("securityEncryptBtn");
+  const securityDecryptBtn = document.getElementById("securityDecryptBtn");
+  const securityHashBtn = document.getElementById("securityHashBtn");
+  const copySecurityInputBtn = document.getElementById("copySecurityInput");
+  const copySecurityOutputBtn = document.getElementById("copySecurityOutput");
+
+  if (securityEncryptBtn) {
+    securityEncryptBtn.addEventListener("click", () => {
+      const method =
+        document.getElementById("securityCryptoMethod")?.value ||
+        document.getElementById("securityDefaultMethod")?.value ||
+        "AES-256";
+      const key = document.getElementById("securityCryptoKey")?.value || "";
+      const inputText = document.getElementById("securityCryptoInput")?.value || "";
+      if (!inputText.trim()) return;
+      const output = encryptSecurityText(inputText, method, key);
+      setSecurityDisplay(inputText, output || "Encryption failed");
+    });
+  }
+
+  if (securityDecryptBtn) {
+    securityDecryptBtn.addEventListener("click", () => {
+      const method =
+        document.getElementById("securityCryptoMethod")?.value ||
+        document.getElementById("securityDefaultMethod")?.value ||
+        "AES-256";
+      const key = document.getElementById("securityCryptoKey")?.value || "";
+      const inputText = document.getElementById("securityCryptoInput")?.value || "";
+      if (!inputText.trim()) return;
+      const output = decryptSecurityText(inputText, method, key);
+      setSecurityDisplay(inputText, output || "Unable to decrypt this payload");
+    });
+  }
+
+  if (securityHashBtn) {
+    securityHashBtn.addEventListener("click", () => {
+      const algorithm =
+        document.getElementById("securityDefaultHash")?.value || "SHA-256";
+      const inputText = document.getElementById("securityCryptoInput")?.value || "";
+      if (!inputText.trim()) return;
+      const output = hashOutputByAlgorithm(inputText, algorithm);
+      setSecurityDisplay(inputText, output);
+    });
+  }
+
+  if (copySecurityInputBtn) {
+    copySecurityInputBtn.addEventListener("click", () => {
+      const text = document.getElementById("securityInputText")?.textContent;
+      if (text) {
+        navigator.clipboard.writeText(text).then(() => {
+          copySecurityInputBtn.textContent = "Copied!";
+          setTimeout(() => (copySecurityInputBtn.textContent = "Copy"), 1000);
+        });
+      }
+    });
+  }
+
+  if (copySecurityOutputBtn) {
+    copySecurityOutputBtn.addEventListener("click", () => {
+      const text = document.getElementById("securityOutputText")?.textContent;
+      if (text) {
+        navigator.clipboard.writeText(text).then(() => {
+          copySecurityOutputBtn.textContent = "Copied!";
+          setTimeout(() => (copySecurityOutputBtn.textContent = "Copy"), 1000);
+        });
       }
     });
   }

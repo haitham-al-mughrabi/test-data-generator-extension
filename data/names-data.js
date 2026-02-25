@@ -75,7 +75,17 @@ const names = {
       { en: "Munir", ar: "منير" },
       { en: "Farid", ar: "فريد" },
       { en: "Jamil", ar: "جميل" },
-      { en: "Latif", ar: "لطيف" }
+      { en: "Latif", ar: "لطيف" },
+      { en: "John", ar: "جون" },
+      { en: "Peter", ar: "بيتر" },
+      { en: "George", ar: "جورج" },
+      { en: "Michael", ar: "مايكل" },
+      { en: "David", ar: "ديفيد" },
+      { en: "Chris", ar: "كريس" },
+      { en: "Mark", ar: "مارك" },
+      { en: "Paul", ar: "بول" },
+      { en: "Kevin", ar: "كيفن" },
+      { en: "Jason", ar: "جيسون" }
     ],
     female: [
       { en: "Fatima", ar: "فاطمة" },
@@ -151,7 +161,17 @@ const names = {
       { en: "Iman", ar: "إيمان" },
       { en: "Jihan", ar: "جيهان" },
       { en: "Kalthoum", ar: "كلثوم" },
-      { en: "Lubna", ar: "لبنى" }
+      { en: "Lubna", ar: "لبنى" },
+      { en: "Mary", ar: "ماري" },
+      { en: "Jennifer", ar: "جينيفر" },
+      { en: "Linda", ar: "ليندا" },
+      { en: "Patricia", ar: "باتريشيا" },
+      { en: "Elizabeth", ar: "إليزابيث" },
+      { en: "Susan", ar: "سوزان" },
+      { en: "Jessica", ar: "جيسيكا" },
+      { en: "Sarah", ar: "سارة" },
+      { en: "Karen", ar: "كارين" },
+      { en: "Nancy", ar: "نانسي" }
     ],
   },
   lastNames: [
@@ -223,7 +243,17 @@ const names = {
     { en: "Al-Zahra", ar: "الزهراء" },
     { en: "Bin Laden", ar: "بن لادن" },
     { en: "Bin Mahfouz", ar: "بن محفوظ" },
-    { en: "Bin Talal", ar: "بن طلال" }
+    { en: "Bin Talal", ar: "بن طلال" },
+    { en: "Smith", ar: "سميث" },
+    { en: "Johnson", ar: "جونسون" },
+    { en: "Williams", ar: "ويليامز" },
+    { en: "Brown", ar: "براون" },
+    { en: "Jones", ar: "جونز" },
+    { en: "Garcia", ar: "جارسيا" },
+    { en: "Miller", ar: "ميلر" },
+    { en: "Davis", ar: "ديفيس" },
+    { en: "Rodriguez", ar: "رودريجيز" },
+    { en: "Martinez", ar: "مارتينيز" }
   ],
 };
 
