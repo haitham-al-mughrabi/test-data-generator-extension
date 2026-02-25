@@ -225,6 +225,7 @@ function createDataGeneratorUI(containerId) {
     .dg-panel-header { background: linear-gradient(135deg, rgba(91, 124, 250, 0.98) 0%, rgba(24, 161, 205, 0.95) 100%); padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.2); cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; }
     .dg-panel-header:hover { filter: brightness(1.02); }
     .dg-panel-title { font-size: 12px; font-weight: 800; color: white; text-transform: uppercase; letter-spacing: 0.5px; }
+    .dg-panel-meta { font-size: 10px; font-weight: 800; color: rgba(255, 255, 255, 0.9); background: rgba(255, 255, 255, 0.18); padding: 3px 8px; letter-spacing: 0.4px; text-transform: uppercase; }
     .dg-panel-toggle { color: white; font-size: 13px; line-height: 1; transition: transform 0.25s ease; }
     .dg-panel-section.collapsed .dg-panel-toggle { transform: rotate(180deg); }
     .dg-panel-section.collapsed .dg-panel-content { display: none; }
@@ -244,7 +245,7 @@ function createDataGeneratorUI(containerId) {
     .dg-btn-secondary:hover { background: #d5dcee; transform: translateY(-1px); box-shadow: var(--shadow-3); }
     .dg-results-section { flex: 1; min-height: 260px; }
     .dg-panel-content.results-content { flex: 1; display: flex; min-height: 0; background: linear-gradient(180deg, #f8faff 0%, #f1f4fb 100%); }
-    .dg-results { flex: 1; overflow-y: auto; font-size: 12px; background: transparent; padding: 0 0 56px; display: flex; flex-direction: column; min-width: 0; box-shadow: inset 0 1px 0 rgba(15, 23, 42, 0.06), inset 0 8px 24px rgba(15, 23, 42, 0.04); }
+    .dg-results { flex: 1; overflow-y: auto; font-size: 12px; background: transparent; padding: 0; display: flex; flex-direction: column; min-width: 0; box-shadow: inset 0 1px 0 rgba(15, 23, 42, 0.06), inset 0 8px 24px rgba(15, 23, 42, 0.04); }
     .dg-record-tabs { display: flex; background: rgba(255,255,255,0.95); border-bottom: 1px solid var(--line); overflow-x: auto; flex-shrink: 0; padding: 6px 10px; gap: 6px; backdrop-filter: blur(8px); }
     .dg-record-tab { padding: 8px 12px; border: 1px solid transparent; background: rgba(91, 124, 250, 0.06); cursor: pointer; font-size: 10px; font-weight: 800; color: #5b6b7f; border-radius: 10px; white-space: nowrap; transition: all 0.25s ease; letter-spacing: 0.6px; text-transform: uppercase; }
     .dg-record-tab:hover { color: var(--brand-1); border-color: rgba(91, 124, 250, 0.25); background: rgba(91, 124, 250, 0.12); }
@@ -310,6 +311,41 @@ function createDataGeneratorUI(containerId) {
     .dg-conversion-item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
     .dg-conversion-item-label { font-size: 9px; font-weight: 900; color: #42526b; letter-spacing: 0.5px; text-transform: uppercase; }
     .dg-conversion-value { font-family: "SFMono-Regular", "Menlo", "Monaco", "Courier New", monospace; font-size: 11px; font-weight: 700; color: #111827; background: #f8fbff; border: 1px solid rgba(91, 124, 250, 0.18); padding: 8px; white-space: normal; word-break: break-word; }
+    .dg-date-tools-tabs { display: flex; gap: 0; border: 1px solid rgba(91, 124, 250, 0.24); margin-bottom: 10px; overflow: hidden; }
+    .dg-date-tools-tab { flex: 1; border: none; background: #f4f7ff; color: #475569; font-size: 10px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; padding: 8px 10px; cursor: pointer; }
+    .dg-date-tools-tab + .dg-date-tools-tab { border-left: 1px solid rgba(91, 124, 250, 0.2); }
+    .dg-date-tools-tab.active { background: linear-gradient(135deg, #5b7cfa 0%, #7f56d9 100%); color: white; }
+    .dg-date-tools-panel { display: none; }
+    .dg-date-tools-panel.active { display: block; }
+    .dg-user-note { margin-top: 8px; padding: 8px 10px; border: 1px solid rgba(24, 161, 205, 0.2); background: #f0f8ff; color: #334155; font-size: 10px; line-height: 1.45; font-weight: 700; }
+    #dateTimeControls { margin: 0; margin-bottom: 12px; padding: 0; background: linear-gradient(145deg, #f2f7ff 0%, #eaf1ff 100%); border: 1px solid rgba(91, 124, 250, 0.24); box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 6px 18px rgba(15, 23, 42, 0.06); }
+    #dateTimeControls,
+    #dateTimeControls *:not(.dg-conversion-value):not(code) { font-family: inherit; }
+    #dateTimeControls .dg-file-controls-header { margin-bottom: 10px; padding: 10px 12px; border: 1px solid rgba(91, 124, 250, 0.25); background: white; }
+    #dateTimeControls .dg-file-controls-title { color: #334155; }
+    #dateTimeControls .dg-file-controls-hint { color: #64748b; }
+    #dateTimeControls .dg-date-tools-tabs { display: flex; gap: 6px; border: none; margin-bottom: 10px; background: transparent; overflow: visible; }
+    #dateTimeControls .dg-date-tools-tab { border: 1px solid transparent; background: rgba(91, 124, 250, 0.08); color: #5b6b7f; border-radius: 0; padding: 8px 10px; font-size: 9px; letter-spacing: 0.6px; transition: all 0.2s ease; }
+    #dateTimeControls .dg-date-tools-tab + .dg-date-tools-tab { border-left: 1px solid transparent; }
+    #dateTimeControls .dg-date-tools-tab:hover { color: var(--brand-1); border-color: rgba(91, 124, 250, 0.25); background: rgba(91, 124, 250, 0.14); }
+    #dateTimeControls .dg-date-tools-tab.active { background: linear-gradient(135deg, #5b7cfa 0%, #7f56d9 100%); color: white; box-shadow: 0 8px 16px rgba(91, 124, 250, 0.25); }
+    #dateTimeControls .dg-date-tools-panel.active { background: transparent; border: none; padding: 0; }
+    #dateTimeControls .dg-file-controls-sections { gap: 10px; }
+    #dateTimeControls .dg-file-control-section { border: 1px solid rgba(91, 124, 250, 0.18); background: #ffffff; border-radius: 0; box-shadow: none; }
+    #dateTimeControls .dg-file-control-section::before { width: 4px; border-radius: 0; }
+    #dateTimeControls .dg-file-control-section-title { color: #334155; letter-spacing: 0.7px; margin-bottom: 8px; }
+    #dateTimeControls .dg-file-control-group input,
+    #dateTimeControls .dg-file-control-group select { border-radius: 0; background: #fcfdff; border-color: rgba(91, 124, 250, 0.35); }
+    #dateTimeControls .dg-file-control-group input:focus,
+    #dateTimeControls .dg-file-control-group select:focus { outline: none; border-color: #5b7cfa; box-shadow: 0 0 0 3px rgba(91, 124, 250, 0.14); }
+    #dateTimeControls .dg-checkbox-inline { background: #f8fbff; border-color: rgba(91, 124, 250, 0.22); border-radius: 0; }
+    #dateTimeControls .dg-mode-toggle { border-radius: 0; }
+    #dateTimeControls .dg-mode-btn { padding: 6px 10px; }
+    #dateTimeControls .dg-mini-btn { border-radius: 0; }
+    #dateTimeControls .dg-conversion-output { border-radius: 0; background: #f0f8ff; border-color: rgba(24, 161, 205, 0.25); }
+    #dateTimeControls .dg-conversion-item { border-radius: 0; border-color: rgba(91, 124, 250, 0.22); }
+    #dateTimeControls .dg-conversion-value { border-radius: 0; background: #f8fbff; }
+    #dateTimeControls .dg-user-note { border-left: 4px solid #18a1cd; border-radius: 0; background: #f0f8ff; }
     .dg-files-section { margin-top: 18px; border: 1px solid rgba(91, 124, 250, 0.24); background: linear-gradient(180deg, #f2f7ff 0%, #edf3ff 100%); box-shadow: var(--shadow-3); }
     .dg-files-section-header { padding: 12px 14px; border-bottom: 1px solid rgba(91, 124, 250, 0.2); background: linear-gradient(135deg, rgba(91, 124, 250, 0.98) 0%, rgba(24, 161, 205, 0.95) 100%); color: white; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
     .dg-files-section-title { font-size: 12px; font-weight: 900; letter-spacing: 0.6px; text-transform: uppercase; }
@@ -2623,18 +2659,42 @@ function createDataGeneratorUI(containerId) {
         // Check if category has sub-tabs
         if (cat.subTabs) {
           // Flatten all fields from sub-tabs into sections
-          const allFieldsHTML = cat.subTabs
-            .map((subTab, subIdx) => `
+          let allFieldsHTML = cat.subTabs
+            .map((subTab, subIdx) => {
+              const sectionFields =
+                cat.title === "Date & Time" && subTab.title === "Basic Dates"
+                  ? subTab.fields.filter(
+                      (field) => field.id !== "date" && field.id !== "time",
+                    )
+                  : subTab.fields;
+              return `
               <div class="dg-field-section">
                 <div class="dg-section-title" style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
                   <input type="checkbox" class="dg-section-checkbox" data-section="${idx}-${subIdx}" style="cursor: pointer;">
                   <span>${subTab.title}</span>
                 </div>
                 <div class="dg-fields-wrapper" data-section-fields="${idx}-${subIdx}">
-                  ${subTab.fields.map((field) => `<label class="dg-checkbox"><input type="checkbox" value="${field.id}"><span>${field.label}</span></label>`).join("")}
+                  ${sectionFields.map((field) => `<label class="dg-checkbox"><input type="checkbox" value="${field.id}"><span>${field.label}</span></label>`).join("")}
                 </div>
               </div>
-            `).join("");
+            `;
+            })
+            .join("");
+
+          if (cat.title === "Date & Time") {
+            allFieldsHTML += `
+              <div class="dg-field-section">
+                <div class="dg-section-title" style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                  <input type="checkbox" class="dg-section-checkbox" data-section="${idx}-conditional-datetime" style="cursor: pointer;">
+                  <span>Condirional Date and Time</span>
+                </div>
+                <div class="dg-fields-wrapper" data-section-fields="${idx}-conditional-datetime">
+                  <label class="dg-checkbox"><input type="checkbox" value="date"><span>Date</span></label>
+                  <label class="dg-checkbox"><input type="checkbox" value="time"><span>Time</span></label>
+                </div>
+              </div>
+            `;
+          }
 
           return `
             <div class="dg-tab-content ${idx === 0 ? "active" : ""}" data-content="${idx}">
@@ -2722,51 +2782,64 @@ function createDataGeneratorUI(containerId) {
                     <div class="dg-file-controls-title">Date & Time Settings</div>
                     <div class="dg-file-controls-hint">Formatting and conversion options</div>
                   </div>
-                  <div class="dg-file-controls-sections">
-                    <div class="dg-file-control-section">
-                      <div class="dg-file-control-section-title">Range</div>
-                      <div class="dg-file-control-group">
-                        <label>Date Range:</label>
-                        <div class="dg-file-size-group">
-                          <input type="date" id="dateFrom" value="2020-01-01">
-                          <input type="date" id="dateTo" value="2030-12-31">
+                  <div class="dg-date-tools-tabs">
+                    <button type="button" class="dg-date-tools-tab active" data-date-tools-tab="basic">Generator</button>
+                    <button type="button" class="dg-date-tools-tab" data-date-tools-tab="convert">Converter</button>
+                  </div>
+                  <div class="dg-date-tools-panel active" data-date-tools-panel="basic">
+                    <div class="dg-file-controls-sections">
+                      <div class="dg-file-control-section">
+                        <div class="dg-file-control-section-title">Range</div>
+                        <div class="dg-file-control-group">
+                          <label>Date Range:</label>
+                          <div class="dg-file-size-group">
+                            <input type="date" id="dateFrom" value="2020-01-01">
+                            <input type="date" id="dateTo" value="2030-12-31">
+                          </div>
+                        </div>
+                        <div class="dg-file-control-group">
+                          <label>Time Range:</label>
+                          <div class="dg-file-size-group">
+                            <input type="time" id="timeFrom" value="00:00">
+                            <input type="time" id="timeTo" value="23:59">
+                          </div>
                         </div>
                       </div>
-                      <div class="dg-file-control-group">
-                        <label>Time Range:</label>
-                        <div class="dg-file-size-group">
-                          <input type="time" id="timeFrom" value="00:00">
-                          <input type="time" id="timeTo" value="23:59">
+                      <div class="dg-file-control-section">
+                        <div class="dg-file-control-section-title">Format</div>
+                        <div class="dg-file-control-group">
+                          <label>Date Format:</label>
+                          <select id="dateFormat">
+                            <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                            <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                            <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                            <option value="DD-MM-YYYY">DD-MM-YYYY</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="dg-file-control-section">
+                        <div class="dg-file-control-section-title">Generated Fields</div>
+                        <div class="dg-file-control-group">
+                          <label>Date Conversion:</label>
+                          <div class="dg-checkbox-inline-group">
+                            <label class="dg-checkbox-inline">
+                              <input type="checkbox" id="includeHijri"> Include Hijri
+                            </label>
+                            <label class="dg-checkbox-inline">
+                              <input type="checkbox" id="includeGregorian" checked> Include Gregorian
+                            </label>
+                            <label class="dg-checkbox-inline">
+                              <input type="checkbox" id="showBothDates"> Show Both
+                            </label>
+                          </div>
+                          <div class="dg-user-note">Note: these options affect generated <code>date</code> and <code>time</code> fields only when those fields are selected in this tab.</div>
                         </div>
                       </div>
                     </div>
-                    <div class="dg-file-control-section">
-                      <div class="dg-file-control-section-title">Format</div>
-                      <div class="dg-file-control-group">
-                        <label>Date Format:</label>
-                        <select id="dateFormat">
-                          <option value="YYYY-MM-DD">YYYY-MM-DD</option>
-                          <option value="DD/MM/YYYY">DD/MM/YYYY</option>
-                          <option value="MM/DD/YYYY">MM/DD/YYYY</option>
-                          <option value="DD-MM-YYYY">DD-MM-YYYY</option>
-                        </select>
-                      </div>
-                      <div class="dg-file-control-group">
-                        <label>Date Conversion:</label>
-                        <div class="dg-checkbox-inline-group">
-                          <label class="dg-checkbox-inline">
-                            <input type="checkbox" id="includeHijri"> Include Hijri
-                          </label>
-                          <label class="dg-checkbox-inline">
-                            <input type="checkbox" id="includeGregorian" checked> Include Gregorian
-                          </label>
-                          <label class="dg-checkbox-inline">
-                            <input type="checkbox" id="showBothDates"> Show Both
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="dg-file-control-section">
+                  </div>
+                  <div class="dg-date-tools-panel" data-date-tools-panel="convert">
+                    <div class="dg-file-controls-sections">
+                      <div class="dg-file-control-section">
                       <div class="dg-file-control-section-title">Convert Tools</div>
                       <input type="hidden" id="gregorianMonthMode" value="english">
                       <input type="hidden" id="hijriMonthMode" value="arabic">
@@ -2858,12 +2931,20 @@ function createDataGeneratorUI(containerId) {
                       </div>
                       <div class="dg-file-control-group">
                         <label>Gregorian Output Format:</label>
-                        <select id="gregorianOutputFormat">
-                          <option value="YYYY-MM-DD">YYYY-MM-DD</option>
-                          <option value="DD/MM/YYYY">DD/MM/YYYY</option>
-                          <option value="MM/DD/YYYY">MM/DD/YYYY</option>
-                          <option value="DD-MM-YYYY">DD-MM-YYYY</option>
-                        </select>
+                        <div class="dg-inline-pair">
+                          <select id="gregorianOutputMode">
+                            <option value="english">English Text</option>
+                            <option value="arabic">Arabic Text</option>
+                            <option value="numbers">Numbers Only</option>
+                          </select>
+                          <select id="gregorianOutputFormat">
+                            <option value="text">Text (Day Month Year)</option>
+                            <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                            <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                            <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                            <option value="DD-MM-YYYY">DD-MM-YYYY</option>
+                          </select>
+                        </div>
                       </div>
                       <div class="dg-file-control-group">
                         <label>Convert Hijri Date:</label>
@@ -2939,6 +3020,7 @@ function createDataGeneratorUI(containerId) {
                             <div id="conversionOutputText" class="dg-conversion-value"></div>
                           </div>
                         </div>
+                      </div>
                       </div>
                     </div>
                   </div>
@@ -3218,51 +3300,64 @@ function createDataGeneratorUI(containerId) {
                     <div class="dg-file-controls-title">Date & Time Settings</div>
                     <div class="dg-file-controls-hint">Formatting and conversion options</div>
                   </div>
-                  <div class="dg-file-controls-sections">
-                    <div class="dg-file-control-section">
-                      <div class="dg-file-control-section-title">Range</div>
-                      <div class="dg-file-control-group">
-                        <label>Date Range:</label>
-                        <div class="dg-file-size-group">
-                          <input type="date" id="dateFrom" value="2020-01-01">
-                          <input type="date" id="dateTo" value="2030-12-31">
+                  <div class="dg-date-tools-tabs">
+                    <button type="button" class="dg-date-tools-tab active" data-date-tools-tab="basic">Generator</button>
+                    <button type="button" class="dg-date-tools-tab" data-date-tools-tab="convert">Converter</button>
+                  </div>
+                  <div class="dg-date-tools-panel active" data-date-tools-panel="basic">
+                    <div class="dg-file-controls-sections">
+                      <div class="dg-file-control-section">
+                        <div class="dg-file-control-section-title">Range</div>
+                        <div class="dg-file-control-group">
+                          <label>Date Range:</label>
+                          <div class="dg-file-size-group">
+                            <input type="date" id="dateFrom" value="2020-01-01">
+                            <input type="date" id="dateTo" value="2030-12-31">
+                          </div>
+                        </div>
+                        <div class="dg-file-control-group">
+                          <label>Time Range:</label>
+                          <div class="dg-file-size-group">
+                            <input type="time" id="timeFrom" value="00:00">
+                            <input type="time" id="timeTo" value="23:59">
+                          </div>
                         </div>
                       </div>
-                      <div class="dg-file-control-group">
-                        <label>Time Range:</label>
-                        <div class="dg-file-size-group">
-                          <input type="time" id="timeFrom" value="00:00">
-                          <input type="time" id="timeTo" value="23:59">
+                      <div class="dg-file-control-section">
+                        <div class="dg-file-control-section-title">Format</div>
+                        <div class="dg-file-control-group">
+                          <label>Date Format:</label>
+                          <select id="dateFormat">
+                            <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                            <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                            <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                            <option value="DD-MM-YYYY">DD-MM-YYYY</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="dg-file-control-section">
+                        <div class="dg-file-control-section-title">Generated Fields</div>
+                        <div class="dg-file-control-group">
+                          <label>Date Conversion:</label>
+                          <div class="dg-checkbox-inline-group">
+                            <label class="dg-checkbox-inline">
+                              <input type="checkbox" id="includeHijri"> Include Hijri
+                            </label>
+                            <label class="dg-checkbox-inline">
+                              <input type="checkbox" id="includeGregorian" checked> Include Gregorian
+                            </label>
+                            <label class="dg-checkbox-inline">
+                              <input type="checkbox" id="showBothDates"> Show Both
+                            </label>
+                          </div>
+                          <div class="dg-user-note">Note: these options affect generated <code>date</code> and <code>time</code> fields only when those fields are selected in this tab.</div>
                         </div>
                       </div>
                     </div>
-                    <div class="dg-file-control-section">
-                      <div class="dg-file-control-section-title">Format</div>
-                      <div class="dg-file-control-group">
-                        <label>Date Format:</label>
-                        <select id="dateFormat">
-                          <option value="YYYY-MM-DD">YYYY-MM-DD</option>
-                          <option value="DD/MM/YYYY">DD/MM/YYYY</option>
-                          <option value="MM/DD/YYYY">MM/DD/YYYY</option>
-                          <option value="DD-MM-YYYY">DD-MM-YYYY</option>
-                        </select>
-                      </div>
-                      <div class="dg-file-control-group">
-                        <label>Date Conversion:</label>
-                        <div class="dg-checkbox-inline-group">
-                          <label class="dg-checkbox-inline">
-                            <input type="checkbox" id="includeHijri"> Include Hijri
-                          </label>
-                          <label class="dg-checkbox-inline">
-                            <input type="checkbox" id="includeGregorian" checked> Include Gregorian
-                          </label>
-                          <label class="dg-checkbox-inline">
-                            <input type="checkbox" id="showBothDates"> Show Both
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="dg-file-control-section">
+                  </div>
+                  <div class="dg-date-tools-panel" data-date-tools-panel="convert">
+                    <div class="dg-file-controls-sections">
+                      <div class="dg-file-control-section">
                       <div class="dg-file-control-section-title">Convert Tools</div>
                       <input type="hidden" id="gregorianMonthMode" value="english">
                       <input type="hidden" id="hijriMonthMode" value="arabic">
@@ -3354,12 +3449,20 @@ function createDataGeneratorUI(containerId) {
                       </div>
                       <div class="dg-file-control-group">
                         <label>Gregorian Output Format:</label>
-                        <select id="gregorianOutputFormat">
-                          <option value="YYYY-MM-DD">YYYY-MM-DD</option>
-                          <option value="DD/MM/YYYY">DD/MM/YYYY</option>
-                          <option value="MM/DD/YYYY">MM/DD/YYYY</option>
-                          <option value="DD-MM-YYYY">DD-MM-YYYY</option>
-                        </select>
+                        <div class="dg-inline-pair">
+                          <select id="gregorianOutputMode">
+                            <option value="english">English Text</option>
+                            <option value="arabic">Arabic Text</option>
+                            <option value="numbers">Numbers Only</option>
+                          </select>
+                          <select id="gregorianOutputFormat">
+                            <option value="text">Text (Day Month Year)</option>
+                            <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                            <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                            <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                            <option value="DD-MM-YYYY">DD-MM-YYYY</option>
+                          </select>
+                        </div>
                       </div>
                       <div class="dg-file-control-group">
                         <label>Convert Hijri Date:</label>
@@ -3435,6 +3538,7 @@ function createDataGeneratorUI(containerId) {
                             <div id="conversionOutputText" class="dg-conversion-value"></div>
                           </div>
                         </div>
+                      </div>
                       </div>
                     </div>
                   </div>
@@ -3552,6 +3656,7 @@ function createDataGeneratorUI(containerId) {
             <section class="dg-panel-section dg-results-section" id="resultsSection">
               <div class="dg-panel-header" id="resultsHeader">
                 <span class="dg-panel-title">📊 Results</span>
+                <span class="dg-panel-meta" id="resultsCounter">0 items</span>
                 <div class="dg-panel-toggle">▲</div>
               </div>
               <div class="dg-panel-content results-content">
@@ -3778,6 +3883,13 @@ function createDataGeneratorUI(containerId) {
       .join("");
   }
 
+  function updateResultsCounter(recordCount = 0, fileCount = 0) {
+    const counterEl = document.getElementById("resultsCounter");
+    if (!counterEl) return;
+    const total = (recordCount || 0) + (fileCount || 0);
+    counterEl.textContent = `${total} item${total === 1 ? "" : "s"}`;
+  }
+
   function displayGeneratedData(data, files) {
     const resultsDiv = document.getElementById("results");
     let resultsHTML = "";
@@ -3827,6 +3939,7 @@ function createDataGeneratorUI(containerId) {
     }
 
     resultsDiv.innerHTML = resultsHTML;
+    updateResultsCounter(data.length, (files && files.length) || 0);
     attachResultsEventListeners();
   }
 
@@ -3892,6 +4005,7 @@ function createDataGeneratorUI(containerId) {
       });
       // Clear results
       document.getElementById("results").innerHTML = "";
+      updateResultsCounter(0, 0);
       generatedData = [];
       // Clear storage
       chrome.storage.local.clear();
@@ -4593,6 +4707,7 @@ function createDataGeneratorUI(containerId) {
     }
 
     resultsDiv.innerHTML = resultsHTML;
+    updateResultsCounter(generatedData.length, generatedFiles.length);
 
     // Save generated data
     saveGeneratedData(generatedData, generatedFiles);
@@ -5004,6 +5119,53 @@ function createDataGeneratorUI(containerId) {
     return `${day} ${monthName} ${year}${outputMode === "arabic" ? "هـ" : " AH"}`;
   }
 
+  function formatGregorianOutput(day, month, year, mode, pattern) {
+    const outputMode = mode || "english";
+    const outputPattern = pattern || "YYYY-MM-DD";
+    const gregorianMonths = {
+      english: [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ],
+      arabic: [
+        "يناير",
+        "فبراير",
+        "مارس",
+        "أبريل",
+        "مايو",
+        "يونيو",
+        "يوليو",
+        "أغسطس",
+        "سبتمبر",
+        "أكتوبر",
+        "نوفمبر",
+        "ديسمبر",
+      ],
+      numbers: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+    };
+
+    if (outputMode === "numbers") {
+      return formatDateByPattern(day, month, year, outputPattern === "text" ? "YYYY-MM-DD" : outputPattern);
+    }
+
+    if (outputPattern !== "text") {
+      return formatDateByPattern(day, month, year, outputPattern);
+    }
+
+    const monthName = gregorianMonths[outputMode][month - 1] || String(month);
+    return `${day} ${monthName} ${year}`;
+  }
+
   function getInputDateDisplay(calendar, day, month, year) {
     const modeInput = document.getElementById(
       calendar === "gregorian" ? "gregorianMonthMode" : "hijriMonthMode",
@@ -5103,6 +5265,26 @@ function createDataGeneratorUI(containerId) {
   setMonthMode("gregorian", document.getElementById("gregorianMonthMode")?.value || "english");
   setMonthMode("hijri", document.getElementById("hijriMonthMode")?.value || "arabic");
 
+  document.querySelectorAll(".dg-date-tools-tabs").forEach((tabGroup) => {
+    const scope = tabGroup.closest(".dg-file-controls");
+    if (!scope) return;
+    tabGroup.querySelectorAll(".dg-date-tools-tab").forEach((tabBtn) => {
+      tabBtn.addEventListener("click", () => {
+        const panel = tabBtn.getAttribute("data-date-tools-tab");
+        tabGroup
+          .querySelectorAll(".dg-date-tools-tab")
+          .forEach((btn) => btn.classList.remove("active"));
+        scope
+          .querySelectorAll(".dg-date-tools-panel")
+          .forEach((panelEl) => panelEl.classList.remove("active"));
+        tabBtn.classList.add("active");
+        scope
+          .querySelector(`.dg-date-tools-panel[data-date-tools-panel="${panel}"]`)
+          ?.classList.add("active");
+      });
+    });
+  });
+
   // Add event listeners for date conversion
   const convertToHijriBtn = document.getElementById("convertToHijri");
   const convertToGregorianBtn = document.getElementById("convertToGregorian");
@@ -5164,6 +5346,8 @@ function createDataGeneratorUI(containerId) {
     convertToGregorianBtn.addEventListener("click", () => {
       const dayInput = document.getElementById("hijriDay");
       const yearInput = document.getElementById("hijriYear");
+      const gregorianOutputMode =
+        document.getElementById("gregorianOutputMode")?.value || "english";
       const gregorianOutputFormat =
         document.getElementById("gregorianOutputFormat")?.value || "YYYY-MM-DD";
 
@@ -5174,10 +5358,11 @@ function createDataGeneratorUI(containerId) {
       if (hDay > 0 && hMonth > 0 && hYear > 0) {
         const gregorianDate = hijriToGregorian(hYear, hMonth, hDay);
         const inputText = getInputDateDisplay("hijri", hDay, hMonth, hYear);
-        const outputText = formatDateByPattern(
+        const outputText = formatGregorianOutput(
           gregorianDate.getDate(),
           gregorianDate.getMonth() + 1,
           gregorianDate.getFullYear(),
+          gregorianOutputMode,
           gregorianOutputFormat,
         );
         setConversionDisplay(inputText, outputText);
