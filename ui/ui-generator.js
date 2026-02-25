@@ -95,8 +95,9 @@ function createDataGeneratorUI(containerId) {
       color: rgba(255,255,255,0.7);
     }
     .dg-search input:focus {
-      background: rgba(255,255,255,0.25);
-      border-color: rgba(255,255,255,0.4);
+      background: white;
+      border-color: rgba(255,255,255,0.8);
+      color: #1f2937;
       outline: none;
     }
     .dg-search input:focus { outline: none; background: white; box-shadow: 0 10px 26px rgba(15, 23, 42, 0.2); transform: translateY(-1px); }
@@ -362,46 +363,129 @@ function createDataGeneratorUI(containerId) {
     #randomValuesControls input[type="text"]:focus,
     #randomValuesControls input[type="number"]:focus { outline: none; border-color: #5b7cfa; box-shadow: 0 0 0 3px rgba(91, 124, 250, 0.14); }
     #randomTextControls,
-    #phoneControls { margin: 0; margin-bottom: 12px; padding: 0; background: linear-gradient(145deg, #f2f7ff 0%, #eaf1ff 100%); border: 1px solid rgba(91, 124, 250, 0.24); box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 6px 18px rgba(15, 23, 42, 0.06); }
+    #phoneControls { margin: 0; margin-bottom: 12px; padding: 0; background: white; border: 1px solid rgba(91, 124, 250, 0.15); box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04); }
     #randomTextControls .dg-file-controls-header,
-    #phoneControls .dg-file-controls-header { margin: 0; border-left: none; border-right: none; border-top: none; }
+    #phoneControls .dg-file-controls-header { margin: 0; border-left: none; border-right: none; border-top: none; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px 16px; }
+    #randomTextControls .dg-file-controls-title,
+    #phoneControls .dg-file-controls-title { color: white; font-size: 13px; font-weight: 700; }
+    #randomTextControls .dg-file-controls-hint,
+    #phoneControls .dg-file-controls-hint { color: rgba(255, 255, 255, 0.85); font-size: 11px; }
     #randomTextControls .dg-file-controls-sections,
-    #phoneControls .dg-file-controls-sections { padding: 10px 12px 12px; gap: 10px; }
+    #phoneControls .dg-file-controls-sections { padding: 16px; gap: 12px; }
     #randomTextControls .dg-file-control-section,
-    #phoneControls .dg-file-control-section { border: 1px solid rgba(91, 124, 250, 0.18); background: #ffffff; border-radius: 0; box-shadow: none; }
+    #phoneControls .dg-file-control-section { border: 1px solid rgba(91, 124, 250, 0.12); background: #f8fafc; border-radius: 8px; box-shadow: none; padding: 12px; }
     #randomTextControls .dg-file-control-section::before,
-    #phoneControls .dg-file-control-section::before { width: 4px; border-radius: 0; }
+    #phoneControls .dg-file-control-section::before { display: none; }
+    #randomTextControls .dg-file-control-section-title,
+    #phoneControls .dg-file-control-section-title { font-size: 11px; font-weight: 700; color: #475569; margin-bottom: 10px; }
     #randomTextControls .dg-file-control-group,
-    #phoneControls .dg-file-control-group { margin-bottom: 8px; padding-left: 8px; }
+    #phoneControls .dg-file-control-group { margin-bottom: 10px; padding-left: 0; }
     #randomTextControls .dg-file-control-group:last-child,
     #phoneControls .dg-file-control-group:last-child { margin-bottom: 0; }
     #randomTextControls .dg-file-control-group label,
-    #phoneControls .dg-file-control-group label { color: #334155; }
+    #phoneControls .dg-file-control-group label { color: #64748b; font-size: 11px; font-weight: 600; }
+    #randomTextControls .dg-file-control-group input[type="number"],
+    #randomTextControls .dg-file-control-group select,
+    #phoneControls .dg-file-control-group input[type="number"],
+    #phoneControls .dg-file-control-group select { width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px; }
     #randomTextControls .dg-rt-check-grid,
-    #phoneControls .dg-phone-check-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+    #phoneControls .dg-phone-check-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
     #randomTextControls .dg-rt-check,
-    #phoneControls .dg-phone-check { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 700; color: #334155; background: #f8fbff; border: 1px solid rgba(91, 124, 250, 0.22); padding: 4px 8px; }
+    #phoneControls .dg-phone-check { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--ink); background: white; border: 1px solid rgba(91, 124, 250, 0.12); padding: 10px 12px; border-radius: 10px; cursor: pointer; transition: all 0.2s ease; flex: 1; min-width: 140px; }
+    #randomTextControls .dg-rt-check:hover,
+    #phoneControls .dg-phone-check:hover { background: #ffffff; border-color: rgba(91, 124, 250, 0.4); box-shadow: var(--shadow-3); transform: translateY(-1px); }
     #randomTextControls .dg-rt-check input,
-    #phoneControls .dg-phone-check input { margin: 0; }
+    #phoneControls .dg-phone-check input { margin: 0; cursor: pointer; flex-shrink: 0; }
     #passwordControls,
-    #emailControls { margin: 0; margin-bottom: 12px; padding: 0; background: linear-gradient(145deg, #f2f7ff 0%, #eaf1ff 100%); border: 1px solid rgba(91, 124, 250, 0.24); box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 6px 18px rgba(15, 23, 42, 0.06); }
+    #emailControls { margin: 0; margin-bottom: 12px; padding: 0; background: white; border: 1px solid rgba(91, 124, 250, 0.15); box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04); }
     #passwordControls .dg-file-controls-header,
-    #emailControls .dg-file-controls-header { margin: 0; border-left: none; border-right: none; border-top: none; }
+    #emailControls .dg-file-controls-header { margin: 0; border-left: none; border-right: none; border-top: none; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px 16px; }
+    #passwordControls .dg-file-controls-title,
+    #emailControls .dg-file-controls-title { color: white; font-size: 13px; font-weight: 700; }
+    #passwordControls .dg-file-controls-hint,
+    #emailControls .dg-file-controls-hint { color: rgba(255, 255, 255, 0.85); font-size: 11px; }
     #passwordControls .dg-file-controls-sections,
-    #emailControls .dg-file-controls-sections { padding: 10px 12px 12px; gap: 10px; }
+    #emailControls .dg-file-controls-sections { padding: 16px; gap: 12px; }
     #passwordControls .dg-file-control-section,
-    #emailControls .dg-file-control-section { border: 1px solid rgba(91, 124, 250, 0.18); background: #ffffff; border-radius: 0; box-shadow: none; }
+    #emailControls .dg-file-control-section { border: 1px solid rgba(91, 124, 250, 0.12); background: #f8fafc; border-radius: 8px; box-shadow: none; padding: 12px; }
     #passwordControls .dg-file-control-section::before,
-    #emailControls .dg-file-control-section::before { width: 4px; border-radius: 0; }
+    #emailControls .dg-file-control-section::before { display: none; }
+    #passwordControls .dg-file-control-section-title,
+    #emailControls .dg-file-control-section-title { font-size: 11px; font-weight: 700; color: #475569; margin-bottom: 10px; }
     #passwordControls .dg-file-control-group,
-    #emailControls .dg-file-control-group { margin-bottom: 8px; padding-left: 8px; }
+    #emailControls .dg-file-control-group { margin-bottom: 10px; padding-left: 0; }
     #passwordControls .dg-file-control-group:last-child,
     #emailControls .dg-file-control-group:last-child { margin-bottom: 0; }
     #passwordControls .dg-file-control-group label,
-    #emailControls .dg-file-control-group label { color: #334155; }
-    #passwordControls .dg-pw-check-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
-    #passwordControls .dg-pw-check { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 700; color: #334155; background: #f8fbff; border: 1px solid rgba(91, 124, 250, 0.22); padding: 4px 8px; }
-    #passwordControls .dg-pw-check input { margin: 0; }
+    #emailControls .dg-file-control-group label { color: #64748b; font-size: 11px; font-weight: 600; }
+    #passwordControls .dg-file-control-group input[type="number"],
+    #emailControls .dg-file-control-group input[type="number"] { width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px; }
+    #passwordControls .dg-pw-check-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    #passwordControls .dg-pw-check { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--ink); background: white; border: 1px solid rgba(91, 124, 250, 0.12); padding: 10px 12px; border-radius: 10px; cursor: pointer; transition: all 0.2s ease; flex: 1; min-width: 140px; }
+    #passwordControls .dg-pw-check:hover { background: #ffffff; border-color: rgba(91, 124, 250, 0.4); box-shadow: var(--shadow-3); transform: translateY(-1px); }
+    #passwordControls .dg-pw-check input { margin: 0; cursor: pointer; flex-shrink: 0; }
+    .dg-checkbox-inline,
+    .dg-rv-check,
+    .dg-rt-check,
+    .dg-phone-check,
+    .dg-pw-check { transition: all 0.2s ease; }
+    .dg-checkbox-inline:hover,
+    .dg-rv-check:hover,
+    .dg-rt-check:hover,
+    .dg-phone-check:hover,
+    .dg-pw-check:hover { border-color: rgba(91, 124, 250, 0.45); background: #eef4ff; }
+    .dg-checkbox-inline input[type="checkbox"],
+    .dg-rv-check input[type="checkbox"],
+    .dg-rt-check input[type="checkbox"],
+    .dg-phone-check input[type="checkbox"],
+    .dg-pw-check input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      border: 1.5px solid rgba(91, 124, 250, 0.5);
+      background: #ffffff;
+      display: inline-grid;
+      place-content: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      flex-shrink: 0;
+    }
+    .dg-checkbox-inline input[type="checkbox"]::after,
+    .dg-rv-check input[type="checkbox"]::after,
+    .dg-rt-check input[type="checkbox"]::after,
+    .dg-phone-check input[type="checkbox"]::after,
+    .dg-pw-check input[type="checkbox"]::after {
+      content: "";
+      width: 7px;
+      height: 4px;
+      border: 2px solid white;
+      border-top: 0;
+      border-right: 0;
+      transform: rotate(-45deg) scale(0);
+      transform-origin: center;
+      transition: transform 0.12s ease;
+      margin-top: -1px;
+    }
+    .dg-checkbox-inline input[type="checkbox"]:checked,
+    .dg-rv-check input[type="checkbox"]:checked,
+    .dg-rt-check input[type="checkbox"]:checked,
+    .dg-phone-check input[type="checkbox"]:checked,
+    .dg-pw-check input[type="checkbox"]:checked {
+      background: linear-gradient(135deg, #5b7cfa 0%, #7f56d9 100%);
+      border-color: #5b7cfa;
+      box-shadow: 0 0 0 1px rgba(91, 124, 250, 0.12);
+    }
+    .dg-checkbox-inline input[type="checkbox"]:checked::after,
+    .dg-rv-check input[type="checkbox"]:checked::after,
+    .dg-rt-check input[type="checkbox"]:checked::after,
+    .dg-phone-check input[type="checkbox"]:checked::after,
+    .dg-pw-check input[type="checkbox"]:checked::after { transform: rotate(-45deg) scale(1); }
+    .dg-checkbox-inline input[type="checkbox"]:focus-visible,
+    .dg-rv-check input[type="checkbox"]:focus-visible,
+    .dg-rt-check input[type="checkbox"]:focus-visible,
+    .dg-phone-check input[type="checkbox"]:focus-visible,
+    .dg-pw-check input[type="checkbox"]:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(91, 124, 250, 0.2); }
     .dg-files-section { margin-top: 18px; border: 1px solid rgba(91, 124, 250, 0.24); background: linear-gradient(180deg, #f2f7ff 0%, #edf3ff 100%); box-shadow: var(--shadow-3); }
     .dg-files-section-header { padding: 12px 14px; border-bottom: 1px solid rgba(91, 124, 250, 0.2); background: linear-gradient(135deg, rgba(91, 124, 250, 0.98) 0%, rgba(24, 161, 205, 0.95) 100%); color: white; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
     .dg-files-section-title { font-size: 12px; font-weight: 900; letter-spacing: 0.6px; text-transform: uppercase; }
