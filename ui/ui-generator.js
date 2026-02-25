@@ -369,6 +369,20 @@ function createDataGeneratorUI(containerId) {
     #securityControls .dg-file-control-group textarea:focus { outline: none; border-color: #5b7cfa; box-shadow: 0 0 0 3px rgba(91, 124, 250, 0.14); }
     #securityControls .dg-security-actions { display: flex; gap: 8px; flex-wrap: wrap; }
     #securityControls .dg-user-note { border-left: 4px solid #18a1cd; border-radius: 0; background: #f0f8ff; }
+    #colorControls { margin: 0; margin-bottom: 12px; padding: 0; background: linear-gradient(145deg, #f2f7ff 0%, #eaf1ff 100%); border: 1px solid rgba(91, 124, 250, 0.24); box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 6px 18px rgba(15, 23, 42, 0.06); }
+    #colorControls .dg-file-controls-header { margin: 0; border-left: none; border-right: none; border-top: none; }
+    #colorControls .dg-file-controls-sections { padding: 10px 12px 12px; gap: 10px; }
+    #colorControls .dg-file-control-section { border: 1px solid rgba(91, 124, 250, 0.18); background: #ffffff; border-radius: 0; box-shadow: none; }
+    #colorControls .dg-file-control-section::before { width: 4px; border-radius: 0; }
+    #colorControls .dg-file-control-group { margin-bottom: 8px; padding-left: 8px; }
+    #colorControls .dg-file-control-group:last-child { margin-bottom: 0; }
+    #colorControls .dg-file-control-group label { color: #334155; }
+    #colorControls #colorInput,
+    #colorControls #colorOutputType { border: 1px solid rgba(91, 124, 250, 0.35); border-radius: 0; background: #fcfdff; color: #0f172a; font-weight: 700; width: 100%; padding: 8px 10px; font-size: 11px; }
+    #colorControls #colorInput:focus,
+    #colorControls #colorOutputType:focus { outline: none; border-color: #5b7cfa; box-shadow: 0 0 0 3px rgba(91, 124, 250, 0.14); }
+    #colorControls #convertColorBtn { width: 100%; }
+    #colorControls #colorConversionResult { margin-top: 8px; padding: 10px; border: 1px solid rgba(24, 161, 205, 0.25); background: #f0f8ff; font-size: 10px; color: #0f172a; font-weight: 700; min-height: 56px; }
     #randomValuesControls { margin: 0; margin-bottom: 12px; padding: 0; background: linear-gradient(145deg, #f2f7ff 0%, #eaf1ff 100%); border: 1px solid rgba(91, 124, 250, 0.24); box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 6px 18px rgba(15, 23, 42, 0.06); }
     #randomValuesControls .dg-file-controls-header { margin: 0; border-left: none; border-right: none; border-top: none; }
     #randomValuesControls .dg-file-controls-sections { padding: 10px 12px 12px; gap: 10px; }
@@ -2979,27 +2993,39 @@ function createDataGeneratorUI(containerId) {
                 cat.title === "Colors"
                   ? `
                 <div class="dg-file-controls active" id="colorControls">
-                  <div class="dg-file-control-group">
-                    <label>Input Color:</label>
-                    <input type="text" id="colorInput" placeholder="#FF5733 or rgb(255,87,51)" value="#FF5733" style="flex: 1;">
+                  <div class="dg-file-controls-header">
+                    <div class="dg-file-controls-title">Color Testing Controls</div>
+                    <div class="dg-file-controls-hint">Convert and inspect color formats</div>
                   </div>
-                  <div class="dg-file-control-group">
-                    <label>Convert To:</label>
-                    <select id="colorOutputType" style="flex: 1; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px;">
-                      <option value="all">All Formats</option>
-                      <option value="hex">HEX</option>
-                      <option value="rgb">RGB</option>
-                      <option value="rgba">RGBA</option>
-                      <option value="hsl">HSL</option>
-                      <option value="hsla">HSLA</option>
-                      <option value="hsv">HSV</option>
-                      <option value="cmyk">CMYK</option>
-                    </select>
+                  <div class="dg-file-controls-sections">
+                    <div class="dg-file-control-section">
+                      <div class="dg-file-control-section-title">Input</div>
+                      <div class="dg-file-control-group">
+                        <label>Input Color:</label>
+                        <input type="text" id="colorInput" placeholder="#FF5733 or rgb(255,87,51)" value="#FF5733">
+                      </div>
+                    </div>
+                    <div class="dg-file-control-section">
+                      <div class="dg-file-control-section-title">Output</div>
+                      <div class="dg-file-control-group">
+                        <label>Convert To:</label>
+                        <select id="colorOutputType">
+                          <option value="all">All Formats</option>
+                          <option value="hex">HEX</option>
+                          <option value="rgb">RGB</option>
+                          <option value="rgba">RGBA</option>
+                          <option value="hsl">HSL</option>
+                          <option value="hsla">HSLA</option>
+                          <option value="hsv">HSV</option>
+                          <option value="cmyk">CMYK</option>
+                        </select>
+                      </div>
+                      <div class="dg-file-control-group">
+                        <button id="convertColorBtn" class="dg-btn dg-btn-primary">🎨 Convert Color</button>
+                      </div>
+                    </div>
                   </div>
-                  <div class="dg-file-control-group">
-                    <button id="convertColorBtn" class="dg-btn dg-btn-primary" style="width: 100%;">🎨 Convert Color</button>
-                  </div>
-                  <div id="colorConversionResult" style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 13px; line-height: 1.8; min-height: 50px;"></div>
+                  <div id="colorConversionResult"></div>
                 </div>
               `
                   : ""
@@ -4166,6 +4192,7 @@ function createDataGeneratorUI(containerId) {
       const isPasswordTestingTab = category.title === "Password Testing";
       const isPhoneTestingTab = category.title === "Phone Testing";
       const isSecurityTestingTab = category.title === "Security Testing";
+      const isColorsTab = category.title === "Colors";
       const isImagesTab = category.title === "Images & Avatars";
       const fileControls = document.getElementById("fileControls");
       const dateTimeControls = document.getElementById("dateTimeControls");
@@ -4177,6 +4204,7 @@ function createDataGeneratorUI(containerId) {
       const passwordControls = document.getElementById("passwordControls");
       const phoneControls = document.getElementById("phoneControls");
       const securityControls = document.getElementById("securityControls");
+      const colorControls = document.getElementById("colorControls");
       const imageControls = document.getElementById("imageControls");
       const downloadBtn = document.getElementById("downloadBtn");
 
@@ -4203,6 +4231,9 @@ function createDataGeneratorUI(containerId) {
       }
       if (securityControls) {
         securityControls.classList.toggle("active", isSecurityTestingTab);
+      }
+      if (colorControls) {
+        colorControls.classList.toggle("active", isColorsTab);
       }
       if (imageControls) {
         imageControls.classList.toggle("active", isImagesTab);
@@ -4715,6 +4746,7 @@ function createDataGeneratorUI(containerId) {
       const isPasswordTestingTab = categoryTitle === "Password Testing";
       const isPhoneTestingTab = categoryTitle === "Phone Testing";
       const isSecurityTestingTab = categoryTitle === "Security Testing";
+      const isColorsTab = categoryTitle === "Colors";
 
       const fileControls = document.getElementById("fileControls");
       const dateTimeControls = document.getElementById("dateTimeControls");
@@ -4726,6 +4758,7 @@ function createDataGeneratorUI(containerId) {
       const passwordControls = document.getElementById("passwordControls");
       const phoneControls = document.getElementById("phoneControls");
       const securityControls = document.getElementById("securityControls");
+      const colorControls = document.getElementById("colorControls");
       const downloadBtn = document.getElementById("downloadBtn");
 
       if (fileControls) fileControls.classList.toggle("active", isFilesTab);
@@ -4743,6 +4776,8 @@ function createDataGeneratorUI(containerId) {
         phoneControls.classList.toggle("active", isPhoneTestingTab);
       if (securityControls)
         securityControls.classList.toggle("active", isSecurityTestingTab);
+      if (colorControls)
+        colorControls.classList.toggle("active", isColorsTab);
       if (downloadBtn)
         downloadBtn.style.display = isFilesTab ? "inline-block" : "none";
     }
@@ -5031,13 +5066,13 @@ function createDataGeneratorUI(containerId) {
           resultHTML = `
             <div style="font-weight: 600; margin-bottom: 8px; color: #1e293b;">✅ All Formats:</div>
             <div style="display: grid; gap: 6px;">
-              <div><strong>HEX:</strong> <code style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; cursor: pointer;" onclick="navigator.clipboard.writeText('${converted.hex}')">${converted.hex}</code></div>
-              <div><strong>RGB:</strong> <code style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; cursor: pointer;" onclick="navigator.clipboard.writeText('${converted.rgb}')">${converted.rgb}</code></div>
-              <div><strong>RGBA:</strong> <code style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; cursor: pointer;" onclick="navigator.clipboard.writeText('${converted.rgba}')">${converted.rgba}</code></div>
-              <div><strong>HSL:</strong> <code style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; cursor: pointer;" onclick="navigator.clipboard.writeText('${converted.hsl}')">${converted.hsl}</code></div>
-              <div><strong>HSLA:</strong> <code style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; cursor: pointer;" onclick="navigator.clipboard.writeText('${converted.hsla}')">${converted.hsla}</code></div>
-              <div><strong>HSV:</strong> <code style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; cursor: pointer;" onclick="navigator.clipboard.writeText('${converted.hsv}')">${converted.hsv}</code></div>
-              <div><strong>CMYK:</strong> <code style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; cursor: pointer;" onclick="navigator.clipboard.writeText('${converted.cmyk}')">${converted.cmyk}</code></div>
+              <div><strong>HEX:</strong> <code class="color-copy-value" data-value="${converted.hex}" style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; cursor: pointer;">${converted.hex}</code></div>
+              <div><strong>RGB:</strong> <code class="color-copy-value" data-value="${converted.rgb}" style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; cursor: pointer;">${converted.rgb}</code></div>
+              <div><strong>RGBA:</strong> <code class="color-copy-value" data-value="${converted.rgba}" style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; cursor: pointer;">${converted.rgba}</code></div>
+              <div><strong>HSL:</strong> <code class="color-copy-value" data-value="${converted.hsl}" style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; cursor: pointer;">${converted.hsl}</code></div>
+              <div><strong>HSLA:</strong> <code class="color-copy-value" data-value="${converted.hsla}" style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; cursor: pointer;">${converted.hsla}</code></div>
+              <div><strong>HSV:</strong> <code class="color-copy-value" data-value="${converted.hsv}" style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; cursor: pointer;">${converted.hsv}</code></div>
+              <div><strong>CMYK:</strong> <code class="color-copy-value" data-value="${converted.cmyk}" style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; cursor: pointer;">${converted.cmyk}</code></div>
               <div style="margin-top: 8px; padding: 20px; background: ${converted.hex}; border-radius: 6px; text-align: center; color: white; text-shadow: 0 1px 2px rgba(0,0,0,0.3); font-weight: 600;">Color Preview</div>
             </div>
           `;
@@ -5045,13 +5080,20 @@ function createDataGeneratorUI(containerId) {
           const value = converted[outputType];
           resultHTML = `
             <div style="font-weight: 600; margin-bottom: 8px; color: #1e293b;">✅ Converted to ${outputType.toUpperCase()}:</div>
-            <div style="font-size: 18px; font-weight: 600; padding: 12px; background: #e2e8f0; border-radius: 6px; cursor: pointer; text-align: center;" onclick="navigator.clipboard.writeText('${value}')">${value}</div>
+            <div class="color-copy-value" data-value="${value}" style="font-size: 18px; font-weight: 600; padding: 12px; background: #e2e8f0; border-radius: 6px; cursor: pointer; text-align: center;">${value}</div>
             <div style="margin-top: 8px; padding: 20px; background: ${converted.hex}; border-radius: 6px; text-align: center; color: white; text-shadow: 0 1px 2px rgba(0,0,0,0.3); font-weight: 600;">Color Preview</div>
             <div style="margin-top: 8px; font-size: 11px; color: #64748b; text-align: center;">💡 Click values to copy</div>
           `;
         }
         
         resultDiv.innerHTML = resultHTML;
+        
+        // Add event listeners for copy
+        document.querySelectorAll('.color-copy-value').forEach(el => {
+          el.addEventListener('click', function() {
+            navigator.clipboard.writeText(this.dataset.value);
+          });
+        });
       } catch (error) {
         resultDiv.innerHTML = `<div style="color: #ef4444;">❌ Error: ${error.message}</div>`;
       }
