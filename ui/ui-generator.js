@@ -346,6 +346,62 @@ function createDataGeneratorUI(containerId) {
     #dateTimeControls .dg-conversion-item { border-radius: 0; border-color: rgba(91, 124, 250, 0.22); }
     #dateTimeControls .dg-conversion-value { border-radius: 0; background: #f8fbff; }
     #dateTimeControls .dg-user-note { border-left: 4px solid #18a1cd; border-radius: 0; background: #f0f8ff; }
+    #randomValuesControls { margin: 0; margin-bottom: 12px; padding: 0; background: linear-gradient(145deg, #f2f7ff 0%, #eaf1ff 100%); border: 1px solid rgba(91, 124, 250, 0.24); box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 6px 18px rgba(15, 23, 42, 0.06); }
+    #randomValuesControls .dg-file-controls-header { margin: 0; border-left: none; border-right: none; border-top: none; }
+    #randomValuesControls .dg-file-controls-sections { padding: 10px 12px 12px; gap: 10px; }
+    #randomValuesControls .dg-file-control-section { border: 1px solid rgba(91, 124, 250, 0.18); background: #ffffff; border-radius: 0; box-shadow: none; }
+    #randomValuesControls .dg-file-control-section::before { width: 4px; border-radius: 0; }
+    #randomValuesControls .dg-file-control-group { margin-bottom: 8px; padding-left: 8px; }
+    #randomValuesControls .dg-file-control-group:last-child { margin-bottom: 0; }
+    #randomValuesControls .dg-file-control-group label { color: #334155; }
+    #randomValuesControls .dg-rv-check-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+    #randomValuesControls .dg-rv-check { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 700; color: #334155; background: #f8fbff; border: 1px solid rgba(91, 124, 250, 0.22); padding: 4px 8px; }
+    #randomValuesControls .dg-rv-check input { margin: 0; }
+    #randomValuesControls input[type="text"],
+    #randomValuesControls input[type="number"] { border: 1px solid rgba(91, 124, 250, 0.35); border-radius: 0; background: #fcfdff; color: #0f172a; font-weight: 700; }
+    #randomValuesControls input[type="text"]:focus,
+    #randomValuesControls input[type="number"]:focus { outline: none; border-color: #5b7cfa; box-shadow: 0 0 0 3px rgba(91, 124, 250, 0.14); }
+    #randomTextControls,
+    #phoneControls { margin: 0; margin-bottom: 12px; padding: 0; background: linear-gradient(145deg, #f2f7ff 0%, #eaf1ff 100%); border: 1px solid rgba(91, 124, 250, 0.24); box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 6px 18px rgba(15, 23, 42, 0.06); }
+    #randomTextControls .dg-file-controls-header,
+    #phoneControls .dg-file-controls-header { margin: 0; border-left: none; border-right: none; border-top: none; }
+    #randomTextControls .dg-file-controls-sections,
+    #phoneControls .dg-file-controls-sections { padding: 10px 12px 12px; gap: 10px; }
+    #randomTextControls .dg-file-control-section,
+    #phoneControls .dg-file-control-section { border: 1px solid rgba(91, 124, 250, 0.18); background: #ffffff; border-radius: 0; box-shadow: none; }
+    #randomTextControls .dg-file-control-section::before,
+    #phoneControls .dg-file-control-section::before { width: 4px; border-radius: 0; }
+    #randomTextControls .dg-file-control-group,
+    #phoneControls .dg-file-control-group { margin-bottom: 8px; padding-left: 8px; }
+    #randomTextControls .dg-file-control-group:last-child,
+    #phoneControls .dg-file-control-group:last-child { margin-bottom: 0; }
+    #randomTextControls .dg-file-control-group label,
+    #phoneControls .dg-file-control-group label { color: #334155; }
+    #randomTextControls .dg-rt-check-grid,
+    #phoneControls .dg-phone-check-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+    #randomTextControls .dg-rt-check,
+    #phoneControls .dg-phone-check { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 700; color: #334155; background: #f8fbff; border: 1px solid rgba(91, 124, 250, 0.22); padding: 4px 8px; }
+    #randomTextControls .dg-rt-check input,
+    #phoneControls .dg-phone-check input { margin: 0; }
+    #passwordControls,
+    #emailControls { margin: 0; margin-bottom: 12px; padding: 0; background: linear-gradient(145deg, #f2f7ff 0%, #eaf1ff 100%); border: 1px solid rgba(91, 124, 250, 0.24); box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 6px 18px rgba(15, 23, 42, 0.06); }
+    #passwordControls .dg-file-controls-header,
+    #emailControls .dg-file-controls-header { margin: 0; border-left: none; border-right: none; border-top: none; }
+    #passwordControls .dg-file-controls-sections,
+    #emailControls .dg-file-controls-sections { padding: 10px 12px 12px; gap: 10px; }
+    #passwordControls .dg-file-control-section,
+    #emailControls .dg-file-control-section { border: 1px solid rgba(91, 124, 250, 0.18); background: #ffffff; border-radius: 0; box-shadow: none; }
+    #passwordControls .dg-file-control-section::before,
+    #emailControls .dg-file-control-section::before { width: 4px; border-radius: 0; }
+    #passwordControls .dg-file-control-group,
+    #emailControls .dg-file-control-group { margin-bottom: 8px; padding-left: 8px; }
+    #passwordControls .dg-file-control-group:last-child,
+    #emailControls .dg-file-control-group:last-child { margin-bottom: 0; }
+    #passwordControls .dg-file-control-group label,
+    #emailControls .dg-file-control-group label { color: #334155; }
+    #passwordControls .dg-pw-check-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+    #passwordControls .dg-pw-check { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 700; color: #334155; background: #f8fbff; border: 1px solid rgba(91, 124, 250, 0.22); padding: 4px 8px; }
+    #passwordControls .dg-pw-check input { margin: 0; }
     .dg-files-section { margin-top: 18px; border: 1px solid rgba(91, 124, 250, 0.24); background: linear-gradient(180deg, #f2f7ff 0%, #edf3ff 100%); box-shadow: var(--shadow-3); }
     .dg-files-section-header { padding: 12px 14px; border-bottom: 1px solid rgba(91, 124, 250, 0.2); background: linear-gradient(135deg, rgba(91, 124, 250, 0.98) 0%, rgba(24, 161, 205, 0.95) 100%); color: white; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
     .dg-files-section-title { font-size: 12px; font-weight: 900; letter-spacing: 0.6px; text-transform: uppercase; }
@@ -3032,36 +3088,47 @@ function createDataGeneratorUI(containerId) {
                 cat.title === "Random Values"
                   ? `
                 <div class="dg-file-controls active" id="randomValuesControls">
-                  <div class="dg-file-control-group">
-                    <label>Character Types:</label>
-                    <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;">
-                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                        <input type="checkbox" id="includeNumbers" checked> Numbers (0-9)
-                      </label>
-                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                        <input type="checkbox" id="includeUppercase" checked> Uppercase (A-Z)
-                      </label>
-                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                        <input type="checkbox" id="includeLowercase" checked> Lowercase (a-z)
-                      </label>
-                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                        <input type="checkbox" id="includeArabicLetters"> Arabic Letters (أ-ي)
-                      </label>
-                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                        <input type="checkbox" id="includeSpecialChars"> Special (!@#$%)
-                      </label>
-                    </div>
+                  <div class="dg-file-controls-header">
+                    <div class="dg-file-controls-title">Random Values Controls</div>
+                    <div class="dg-file-controls-hint">Character pool and output length</div>
                   </div>
-                  <div class="dg-file-control-group">
-                    <label>Length:</label>
-                    <div class="dg-file-size-group">
-                      <input type="number" id="randomLength" value="10" min="1" max="1000" style="width: 80px;">
-                      <span style="font-size: 10px; color: #64748b;">characters</span>
+                  <div class="dg-file-controls-sections">
+                    <div class="dg-file-control-section">
+                      <div class="dg-file-control-section-title">Character Types</div>
+                      <div class="dg-file-control-group">
+                        <div class="dg-rv-check-grid">
+                          <label class="dg-rv-check">
+                            <input type="checkbox" id="includeNumbers" checked> Numbers (0-9)
+                          </label>
+                          <label class="dg-rv-check">
+                            <input type="checkbox" id="includeUppercase" checked> Uppercase (A-Z)
+                          </label>
+                          <label class="dg-rv-check">
+                            <input type="checkbox" id="includeLowercase" checked> Lowercase (a-z)
+                          </label>
+                          <label class="dg-rv-check">
+                            <input type="checkbox" id="includeArabicLetters"> Arabic Letters (أ-ي)
+                          </label>
+                          <label class="dg-rv-check">
+                            <input type="checkbox" id="includeSpecialChars"> Special (!@#$%)
+                          </label>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div class="dg-file-control-group">
-                    <label>Custom Characters:</label>
-                    <input type="text" id="customChars" placeholder="Add custom characters..." style="width: 100%; padding: 4px 6px; font-size: 10px;">
+                    <div class="dg-file-control-section">
+                      <div class="dg-file-control-section-title">Output</div>
+                      <div class="dg-file-control-group">
+                        <label>Length:</label>
+                        <div class="dg-file-size-group">
+                          <input type="number" id="randomLength" value="10" min="1" max="1000" class="dg-dimension-input">
+                          <span style="font-size: 10px; color: #64748b;">characters</span>
+                        </div>
+                      </div>
+                      <div class="dg-file-control-group">
+                        <label>Custom Characters:</label>
+                        <input type="text" id="customChars" placeholder="Add custom characters...">
+                      </div>
+                    </div>
                   </div>
                 </div>
               `
@@ -3071,28 +3138,39 @@ function createDataGeneratorUI(containerId) {
                 cat.title === "Random Text"
                   ? `
                 <div class="dg-file-controls active" id="randomTextControls">
-                  <div class="dg-file-control-group">
-                    <label>Text Length:</label>
-                    <input type="number" id="textLength" value="50" min="1" max="10000">
+                  <div class="dg-file-controls-header">
+                    <div class="dg-file-controls-title">Random Text Controls</div>
+                    <div class="dg-file-controls-hint">Text length and character mix</div>
                   </div>
-                  <div class="dg-file-control-group">
-                    <label>Character Types:</label>
-                    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px;">
-                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                        <input type="checkbox" id="includeDigits" checked> Digits (0-9)
-                      </label>
-                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                        <input type="checkbox" id="includeEnglish" checked> English (A-z)
-                      </label>
-                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                        <input type="checkbox" id="includeArabic"> Arabic (ا-ي)
-                      </label>
-                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                        <input type="checkbox" id="includeSpecial"> Special (!@#$)
-                      </label>
-                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                        <input type="checkbox" id="includeSpace"> Spaces
-                      </label>
+                  <div class="dg-file-controls-sections">
+                    <div class="dg-file-control-section">
+                      <div class="dg-file-control-section-title">Output</div>
+                      <div class="dg-file-control-group">
+                        <label>Text Length:</label>
+                        <input type="number" id="textLength" value="50" min="1" max="10000">
+                      </div>
+                    </div>
+                    <div class="dg-file-control-section">
+                      <div class="dg-file-control-section-title">Character Types</div>
+                      <div class="dg-file-control-group">
+                        <div class="dg-rt-check-grid">
+                          <label class="dg-rt-check">
+                            <input type="checkbox" id="includeDigits" checked> Digits (0-9)
+                          </label>
+                          <label class="dg-rt-check">
+                            <input type="checkbox" id="includeEnglish" checked> English (A-z)
+                          </label>
+                          <label class="dg-rt-check">
+                            <input type="checkbox" id="includeArabic"> Arabic (ا-ي)
+                          </label>
+                          <label class="dg-rt-check">
+                            <input type="checkbox" id="includeSpecial"> Special (!@#$)
+                          </label>
+                          <label class="dg-rt-check">
+                            <input type="checkbox" id="includeSpace"> Spaces
+                          </label>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -3103,43 +3181,55 @@ function createDataGeneratorUI(containerId) {
                 cat.title === "Email Testing"
                   ? `
                 <div class="dg-file-controls active" id="emailControls">
-                  <div class="dg-file-control-group">
-                    <label>Email Domain:</label>
-                    <select id="emailDomain">
-                      <option value="random">Random Domain</option>
-                      <option value="gmail.com">gmail.com</option>
-                      <option value="yahoo.com">yahoo.com</option>
-                      <option value="hotmail.com">hotmail.com</option>
-                      <option value="outlook.com">outlook.com</option>
-                      <option value="company.com">company.com</option>
-                      <option value="test.com">test.com</option>
-                      <option value="example.com">example.com</option>
-                      <option value="custom">Custom Domain</option>
-                    </select>
+                  <div class="dg-file-controls-header">
+                    <div class="dg-file-controls-title">Email Testing Controls</div>
+                    <div class="dg-file-controls-hint">Domain, format, and length profile</div>
                   </div>
-                  <div class="dg-file-control-group" id="customDomainGroup" style="display: none;">
-                    <label>Custom Domain:</label>
-                    <input type="text" id="customDomain" placeholder="mydomain.com">
-                  </div>
-                  <div class="dg-file-control-group">
-                    <label>Email Format:</label>
-                    <select id="emailFormat">
-                      <option value="standard">Standard (name@domain.com)</option>
-                      <option value="subdomain">Subdomain (name@sub.domain.com)</option>
-                      <option value="plus">Plus Addressing (name+tag@domain.com)</option>
-                      <option value="dot">Dot Notation (first.last@domain.com)</option>
-                      <option value="underscore">Underscore (first_last@domain.com)</option>
-                      <option value="hyphen">Hyphen (first-last@domain.com)</option>
-                    </select>
-                  </div>
-                  <div class="dg-file-control-group">
-                    <label>Email Length:</label>
-                    <select id="emailLength">
-                      <option value="short">Short (5-10 chars)</option>
-                      <option value="medium" selected>Medium (10-20 chars)</option>
-                      <option value="long">Long (20-40 chars)</option>
-                      <option value="very-long">Very Long (40+ chars)</option>
-                    </select>
+                  <div class="dg-file-controls-sections">
+                    <div class="dg-file-control-section">
+                      <div class="dg-file-control-section-title">Domain</div>
+                      <div class="dg-file-control-group">
+                        <label>Email Domain:</label>
+                        <select id="emailDomain">
+                          <option value="random">Random Domain</option>
+                          <option value="gmail.com">gmail.com</option>
+                          <option value="yahoo.com">yahoo.com</option>
+                          <option value="hotmail.com">hotmail.com</option>
+                          <option value="outlook.com">outlook.com</option>
+                          <option value="company.com">company.com</option>
+                          <option value="test.com">test.com</option>
+                          <option value="example.com">example.com</option>
+                          <option value="custom">Custom Domain</option>
+                        </select>
+                      </div>
+                      <div class="dg-file-control-group" id="customDomainGroup" style="display: none;">
+                        <label>Custom Domain:</label>
+                        <input type="text" id="customDomain" placeholder="mydomain.com">
+                      </div>
+                    </div>
+                    <div class="dg-file-control-section">
+                      <div class="dg-file-control-section-title">Output</div>
+                      <div class="dg-file-control-group">
+                        <label>Email Format:</label>
+                        <select id="emailFormat">
+                          <option value="standard">Standard (name@domain.com)</option>
+                          <option value="subdomain">Subdomain (name@sub.domain.com)</option>
+                          <option value="plus">Plus Addressing (name+tag@domain.com)</option>
+                          <option value="dot">Dot Notation (first.last@domain.com)</option>
+                          <option value="underscore">Underscore (first_last@domain.com)</option>
+                          <option value="hyphen">Hyphen (first-last@domain.com)</option>
+                        </select>
+                      </div>
+                      <div class="dg-file-control-group">
+                        <label>Email Length:</label>
+                        <select id="emailLength">
+                          <option value="short">Short (5-10 chars)</option>
+                          <option value="medium" selected>Medium (10-20 chars)</option>
+                          <option value="long">Long (20-40 chars)</option>
+                          <option value="very-long">Very Long (40+ chars)</option>
+                        </select>
+                      </div>
+                    </div>
                   </div>
                 </div>
               `
@@ -3149,42 +3239,55 @@ function createDataGeneratorUI(containerId) {
                 cat.title === "Password Testing"
                   ? `
                 <div class="dg-file-controls active" id="passwordControls">
-                  <div class="dg-file-control-group">
-                    <label>Password Length:</label>
-                    <input type="number" id="passwordLength" value="12" min="4" max="128">
+                  <div class="dg-file-controls-header">
+                    <div class="dg-file-controls-title">Password Testing Controls</div>
+                    <div class="dg-file-controls-hint">Length, composition, and constraints</div>
                   </div>
-                  <div class="dg-file-control-group">
-                    <label>Character Types:</label>
-                    <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;">
-                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                        <input type="checkbox" id="includeUppercase" checked> Uppercase (A-Z)
-                      </label>
-                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                        <input type="checkbox" id="includeLowercase" checked> Lowercase (a-z)
-                      </label>
-                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                        <input type="checkbox" id="includeNumbers" checked> Numbers (0-9)
-                      </label>
-                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                        <input type="checkbox" id="includeSpecialChars"> Special (!@#$)
-                      </label>
-                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                        <input type="checkbox" id="includeArabicChars"> Arabic (ا-ي)
-                      </label>
+                  <div class="dg-file-controls-sections">
+                    <div class="dg-file-control-section">
+                      <div class="dg-file-control-section-title">Output</div>
+                      <div class="dg-file-control-group">
+                        <label>Password Length:</label>
+                        <input type="number" id="passwordLength" value="12" min="4" max="128">
+                      </div>
                     </div>
-                  </div>
-                  <div class="dg-file-control-group">
-                    <label>Requirements:</label>
-                    <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;">
-                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                        <input type="checkbox" id="mustStartWith"> Must start with letter
-                      </label>
-                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                        <input type="checkbox" id="mustEndWith"> Must end with number
-                      </label>
-                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                        <input type="checkbox" id="noRepeating"> No repeating chars
-                      </label>
+                    <div class="dg-file-control-section">
+                      <div class="dg-file-control-section-title">Character Types</div>
+                      <div class="dg-file-control-group">
+                        <div class="dg-pw-check-grid">
+                          <label class="dg-pw-check">
+                            <input type="checkbox" id="includeUppercase" checked> Uppercase (A-Z)
+                          </label>
+                          <label class="dg-pw-check">
+                            <input type="checkbox" id="includeLowercase" checked> Lowercase (a-z)
+                          </label>
+                          <label class="dg-pw-check">
+                            <input type="checkbox" id="includeNumbers" checked> Numbers (0-9)
+                          </label>
+                          <label class="dg-pw-check">
+                            <input type="checkbox" id="includeSpecialChars"> Special (!@#$)
+                          </label>
+                          <label class="dg-pw-check">
+                            <input type="checkbox" id="includeArabicChars"> Arabic (ا-ي)
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="dg-file-control-section">
+                      <div class="dg-file-control-section-title">Requirements</div>
+                      <div class="dg-file-control-group">
+                        <div class="dg-pw-check-grid">
+                          <label class="dg-pw-check">
+                            <input type="checkbox" id="mustStartWith"> Must start with letter
+                          </label>
+                          <label class="dg-pw-check">
+                            <input type="checkbox" id="mustEndWith"> Must end with number
+                          </label>
+                          <label class="dg-pw-check">
+                            <input type="checkbox" id="noRepeating"> No repeating chars
+                          </label>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -3195,37 +3298,48 @@ function createDataGeneratorUI(containerId) {
                 cat.title === "Phone Testing"
                   ? `
                 <div class="dg-file-controls active" id="phoneControls">
-                  <div class="dg-file-control-group">
-                    <label>Phone Type:</label>
-                    <select id="phoneType">
-                      <option value="mobile">Mobile (05X)</option>
-                      <option value="landline">Landline (01X)</option>
-                      <option value="short-mobile">Short Mobile (5X)</option>
-                      <option value="short-landline">Short Landline (1X)</option>
-                      <option value="mixed">Mixed Types</option>
-                    </select>
+                  <div class="dg-file-controls-header">
+                    <div class="dg-file-controls-title">Phone Testing Controls</div>
+                    <div class="dg-file-controls-hint">Type, format, and validation profile</div>
                   </div>
-                  <div class="dg-file-control-group">
-                    <label>Phone Format:</label>
-                    <select id="phoneFormat">
-                      <option value="formatted">Formatted (+966 5X XXX XXXX)</option>
-                      <option value="unformatted">Unformatted (05XXXXXXXX)</option>
-                      <option value="international">International (+966)</option>
-                      <option value="local">Local (05X)</option>
-                    </select>
-                  </div>
-                  <div class="dg-file-control-group">
-                    <label>Validation:</label>
-                    <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;">
-                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                        <input type="checkbox" id="generateValid" checked> Valid Numbers
-                      </label>
-                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                        <input type="checkbox" id="generateInvalid"> Invalid Numbers
-                      </label>
-                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                        <input type="checkbox" id="wrongLength"> Wrong Length
-                      </label>
+                  <div class="dg-file-controls-sections">
+                    <div class="dg-file-control-section">
+                      <div class="dg-file-control-section-title">Phone Pattern</div>
+                      <div class="dg-file-control-group">
+                        <label>Phone Type:</label>
+                        <select id="phoneType">
+                          <option value="mobile">Mobile (05X)</option>
+                          <option value="landline">Landline (01X)</option>
+                          <option value="short-mobile">Short Mobile (5X)</option>
+                          <option value="short-landline">Short Landline (1X)</option>
+                          <option value="mixed">Mixed Types</option>
+                        </select>
+                      </div>
+                      <div class="dg-file-control-group">
+                        <label>Phone Format:</label>
+                        <select id="phoneFormat">
+                          <option value="formatted">Formatted (+966 5X XXX XXXX)</option>
+                          <option value="unformatted">Unformatted (05XXXXXXXX)</option>
+                          <option value="international">International (+966)</option>
+                          <option value="local">Local (05X)</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="dg-file-control-section">
+                      <div class="dg-file-control-section-title">Validation</div>
+                      <div class="dg-file-control-group">
+                        <div class="dg-phone-check-grid">
+                          <label class="dg-phone-check">
+                            <input type="checkbox" id="generateValid" checked> Valid Numbers
+                          </label>
+                          <label class="dg-phone-check">
+                            <input type="checkbox" id="generateInvalid"> Invalid Numbers
+                          </label>
+                          <label class="dg-phone-check">
+                            <input type="checkbox" id="wrongLength"> Wrong Length
+                          </label>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
