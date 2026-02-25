@@ -270,15 +270,59 @@ function createDataGeneratorUI(containerId) {
     .dg-field-value { color: #1f2937; word-break: break-all; cursor: pointer; padding: 6px 10px; border-radius: 10px; background: #eef2f8; transition: all 0.2s ease; flex: 1; text-align: left; font-family: "SFMono-Regular", "Menlo", "Monaco", "Courier New", monospace; font-size: 12px; font-weight: 700; }
     .dg-field-value:hover { background: #e2e8ff; color: var(--brand-1); box-shadow: 0 4px 10px rgba(91, 124, 250, 0.2); }
     .dg-footer { font-size: 9px; color: #8a94a6; text-align: center; padding: 10px; border-top: 1px solid var(--line); background: linear-gradient(180deg, #ffffff 0%, #f6f7fb 100%); width: 100%; position: absolute; bottom: 0; left: 0; right: 0; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase; }
-    .dg-file-controls { display: none; margin-top: 10px; padding: 12px; background: #f6f7fb; border: 1px solid var(--line); border-radius: 10px; }
+    .dg-file-controls { display: none; margin-top: 14px; padding: 12px; background: linear-gradient(145deg, #f2f7ff 0%, #eaf1ff 100%); border: 1px solid rgba(91, 124, 250, 0.24); border-radius: 0; box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 6px 18px rgba(15, 23, 42, 0.06); }
     .dg-file-controls.active { display: block; }
-    .dg-file-control-group { margin-bottom: 10px; }
+    .dg-file-controls-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; padding: 10px 12px; border: 1px solid rgba(91, 124, 250, 0.25); background: white; }
+    .dg-file-controls-title { font-size: 11px; font-weight: 900; color: #334155; text-transform: uppercase; letter-spacing: 0.9px; }
+    .dg-file-controls-hint { font-size: 10px; color: #64748b; font-weight: 700; }
+    .dg-file-controls-sections { display: grid; grid-template-columns: 1fr; gap: 10px; }
+    .dg-file-control-section { background: #ffffff; border: 1px solid rgba(91, 124, 250, 0.18); padding: 10px; position: relative; }
+    .dg-file-control-section::before { content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(180deg, #5b7cfa 0%, #18a1cd 100%); }
+    .dg-file-control-section-title { font-size: 10px; font-weight: 900; color: #334155; letter-spacing: 0.7px; text-transform: uppercase; margin-bottom: 8px; padding-left: 8px; }
+    .dg-file-control-group { margin-bottom: 8px; padding-left: 8px; }
     .dg-file-control-group:last-child { margin-bottom: 0; }
-    .dg-file-control-group label { display: block; font-size: 11px; font-weight: 700; color: #344054; margin-bottom: 4px; }
-    .dg-file-control-group input, .dg-file-control-group select { width: 100%; padding: 6px 8px; border: 1px solid rgba(91, 124, 250, 0.3); border-radius: 6px; font-size: 11px; box-sizing: border-box; }
-    .dg-file-size-group { display: flex; gap: 6px; }
-    .dg-file-size-group input { flex: 1; }
-    .dg-file-size-group select { width: 80px; flex-shrink: 0; }
+    .dg-file-control-group label { display: block; font-size: 11px; font-weight: 700; color: #344054; margin-bottom: 5px; }
+    .dg-file-control-group input, .dg-file-control-group select { width: 100%; padding: 8px 10px; border: 1px solid rgba(91, 124, 250, 0.35); border-radius: 0; font-size: 11px; box-sizing: border-box; background: #fcfdff; font-weight: 700; color: #0f172a; }
+    .dg-file-size-group { display: flex; gap: 8px; align-items: center; }
+    .dg-file-size-group input { flex: 1; min-width: 0; }
+    .dg-file-size-group select { width: 90px; flex-shrink: 0; }
+    .dg-file-size-group .dg-multiply { font-weight: 900; color: #475569; font-size: 13px; line-height: 1; }
+    .dg-dimension-input { max-width: 120px; text-align: center; }
+    .dg-inline-pair { display: flex; gap: 8px; align-items: center; }
+    .dg-inline-pair > * { flex: 1; min-width: 0; }
+    .dg-inline-pair .dg-compact-input { max-width: 70px; text-align: center; }
+    .dg-month-select-wrap { flex: 1; min-width: 0; position: relative; }
+    .dg-month-input { display: none; width: 100%; }
+    .dg-month-input.active { display: block; }
+    .dg-mode-toggle { display: inline-flex; border: 1px solid rgba(91, 124, 250, 0.28); background: #f5f8ff; overflow: hidden; }
+    .dg-mode-btn { border: none; background: transparent; color: #42526b; font-size: 10px; font-weight: 800; padding: 6px 10px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.4px; }
+    .dg-mode-btn.active { background: linear-gradient(135deg, #5b7cfa 0%, #7f56d9 100%); color: white; }
+    .dg-checkbox-inline-group { display: flex; flex-wrap: wrap; gap: 8px; }
+    .dg-checkbox-inline { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 700; color: #334155; background: #f8fbff; border: 1px solid rgba(91, 124, 250, 0.22); padding: 4px 8px; }
+    .dg-checkbox-inline input { margin: 0; }
+    .dg-convert-actions { display: flex; justify-content: flex-end; margin-top: 6px; }
+    .dg-mini-btn { border: none; background: linear-gradient(135deg, #5b7cfa 0%, #7f56d9 100%); color: white; font-size: 10px; font-weight: 800; padding: 6px 10px; cursor: pointer; letter-spacing: 0.3px; text-transform: uppercase; }
+    .dg-mini-btn.secondary { background: linear-gradient(135deg, #18a1cd 0%, #5b7cfa 100%); }
+    .dg-conversion-output { margin-top: 8px; padding: 10px; border: 1px solid rgba(24, 161, 205, 0.25); background: #f0f8ff; font-size: 10px; color: #0f172a; font-weight: 700; display: none; }
+    .dg-conversion-output-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .dg-conversion-grid { display: grid; gap: 8px; }
+    .dg-conversion-item { background: white; border: 1px solid rgba(91, 124, 250, 0.22); padding: 8px; }
+    .dg-conversion-item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .dg-conversion-item-label { font-size: 9px; font-weight: 900; color: #42526b; letter-spacing: 0.5px; text-transform: uppercase; }
+    .dg-conversion-value { font-family: "SFMono-Regular", "Menlo", "Monaco", "Courier New", monospace; font-size: 11px; font-weight: 700; color: #111827; background: #f8fbff; border: 1px solid rgba(91, 124, 250, 0.18); padding: 8px; white-space: normal; word-break: break-word; }
+    .dg-files-section { margin-top: 18px; border: 1px solid rgba(91, 124, 250, 0.24); background: linear-gradient(180deg, #f2f7ff 0%, #edf3ff 100%); box-shadow: var(--shadow-3); }
+    .dg-files-section-header { padding: 12px 14px; border-bottom: 1px solid rgba(91, 124, 250, 0.2); background: linear-gradient(135deg, rgba(91, 124, 250, 0.98) 0%, rgba(24, 161, 205, 0.95) 100%); color: white; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .dg-files-section-title { font-size: 12px; font-weight: 900; letter-spacing: 0.6px; text-transform: uppercase; }
+    .dg-files-section-count { font-size: 10px; font-weight: 800; background: rgba(255,255,255,0.2); padding: 4px 8px; text-transform: uppercase; letter-spacing: 0.4px; }
+    .dg-files-list { padding: 10px; display: grid; gap: 8px; }
+    .dg-file-item { background: white; border: 1px solid rgba(91, 124, 250, 0.18); padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .dg-file-item-main { min-width: 0; display: grid; gap: 4px; }
+    .dg-file-item-name { font-weight: 800; color: #1f2937; font-size: 12px; line-height: 1.3; word-break: break-word; }
+    .dg-file-item-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .dg-file-tag { font-size: 9px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 900; padding: 2px 6px; background: #e9efff; color: #3656be; border: 1px solid rgba(91, 124, 250, 0.25); }
+    .dg-file-item-meta { font-size: 10px; color: #64748b; font-weight: 700; }
+    .dg-download-file-btn { background: linear-gradient(135deg, #5b7cfa 0%, #7f56d9 100%); color: white; border: none; padding: 8px 12px; cursor: pointer; font-weight: 800; font-size: 10px; text-transform: uppercase; letter-spacing: 0.4px; white-space: nowrap; transition: all 0.2s ease; border-radius: 0; }
+    .dg-download-file-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 16px rgba(91, 124, 250, 0.25); }
     .dg-image-controls { display: none; margin-top: 10px; padding: 15px; background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(16, 185, 129, 0.12) 100%); border: 1px solid rgba(24, 161, 205, 0.4); border-radius: 12px; box-shadow: var(--shadow-3); }
     .dg-image-controls.active { display: block; }
     .dg-image-controls h4 { margin: 0 0 12px 0; color: #0b4b5a; font-size: 12px; font-weight: 800; display: flex; align-items: center; gap: 6px; text-transform: uppercase; letter-spacing: 0.6px; }
@@ -2627,28 +2671,43 @@ function createDataGeneratorUI(containerId) {
                 cat.title === "Files"
                   ? `
                 <div class="dg-file-controls active" id="fileControls">
-                  <div class="dg-file-control-group">
-                    <label>File Name:</label>
-                    <input type="text" id="fileName" placeholder="test-file" value="test-file">
+                  <div class="dg-file-controls-header">
+                    <div class="dg-file-controls-title">File Generation Settings</div>
+                    <div class="dg-file-controls-hint">Applied to selected file types</div>
                   </div>
-                  <div class="dg-file-control-group">
-                    <label>File Size:</label>
-                    <div class="dg-file-size-group">
-                      <input type="number" id="fileSize" value="10" min="1">
-                      <select id="fileSizeUnit">
-                        <option value="B">Bytes</option>
-                        <option value="KB" selected>KB</option>
-                        <option value="MB">MB</option>
-                        <option value="GB">GB</option>
-                      </select>
+                  <div class="dg-file-controls-sections">
+                    <div class="dg-file-control-section">
+                      <div class="dg-file-control-section-title">File Identity</div>
+                      <div class="dg-file-control-group">
+                        <label>File Name:</label>
+                        <input type="text" id="fileName" placeholder="test-file" value="test-file">
+                      </div>
                     </div>
-                  </div>
-                  <div class="dg-file-control-group">
-                    <label>Image Dimensions:</label>
-                    <div class="dg-file-size-group">
-                      <input type="number" id="imageWidth" placeholder="Width" value="800" min="1" style="width: 80px;">
-                      <span style="margin: 0 5px;">×</span>
-                      <input type="number" id="imageHeight" placeholder="Height" value="600" min="1" style="width: 80px;">
+                    <div class="dg-file-control-section">
+                      <div class="dg-file-control-section-title">File Size</div>
+                      <div class="dg-file-control-group">
+                        <label>Target Size:</label>
+                        <div class="dg-file-size-group">
+                          <input type="number" id="fileSize" value="10" min="1">
+                          <select id="fileSizeUnit">
+                            <option value="B">Bytes</option>
+                            <option value="KB" selected>KB</option>
+                            <option value="MB">MB</option>
+                            <option value="GB">GB</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="dg-file-control-section">
+                      <div class="dg-file-control-section-title">Image Settings</div>
+                      <div class="dg-file-control-group">
+                        <label>Dimensions (images only):</label>
+                        <div class="dg-file-size-group">
+                          <input type="number" class="dg-dimension-input" id="imageWidth" placeholder="Width" value="800" min="1">
+                          <span class="dg-multiply">×</span>
+                          <input type="number" class="dg-dimension-input" id="imageHeight" placeholder="Height" value="600" min="1">
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -2659,100 +2718,229 @@ function createDataGeneratorUI(containerId) {
                 cat.title === "Date & Time"
                   ? `
                 <div class="dg-file-controls active" id="dateTimeControls">
-                  <div class="dg-file-control-group">
-                    <label>Date Range:</label>
-                    <div class="dg-file-size-group">
-                      <input type="date" id="dateFrom" value="2020-01-01">
-                      <input type="date" id="dateTo" value="2030-12-31">
-                    </div>
+                  <div class="dg-file-controls-header">
+                    <div class="dg-file-controls-title">Date & Time Settings</div>
+                    <div class="dg-file-controls-hint">Formatting and conversion options</div>
                   </div>
-                  <div class="dg-file-control-group">
-                    <label>Time Range:</label>
-                    <div class="dg-file-size-group">
-                      <input type="time" id="timeFrom" value="00:00">
-                      <input type="time" id="timeTo" value="23:59">
+                  <div class="dg-file-controls-sections">
+                    <div class="dg-file-control-section">
+                      <div class="dg-file-control-section-title">Range</div>
+                      <div class="dg-file-control-group">
+                        <label>Date Range:</label>
+                        <div class="dg-file-size-group">
+                          <input type="date" id="dateFrom" value="2020-01-01">
+                          <input type="date" id="dateTo" value="2030-12-31">
+                        </div>
+                      </div>
+                      <div class="dg-file-control-group">
+                        <label>Time Range:</label>
+                        <div class="dg-file-size-group">
+                          <input type="time" id="timeFrom" value="00:00">
+                          <input type="time" id="timeTo" value="23:59">
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div class="dg-file-control-group">
-                    <label>Date Format & Language:</label>
-                    <div style="display: flex; gap: 6px;">
-                      <select id="dateFormat">
-                        <option value="YYYY-MM-DD">YYYY-MM-DD</option>
-                        <option value="DD/MM/YYYY">DD/MM/YYYY</option>
-                        <option value="MM/DD/YYYY">MM/DD/YYYY</option>
-                        <option value="DD-MM-YYYY">DD-MM-YYYY</option>
-                      </select>
-                      <select id="hijriLanguage">
-                        <option value="arabic">Arabic (هجري)</option>
-                        <option value="english">English</option>
-                        <option value="numbers">Numbers Only</option>
-                      </select>
+                    <div class="dg-file-control-section">
+                      <div class="dg-file-control-section-title">Format</div>
+                      <div class="dg-file-control-group">
+                        <label>Date Format:</label>
+                        <select id="dateFormat">
+                          <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                          <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                          <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                          <option value="DD-MM-YYYY">DD-MM-YYYY</option>
+                        </select>
+                      </div>
+                      <div class="dg-file-control-group">
+                        <label>Date Conversion:</label>
+                        <div class="dg-checkbox-inline-group">
+                          <label class="dg-checkbox-inline">
+                            <input type="checkbox" id="includeHijri"> Include Hijri
+                          </label>
+                          <label class="dg-checkbox-inline">
+                            <input type="checkbox" id="includeGregorian" checked> Include Gregorian
+                          </label>
+                          <label class="dg-checkbox-inline">
+                            <input type="checkbox" id="showBothDates"> Show Both
+                          </label>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div class="dg-file-control-group">
-                    <label>Date Conversion:</label>
-                    <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;">
-                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                        <input type="checkbox" id="includeHijri"> Include Hijri
-                      </label>
-                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                        <input type="checkbox" id="includeGregorian" checked> Include Gregorian
-                      </label>
-                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                        <input type="checkbox" id="showBothDates"> Show Both
-                      </label>
+                    <div class="dg-file-control-section">
+                      <div class="dg-file-control-section-title">Convert Tools</div>
+                      <input type="hidden" id="gregorianMonthMode" value="english">
+                      <input type="hidden" id="hijriMonthMode" value="arabic">
+                      <div class="dg-file-control-group">
+                        <label>Gregorian Month Input:</label>
+                        <div class="dg-mode-toggle" data-mode-toggle="gregorian">
+                          <button type="button" class="dg-mode-btn active" data-mode-value="english">English</button>
+                          <button type="button" class="dg-mode-btn" data-mode-value="arabic">Arabic</button>
+                          <button type="button" class="dg-mode-btn" data-mode-value="numbers">Numbers</button>
+                        </div>
+                      </div>
+                      <div class="dg-file-control-group">
+                        <label>Convert Specific Gregorian Date:</label>
+                        <div class="dg-inline-pair">
+                          <input type="number" class="dg-compact-input" id="specificGregorianDay" placeholder="Day" min="1" max="31">
+                          <div class="dg-month-select-wrap">
+                            <select id="specificGregorianMonthEnglish" class="dg-month-input active">
+                              <option value="1">January</option>
+                              <option value="2">February</option>
+                              <option value="3">March</option>
+                              <option value="4">April</option>
+                              <option value="5">May</option>
+                              <option value="6">June</option>
+                              <option value="7">July</option>
+                              <option value="8">August</option>
+                              <option value="9">September</option>
+                              <option value="10">October</option>
+                              <option value="11">November</option>
+                              <option value="12">December</option>
+                            </select>
+                            <select id="specificGregorianMonthArabic" class="dg-month-input">
+                              <option value="1">يناير</option>
+                              <option value="2">فبراير</option>
+                              <option value="3">مارس</option>
+                              <option value="4">أبريل</option>
+                              <option value="5">مايو</option>
+                              <option value="6">يونيو</option>
+                              <option value="7">يوليو</option>
+                              <option value="8">أغسطس</option>
+                              <option value="9">سبتمبر</option>
+                              <option value="10">أكتوبر</option>
+                              <option value="11">نوفمبر</option>
+                              <option value="12">ديسمبر</option>
+                            </select>
+                            <select id="specificGregorianMonthNumbers" class="dg-month-input">
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                              <option value="6">6</option>
+                              <option value="7">7</option>
+                              <option value="8">8</option>
+                              <option value="9">9</option>
+                              <option value="10">10</option>
+                              <option value="11">11</option>
+                              <option value="12">12</option>
+                            </select>
+                          </div>
+                          <input type="number" class="dg-compact-input" id="specificGregorianYear" placeholder="Year" min="1900" max="2100">
+                        </div>
+                        <div class="dg-convert-actions">
+                          <button type="button" id="convertToHijri" class="dg-mini-btn">To Hijri</button>
+                        </div>
+                      </div>
+                      <div class="dg-file-control-group">
+                        <label>Hijri Month Input:</label>
+                        <div class="dg-mode-toggle" data-mode-toggle="hijri">
+                          <button type="button" class="dg-mode-btn active" data-mode-value="arabic">Arabic</button>
+                          <button type="button" class="dg-mode-btn" data-mode-value="english">English</button>
+                          <button type="button" class="dg-mode-btn" data-mode-value="numbers">Numbers</button>
+                        </div>
+                      </div>
+                      <div class="dg-file-control-group">
+                        <label>Hijri Output Format:</label>
+                        <div class="dg-inline-pair">
+                          <select id="hijriOutputMode">
+                            <option value="arabic">Arabic Text</option>
+                            <option value="english">English Text</option>
+                            <option value="numbers">Numbers Only</option>
+                          </select>
+                          <select id="hijriOutputFormat">
+                            <option value="text">Text (Day Month Year)</option>
+                            <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                            <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                            <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="dg-file-control-group">
+                        <label>Gregorian Output Format:</label>
+                        <select id="gregorianOutputFormat">
+                          <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                          <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                          <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                          <option value="DD-MM-YYYY">DD-MM-YYYY</option>
+                        </select>
+                      </div>
+                      <div class="dg-file-control-group">
+                        <label>Convert Hijri Date:</label>
+                        <div class="dg-inline-pair">
+                          <input type="number" class="dg-compact-input" id="hijriDay" placeholder="Day" min="1" max="30">
+                          <div class="dg-month-select-wrap">
+                            <select id="hijriMonthArabic" class="dg-month-input active">
+                              <option value="1">محرم</option>
+                              <option value="2">صفر</option>
+                              <option value="3">ربيع الأول</option>
+                              <option value="4">ربيع الثاني</option>
+                              <option value="5">جمادى الأولى</option>
+                              <option value="6">جمادى الثانية</option>
+                              <option value="7">رجب</option>
+                              <option value="8">شعبان</option>
+                              <option value="9">رمضان</option>
+                              <option value="10">شوال</option>
+                              <option value="11">ذو القعدة</option>
+                              <option value="12">ذو الحجة</option>
+                            </select>
+                            <select id="hijriMonthEnglish" class="dg-month-input">
+                              <option value="1">Muharram</option>
+                              <option value="2">Safar</option>
+                              <option value="3">Rabi I</option>
+                              <option value="4">Rabi II</option>
+                              <option value="5">Jumada I</option>
+                              <option value="6">Jumada II</option>
+                              <option value="7">Rajab</option>
+                              <option value="8">Sha'ban</option>
+                              <option value="9">Ramadan</option>
+                              <option value="10">Shawwal</option>
+                              <option value="11">Dhu al-Qi'dah</option>
+                              <option value="12">Dhu al-Hijjah</option>
+                            </select>
+                            <select id="hijriMonthNumbers" class="dg-month-input">
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                              <option value="6">6</option>
+                              <option value="7">7</option>
+                              <option value="8">8</option>
+                              <option value="9">9</option>
+                              <option value="10">10</option>
+                              <option value="11">11</option>
+                              <option value="12">12</option>
+                            </select>
+                          </div>
+                          <input type="number" class="dg-compact-input" id="hijriYear" placeholder="Year" min="1400" max="1500">
+                        </div>
+                        <div class="dg-convert-actions">
+                          <button type="button" id="convertToGregorian" class="dg-mini-btn secondary">To Gregorian</button>
+                        </div>
+                      </div>
+                      <div id="conversionResult" class="dg-conversion-output">
+                        <div class="dg-conversion-output-header">
+                          <span>Conversion Result</span>
+                        </div>
+                        <div class="dg-conversion-grid">
+                          <div class="dg-conversion-item">
+                            <div class="dg-conversion-item-header">
+                              <span class="dg-conversion-item-label">Input</span>
+                              <button type="button" id="copyConversionInput" class="dg-mini-btn">Copy</button>
+                            </div>
+                            <div id="conversionInputText" class="dg-conversion-value"></div>
+                          </div>
+                          <div class="dg-conversion-item">
+                            <div class="dg-conversion-item-header">
+                              <span class="dg-conversion-item-label">Output</span>
+                              <button type="button" id="copyConversionOutput" class="dg-mini-btn secondary">Copy</button>
+                            </div>
+                            <div id="conversionOutputText" class="dg-conversion-value"></div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div class="dg-file-control-group">
-                    <label>Convert Specific Date:</label>
-                    <div style="display: flex; gap: 4px;">
-                      <input type="number" id="specificGregorianDay" placeholder="Day" min="1" max="31" style="width: 50px;">
-                      <select id="specificGregorianMonth" style="flex: 1;">
-                        <option value="1">January</option>
-                        <option value="2">February</option>
-                        <option value="3">March</option>
-                        <option value="4">April</option>
-                        <option value="5">May</option>
-                        <option value="6">June</option>
-                        <option value="7">July</option>
-                        <option value="8">August</option>
-                        <option value="9">September</option>
-                        <option value="10">October</option>
-                        <option value="11">November</option>
-                        <option value="12">December</option>
-                      </select>
-                      <input type="number" id="specificGregorianYear" placeholder="Year" min="1900" max="2100" style="width: 70px;">
-                      <button type="button" id="convertToHijri" style="width: 80px; padding: 4px; font-size: 9px; background: #667eea; color: white; border: none; border-radius: 4px;">→ Hijri</button>
-                    </div>
-                  </div>
-                  <div class="dg-file-control-group">
-                    <label>Convert Hijri Date:</label>
-                    <div style="display: flex; gap: 4px;">
-                      <input type="number" id="hijriDay" placeholder="Day" min="1" max="30" style="width: 50px;">
-                      <select id="hijriMonth" style="flex: 1;">
-                        <option value="1">محرم</option>
-                        <option value="2">صفر</option>
-                        <option value="3">ربيع الأول</option>
-                        <option value="4">ربيع الثاني</option>
-                        <option value="5">جمادى الأولى</option>
-                        <option value="6">جمادى الثانية</option>
-                        <option value="7">رجب</option>
-                        <option value="8">شعبان</option>
-                        <option value="9">رمضان</option>
-                        <option value="10">شوال</option>
-                        <option value="11">ذو القعدة</option>
-                        <option value="12">ذو الحجة</option>
-                      </select>
-                      <input type="number" id="hijriYear" placeholder="Year" min="1400" max="1500" style="width: 60px;">
-                      <button type="button" id="convertToGregorian" style="width: 80px; padding: 4px; font-size: 9px; background: #667eea; color: white; border: none; border-radius: 4px;">→ Greg</button>
-                    </div>
-                  </div>
-                  <div id="conversionResult" style="margin-top: 8px; padding: 8px; background: #f0f9ff; border-radius: 6px; font-size: 10px; display: none;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                      <span style="font-weight: bold;">Conversion Result:</span>
-                      <button type="button" id="copyConversionResult" style="padding: 2px 6px; font-size: 8px; background: #667eea; color: white; border: none; border-radius: 3px; cursor: pointer;">Copy</button>
-                    </div>
-                    <div id="conversionResultText"></div>
                   </div>
                 </div>
               `
@@ -2979,28 +3167,43 @@ function createDataGeneratorUI(containerId) {
                 cat.title === "Files"
                   ? `
                 <div class="dg-file-controls" id="fileControls">
-                  <div class="dg-file-control-group">
-                    <label>File Name:</label>
-                    <input type="text" id="fileName" placeholder="test-file" value="test-file">
+                  <div class="dg-file-controls-header">
+                    <div class="dg-file-controls-title">File Generation Settings</div>
+                    <div class="dg-file-controls-hint">Applied to selected file types</div>
                   </div>
-                  <div class="dg-file-control-group">
-                    <label>File Size:</label>
-                    <div class="dg-file-size-group">
-                      <input type="number" id="fileSize" value="10" min="1">
-                      <select id="fileSizeUnit">
-                        <option value="B">Bytes</option>
-                        <option value="KB" selected>KB</option>
-                        <option value="MB">MB</option>
-                        <option value="GB">GB</option>
-                      </select>
+                  <div class="dg-file-controls-sections">
+                    <div class="dg-file-control-section">
+                      <div class="dg-file-control-section-title">File Identity</div>
+                      <div class="dg-file-control-group">
+                        <label>File Name:</label>
+                        <input type="text" id="fileName" placeholder="test-file" value="test-file">
+                      </div>
                     </div>
-                  </div>
-                  <div class="dg-file-control-group">
-                    <label>Image Dimensions:</label>
-                    <div class="dg-file-size-group">
-                      <input type="number" id="imageWidth" placeholder="Width" value="800" min="1" style="width: 80px;">
-                      <span style="margin: 0 5px;">×</span>
-                      <input type="number" id="imageHeight" placeholder="Height" value="600" min="1" style="width: 80px;">
+                    <div class="dg-file-control-section">
+                      <div class="dg-file-control-section-title">File Size</div>
+                      <div class="dg-file-control-group">
+                        <label>Target Size:</label>
+                        <div class="dg-file-size-group">
+                          <input type="number" id="fileSize" value="10" min="1">
+                          <select id="fileSizeUnit">
+                            <option value="B">Bytes</option>
+                            <option value="KB" selected>KB</option>
+                            <option value="MB">MB</option>
+                            <option value="GB">GB</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="dg-file-control-section">
+                      <div class="dg-file-control-section-title">Image Settings</div>
+                      <div class="dg-file-control-group">
+                        <label>Dimensions (images only):</label>
+                        <div class="dg-file-size-group">
+                          <input type="number" class="dg-dimension-input" id="imageWidth" placeholder="Width" value="800" min="1">
+                          <span class="dg-multiply">×</span>
+                          <input type="number" class="dg-dimension-input" id="imageHeight" placeholder="Height" value="600" min="1">
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -3011,88 +3214,230 @@ function createDataGeneratorUI(containerId) {
                 cat.title === "Date & Time"
                   ? `
                 <div class="dg-file-controls" id="dateTimeControls">
-                  <div class="dg-file-control-group">
-                    <label>Date Range:</label>
-                    <div class="dg-file-size-group">
-                      <input type="date" id="dateFrom" value="2020-01-01">
-                      <input type="date" id="dateTo" value="2030-12-31">
+                  <div class="dg-file-controls-header">
+                    <div class="dg-file-controls-title">Date & Time Settings</div>
+                    <div class="dg-file-controls-hint">Formatting and conversion options</div>
+                  </div>
+                  <div class="dg-file-controls-sections">
+                    <div class="dg-file-control-section">
+                      <div class="dg-file-control-section-title">Range</div>
+                      <div class="dg-file-control-group">
+                        <label>Date Range:</label>
+                        <div class="dg-file-size-group">
+                          <input type="date" id="dateFrom" value="2020-01-01">
+                          <input type="date" id="dateTo" value="2030-12-31">
+                        </div>
+                      </div>
+                      <div class="dg-file-control-group">
+                        <label>Time Range:</label>
+                        <div class="dg-file-size-group">
+                          <input type="time" id="timeFrom" value="00:00">
+                          <input type="time" id="timeTo" value="23:59">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="dg-file-control-section">
+                      <div class="dg-file-control-section-title">Format</div>
+                      <div class="dg-file-control-group">
+                        <label>Date Format:</label>
+                        <select id="dateFormat">
+                          <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                          <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                          <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                          <option value="DD-MM-YYYY">DD-MM-YYYY</option>
+                        </select>
+                      </div>
+                      <div class="dg-file-control-group">
+                        <label>Date Conversion:</label>
+                        <div class="dg-checkbox-inline-group">
+                          <label class="dg-checkbox-inline">
+                            <input type="checkbox" id="includeHijri"> Include Hijri
+                          </label>
+                          <label class="dg-checkbox-inline">
+                            <input type="checkbox" id="includeGregorian" checked> Include Gregorian
+                          </label>
+                          <label class="dg-checkbox-inline">
+                            <input type="checkbox" id="showBothDates"> Show Both
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="dg-file-control-section">
+                      <div class="dg-file-control-section-title">Convert Tools</div>
+                      <input type="hidden" id="gregorianMonthMode" value="english">
+                      <input type="hidden" id="hijriMonthMode" value="arabic">
+                      <div class="dg-file-control-group">
+                        <label>Gregorian Month Input:</label>
+                        <div class="dg-mode-toggle" data-mode-toggle="gregorian">
+                          <button type="button" class="dg-mode-btn active" data-mode-value="english">English</button>
+                          <button type="button" class="dg-mode-btn" data-mode-value="arabic">Arabic</button>
+                          <button type="button" class="dg-mode-btn" data-mode-value="numbers">Numbers</button>
+                        </div>
+                      </div>
+                      <div class="dg-file-control-group">
+                        <label>Convert Specific Gregorian Date:</label>
+                        <div class="dg-inline-pair">
+                          <input type="number" class="dg-compact-input" id="specificGregorianDay" placeholder="Day" min="1" max="31">
+                          <div class="dg-month-select-wrap">
+                            <select id="specificGregorianMonthEnglish" class="dg-month-input active">
+                              <option value="1">January</option>
+                              <option value="2">February</option>
+                              <option value="3">March</option>
+                              <option value="4">April</option>
+                              <option value="5">May</option>
+                              <option value="6">June</option>
+                              <option value="7">July</option>
+                              <option value="8">August</option>
+                              <option value="9">September</option>
+                              <option value="10">October</option>
+                              <option value="11">November</option>
+                              <option value="12">December</option>
+                            </select>
+                            <select id="specificGregorianMonthArabic" class="dg-month-input">
+                              <option value="1">يناير</option>
+                              <option value="2">فبراير</option>
+                              <option value="3">مارس</option>
+                              <option value="4">أبريل</option>
+                              <option value="5">مايو</option>
+                              <option value="6">يونيو</option>
+                              <option value="7">يوليو</option>
+                              <option value="8">أغسطس</option>
+                              <option value="9">سبتمبر</option>
+                              <option value="10">أكتوبر</option>
+                              <option value="11">نوفمبر</option>
+                              <option value="12">ديسمبر</option>
+                            </select>
+                            <select id="specificGregorianMonthNumbers" class="dg-month-input">
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                              <option value="6">6</option>
+                              <option value="7">7</option>
+                              <option value="8">8</option>
+                              <option value="9">9</option>
+                              <option value="10">10</option>
+                              <option value="11">11</option>
+                              <option value="12">12</option>
+                            </select>
+                          </div>
+                          <input type="number" class="dg-compact-input" id="specificGregorianYear" placeholder="Year" min="1900" max="2100">
+                        </div>
+                        <div class="dg-convert-actions">
+                          <button type="button" id="convertToHijri" class="dg-mini-btn">To Hijri</button>
+                        </div>
+                      </div>
+                      <div class="dg-file-control-group">
+                        <label>Hijri Month Input:</label>
+                        <div class="dg-mode-toggle" data-mode-toggle="hijri">
+                          <button type="button" class="dg-mode-btn active" data-mode-value="arabic">Arabic</button>
+                          <button type="button" class="dg-mode-btn" data-mode-value="english">English</button>
+                          <button type="button" class="dg-mode-btn" data-mode-value="numbers">Numbers</button>
+                        </div>
+                      </div>
+                      <div class="dg-file-control-group">
+                        <label>Hijri Output Format:</label>
+                        <div class="dg-inline-pair">
+                          <select id="hijriOutputMode">
+                            <option value="arabic">Arabic Text</option>
+                            <option value="english">English Text</option>
+                            <option value="numbers">Numbers Only</option>
+                          </select>
+                          <select id="hijriOutputFormat">
+                            <option value="text">Text (Day Month Year)</option>
+                            <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                            <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                            <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="dg-file-control-group">
+                        <label>Gregorian Output Format:</label>
+                        <select id="gregorianOutputFormat">
+                          <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                          <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                          <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                          <option value="DD-MM-YYYY">DD-MM-YYYY</option>
+                        </select>
+                      </div>
+                      <div class="dg-file-control-group">
+                        <label>Convert Hijri Date:</label>
+                        <div class="dg-inline-pair">
+                          <input type="number" class="dg-compact-input" id="hijriDay" placeholder="Day" min="1" max="30">
+                          <div class="dg-month-select-wrap">
+                            <select id="hijriMonthArabic" class="dg-month-input active">
+                              <option value="1">محرم</option>
+                              <option value="2">صفر</option>
+                              <option value="3">ربيع الأول</option>
+                              <option value="4">ربيع الثاني</option>
+                              <option value="5">جمادى الأولى</option>
+                              <option value="6">جمادى الثانية</option>
+                              <option value="7">رجب</option>
+                              <option value="8">شعبان</option>
+                              <option value="9">رمضان</option>
+                              <option value="10">شوال</option>
+                              <option value="11">ذو القعدة</option>
+                              <option value="12">ذو الحجة</option>
+                            </select>
+                            <select id="hijriMonthEnglish" class="dg-month-input">
+                              <option value="1">Muharram</option>
+                              <option value="2">Safar</option>
+                              <option value="3">Rabi I</option>
+                              <option value="4">Rabi II</option>
+                              <option value="5">Jumada I</option>
+                              <option value="6">Jumada II</option>
+                              <option value="7">Rajab</option>
+                              <option value="8">Sha'ban</option>
+                              <option value="9">Ramadan</option>
+                              <option value="10">Shawwal</option>
+                              <option value="11">Dhu al-Qi'dah</option>
+                              <option value="12">Dhu al-Hijjah</option>
+                            </select>
+                            <select id="hijriMonthNumbers" class="dg-month-input">
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                              <option value="6">6</option>
+                              <option value="7">7</option>
+                              <option value="8">8</option>
+                              <option value="9">9</option>
+                              <option value="10">10</option>
+                              <option value="11">11</option>
+                              <option value="12">12</option>
+                            </select>
+                          </div>
+                          <input type="number" class="dg-compact-input" id="hijriYear" placeholder="Year" min="1400" max="1500">
+                        </div>
+                        <div class="dg-convert-actions">
+                          <button type="button" id="convertToGregorian" class="dg-mini-btn secondary">To Gregorian</button>
+                        </div>
+                      </div>
+                      <div id="conversionResult" class="dg-conversion-output">
+                        <div class="dg-conversion-output-header">
+                          <span>Conversion Result</span>
+                        </div>
+                        <div class="dg-conversion-grid">
+                          <div class="dg-conversion-item">
+                            <div class="dg-conversion-item-header">
+                              <span class="dg-conversion-item-label">Input</span>
+                              <button type="button" id="copyConversionInput" class="dg-mini-btn">Copy</button>
+                            </div>
+                            <div id="conversionInputText" class="dg-conversion-value"></div>
+                          </div>
+                          <div class="dg-conversion-item">
+                            <div class="dg-conversion-item-header">
+                              <span class="dg-conversion-item-label">Output</span>
+                              <button type="button" id="copyConversionOutput" class="dg-mini-btn secondary">Copy</button>
+                            </div>
+                            <div id="conversionOutputText" class="dg-conversion-value"></div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div class="dg-file-control-group">
-                    <label>Time Range:</label>
-                    <div class="dg-file-size-group">
-                      <input type="time" id="timeFrom" value="00:00">
-                      <input type="time" id="timeTo" value="23:59">
-                    </div>
-                  </div>
-                  <div class="dg-file-control-group">
-                    <label>Date Format:</label>
-                    <select id="dateFormat">
-                      <option value="YYYY-MM-DD">YYYY-MM-DD</option>
-                      <option value="DD/MM/YYYY">DD/MM/YYYY</option>
-                      <option value="MM/DD/YYYY">MM/DD/YYYY</option>
-                      <option value="DD-MM-YYYY">DD-MM-YYYY</option>
-                    </select>
-                  </div>
-                  <div class="dg-file-control-group">
-                    <label>Date Conversion:</label>
-                    <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;">
-                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                        <input type="checkbox" id="includeHijri"> Include Hijri
-                      </label>
-                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                        <input type="checkbox" id="includeGregorian" checked> Include Gregorian
-                      </label>
-                      <label style="display: flex; align-items: center; gap: 4px; font-size: 10px;">
-                        <input type="checkbox" id="showBothDates"> Show Both
-                      </label>
-                    </div>
-                  </div>
-                  <div class="dg-file-control-group">
-                    <label>Convert Specific Date:</label>
-                    <div style="display: flex; gap: 4px;">
-                      <input type="number" id="specificGregorianDay" placeholder="Day" min="1" max="31" style="width: 50px;">
-                      <select id="specificGregorianMonth" style="flex: 1;">
-                        <option value="1">January</option>
-                        <option value="2">February</option>
-                        <option value="3">March</option>
-                        <option value="4">April</option>
-                        <option value="5">May</option>
-                        <option value="6">June</option>
-                        <option value="7">July</option>
-                        <option value="8">August</option>
-                        <option value="9">September</option>
-                        <option value="10">October</option>
-                        <option value="11">November</option>
-                        <option value="12">December</option>
-                      </select>
-                      <input type="number" id="specificGregorianYear" placeholder="Year" min="1900" max="2100" style="width: 70px;">
-                      <button type="button" id="convertToHijri" style="width: 80px; padding: 4px; font-size: 9px; background: #667eea; color: white; border: none; border-radius: 4px;">→ Hijri</button>
-                    </div>
-                  </div>
-                  <div class="dg-file-control-group">
-                    <label>Convert Hijri Date:</label>
-                    <div style="display: flex; gap: 4px;">
-                      <input type="number" id="hijriDay" placeholder="Day" min="1" max="30" style="width: 50px;">
-                      <select id="hijriMonth" style="flex: 1;">
-                        <option value="1">محرم</option>
-                        <option value="2">صفر</option>
-                        <option value="3">ربيع الأول</option>
-                        <option value="4">ربيع الثاني</option>
-                        <option value="5">جمادى الأولى</option>
-                        <option value="6">جمادى الثانية</option>
-                        <option value="7">رجب</option>
-                        <option value="8">شعبان</option>
-                        <option value="9">رمضان</option>
-                        <option value="10">شوال</option>
-                        <option value="11">ذو القعدة</option>
-                        <option value="12">ذو الحجة</option>
-                      </select>
-                      <input type="number" id="hijriYear" placeholder="Year" min="1400" max="1500" style="width: 60px;">
-                      <button type="button" id="convertToGregorian" style="width: 80px; padding: 4px; font-size: 9px; background: #667eea; color: white; border: none; border-radius: 4px;">→ Greg</button>
-                    </div>
-                  </div>
-                  <div id="conversionResult" style="margin-top: 8px; padding: 8px; background: #f0f9ff; border-radius: 6px; font-size: 10px; display: none;"></div>
                 </div>
               `
                   : ""
@@ -3451,18 +3796,30 @@ function createDataGeneratorUI(containerId) {
     // Show files section
     if (files && files.length > 0) {
       const filesHTML = `
-        <div class="dg-files-section" style="margin-top: ${data.length > 0 ? '20px' : '0'}; padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px;">
-          <h3 style="color: white; margin: 0 0 15px 0; font-size: 18px;">📁 Generated Files</h3>
+        <div class="dg-files-section" style="margin-top: ${data.length > 0 ? "20px" : "0"};">
+          <div class="dg-files-section-header">
+            <div class="dg-files-section-title">📁 Generated Files</div>
+            <div class="dg-files-section-count">${files.length} file${files.length > 1 ? "s" : ""}</div>
+          </div>
           <div class="dg-files-list">
-            ${files.map((file, idx) => `
-              <div class="dg-file-item" style="background: rgba(255,255,255,0.95); padding: 12px; margin-bottom: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <div style="font-weight: 600; color: #333; margin-bottom: 4px;">${file.fileName}</div>
-                  <div style="font-size: 13px; color: #666;">Type: ${file.fileType.toUpperCase()} • Size: ${file.fileSize}${file.dimensions ? ` • ${file.dimensions}` : ''}</div>
+            ${files
+              .map(
+                (file, idx) => `
+              <div class="dg-file-item">
+                <div class="dg-file-item-main">
+                  <div class="dg-file-item-name">${file.fileName}</div>
+                  <div class="dg-file-item-tags">
+                    <span class="dg-file-tag">${file.fileType.toUpperCase()}</span>
+                    <span class="dg-file-tag">${file.fileSize}</span>
+                    ${file.dimensions ? `<span class="dg-file-tag">${file.dimensions}</span>` : ""}
+                  </div>
+                  <div class="dg-file-item-meta">Ready to download</div>
                 </div>
-                <button class="dg-download-file-btn" data-file-idx="${idx}" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600;">Download</button>
+                <button class="dg-download-file-btn" data-file-idx="${idx}">Download</button>
               </div>
-            `).join('')}
+            `,
+              )
+              .join("")}
           </div>
         </div>
       `;
@@ -4205,18 +4562,30 @@ function createDataGeneratorUI(containerId) {
     // Show files section
     if (generatedFiles.length > 0) {
       const filesHTML = `
-        <div class="dg-files-section" style="margin-top: ${generatedData.length > 0 ? '20px' : '0'}; padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px;">
-          <h3 style="color: white; margin: 0 0 15px 0; font-size: 18px;">📁 Generated Files</h3>
+        <div class="dg-files-section" style="margin-top: ${generatedData.length > 0 ? "20px" : "0"};">
+          <div class="dg-files-section-header">
+            <div class="dg-files-section-title">📁 Generated Files</div>
+            <div class="dg-files-section-count">${generatedFiles.length} file${generatedFiles.length > 1 ? "s" : ""}</div>
+          </div>
           <div class="dg-files-list">
-            ${generatedFiles.map((file, idx) => `
-              <div class="dg-file-item" style="background: rgba(255,255,255,0.95); padding: 12px; margin-bottom: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <div style="font-weight: 600; color: #333; margin-bottom: 4px;">${file.fileName}</div>
-                  <div style="font-size: 13px; color: #666;">Type: ${file.fileType.toUpperCase()} • Size: ${file.fileSize}${file.dimensions ? ` • ${file.dimensions}` : ''}</div>
+            ${generatedFiles
+              .map(
+                (file, idx) => `
+              <div class="dg-file-item">
+                <div class="dg-file-item-main">
+                  <div class="dg-file-item-name">${file.fileName}</div>
+                  <div class="dg-file-item-tags">
+                    <span class="dg-file-tag">${file.fileType.toUpperCase()}</span>
+                    <span class="dg-file-tag">${file.fileSize}</span>
+                    ${file.dimensions ? `<span class="dg-file-tag">${file.dimensions}</span>` : ""}
+                  </div>
+                  <div class="dg-file-item-meta">Ready to download</div>
                 </div>
-                <button class="dg-download-file-btn" data-file-idx="${idx}" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600;">Download</button>
+                <button class="dg-download-file-btn" data-file-idx="${idx}">Download</button>
               </div>
-            `).join('')}
+            `,
+              )
+              .join("")}
           </div>
         </div>
       `;
@@ -4581,51 +4950,211 @@ function createDataGeneratorUI(containerId) {
     });
   });
 
+  function formatDateByPattern(day, month, year, pattern) {
+    const dd = String(day).padStart(2, "0");
+    const mm = String(month).padStart(2, "0");
+    const yyyy = String(year);
+    const outputPattern = pattern || "YYYY-MM-DD";
+    if (outputPattern === "DD/MM/YYYY") return `${dd}/${mm}/${yyyy}`;
+    if (outputPattern === "MM/DD/YYYY") return `${mm}/${dd}/${yyyy}`;
+    if (outputPattern === "DD-MM-YYYY") return `${dd}-${mm}-${yyyy}`;
+    return `${yyyy}-${mm}-${dd}`;
+  }
+
+  function formatHijriOutput(day, month, year, mode, pattern) {
+    const outputMode = mode || "arabic";
+    const outputPattern = pattern || "text";
+    const hijriMonths = {
+      arabic: [
+        "محرم",
+        "صفر",
+        "ربيع الأول",
+        "ربيع الثاني",
+        "جمادى الأولى",
+        "جمادى الثانية",
+        "رجب",
+        "شعبان",
+        "رمضان",
+        "شوال",
+        "ذو القعدة",
+        "ذو الحجة",
+      ],
+      english: [
+        "Muharram",
+        "Safar",
+        "Rabi' al-awwal",
+        "Rabi' al-thani",
+        "Jumada al-awwal",
+        "Jumada al-thani",
+        "Rajab",
+        "Sha'ban",
+        "Ramadan",
+        "Shawwal",
+        "Dhu al-Qi'dah",
+        "Dhu al-Hijjah",
+      ],
+      numbers: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+    };
+
+    if (outputPattern !== "text" || outputMode === "numbers") {
+      return formatDateByPattern(day, month, year, outputPattern === "text" ? "YYYY-MM-DD" : outputPattern);
+    }
+
+    const monthName = hijriMonths[outputMode][month - 1] || String(month);
+    return `${day} ${monthName} ${year}${outputMode === "arabic" ? "هـ" : " AH"}`;
+  }
+
+  function getInputDateDisplay(calendar, day, month, year) {
+    const modeInput = document.getElementById(
+      calendar === "gregorian" ? "gregorianMonthMode" : "hijriMonthMode",
+    );
+    const mode = modeInput?.value || (calendar === "gregorian" ? "english" : "arabic");
+    const monthInputIdMap =
+      calendar === "gregorian"
+        ? {
+            english: "specificGregorianMonthEnglish",
+            arabic: "specificGregorianMonthArabic",
+            numbers: "specificGregorianMonthNumbers",
+          }
+        : {
+            arabic: "hijriMonthArabic",
+            english: "hijriMonthEnglish",
+            numbers: "hijriMonthNumbers",
+          };
+    const monthEl = document.getElementById(monthInputIdMap[mode]);
+    const selectedText = monthEl?.options?.[monthEl.selectedIndex]?.text || String(month);
+    const dateFormatSelect = document.getElementById("dateFormat");
+    const selectedFormat = dateFormatSelect?.value || "YYYY-MM-DD";
+
+    if (mode === "numbers") return formatDateByPattern(day, month, year, selectedFormat);
+    return `${String(day).padStart(2, "0")} ${selectedText} ${year}`;
+  }
+
+  function setConversionDisplay(inputText, outputText) {
+    const conversionResult = document.getElementById("conversionResult");
+    const conversionInputEl = document.getElementById("conversionInputText");
+    const conversionOutputEl = document.getElementById("conversionOutputText");
+
+    if (conversionInputEl) conversionInputEl.textContent = inputText || "";
+    if (conversionOutputEl) conversionOutputEl.textContent = outputText || "";
+    if (conversionResult) conversionResult.style.display = "block";
+  }
+
+  function setMonthMode(calendar, mode) {
+    const modeInput = document.getElementById(
+      calendar === "gregorian" ? "gregorianMonthMode" : "hijriMonthMode",
+    );
+    if (modeInput) modeInput.value = mode;
+
+    const monthInputIds =
+      calendar === "gregorian"
+        ? {
+            english: "specificGregorianMonthEnglish",
+            arabic: "specificGregorianMonthArabic",
+            numbers: "specificGregorianMonthNumbers",
+          }
+        : {
+            arabic: "hijriMonthArabic",
+            english: "hijriMonthEnglish",
+            numbers: "hijriMonthNumbers",
+          };
+
+    Object.entries(monthInputIds).forEach(([key, id]) => {
+      const el = document.getElementById(id);
+      if (el) el.classList.toggle("active", key === mode);
+    });
+  }
+
+  function getSelectedMonthNumber(calendar) {
+    const modeInput = document.getElementById(
+      calendar === "gregorian" ? "gregorianMonthMode" : "hijriMonthMode",
+    );
+    const mode = modeInput?.value || (calendar === "gregorian" ? "english" : "arabic");
+    const monthInputIdMap =
+      calendar === "gregorian"
+        ? {
+            english: "specificGregorianMonthEnglish",
+            arabic: "specificGregorianMonthArabic",
+            numbers: "specificGregorianMonthNumbers",
+          }
+        : {
+            arabic: "hijriMonthArabic",
+            english: "hijriMonthEnglish",
+            numbers: "hijriMonthNumbers",
+          };
+    const selectEl = document.getElementById(monthInputIdMap[mode]);
+    return parseInt(selectEl?.value || "0", 10);
+  }
+
+  document.querySelectorAll("[data-mode-toggle]").forEach((toggleGroup) => {
+    const calendar = toggleGroup.getAttribute("data-mode-toggle");
+    toggleGroup.querySelectorAll(".dg-mode-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const mode = btn.getAttribute("data-mode-value");
+        toggleGroup
+          .querySelectorAll(".dg-mode-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        setMonthMode(calendar, mode);
+      });
+    });
+  });
+
+  setMonthMode("gregorian", document.getElementById("gregorianMonthMode")?.value || "english");
+  setMonthMode("hijri", document.getElementById("hijriMonthMode")?.value || "arabic");
+
   // Add event listeners for date conversion
   const convertToHijriBtn = document.getElementById("convertToHijri");
   const convertToGregorianBtn = document.getElementById("convertToGregorian");
-  const conversionResult = document.getElementById("conversionResult");
-  const copyResultBtn = document.getElementById("copyConversionResult");
+  const copyInputBtn = document.getElementById("copyConversionInput");
+  const copyOutputBtn = document.getElementById("copyConversionOutput");
 
   if (convertToHijriBtn) {
     convertToHijriBtn.addEventListener("click", () => {
       const dayInput = document.getElementById("specificGregorianDay");
-      const monthSelect = document.getElementById("specificGregorianMonth");
       const yearInput = document.getElementById("specificGregorianYear");
-      const languageSelect = document.getElementById("hijriLanguage");
+      const hijriOutputMode = document.getElementById("hijriOutputMode")?.value || "arabic";
+      const hijriOutputFormat = document.getElementById("hijriOutputFormat")?.value || "text";
       
-      if (dayInput?.value && monthSelect?.value && yearInput?.value) {
-        const gregorianDate = new Date(yearInput.value, monthSelect.value - 1, dayInput.value);
+      const day = parseInt(dayInput?.value || "0", 10);
+      const month = getSelectedMonthNumber("gregorian");
+      const year = parseInt(yearInput?.value || "0", 10);
+
+      if (day > 0 && month > 0 && year > 0) {
+        const gregorianDate = new Date(year, month - 1, day);
         const hijri = gregorianToHijri(gregorianDate);
-        const language = languageSelect?.value || "arabic";
-        
-        const hijriMonths = {
-          arabic: ["محرم", "صفر", "ربيع الأول", "ربيع الثاني", "جمادى الأولى", "جمادى الثانية", "رجب", "شعبان", "رمضان", "شوال", "ذو القعدة", "ذو الحجة"],
-          english: ["Muharram", "Safar", "Rabi' al-awwal", "Rabi' al-thani", "Jumada al-awwal", "Jumada al-thani", "Rajab", "Sha'ban", "Ramadan", "Shawwal", "Dhu al-Qi'dah", "Dhu al-Hijjah"],
-          numbers: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
-        };
-        
-        let result;
-        if (language === "numbers") {
-          result = `${dayInput.value}/${monthSelect.value}/${yearInput.value} → ${hijri.day}/${hijri.month}/${hijri.year}`;
-        } else {
-          const monthName = hijriMonths[language][hijri.month - 1];
-          result = `${dayInput.value}/${monthSelect.value}/${yearInput.value} → ${hijri.day} ${monthName} ${hijri.year}${language === "arabic" ? "هـ" : " AH"}`;
-        }
-        
-        document.getElementById("conversionResultText").textContent = result;
-        conversionResult.style.display = "block";
+        const inputText = getInputDateDisplay("gregorian", day, month, year);
+        const outputText = formatHijriOutput(
+          hijri.day,
+          hijri.month,
+          hijri.year,
+          hijriOutputMode,
+          hijriOutputFormat,
+        );
+        setConversionDisplay(inputText, outputText);
       }
     });
   }
 
-  if (copyResultBtn) {
-    copyResultBtn.addEventListener("click", () => {
-      const resultText = document.getElementById("conversionResultText")?.textContent;
-      if (resultText) {
-        navigator.clipboard.writeText(resultText).then(() => {
-          copyResultBtn.textContent = "Copied!";
-          setTimeout(() => copyResultBtn.textContent = "Copy", 1000);
+  if (copyInputBtn) {
+    copyInputBtn.addEventListener("click", () => {
+      const text = document.getElementById("conversionInputText")?.textContent;
+      if (text) {
+        navigator.clipboard.writeText(text).then(() => {
+          copyInputBtn.textContent = "Copied!";
+          setTimeout(() => (copyInputBtn.textContent = "Copy"), 1000);
+        });
+      }
+    });
+  }
+
+  if (copyOutputBtn) {
+    copyOutputBtn.addEventListener("click", () => {
+      const text = document.getElementById("conversionOutputText")?.textContent;
+      if (text) {
+        navigator.clipboard.writeText(text).then(() => {
+          copyOutputBtn.textContent = "Copied!";
+          setTimeout(() => (copyOutputBtn.textContent = "Copy"), 1000);
         });
       }
     });
@@ -4634,31 +5163,24 @@ function createDataGeneratorUI(containerId) {
   if (convertToGregorianBtn) {
     convertToGregorianBtn.addEventListener("click", () => {
       const dayInput = document.getElementById("hijriDay");
-      const monthSelect = document.getElementById("hijriMonth");
       const yearInput = document.getElementById("hijriYear");
+      const gregorianOutputFormat =
+        document.getElementById("gregorianOutputFormat")?.value || "YYYY-MM-DD";
 
-      if (dayInput.value && monthSelect.value && yearInput.value) {
-        const hDay = parseInt(dayInput.value);
-        const hMonth = parseInt(monthSelect.value);
-        const hYear = parseInt(yearInput.value);
+      const hDay = parseInt(dayInput?.value || "0", 10);
+      const hMonth = getSelectedMonthNumber("hijri");
+      const hYear = parseInt(yearInput?.value || "0", 10);
+
+      if (hDay > 0 && hMonth > 0 && hYear > 0) {
         const gregorianDate = hijriToGregorian(hYear, hMonth, hDay);
-        const hijriMonths = [
-          "محرم",
-          "صفر",
-          "ربيع الأول",
-          "ربيع الثاني",
-          "جمادى الأولى",
-          "جمادى الثانية",
-          "رجب",
-          "شعبان",
-          "رمضان",
-          "شوال",
-          "ذو القعدة",
-          "ذو الحجة",
-        ];
-        const result = `${hDay} ${hijriMonths[hMonth - 1]} ${hYear}هـ → ${gregorianDate.getFullYear()}-${(gregorianDate.getMonth() + 1).toString().padStart(2, "0")}-${gregorianDate.getDate().toString().padStart(2, "0")}`;
-        conversionResult.textContent = result;
-        conversionResult.style.display = "block";
+        const inputText = getInputDateDisplay("hijri", hDay, hMonth, hYear);
+        const outputText = formatDateByPattern(
+          gregorianDate.getDate(),
+          gregorianDate.getMonth() + 1,
+          gregorianDate.getFullYear(),
+          gregorianOutputFormat,
+        );
+        setConversionDisplay(inputText, outputText);
       }
     });
   }
