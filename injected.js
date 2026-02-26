@@ -7,6 +7,182 @@
   // Context menu for direct input filling
   let contextMenu = null;
   let targetInput = null;
+  
+  // Hover/focus character counter (single badge)
+  let charCounterBadge = null;
+  let charCounterFrame = null;
+  let hoveredField = null;
+  let focusedField = null;
+
+  function isTrackableField(element) {
+    if (!element || (element.tagName !== 'INPUT' && element.tagName !== 'TEXTAREA')) {
+      return false;
+    }
+    if (element.disabled || element.readOnly) {
+      return false;
+    }
+    if (element.tagName === 'TEXTAREA') {
+      return true;
+    }
+
+    const type = (element.type || 'text').toLowerCase();
+    const excludedTypes = new Set([
+      'hidden', 'checkbox', 'radio', 'file', 'submit', 'button', 'reset',
+      'image', 'range', 'color'
+    ]);
+    return !excludedTypes.has(type);
+  }
+
+  function createCharCounterBadge() {
+    const badge = document.createElement('div');
+    badge.className = 'dg-char-counter';
+    badge.style.cssText = `
+      position: fixed;
+      z-index: 9999;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      line-height: 1.15;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      color: #0b3a5e;
+      background: linear-gradient(180deg, rgba(236, 253, 255, 0.98) 0%, rgba(224, 242, 254, 0.98) 100%);
+      border: 1px solid rgba(56, 189, 248, 0.45);
+      box-shadow: 0 5px 14px rgba(2, 132, 199, 0.14);
+      backdrop-filter: blur(2px);
+      pointer-events: none;
+      white-space: nowrap;
+      user-select: none;
+      display: none;
+    `;
+    document.body.appendChild(badge);
+    return badge;
+  }
+
+  function getActiveCounterField() {
+    return hoveredField || focusedField;
+  }
+
+  function positionCharCounterBadge(input, badge) {
+    const rect = input.getBoundingClientRect();
+    if (rect.width <= 0 || rect.height <= 0 || rect.bottom < 0 || rect.top > window.innerHeight) {
+      badge.style.display = 'none';
+      return;
+    }
+
+    const badgeWidth = badge.offsetWidth;
+    const badgeHeight = badge.offsetHeight;
+    const insetX = 6;
+    const spacingY = 6;
+    const direction = window.getComputedStyle(input).direction;
+
+    let top = rect.top - badgeHeight - spacingY;
+    let left = direction === 'rtl'
+      ? rect.left + insetX
+      : rect.right - badgeWidth - insetX;
+
+    // Keep counter outside the field; if no room above, hide it.
+    if (top < 0) {
+      badge.style.display = 'none';
+      return;
+    }
+    if (left < 1) {
+      left = 1;
+    }
+    if (left + badgeWidth > window.innerWidth - 1) {
+      left = window.innerWidth - badgeWidth - 1;
+    }
+
+    top = Math.max(0, Math.min(top, window.innerHeight - badgeHeight - 1));
+    left = Math.max(0, left);
+
+    badge.style.top = `${Math.round(top)}px`;
+    badge.style.left = `${Math.round(left)}px`;
+    badge.style.display = 'block';
+  }
+
+  function updateHoverCharCounter() {
+    charCounterFrame = null;
+    const activeField = getActiveCounterField();
+
+    if (!charCounterBadge) {
+      charCounterBadge = createCharCounterBadge();
+    }
+
+    if (!activeField || !document.contains(activeField) || !isTrackableField(activeField)) {
+      charCounterBadge.style.display = 'none';
+      return;
+    }
+
+    const value = activeField.value == null ? '' : String(activeField.value);
+    charCounterBadge.textContent = `${value.length} chars`;
+    positionCharCounterBadge(activeField, charCounterBadge);
+  }
+
+  function scheduleCharCounterUpdate() {
+    if (charCounterFrame !== null) return;
+    charCounterFrame = window.requestAnimationFrame(updateHoverCharCounter);
+  }
+
+  function initCharCounters() {
+    scheduleCharCounterUpdate();
+
+    document.addEventListener('mouseover', (e) => {
+      if (isTrackableField(e.target)) {
+        hoveredField = e.target;
+        scheduleCharCounterUpdate();
+      }
+    }, true);
+
+    document.addEventListener('mouseout', (e) => {
+      if (hoveredField && e.target === hoveredField) {
+        const next = e.relatedTarget;
+        if (!next || next !== hoveredField) {
+          hoveredField = null;
+          scheduleCharCounterUpdate();
+        }
+      }
+    }, true);
+
+    document.addEventListener('focusin', (e) => {
+      if (isTrackableField(e.target)) {
+        focusedField = e.target;
+        scheduleCharCounterUpdate();
+      }
+    }, true);
+
+    document.addEventListener('focusout', (e) => {
+      if (focusedField && e.target === focusedField) {
+        focusedField = null;
+        scheduleCharCounterUpdate();
+      }
+    }, true);
+
+    document.addEventListener('input', (e) => {
+      const activeField = getActiveCounterField();
+      if (activeField && e.target === activeField) {
+        scheduleCharCounterUpdate();
+      }
+    }, true);
+
+    document.addEventListener('change', (e) => {
+      const activeField = getActiveCounterField();
+      if (activeField && e.target === activeField) {
+        scheduleCharCounterUpdate();
+      }
+    }, true);
+
+    window.addEventListener('scroll', scheduleCharCounterUpdate, true);
+    window.addEventListener('resize', scheduleCharCounterUpdate);
+
+    const charCounterObserver = new MutationObserver(() => {
+      scheduleCharCounterUpdate();
+    });
+    charCounterObserver.observe(document.documentElement, {
+      childList: true,
+      subtree: true
+    });
+  }
 
   // Smart field detection
   function detectFieldType(input) {
@@ -1141,5 +1317,7 @@
       hideContextMenu();
     }
   });
+
+  initCharCounters();
 
 })();
