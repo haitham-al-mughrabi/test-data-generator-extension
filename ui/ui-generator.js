@@ -64,6 +64,9 @@ function createDataGeneratorUI(containerId) {
       align-items: center;
       gap: 24px;
       border-bottom: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 120;
+      overflow: visible;
     }
     .dg-header h1 { 
       font-size: 20px; 
@@ -79,6 +82,7 @@ function createDataGeneratorUI(containerId) {
       position: relative; 
       flex: 1;
       max-width: 400px;
+      z-index: 121;
     }
     .dg-search input { 
       width: 100%; 
@@ -104,12 +108,12 @@ function createDataGeneratorUI(containerId) {
     .dg-search-icon { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.8); font-size: 16px; pointer-events: none; }
     .dg-search-clear { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.2); border: none; color: white; cursor: pointer; font-size: 12px; display: none; width: 20px; height: 20px; border-radius: 50%; transition: all 0.2s ease; }
     .dg-search-clear:hover { background: rgba(255,255,255,0.3); }
-    .dg-search-results { position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1px solid var(--line); border-radius: 10px; max-height: 200px; overflow-y: auto; z-index: 1000; display: none; box-shadow: var(--shadow-2); }
-    .dg-search-result { padding: 10px 12px; cursor: pointer; font-size: 11px; border-bottom: 1px solid #f0f2f8; transition: background 0.2s ease; }
-    .dg-search-result:hover { background: #f3f6ff; }
+    .dg-search-results { position: absolute; top: calc(100% + 8px); left: 0; right: 0; background: #ffffff; border: 1px solid rgba(148, 163, 184, 0.35); border-radius: 12px; max-height: 260px; overflow-y: auto; z-index: 99999; display: none; box-shadow: 0 20px 36px rgba(15, 23, 42, 0.26); opacity: 1; backdrop-filter: none; isolation: isolate; }
+    .dg-search-result { padding: 11px 12px; cursor: pointer; font-size: 12px; border-bottom: 1px solid #e7ecf5; transition: background 0.2s ease; background: #ffffff; color: #0f172a; }
+    .dg-search-result:hover { background: #edf3ff; }
     .dg-search-result:last-child { border-bottom: none; }
-    .dg-search-category { font-weight: 700; color: var(--brand-2); }
-    .dg-search-field { color: var(--muted); margin-left: 8px; }
+    .dg-search-category { font-weight: 800; color: #334155; }
+    .dg-search-field { color: #475569; margin-left: 0; margin-top: 2px; font-weight: 700; }
     .dg-search-highlight { background: #fff1c2; padding: 1px 3px; border-radius: 3px; }
     .dg-body { flex: 1; display: flex; min-height: 0; overflow: hidden; width: 100%; }
     .dg-tabs-panel {
@@ -585,6 +589,13 @@ function createDataGeneratorUI(containerId) {
     #jsonTemplateStatus { min-height: 18px; font-size: 11px; font-weight: 700; color: #42526b; }
     #jsonTemplateStatus.error { color: #dc2626; }
     .dg-json-fields-wrap { flex: 1; min-height: 0; overflow-y: auto; padding: 10px; }
+    .dg-json-insert-panel { border: 1px solid rgba(91, 124, 250, 0.2); background: linear-gradient(180deg, #f6f9ff 0%, #eef4ff 100%); border-radius: 12px; padding: 10px; margin-bottom: 10px; }
+    .dg-json-insert-title { font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.6px; color: #2c448b; margin-bottom: 8px; }
+    .dg-json-insert-target { font-size: 11px; font-weight: 700; color: #30405f; margin-bottom: 8px; word-break: break-word; }
+    .dg-json-insert-grid { display: grid; grid-template-columns: minmax(0, 1fr) 140px auto; gap: 8px; align-items: center; }
+    .dg-json-insert-name { border: 1px solid rgba(91, 124, 250, 0.3); background: #fff; padding: 8px; font-size: 11px; color: #1f2937; border-radius: 10px; font-weight: 700; }
+    .dg-json-insert-name:focus { outline: none; border-color: #5b7cfa; box-shadow: 0 0 0 3px rgba(91, 124, 250, 0.14); }
+    .dg-json-insert-btn { white-space: nowrap; }
     .dg-json-field-card { border: 1px solid rgba(91, 124, 250, 0.18); background: #ffffff; margin-bottom: 8px; transition: all 0.2s ease; }
     .dg-json-field-card:hover { border-color: rgba(91, 124, 250, 0.35); box-shadow: 0 8px 16px rgba(15, 23, 42, 0.08); }
     .dg-json-field-card.active { border-color: #5b7cfa; box-shadow: 0 10px 20px rgba(91, 124, 250, 0.15); }
@@ -4743,6 +4754,8 @@ function createDataGeneratorUI(containerId) {
   let activeJsonLine = 0;
   let activeJsonFieldIndex = null;
   let activeJsonFieldPath = "";
+  let jsonInsertFieldName = "";
+  let jsonInsertValueType = "string";
 
   const maximizeViewBtn = document.getElementById("maximizeViewBtn");
   const jsonFillerToggleBtn = document.getElementById("jsonFillerToggleBtn");
@@ -4971,6 +4984,95 @@ function createDataGeneratorUI(containerId) {
     cursor[tokens[tokens.length - 1]] = value;
   }
 
+  function getValueByPath(target, path) {
+    if (!path) return target;
+    const tokens = getPathTokens(path);
+    if (!tokens.length) return target;
+    let cursor = target;
+    for (let i = 0; i < tokens.length; i++) {
+      if (cursor === null || typeof cursor === "undefined") return undefined;
+      cursor = cursor[tokens[i]];
+    }
+    return cursor;
+  }
+
+  function getParentPath(path) {
+    if (!path) return "";
+    const arrayMatch = path.match(/^(.*)\[(\d+)\]$/);
+    if (arrayMatch) {
+      return arrayMatch[1] || "";
+    }
+    const dotIndex = path.lastIndexOf(".");
+    if (dotIndex === -1) return "";
+    return path.slice(0, dotIndex);
+  }
+
+  function getClosestPathForLine(line) {
+    if (!line || !jsonLineMap) return "";
+    let chosenPath = "";
+    let chosenLine = -1;
+    Object.entries(jsonLineMap).forEach(([path, lineNo]) => {
+      if (lineNo <= line && lineNo > chosenLine) {
+        chosenLine = lineNo;
+        chosenPath = path;
+      }
+    });
+    return chosenPath;
+  }
+
+  function createValueByType(type) {
+    if (type === "number") return 0;
+    if (type === "long") return 0;
+    if (type === "bool") return false;
+    if (type === "list") return [];
+    if (type === "dict") return {};
+    return "";
+  }
+
+  function getInsertTargetContext() {
+    const selectedPath =
+      activeJsonFieldPath ||
+      getClosestPathForLine(activeJsonLine) ||
+      "";
+    if (!selectedPath) {
+      if (Array.isArray(jsonTemplateData)) {
+        return { targetPath: "", targetValue: jsonTemplateData, mode: "array" };
+      }
+      if (jsonTemplateData && typeof jsonTemplateData === "object") {
+        return { targetPath: "", targetValue: jsonTemplateData, mode: "object" };
+      }
+      return { targetPath: "", targetValue: jsonTemplateData, mode: "object" };
+    }
+    const selectedValue = getValueByPath(jsonTemplateData, selectedPath);
+    if (Array.isArray(selectedValue)) {
+      return { targetPath: selectedPath, targetValue: selectedValue, mode: "array" };
+    }
+    if (selectedValue && typeof selectedValue === "object") {
+      return { targetPath: selectedPath, targetValue: selectedValue, mode: "object" };
+    }
+
+    const parentPath = getParentPath(selectedPath);
+    const parentValue = getValueByPath(jsonTemplateData, parentPath);
+    if (Array.isArray(parentValue)) {
+      return { targetPath: parentPath, targetValue: parentValue, mode: "array" };
+    }
+    if (parentValue && typeof parentValue === "object") {
+      return { targetPath: parentPath, targetValue: parentValue, mode: "object" };
+    }
+    return { targetPath: "", targetValue: jsonTemplateData, mode: "object" };
+  }
+
+  function updateInsertTargetUI() {
+    const targetEl = document.getElementById("jsonInsertTarget");
+    if (!targetEl) return;
+    const ctx = getInsertTargetContext();
+    if (ctx.mode === "array") {
+      targetEl.textContent = `Target: ${ctx.targetPath || "root array"} (array item)`;
+      return;
+    }
+    targetEl.textContent = `Target: ${ctx.targetPath || "root object"} (object key)`;
+  }
+
   function updateJsonLineNumbers() {
     if (!jsonTemplateLineNumbers || !jsonTemplateInput) return;
     const lineCount = Math.max(1, (jsonTemplateInput.value.match(/\n/g) || []).length + 1);
@@ -5013,6 +5115,15 @@ function createDataGeneratorUI(containerId) {
       jsonTemplateInput.style.setProperty("--dg-line-highlight-height", "0px");
       jsonTemplateInput.style.setProperty("--dg-line-highlight-top", "-9999px");
     }
+    const closestPath = getClosestPathForLine(activeJsonLine);
+    if (closestPath) {
+      activeJsonFieldPath = closestPath;
+      const idx = jsonFieldsState.findIndex((item) => item.path === closestPath);
+      if (idx !== -1) {
+        activeJsonFieldIndex = idx;
+      }
+    }
+    updateInsertTargetUI();
   }
 
   function serializeJsonWithLineMap(value) {
@@ -5174,13 +5285,8 @@ function createDataGeneratorUI(containerId) {
 
   function renderJsonFields() {
     const generatorCatalog = buildGeneratorCatalog();
-    if (!jsonFieldsState.length) {
-      jsonFieldsContainer.innerHTML =
-        '<div class="dg-json-empty">No leaf fields found in this JSON.</div>';
-      return;
-    }
-
-    jsonFieldsState.forEach((field) => {
+    if (jsonFieldsState.length) {
+      jsonFieldsState.forEach((field) => {
       const allowedEditorTypes = new Set([
         "string",
         "number",
@@ -5221,7 +5327,8 @@ function createDataGeneratorUI(containerId) {
       }
       field.generatorTab = defaultTab;
       field.generatorSection = defaultSection;
-    });
+      });
+    }
 
     function tabOptionsHtml(selectedTab) {
       return generatorCatalog
@@ -5257,7 +5364,14 @@ function createDataGeneratorUI(containerId) {
       ].join("");
     }
 
-    jsonFieldsContainer.innerHTML = jsonFieldsState
+    const insertTargetContext = getInsertTargetContext();
+    const insertTargetLabel =
+      insertTargetContext.mode === "array"
+        ? `Target: ${insertTargetContext.targetPath || "root array"} (array item)`
+        : `Target: ${insertTargetContext.targetPath || "root object"} (object key)`;
+
+    const fieldsHtml = jsonFieldsState.length
+      ? jsonFieldsState
       .map(
         (field, index) => `
           <div class="dg-json-field-card" data-json-field-card="${index}">
@@ -5292,7 +5406,33 @@ function createDataGeneratorUI(containerId) {
           </div>
         `,
       )
-      .join("");
+      .join("")
+      : '<div class="dg-json-empty">No leaf fields found in this JSON yet. Use "Add New Variable" to start.</div>';
+
+    jsonFieldsContainer.innerHTML = `
+      <div class="dg-json-insert-panel">
+        <div class="dg-json-insert-title">Add New Variable</div>
+        <div class="dg-json-insert-target" id="jsonInsertTarget">${escapeHtmlText(insertTargetLabel)}</div>
+        <div class="dg-json-insert-grid">
+          <input
+            class="dg-json-insert-name"
+            id="jsonInsertNameInput"
+            placeholder="Variable name"
+            value="${escapeAttributeValue(jsonInsertFieldName)}"
+          >
+          <select class="dg-json-type-select" id="jsonInsertTypeSelect">
+            <option value="string" ${jsonInsertValueType === "string" ? "selected" : ""}>string</option>
+            <option value="number" ${jsonInsertValueType === "number" ? "selected" : ""}>number</option>
+            <option value="long" ${jsonInsertValueType === "long" ? "selected" : ""}>long</option>
+            <option value="bool" ${jsonInsertValueType === "bool" ? "selected" : ""}>bool</option>
+            <option value="list" ${jsonInsertValueType === "list" ? "selected" : ""}>list</option>
+            <option value="dict" ${jsonInsertValueType === "dict" ? "selected" : ""}>dict</option>
+          </select>
+          <button class="dg-btn dg-btn-primary dg-json-insert-btn" id="jsonInsertAddBtn">Add</button>
+        </div>
+      </div>
+      ${fieldsHtml}
+    `;
 
     if (activeJsonFieldPath) {
       const byPathIndex = jsonFieldsState.findIndex(
@@ -5511,6 +5651,68 @@ function createDataGeneratorUI(containerId) {
           renderJsonFields();
         });
       });
+
+    const jsonInsertNameInput = document.getElementById("jsonInsertNameInput");
+    const jsonInsertTypeSelect = document.getElementById("jsonInsertTypeSelect");
+    const jsonInsertAddBtn = document.getElementById("jsonInsertAddBtn");
+
+    if (jsonInsertNameInput) {
+      jsonInsertNameInput.addEventListener("input", () => {
+        jsonInsertFieldName = jsonInsertNameInput.value;
+      });
+    }
+
+    if (jsonInsertTypeSelect) {
+      jsonInsertTypeSelect.addEventListener("change", () => {
+        jsonInsertValueType = jsonInsertTypeSelect.value || "string";
+      });
+    }
+
+    if (jsonInsertAddBtn) {
+      jsonInsertAddBtn.addEventListener("click", () => {
+        if (!jsonTemplateData) return;
+        const context = getInsertTargetContext();
+        const newValue = createValueByType(jsonInsertValueType);
+        let insertedPath = "";
+
+        if (context.mode === "array") {
+          if (!Array.isArray(context.targetValue)) return;
+          context.targetValue.push(newValue);
+          insertedPath = `${context.targetPath}[${context.targetValue.length - 1}]`;
+        } else {
+          const variableName = (jsonInsertFieldName || "").trim();
+          if (!variableName) {
+            jsonTemplateStatus.textContent = "Variable name is required for object keys.";
+            jsonTemplateStatus.classList.add("error");
+            return;
+          }
+          if (!context.targetValue || typeof context.targetValue !== "object" || Array.isArray(context.targetValue)) {
+            jsonTemplateStatus.textContent = "Selected line is not inside an object.";
+            jsonTemplateStatus.classList.add("error");
+            return;
+          }
+          if (Object.prototype.hasOwnProperty.call(context.targetValue, variableName)) {
+            jsonTemplateStatus.textContent = `Key "${variableName}" already exists.`;
+            jsonTemplateStatus.classList.add("error");
+            return;
+          }
+          context.targetValue[variableName] = newValue;
+          insertedPath = context.targetPath
+            ? `${context.targetPath}.${variableName}`
+            : variableName;
+        }
+
+        activeJsonFieldPath = insertedPath;
+        syncJsonFieldsStateFromTemplate();
+        renderJsonFields();
+        refreshJsonEditorFromData();
+        scrollJsonToField(insertedPath);
+        jsonTemplateStatus.textContent = `Added ${insertedPath} (${jsonInsertValueType}).`;
+        jsonTemplateStatus.classList.remove("error");
+      });
+    }
+
+    updateInsertTargetUI();
 
     jsonFieldsContainer.querySelectorAll("[data-json-generator]").forEach((select) => {
       select.addEventListener("change", () => {
