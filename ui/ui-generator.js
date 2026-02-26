@@ -560,9 +560,12 @@ function createDataGeneratorUI(containerId) {
     .dg-header-actions .dg-btn { background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3); backdrop-filter: blur(10px); font-weight: 700; padding: 9px 14px; border-radius: 10px; transition: all 0.2s ease; }
     .dg-header-actions .dg-btn:hover { background: rgba(255,255,255,0.3); border-color: rgba(255,255,255,0.6); }
     .dg-json-toggle.active { background: rgba(255,255,255,0.35) !important; border-color: white !important; }
+    .dg-maximize-btn.active { background: rgba(255,255,255,0.35) !important; border-color: white !important; }
     .dg-json-view { display: none; flex: 1; min-height: 0; overflow: hidden; border-top: 1px solid var(--line); }
     .dg-json-view.active { display: flex; }
     .dg-app.json-mode .dg-footer { display: none; }
+    body.dg-force-maximized { width: 100vw !important; height: 100vh !important; overflow: hidden; }
+    .dg-app.dg-force-maximized { position: fixed; inset: 0; z-index: 2147483647; }
     .dg-json-pane { flex: 1; min-height: 0; display: flex; flex-direction: column; }
     .dg-json-pane + .dg-json-pane { border-left: 1px solid var(--line); }
     .dg-json-editor-pane { background: linear-gradient(180deg, #f8fbff 0%, #eef3fb 100%); }
@@ -593,6 +596,16 @@ function createDataGeneratorUI(containerId) {
     .dg-json-generator-select { flex: 1; min-width: 0; border: 1px solid rgba(91, 124, 250, 0.3); padding: 8px; font-size: 11px; background: #ffffff; color: #1f2937; font-weight: 700; }
     .dg-json-generator-select:focus { outline: none; border-color: #5b7cfa; }
     .dg-json-empty { border: 1px dashed rgba(91, 124, 250, 0.35); background: #f8fbff; color: #516177; font-size: 12px; font-weight: 700; padding: 14px; text-align: center; }
+    .dg-app.dg-fullpage .dg-tabs-panel { width: min(22vw, 300px); }
+    .dg-app.dg-fullpage .dg-main { width: min(36vw, 620px); }
+    .dg-app.dg-fullpage .dg-right-sidebar { min-width: 420px; }
+    .dg-app.dg-fullpage .dg-fields-wrapper { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .dg-app.dg-fullpage .dg-content { padding-bottom: 18px; }
+    .dg-app.dg-fullpage .dg-right-sidebar { padding-bottom: 18px; }
+    .dg-app.dg-fullpage .dg-footer { position: static; }
+    .dg-app.dg-fullpage .dg-json-editor-pane { flex: 1.1; }
+    .dg-app.dg-fullpage .dg-json-fields-pane { flex: 1.2; }
+    .dg-app.dg-fullpage #jsonTemplateInput { font-size: 13px; }
   `;
   document.head.appendChild(style);
 
@@ -4181,6 +4194,7 @@ function createDataGeneratorUI(containerId) {
           <div class="dg-search-results" id="searchResults"></div>
         </div>
         <div class="dg-header-actions">
+          <button id="maximizeViewBtn" class="dg-btn dg-btn-secondary dg-maximize-btn">⛶ Maximize</button>
           <button id="jsonFillerToggleBtn" class="dg-btn dg-btn-secondary dg-json-toggle">🧩 JSON Filler</button>
           <button id="resetAllBtn" class="dg-btn dg-btn-secondary">🔄 Reset All</button>
         </div>
@@ -4329,7 +4343,9 @@ function createDataGeneratorUI(containerId) {
   let generatedData = [];
   let jsonTemplateData = null;
   let jsonFieldsState = [];
+  let jsonLineMap = {};
 
+  const maximizeViewBtn = document.getElementById("maximizeViewBtn");
   const jsonFillerToggleBtn = document.getElementById("jsonFillerToggleBtn");
   const mainGeneratorView = document.getElementById("mainGeneratorView");
   const jsonFillerView = document.getElementById("jsonFillerView");
@@ -4343,6 +4359,15 @@ function createDataGeneratorUI(containerId) {
   const jsonCopyResultBtn = document.getElementById("jsonCopyResultBtn");
   const jsonFieldsContainer = document.getElementById("jsonFieldsContainer");
   const jsonTemplateStatus = document.getElementById("jsonTemplateStatus");
+
+  function syncAppLayoutMode() {
+    const fullPageByBody =
+      typeof document !== "undefined" &&
+      document.body &&
+      document.body.classList.contains("dg-fullpage");
+    const fullPageBySize = window.innerWidth > 820 || window.innerHeight > 820;
+    appRoot.classList.toggle("dg-fullpage", fullPageByBody || fullPageBySize);
+  }
 
   function formatGeneratorLabel(generatorName) {
     if (!generatorName) return "";
@@ -4453,6 +4478,105 @@ function createDataGeneratorUI(containerId) {
     jsonTemplateLineNumbers.scrollTop = jsonTemplateInput.scrollTop;
   }
 
+  function serializeJsonWithLineMap(value) {
+    const lineMap = {};
+    const lines = [];
+    let currentLine = 0;
+
+    function pushLine(text, path) {
+      lines.push(text);
+      currentLine += 1;
+      if (path) {
+        lineMap[path] = currentLine;
+      }
+    }
+
+    function writeNode(node, indentLevel, path, options = {}) {
+      const { key = null, isLast = true, asProperty = false } = options;
+      const indent = "  ".repeat(indentLevel);
+      const keyPrefix = asProperty ? `${JSON.stringify(key)}: ` : "";
+
+      if (Array.isArray(node)) {
+        if (node.length === 0) {
+          pushLine(`${indent}${keyPrefix}[]${isLast ? "" : ","}`, path);
+          return;
+        }
+        pushLine(`${indent}${keyPrefix}[`, path);
+        node.forEach((item, index) => {
+          const childPath = path ? `${path}[${index}]` : `[${index}]`;
+          writeNode(item, indentLevel + 1, childPath, {
+            isLast: index === node.length - 1,
+            asProperty: false,
+          });
+        });
+        pushLine(`${indent}]${isLast ? "" : ","}`);
+        return;
+      }
+
+      if (node !== null && typeof node === "object") {
+        const entries = Object.entries(node);
+        if (entries.length === 0) {
+          pushLine(`${indent}${keyPrefix}{}${isLast ? "" : ","}`, path);
+          return;
+        }
+        pushLine(`${indent}${keyPrefix}{`, path);
+        entries.forEach(([childKey, childValue], index) => {
+          const childPath = path ? `${path}.${childKey}` : childKey;
+          writeNode(childValue, indentLevel + 1, childPath, {
+            key: childKey,
+            isLast: index === entries.length - 1,
+            asProperty: true,
+          });
+        });
+        pushLine(`${indent}}${isLast ? "" : ","}`);
+        return;
+      }
+
+      pushLine(
+        `${indent}${keyPrefix}${JSON.stringify(node)}${isLast ? "" : ","}`,
+        path,
+      );
+    }
+
+    writeNode(value, 0, "", { isLast: true, asProperty: false });
+    return { text: lines.join("\n"), lineMap };
+  }
+
+  function refreshJsonEditorFromData() {
+    if (!jsonTemplateInput || jsonTemplateData === null) return;
+    const serialized = serializeJsonWithLineMap(jsonTemplateData);
+    jsonLineMap = serialized.lineMap || {};
+    jsonTemplateInput.value = serialized.text;
+    updateJsonLineNumbers();
+  }
+
+  function scrollJsonToField(path, options = {}) {
+    if (!jsonTemplateInput || !path) return;
+    const { focusEditor = false } = options;
+    const line = jsonLineMap[path];
+    if (!line) return;
+    const lineHeight =
+      parseFloat(window.getComputedStyle(jsonTemplateInput).lineHeight) || 18;
+    const targetScrollTop = Math.max(
+      0,
+      (line - 1) * lineHeight - jsonTemplateInput.clientHeight / 3,
+    );
+    jsonTemplateInput.scrollTop = targetScrollTop;
+    if (jsonTemplateLineNumbers) {
+      jsonTemplateLineNumbers.scrollTop = jsonTemplateInput.scrollTop;
+    }
+
+    const lines = jsonTemplateInput.value.split("\n");
+    let cursorPosition = 0;
+    for (let i = 0; i < line - 1; i++) {
+      cursorPosition += lines[i].length + 1;
+    }
+    if (focusEditor) {
+      jsonTemplateInput.focus();
+      jsonTemplateInput.setSelectionRange(cursorPosition, cursorPosition);
+    }
+  }
+
   function flattenJsonFields(value, path = "") {
     if (Array.isArray(value)) {
       if (value.length === 0) {
@@ -4509,19 +4633,29 @@ function createDataGeneratorUI(containerId) {
           `[data-json-field-card="${idx}"]`,
         );
         if (card) card.classList.add("active");
+        if (jsonFieldsState[idx]) {
+          scrollJsonToField(jsonFieldsState[idx].path);
+        }
       });
     });
 
     jsonFieldsContainer.querySelectorAll("[data-json-field-input]").forEach((input) => {
+      const index = Number(input.getAttribute("data-json-field-input"));
+
       input.addEventListener("input", () => {
-        const index = Number(input.getAttribute("data-json-field-input"));
         const field = jsonFieldsState[index];
         if (!field || !jsonTemplateData) return;
         const coercedValue = coerceInputValue(input.value, field.valueType);
         field.value = coercedValue;
         setValueByPath(jsonTemplateData, field.path, coercedValue);
-        jsonTemplateInput.value = JSON.stringify(jsonTemplateData, null, 2);
-        updateJsonLineNumbers();
+        refreshJsonEditorFromData();
+        scrollJsonToField(field.path);
+      });
+
+      input.addEventListener("focus", () => {
+        if (jsonFieldsState[index]) {
+          scrollJsonToField(jsonFieldsState[index].path);
+        }
       });
     });
 
@@ -4548,8 +4682,8 @@ function createDataGeneratorUI(containerId) {
             `[data-json-field-input="${index}"]`,
           );
           if (input) input.value = formatValueForInput(generatedValue);
-          jsonTemplateInput.value = JSON.stringify(jsonTemplateData, null, 2);
-          updateJsonLineNumbers();
+          refreshJsonEditorFromData();
+          scrollJsonToField(field.path);
           jsonTemplateStatus.textContent = `Generated value for ${field.path}`;
           jsonTemplateStatus.classList.remove("error");
         } catch (error) {
@@ -4589,8 +4723,7 @@ function createDataGeneratorUI(containerId) {
       renderJsonFields();
       jsonTemplateStatus.textContent = `Parsed ${jsonFieldsState.length} field${jsonFieldsState.length === 1 ? "" : "s"}.`;
       jsonTemplateStatus.classList.remove("error");
-      jsonTemplateInput.value = JSON.stringify(jsonTemplateData, null, 2);
-      updateJsonLineNumbers();
+      refreshJsonEditorFromData();
     } catch (error) {
       jsonTemplateStatus.textContent = `Invalid JSON: ${error.message}`;
       jsonTemplateStatus.classList.add("error");
@@ -4608,11 +4741,83 @@ function createDataGeneratorUI(containerId) {
     appRoot.classList.toggle("json-mode", jsonMode);
   }
 
+  function syncMaximizeButton() {
+    if (!maximizeViewBtn) return;
+    const isLikelyPopup = window.innerWidth <= 820 && window.innerHeight <= 820;
+    if (isLikelyPopup) {
+      maximizeViewBtn.classList.remove("active");
+      maximizeViewBtn.textContent = "⤢ Full Page";
+      return;
+    }
+    const isFullscreen = !!document.fullscreenElement;
+    const isFallbackMax = appRoot.classList.contains("dg-force-maximized");
+    const isMaximized = isFullscreen || isFallbackMax;
+    maximizeViewBtn.classList.toggle("active", isMaximized);
+    maximizeViewBtn.textContent = isMaximized ? "🗗 Restore" : "⛶ Maximize";
+  }
+
+  async function toggleMaximizeView() {
+    const isLikelyPopup = window.innerWidth <= 820 && window.innerHeight <= 820;
+    if (isLikelyPopup) {
+      const hasChromeRuntime =
+        typeof chrome !== "undefined" && chrome.runtime && chrome.runtime.getURL;
+      const hasChromeTabs =
+        typeof chrome !== "undefined" && chrome.tabs && chrome.tabs.create;
+      const openUrl = hasChromeRuntime
+        ? chrome.runtime.getURL(
+            `popup.html${jsonFillerView.classList.contains("active") ? "#json-filler" : ""}`,
+          )
+        : `popup.html${jsonFillerView.classList.contains("active") ? "#json-filler" : ""}`;
+      try {
+        if (hasChromeTabs) {
+          chrome.tabs.create({ url: openUrl });
+        } else {
+          window.open(openUrl, "_blank");
+        }
+      } catch (error) {
+        window.open(openUrl, "_blank");
+      }
+      return;
+    }
+
+    const isFullscreen = !!document.fullscreenElement;
+    const isFallbackMax = appRoot.classList.contains("dg-force-maximized");
+
+    if (isFullscreen) {
+      try {
+        await document.exitFullscreen();
+      } catch (error) {
+        // Ignore if browser blocks exiting fullscreen here.
+      }
+      syncMaximizeButton();
+      return;
+    }
+
+    if (isFallbackMax) {
+      appRoot.classList.remove("dg-force-maximized");
+      document.body.classList.remove("dg-force-maximized");
+      syncMaximizeButton();
+      return;
+    }
+
+    try {
+      await document.documentElement.requestFullscreen();
+    } catch (error) {
+      appRoot.classList.add("dg-force-maximized");
+      document.body.classList.add("dg-force-maximized");
+    }
+    syncMaximizeButton();
+  }
+
   if (jsonFillerToggleBtn) {
     jsonFillerToggleBtn.addEventListener("click", () => {
       const isActive = jsonFillerView.classList.contains("active");
       setViewMode(isActive ? "main" : "json");
     });
+  }
+
+  if ((window.location.hash || "").toLowerCase().includes("json-filler")) {
+    setViewMode("json");
   }
 
   if (jsonParseBtn) {
@@ -4642,8 +4847,7 @@ function createDataGeneratorUI(containerId) {
           // Skip failed generator and continue others.
         }
       });
-      jsonTemplateInput.value = JSON.stringify(jsonTemplateData, null, 2);
-      updateJsonLineNumbers();
+      refreshJsonEditorFromData();
       jsonTemplateStatus.textContent = "Applied selected generators.";
       jsonTemplateStatus.classList.remove("error");
     });
@@ -4672,6 +4876,17 @@ function createDataGeneratorUI(containerId) {
       });
     });
   }
+
+  if (maximizeViewBtn) {
+    maximizeViewBtn.addEventListener("click", () => {
+      toggleMaximizeView();
+    });
+  }
+
+  window.addEventListener("resize", syncAppLayoutMode);
+  syncAppLayoutMode();
+  document.addEventListener("fullscreenchange", syncMaximizeButton);
+  syncMaximizeButton();
 
   document.querySelectorAll(".dg-tab").forEach((tab) => {
     tab.addEventListener("click", () => {
