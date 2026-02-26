@@ -2840,6 +2840,88 @@ function createDataGeneratorUI(containerId) {
         }
       ]
     },
+    {
+      title: "Currencies",
+      subTabs: [
+        {
+          title: "Currency Info",
+          fields: [
+            { id: "currencyCode", label: "Currency Code" },
+            { id: "currencyName", label: "Currency Name" },
+            { id: "currencyAmount", label: "Currency Amount" },
+            { id: "exchangeRate", label: "Exchange Rate" },
+            { id: "currencyConversion", label: "Currency Conversion" }
+          ]
+        },
+        {
+          title: "Pricing",
+          fields: [
+            { id: "priceRange", label: "Price Range" },
+            { id: "discount", label: "Discount" },
+            { id: "tax", label: "Tax Calculation" }
+          ]
+        },
+        {
+          title: "Cryptocurrency",
+          fields: [
+            { id: "cryptoCurrency", label: "Crypto Currency" },
+            { id: "cryptoCode", label: "Crypto Code" },
+            { id: "cryptoPrice", label: "Crypto Price" },
+            { id: "cryptoWallet", label: "Crypto Wallet" }
+          ]
+        }
+      ]
+    },
+    {
+      title: "Sizes",
+      subTabs: [
+        {
+          title: "Clothing",
+          fields: [
+            { id: "clothingSize", label: "Clothing Size" },
+            { id: "clothingSizeNumeric", label: "Clothing Size (Numeric)" },
+            { id: "clothingSizeEU", label: "Clothing Size (EU)" },
+            { id: "clothingSizeConversion", label: "Clothing Size Conversion" }
+          ]
+        },
+        {
+          title: "Footwear",
+          fields: [
+            { id: "shoeSize", label: "Shoe Size (US)" },
+            { id: "shoeSizeEU", label: "Shoe Size (EU)" },
+            { id: "shoeSizeUK", label: "Shoe Size (UK)" },
+            { id: "shoeSizeConversion", label: "Shoe Size Conversion" }
+          ]
+        },
+        {
+          title: "Accessories",
+          fields: [
+            { id: "hatSize", label: "Hat Size" },
+            { id: "hatSizeNumeric", label: "Hat Size (Numeric)" },
+            { id: "ringSize", label: "Ring Size" }
+          ]
+        },
+        {
+          title: "Measurements",
+          fields: [
+            { id: "height", label: "Height" },
+            { id: "weight", label: "Weight" },
+            { id: "chest", label: "Chest" },
+            { id: "waist", label: "Waist" },
+            { id: "inseam", label: "Inseam" }
+          ]
+        },
+        {
+          title: "Display & Paper",
+          fields: [
+            { id: "screenSize", label: "Screen Size" },
+            { id: "screenResolution", label: "Screen Resolution" },
+            { id: "paperSize", label: "Paper Size" },
+            { id: "paperSizeDimensions", label: "Paper Size Dimensions" }
+          ]
+        }
+      ]
+    },
   ];
 
   // Tab icons mapping
@@ -2911,6 +2993,8 @@ function createDataGeneratorUI(containerId) {
     'IoT': '🔌',
     'IoT & Smart Home': '🔌',
     'Colors': '🎨',
+    'Currencies': '💰',
+    'Sizes': '📏',
     'Other': '📋'
   };
 
