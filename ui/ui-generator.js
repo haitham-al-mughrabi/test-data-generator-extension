@@ -825,6 +825,587 @@ function createDataGeneratorUI(containerId) {
       border-radius: 10px;
       box-shadow: 0 8px 16px rgba(35, 119, 247, 0.24);
     }
+    .dg-theme-toggle-btn.active {
+      background: linear-gradient(180deg, rgba(255,255,255,0.42) 0%, rgba(255,255,255,0.24) 100%) !important;
+      border-color: rgba(255,255,255,0.85) !important;
+      color: #ffffff !important;
+    }
+    .dg-app.dg-theme-dark {
+      --ink: #e7edf8;
+      --muted: #98a8c3;
+      --line: rgba(148, 163, 184, 0.22);
+      background: radial-gradient(circle at 12% 8%, rgba(75, 97, 224, 0.3), transparent 42%), radial-gradient(circle at 88% 12%, rgba(10, 122, 160, 0.22), transparent 46%), linear-gradient(180deg, #0b1220 0%, #0e1728 100%);
+      color: var(--ink);
+    }
+    .dg-app.dg-theme-dark .dg-header {
+      background: linear-gradient(135deg, #1d2b48 0%, #2a1f45 100%);
+      border-bottom-color: rgba(255,255,255,0.08);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    }
+    .dg-app.dg-theme-dark .dg-search input {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.16);
+      color: #f4f7ff;
+    }
+    .dg-app.dg-theme-dark .dg-search input::placeholder {
+      color: rgba(232, 240, 255, 0.66);
+    }
+    .dg-app.dg-theme-dark .dg-search input:focus {
+      background: #121d33;
+      border-color: rgba(131, 169, 255, 0.64);
+      color: #f8fbff;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+    }
+    .dg-app.dg-theme-dark .dg-search-results {
+      background: #131d31;
+      border-color: rgba(125, 154, 206, 0.35);
+      box-shadow: 0 22px 34px rgba(0, 0, 0, 0.5);
+    }
+    .dg-app.dg-theme-dark .dg-search-result {
+      background: #131d31;
+      border-bottom-color: rgba(125, 154, 206, 0.2);
+      color: #d9e4f8;
+    }
+    .dg-app.dg-theme-dark .dg-search-result:hover {
+      background: #1a2742;
+    }
+    .dg-app.dg-theme-dark .dg-search-category {
+      color: #f0f5ff;
+    }
+    .dg-app.dg-theme-dark .dg-search-field {
+      color: #a8b9d8;
+    }
+    .dg-app.dg-theme-dark .dg-body {
+      background: linear-gradient(180deg, rgba(16, 25, 44, 0.85) 0%, rgba(11, 18, 32, 0.95) 100%);
+    }
+    .dg-app.dg-theme-dark .dg-tabs-panel {
+      background: linear-gradient(180deg, #0f1a2d 0%, #111e33 100%);
+      border-right-color: rgba(148, 163, 184, 0.22);
+    }
+    .dg-app.dg-theme-dark .dg-tab {
+      color: #a9bad8;
+    }
+    .dg-app.dg-theme-dark .dg-tab:hover {
+      color: #d6e3fb;
+      background: rgba(91, 124, 250, 0.22);
+    }
+    .dg-app.dg-theme-dark .dg-content {
+      background: linear-gradient(180deg, #101a2d 0%, #0e1829 100%);
+    }
+    .dg-app.dg-theme-dark .dg-field-section,
+    .dg-app.dg-theme-dark .dg-panel-section,
+    .dg-app.dg-theme-dark .dg-json-field-card {
+      background: linear-gradient(180deg, #162238 0%, #131f33 100%);
+      border-color: rgba(122, 151, 201, 0.25);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.35);
+    }
+    .dg-app.dg-theme-dark .dg-section-title,
+    .dg-app.dg-theme-dark .dg-record-label,
+    .dg-app.dg-theme-dark .dg-json-field-path {
+      color: #cddbf7;
+    }
+    .dg-app.dg-theme-dark .dg-checkbox {
+      background: #18253b;
+      border-color: rgba(128, 160, 213, 0.28);
+      color: #dce7fc;
+    }
+    .dg-app.dg-theme-dark .dg-checkbox:hover {
+      background: #1d2d47;
+      border-color: rgba(142, 175, 230, 0.5);
+    }
+    .dg-app.dg-theme-dark .dg-right-sidebar {
+      background: linear-gradient(180deg, #101b2f 0%, #0e1728 100%);
+      border-left-color: rgba(148, 163, 184, 0.2);
+    }
+    .dg-app.dg-theme-dark .dg-panel-content.results-content,
+    .dg-app.dg-theme-dark .dg-results {
+      background: linear-gradient(180deg, #121f34 0%, #101b2c 100%);
+    }
+    .dg-app.dg-theme-dark .dg-record-tab,
+    .dg-app.dg-theme-dark .dg-category-tab {
+      background: rgba(82, 106, 186, 0.24);
+      color: #b8c9e8;
+    }
+    .dg-app.dg-theme-dark .dg-record-tab:hover,
+    .dg-app.dg-theme-dark .dg-category-tab:hover {
+      color: #e4edff;
+      border-color: rgba(129, 162, 224, 0.52);
+      background: rgba(91, 124, 250, 0.33);
+    }
+    .dg-app.dg-theme-dark .dg-record-field {
+      background: #17243a !important;
+      border-color: rgba(129, 162, 224, 0.28);
+    }
+    .dg-app.dg-theme-dark .dg-field-value {
+      background: #22324f;
+      color: #e5edff;
+    }
+    .dg-app.dg-theme-dark .dg-field-value:hover {
+      background: #294069;
+      color: #f1f6ff;
+    }
+    .dg-app.dg-theme-dark .dg-json-view {
+      background: linear-gradient(180deg, #101a2d 0%, #0c1424 100%);
+    }
+    .dg-app.dg-theme-dark .dg-json-pane {
+      background: #0f1a2d;
+      border-color: rgba(128, 160, 213, 0.24);
+    }
+    .dg-app.dg-theme-dark .dg-json-editor-pane {
+      background: linear-gradient(180deg, #101b30 0%, #0d1728 100%);
+    }
+    .dg-app.dg-theme-dark .dg-json-fields-pane {
+      background: linear-gradient(180deg, #111d31 0%, #0f182a 100%);
+    }
+    .dg-app.dg-theme-dark .dg-json-editor-surface {
+      border-color: rgba(128, 160, 213, 0.28);
+      background: #111c31;
+    }
+    .dg-app.dg-theme-dark .dg-json-line-numbers {
+      background: linear-gradient(180deg, #18253d 0%, #162338 100%);
+      border-right-color: rgba(128, 160, 213, 0.2);
+      color: #8ea4c8;
+    }
+    .dg-app.dg-theme-dark .dg-json-line-numbers div.active {
+      background: rgba(91, 124, 250, 0.34);
+      color: #e7efff;
+    }
+    .dg-app.dg-theme-dark #jsonTemplateInput {
+      background-color: #111c31;
+      color: #e5eeff;
+      border: none;
+    }
+    .dg-app.dg-theme-dark #jsonTemplateStatus {
+      color: #9fb5d8;
+    }
+    .dg-app.dg-theme-dark #jsonTemplateStatus.error {
+      color: #fca5a5;
+    }
+    .dg-app.dg-theme-dark .dg-json-insert-panel {
+      background: linear-gradient(180deg, #1a2741 0%, #162238 100%);
+      border-color: rgba(128, 160, 213, 0.3);
+    }
+    .dg-app.dg-theme-dark .dg-json-insert-title {
+      color: #c6d7f7;
+    }
+    .dg-app.dg-theme-dark .dg-json-insert-target {
+      color: #a9bfdf;
+    }
+    .dg-app.dg-theme-dark .dg-json-field-input,
+    .dg-app.dg-theme-dark .dg-json-type-select,
+    .dg-app.dg-theme-dark .dg-json-generator-select,
+    .dg-app.dg-theme-dark .dg-json-insert-name {
+      background: #182740;
+      color: #e4edff;
+      border-color: rgba(128, 160, 213, 0.34);
+    }
+    .dg-app.dg-theme-dark .dg-json-field-input:focus,
+    .dg-app.dg-theme-dark .dg-json-type-select:focus,
+    .dg-app.dg-theme-dark .dg-json-generator-select:focus,
+    .dg-app.dg-theme-dark .dg-json-insert-name:focus {
+      border-color: rgba(141, 177, 243, 0.88);
+      box-shadow: 0 0 0 3px rgba(91, 124, 250, 0.22);
+    }
+    .dg-app.dg-theme-dark .dg-btn-secondary {
+      background: linear-gradient(180deg, #182741 0%, #15243d 100%);
+      color: #d6e3fb;
+      border-color: rgba(128, 160, 213, 0.34);
+    }
+    .dg-app.dg-theme-dark .dg-btn-secondary:hover {
+      background: linear-gradient(180deg, #1d2f4f 0%, #182843 100%);
+      border-color: rgba(141, 177, 243, 0.62);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+    }
+    .dg-app.dg-theme-dark .dg-footer {
+      background: linear-gradient(180deg, #101b2e 0%, #0d1728 100%);
+      color: #90a3c3;
+      border-top-color: rgba(128, 160, 213, 0.2);
+    }
+    .dg-app.dg-theme-dark .dg-tabs-header,
+    .dg-app.dg-theme-dark .dg-panel-header,
+    .dg-app.dg-theme-dark .dg-json-pane-header {
+      background: linear-gradient(135deg, #243b66 0%, #1c2e52 55%, #1a4561 100%);
+      border-bottom-color: rgba(148, 163, 184, 0.25);
+    }
+    .dg-app.dg-theme-dark .dg-controls-subsection {
+      background: linear-gradient(180deg, #1b2a44 0%, #18263f 100%);
+      border-color: rgba(128, 160, 213, 0.28);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+    }
+    .dg-app.dg-theme-dark .dg-controls-subtitle,
+    .dg-app.dg-theme-dark .dg-count-control,
+    .dg-app.dg-theme-dark .dg-file-controls-title,
+    .dg-app.dg-theme-dark .dg-file-controls-hint,
+    .dg-app.dg-theme-dark .dg-file-control-section-title,
+    .dg-app.dg-theme-dark .dg-file-control-group label,
+    .dg-app.dg-theme-dark .dg-current-dimensions {
+      color: #a9bfdf;
+    }
+    .dg-app.dg-theme-dark .dg-file-controls,
+    .dg-app.dg-theme-dark #dateTimeControls,
+    .dg-app.dg-theme-dark #securityControls,
+    .dg-app.dg-theme-dark #colorControls,
+    .dg-app.dg-theme-dark #randomValuesControls,
+    .dg-app.dg-theme-dark #randomTextControls,
+    .dg-app.dg-theme-dark #phoneControls,
+    .dg-app.dg-theme-dark #passwordControls,
+    .dg-app.dg-theme-dark #emailControls {
+      background: linear-gradient(180deg, #15233a 0%, #121d31 100%);
+      border-color: rgba(128, 160, 213, 0.28);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+    }
+    .dg-app.dg-theme-dark .dg-file-controls-header {
+      background: linear-gradient(135deg, #22385f 0%, #1f3154 55%, #1c4b66 100%);
+      border-color: rgba(128, 160, 213, 0.28);
+    }
+    .dg-app.dg-theme-dark .dg-file-control-section {
+      background: #18263e;
+      border-color: rgba(128, 160, 213, 0.26);
+    }
+    .dg-app.dg-theme-dark .dg-date-tools-tab {
+      background: #1b2a44;
+      color: #b6c8e6;
+      border-color: rgba(128, 160, 213, 0.28);
+    }
+    .dg-app.dg-theme-dark .dg-date-tools-tab:hover {
+      background: #253a5f;
+      color: #ecf3ff;
+    }
+    .dg-app.dg-theme-dark .dg-date-tools-tab.active {
+      background: linear-gradient(135deg, #3d63db 0%, #2f85e8 55%, #1099ca 100%);
+      color: #fff;
+      box-shadow: 0 10px 18px rgba(34, 89, 192, 0.4);
+    }
+    .dg-app.dg-theme-dark input,
+    .dg-app.dg-theme-dark select,
+    .dg-app.dg-theme-dark textarea {
+      background-color: #192941;
+      color: #e5eeff;
+      border-color: rgba(128, 160, 213, 0.35);
+    }
+    .dg-app.dg-theme-dark input::placeholder,
+    .dg-app.dg-theme-dark textarea::placeholder {
+      color: #8da4c8;
+    }
+    .dg-app.dg-theme-dark input:focus,
+    .dg-app.dg-theme-dark select:focus,
+    .dg-app.dg-theme-dark textarea:focus {
+      border-color: rgba(141, 177, 243, 0.85);
+      box-shadow: 0 0 0 3px rgba(91, 124, 250, 0.22);
+      outline: none;
+    }
+    .dg-app.dg-theme-dark .dg-checkbox-inline,
+    .dg-app.dg-theme-dark .dg-rv-check,
+    .dg-app.dg-theme-dark .dg-rt-check,
+    .dg-app.dg-theme-dark .dg-phone-check,
+    .dg-app.dg-theme-dark .dg-pw-check {
+      background: #1a2a44;
+      border-color: rgba(128, 160, 213, 0.32);
+      color: #d8e6ff;
+    }
+    .dg-app.dg-theme-dark .dg-checkbox-inline:hover,
+    .dg-app.dg-theme-dark .dg-rv-check:hover,
+    .dg-app.dg-theme-dark .dg-rt-check:hover,
+    .dg-app.dg-theme-dark .dg-phone-check:hover,
+    .dg-app.dg-theme-dark .dg-pw-check:hover {
+      background: #22375b;
+      border-color: rgba(141, 177, 243, 0.56);
+    }
+    .dg-app.dg-theme-dark .dg-conversion-output,
+    .dg-app.dg-theme-dark .dg-user-note,
+    .dg-app.dg-theme-dark #colorConversionResult {
+      background: #172742;
+      border-color: rgba(128, 160, 213, 0.3);
+      color: #d6e5ff;
+    }
+    .dg-app.dg-theme-dark .dg-conversion-item,
+    .dg-app.dg-theme-dark .dg-conversion-value {
+      background: #1a2c48;
+      border-color: rgba(128, 160, 213, 0.28);
+      color: #e7efff;
+    }
+    .dg-app.dg-theme-dark .dg-file-item,
+    .dg-app.dg-theme-dark .dg-files-section {
+      background: #16253d;
+      border-color: rgba(128, 160, 213, 0.25);
+    }
+    .dg-app.dg-theme-dark .dg-file-item-name,
+    .dg-app.dg-theme-dark .dg-file-item-meta,
+    .dg-app.dg-theme-dark .dg-files-section-title,
+    .dg-app.dg-theme-dark .dg-files-section-count {
+      color: #d7e5ff;
+    }
+    .dg-app.dg-theme-dark .dg-file-tag {
+      background: #22385d;
+      color: #dbe8ff;
+      border-color: rgba(128, 160, 213, 0.35);
+    }
+    .dg-app.dg-theme-dark .dg-download-file-btn {
+      background: linear-gradient(135deg, #3d63db 0%, #2f85e8 55%, #1099ca 100%);
+      color: #fff;
+    }
+    .dg-app.dg-theme-dark .dg-search-highlight {
+      background: rgba(245, 158, 11, 0.24);
+      color: #fff1c4;
+    }
+    .dg-app.dg-theme-dark .dg-json-empty {
+      color: #b8c9e8;
+      border-color: rgba(128, 160, 213, 0.3);
+      background: linear-gradient(180deg, #182740 0%, #15223a 100%);
+    }
+    /* Hard dark-mode overrides for legacy light blocks */
+    .dg-app.dg-theme-dark .dg-buttons {
+      background: #121f34 !important;
+      border-top: 1px solid rgba(128, 160, 213, 0.24) !important;
+    }
+    .dg-app.dg-theme-dark .dg-panel-content.results-content,
+    .dg-app.dg-theme-dark .dg-results,
+    .dg-app.dg-theme-dark .dg-record-contents,
+    .dg-app.dg-theme-dark .dg-record-content,
+    .dg-app.dg-theme-dark .dg-category-contents,
+    .dg-app.dg-theme-dark .dg-category-content {
+      background: #101b2c !important;
+    }
+    .dg-app.dg-theme-dark .dg-record-tabs,
+    .dg-app.dg-theme-dark .dg-category-tabs {
+      background: #13213a !important;
+      border-bottom-color: rgba(128, 160, 213, 0.24) !important;
+    }
+    .dg-app.dg-theme-dark .dg-record-tab,
+    .dg-app.dg-theme-dark .dg-category-tab {
+      color: #c4d4ef !important;
+      border-color: rgba(128, 160, 213, 0.22) !important;
+      background: rgba(86, 112, 196, 0.26) !important;
+    }
+    .dg-app.dg-theme-dark .dg-record-tab.active,
+    .dg-app.dg-theme-dark .dg-category-tab.active {
+      color: #ffffff !important;
+      border-color: transparent !important;
+      background: linear-gradient(135deg, #3d63db 0%, #2f85e8 55%, #1099ca 100%) !important;
+      box-shadow: 0 10px 20px rgba(33, 78, 179, 0.42) !important;
+    }
+    .dg-app.dg-theme-dark .dg-record-content.active {
+      display: flex !important;
+      color: #dbe7ff !important;
+    }
+    .dg-app.dg-theme-dark .dg-category-content.active {
+      display: block !important;
+      color: #dbe7ff !important;
+    }
+    .dg-app.dg-theme-dark .dg-record-content,
+    .dg-app.dg-theme-dark .dg-category-content {
+      color: #cddcf7;
+    }
+    .dg-app.dg-theme-dark .dg-files-section,
+    .dg-app.dg-theme-dark .dg-files-list,
+    .dg-app.dg-theme-dark .dg-file-item {
+      display: block;
+      color: #d7e6ff;
+    }
+    .dg-app.dg-theme-dark .dg-file-item {
+      display: flex;
+    }
+    .dg-app.dg-theme-dark #dateTimeControls,
+    .dg-app.dg-theme-dark #securityControls,
+    .dg-app.dg-theme-dark #colorControls,
+    .dg-app.dg-theme-dark #randomValuesControls,
+    .dg-app.dg-theme-dark #randomTextControls,
+    .dg-app.dg-theme-dark #phoneControls,
+    .dg-app.dg-theme-dark #passwordControls,
+    .dg-app.dg-theme-dark #emailControls {
+      background: linear-gradient(180deg, #15233a 0%, #121d31 100%) !important;
+      border-color: rgba(128, 160, 213, 0.28) !important;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35) !important;
+    }
+    .dg-app.dg-theme-dark #dateTimeControls .dg-file-controls-header,
+    .dg-app.dg-theme-dark #securityControls .dg-file-controls-header,
+    .dg-app.dg-theme-dark #colorControls .dg-file-controls-header,
+    .dg-app.dg-theme-dark #randomValuesControls .dg-file-controls-header,
+    .dg-app.dg-theme-dark #randomTextControls .dg-file-controls-header,
+    .dg-app.dg-theme-dark #phoneControls .dg-file-controls-header,
+    .dg-app.dg-theme-dark #passwordControls .dg-file-controls-header,
+    .dg-app.dg-theme-dark #emailControls .dg-file-controls-header {
+      background: linear-gradient(135deg, #22385f 0%, #1f3154 55%, #1c4b66 100%) !important;
+      border-color: rgba(128, 160, 213, 0.26) !important;
+    }
+    .dg-app.dg-theme-dark #dateTimeControls .dg-file-control-section,
+    .dg-app.dg-theme-dark #securityControls .dg-file-control-section,
+    .dg-app.dg-theme-dark #colorControls .dg-file-control-section,
+    .dg-app.dg-theme-dark #randomValuesControls .dg-file-control-section,
+    .dg-app.dg-theme-dark #randomTextControls .dg-file-control-section,
+    .dg-app.dg-theme-dark #phoneControls .dg-file-control-section,
+    .dg-app.dg-theme-dark #passwordControls .dg-file-control-section,
+    .dg-app.dg-theme-dark #emailControls .dg-file-control-section {
+      background: #18263e !important;
+      border-color: rgba(128, 160, 213, 0.25) !important;
+    }
+    .dg-app.dg-theme-dark #dateTimeControls .dg-file-control-group input,
+    .dg-app.dg-theme-dark #dateTimeControls .dg-file-control-group select,
+    .dg-app.dg-theme-dark #securityControls .dg-file-control-group input,
+    .dg-app.dg-theme-dark #securityControls .dg-file-control-group select,
+    .dg-app.dg-theme-dark #securityControls .dg-file-control-group textarea,
+    .dg-app.dg-theme-dark #colorControls #colorInput,
+    .dg-app.dg-theme-dark #colorControls #colorOutputType,
+    .dg-app.dg-theme-dark #randomValuesControls input[type="text"],
+    .dg-app.dg-theme-dark #randomValuesControls input[type="number"],
+    .dg-app.dg-theme-dark #randomTextControls .dg-file-control-group input[type="number"],
+    .dg-app.dg-theme-dark #randomTextControls .dg-file-control-group select,
+    .dg-app.dg-theme-dark #phoneControls .dg-file-control-group input[type="number"],
+    .dg-app.dg-theme-dark #phoneControls .dg-file-control-group select,
+    .dg-app.dg-theme-dark #passwordControls .dg-file-control-group input[type="number"],
+    .dg-app.dg-theme-dark #emailControls .dg-file-control-group input[type="number"] {
+      background: #192941 !important;
+      color: #e5eeff !important;
+      border-color: rgba(128, 160, 213, 0.36) !important;
+    }
+    .dg-app.dg-theme-dark #dateTimeControls .dg-date-tools-tab,
+    .dg-app.dg-theme-dark #securityControls .dg-date-tools-tab {
+      background: #1b2a44 !important;
+      color: #c0d0ea !important;
+      border-color: rgba(128, 160, 213, 0.28) !important;
+    }
+    .dg-app.dg-theme-dark #dateTimeControls .dg-date-tools-tab.active,
+    .dg-app.dg-theme-dark #securityControls .dg-date-tools-tab.active {
+      background: linear-gradient(135deg, #3d63db 0%, #2f85e8 55%, #1099ca 100%) !important;
+      color: #fff !important;
+    }
+    .dg-app.dg-theme-dark #dateTimeControls .dg-user-note,
+    .dg-app.dg-theme-dark #securityControls .dg-user-note,
+    .dg-app.dg-theme-dark #colorControls #colorConversionResult {
+      background: #172742 !important;
+      color: #d6e5ff !important;
+      border-color: rgba(128, 160, 213, 0.28) !important;
+    }
+    .dg-app.dg-theme-dark #dateTimeControls input[type="date"],
+    .dg-app.dg-theme-dark #dateTimeControls input[type="time"],
+    .dg-app.dg-theme-dark #dateTimeControls input[type="number"],
+    .dg-app.dg-theme-dark #dateTimeControls select,
+    .dg-app.dg-theme-dark #dateTimeControls .dg-compact-input {
+      background: #192941 !important;
+      color: #e8f0ff !important;
+      border-color: rgba(128, 160, 213, 0.38) !important;
+      color-scheme: dark;
+    }
+    .dg-app.dg-theme-dark #dateTimeControls input[type="date"]::-webkit-calendar-picker-indicator,
+    .dg-app.dg-theme-dark #dateTimeControls input[type="time"]::-webkit-calendar-picker-indicator {
+      filter: invert(0.9) hue-rotate(180deg) saturate(0.6);
+      opacity: 0.9;
+      cursor: pointer;
+    }
+    .dg-app.dg-theme-dark #dateTimeControls input[type="date"]::-webkit-datetime-edit,
+    .dg-app.dg-theme-dark #dateTimeControls input[type="time"]::-webkit-datetime-edit {
+      color: #e8f0ff;
+    }
+    .dg-app.dg-theme-dark #dateTimeControls input[type="date"]::-webkit-datetime-edit-text,
+    .dg-app.dg-theme-dark #dateTimeControls input[type="time"]::-webkit-datetime-edit-text {
+      color: #9fb4d7;
+    }
+    .dg-app.dg-theme-dark #dateTimeControls input[type="date"]::-webkit-datetime-edit-year-field,
+    .dg-app.dg-theme-dark #dateTimeControls input[type="date"]::-webkit-datetime-edit-month-field,
+    .dg-app.dg-theme-dark #dateTimeControls input[type="date"]::-webkit-datetime-edit-day-field,
+    .dg-app.dg-theme-dark #dateTimeControls input[type="time"]::-webkit-datetime-edit-hour-field,
+    .dg-app.dg-theme-dark #dateTimeControls input[type="time"]::-webkit-datetime-edit-minute-field,
+    .dg-app.dg-theme-dark #dateTimeControls input[type="time"]::-webkit-datetime-edit-ampm-field {
+      color: #e8f0ff;
+      background: transparent;
+    }
+    .dg-app.dg-theme-dark #dateTimeControls input[type="date"]::-webkit-datetime-edit-year-field:focus,
+    .dg-app.dg-theme-dark #dateTimeControls input[type="date"]::-webkit-datetime-edit-month-field:focus,
+    .dg-app.dg-theme-dark #dateTimeControls input[type="date"]::-webkit-datetime-edit-day-field:focus,
+    .dg-app.dg-theme-dark #dateTimeControls input[type="time"]::-webkit-datetime-edit-hour-field:focus,
+    .dg-app.dg-theme-dark #dateTimeControls input[type="time"]::-webkit-datetime-edit-minute-field:focus,
+    .dg-app.dg-theme-dark #dateTimeControls input[type="time"]::-webkit-datetime-edit-ampm-field:focus {
+      background: rgba(91, 124, 250, 0.24);
+      color: #f4f8ff;
+    }
+    .dg-app.dg-theme-dark #dateTimeControls .dg-inline-pair select,
+    .dg-app.dg-theme-dark #dateTimeControls .dg-month-input {
+      color: #e8f0ff !important;
+      background: #192941 !important;
+    }
+    .dg-app.dg-theme-dark .dg-subsection-group {
+      background: #142238 !important;
+      border-color: rgba(128, 160, 213, 0.28) !important;
+    }
+    .dg-app.dg-theme-dark .dg-subsection-title {
+      background: #1b2a44 !important;
+      color: #d6e5ff !important;
+      border-bottom: 1px solid rgba(128, 160, 213, 0.24);
+    }
+    .dg-app.dg-theme-dark .dg-record-field:nth-child(odd),
+    .dg-app.dg-theme-dark .dg-record-field:nth-child(even) {
+      background: #17243a !important;
+    }
+    .dg-app.dg-theme-dark .dg-record-key {
+      color: #8fa8cd !important;
+    }
+    .dg-app.dg-theme-dark .dg-json-generator-row {
+      background: #16253d !important;
+      border-top-color: rgba(128, 160, 213, 0.26) !important;
+    }
+    .dg-app.dg-theme-dark .dg-json-value-controls {
+      background: transparent !important;
+    }
+    .dg-app.dg-theme-dark .dg-theme-toggle-btn {
+      background: linear-gradient(180deg, rgba(20, 34, 58, 0.95) 0%, rgba(16, 28, 48, 0.95) 100%) !important;
+      border-color: rgba(141, 177, 243, 0.42) !important;
+      color: #dbe8ff !important;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.36) !important;
+    }
+    .dg-app.dg-theme-dark .dg-theme-toggle-btn.active {
+      background: linear-gradient(180deg, rgba(31, 50, 84, 0.98) 0%, rgba(26, 43, 72, 0.98) 100%) !important;
+      border-color: rgba(122, 165, 244, 0.85) !important;
+      color: #eef4ff !important;
+      box-shadow: 0 10px 22px rgba(22, 53, 121, 0.42) !important;
+    }
+    .dg-app.dg-theme-dark #randomTextControls .dg-rt-check,
+    .dg-app.dg-theme-dark #phoneControls .dg-phone-check,
+    .dg-app.dg-theme-dark #passwordControls .dg-pw-check,
+    .dg-app.dg-theme-dark #randomValuesControls .dg-rv-check,
+    .dg-app.dg-theme-dark #dateTimeControls .dg-checkbox-inline,
+    .dg-app.dg-theme-dark #securityControls .dg-checkbox-inline {
+      background: #1a2a44 !important;
+      color: #dce9ff !important;
+      border-color: rgba(128, 160, 213, 0.34) !important;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.22);
+    }
+    .dg-app.dg-theme-dark #randomTextControls .dg-rt-check:hover,
+    .dg-app.dg-theme-dark #phoneControls .dg-phone-check:hover,
+    .dg-app.dg-theme-dark #passwordControls .dg-pw-check:hover,
+    .dg-app.dg-theme-dark #randomValuesControls .dg-rv-check:hover,
+    .dg-app.dg-theme-dark #dateTimeControls .dg-checkbox-inline:hover,
+    .dg-app.dg-theme-dark #securityControls .dg-checkbox-inline:hover {
+      background: #23395d !important;
+      border-color: rgba(141, 177, 243, 0.58) !important;
+    }
+    .dg-app.dg-theme-dark #randomTextControls .dg-rt-check input[type="checkbox"],
+    .dg-app.dg-theme-dark #phoneControls .dg-phone-check input[type="checkbox"],
+    .dg-app.dg-theme-dark #passwordControls .dg-pw-check input[type="checkbox"],
+    .dg-app.dg-theme-dark #randomValuesControls .dg-rv-check input[type="checkbox"],
+    .dg-app.dg-theme-dark #dateTimeControls .dg-checkbox-inline input[type="checkbox"],
+    .dg-app.dg-theme-dark #securityControls .dg-checkbox-inline input[type="checkbox"] {
+      background: #10203a !important;
+      border-color: rgba(141, 177, 243, 0.62) !important;
+    }
+    .dg-app.dg-theme-dark #randomTextControls .dg-rt-check input[type="checkbox"]:checked,
+    .dg-app.dg-theme-dark #phoneControls .dg-phone-check input[type="checkbox"]:checked,
+    .dg-app.dg-theme-dark #passwordControls .dg-pw-check input[type="checkbox"]:checked,
+    .dg-app.dg-theme-dark #randomValuesControls .dg-rv-check input[type="checkbox"]:checked,
+    .dg-app.dg-theme-dark #dateTimeControls .dg-checkbox-inline input[type="checkbox"]:checked,
+    .dg-app.dg-theme-dark #securityControls .dg-checkbox-inline input[type="checkbox"]:checked {
+      background: linear-gradient(135deg, #4f7fff 0%, #3aa9ea 100%) !important;
+      border-color: #5a8dff !important;
+    }
+    .dg-app.dg-theme-dark #colorConversionResult .color-copy-value,
+    .dg-app.dg-theme-dark #colorConversionResult code {
+      background: #22385d !important;
+      color: #e6efff !important;
+      border: 1px solid rgba(128, 160, 213, 0.32) !important;
+    }
+    .dg-app.dg-theme-dark #colorConversionResult div[style*="Color Preview"] {
+      color: #f8fbff !important;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.45) !important;
+    }
   `;
   document.head.appendChild(style);
 
@@ -4601,9 +5182,10 @@ function createDataGeneratorUI(containerId) {
           <div class="dg-search-results" id="searchResults"></div>
         </div>
         <div class="dg-header-actions">
-          <button id="maximizeViewBtn" class="dg-btn dg-btn-secondary dg-maximize-btn">⛶ Maximize</button>
-          <button id="jsonFillerToggleBtn" class="dg-btn dg-btn-secondary dg-json-toggle">🧩 JSON Filler</button>
-          <button id="resetAllBtn" class="dg-btn dg-btn-secondary">🔄 Reset All</button>
+          <button id="themeToggleBtn" class="dg-btn dg-btn-secondary dg-theme-toggle-btn" title="Toggle Theme">🌙</button>
+          <button id="maximizeViewBtn" class="dg-btn dg-btn-secondary dg-maximize-btn" title="Maximize">⛶</button>
+          <button id="jsonFillerToggleBtn" class="dg-btn dg-btn-secondary dg-json-toggle" title="JSON Filler">🧩</button>
+          <button id="resetAllBtn" class="dg-btn dg-btn-secondary" title="Reset All">🔄</button>
         </div>
       </div>
       <div class="dg-body" id="mainGeneratorView">
@@ -4756,7 +5338,9 @@ function createDataGeneratorUI(containerId) {
   let activeJsonFieldPath = "";
   let jsonInsertFieldName = "";
   let jsonInsertValueType = "string";
+  let currentTheme = "light";
 
+  const themeToggleBtn = document.getElementById("themeToggleBtn");
   const maximizeViewBtn = document.getElementById("maximizeViewBtn");
   const jsonFillerToggleBtn = document.getElementById("jsonFillerToggleBtn");
   const mainGeneratorView = document.getElementById("mainGeneratorView");
@@ -4779,6 +5363,35 @@ function createDataGeneratorUI(containerId) {
       document.body.classList.contains("dg-fullpage");
     const fullPageBySize = window.innerWidth > 820 || window.innerHeight > 820;
     appRoot.classList.toggle("dg-fullpage", fullPageByBody || fullPageBySize);
+  }
+
+  function applyTheme(theme) {
+    currentTheme = theme === "dark" ? "dark" : "light";
+    appRoot.classList.toggle("dg-theme-dark", currentTheme === "dark");
+    if (themeToggleBtn) {
+      themeToggleBtn.classList.toggle("active", currentTheme === "dark");
+      themeToggleBtn.textContent = currentTheme === "dark" ? "☀️" : "🌙";
+      themeToggleBtn.title = currentTheme === "dark" ? "Switch to Light" : "Switch to Dark";
+    }
+  }
+
+  function loadSavedTheme() {
+    try {
+      const savedTheme = localStorage.getItem("dgTheme");
+      applyTheme(savedTheme === "dark" ? "dark" : "light");
+    } catch (error) {
+      applyTheme("light");
+    }
+  }
+
+  function toggleTheme() {
+    const nextTheme = currentTheme === "dark" ? "light" : "dark";
+    applyTheme(nextTheme);
+    try {
+      localStorage.setItem("dgTheme", nextTheme);
+    } catch (error) {
+      // Ignore storage issues.
+    }
   }
 
   function formatGeneratorLabel(generatorName) {
@@ -5793,9 +6406,8 @@ function createDataGeneratorUI(containerId) {
     mainGeneratorView.style.display = jsonMode ? "none" : "flex";
     jsonFillerView.classList.toggle("active", jsonMode);
     jsonFillerToggleBtn.classList.toggle("active", jsonMode);
-    jsonFillerToggleBtn.textContent = jsonMode
-      ? "⬅ Back To Generator"
-      : "🧩 JSON Filler";
+    jsonFillerToggleBtn.textContent = jsonMode ? "⬅️" : "🧩";
+    jsonFillerToggleBtn.title = jsonMode ? "Back To Generator" : "JSON Filler";
     appRoot.classList.toggle("json-mode", jsonMode);
   }
 
@@ -5804,14 +6416,16 @@ function createDataGeneratorUI(containerId) {
     const isLikelyPopup = window.innerWidth <= 820 && window.innerHeight <= 820;
     if (isLikelyPopup) {
       maximizeViewBtn.classList.remove("active");
-      maximizeViewBtn.textContent = "⤢ Full Page";
+      maximizeViewBtn.textContent = "⤢";
+      maximizeViewBtn.title = "Open Full Page";
       return;
     }
     const isFullscreen = !!document.fullscreenElement;
     const isFallbackMax = appRoot.classList.contains("dg-force-maximized");
     const isMaximized = isFullscreen || isFallbackMax;
     maximizeViewBtn.classList.toggle("active", isMaximized);
-    maximizeViewBtn.textContent = isMaximized ? "🗗 Restore" : "⛶ Maximize";
+    maximizeViewBtn.textContent = isMaximized ? "🗗" : "⛶";
+    maximizeViewBtn.title = isMaximized ? "Restore Size" : "Maximize";
   }
 
   async function toggleMaximizeView() {
@@ -5944,6 +6558,13 @@ function createDataGeneratorUI(containerId) {
       });
     });
   }
+
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener("click", () => {
+      toggleTheme();
+    });
+  }
+  loadSavedTheme();
 
   if (maximizeViewBtn) {
     maximizeViewBtn.addEventListener("click", () => {
