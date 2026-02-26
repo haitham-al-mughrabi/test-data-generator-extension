@@ -111,6 +111,7 @@ function initGenerators() {
   if (window.currenciesGenerators) Object.assign(window.generators, window.currenciesGenerators);
   if (window.sizesGenerators) Object.assign(window.generators, window.sizesGenerators);
   if (window.companiesGenerators) Object.assign(window.generators, window.companiesGenerators);
+  if (window.usersAccountsGenerators) Object.assign(window.generators, window.usersAccountsGenerators);
   
   // Missing generators
   if (window.missingGenerators) Object.assign(window.generators, window.missingGenerators);

@@ -2982,6 +2982,77 @@ function createDataGeneratorUI(containerId) {
         {
           title: "Clothing",
           fields: [
+            { id: "username", label: "Username" },
+            { id: "password", label: "Password" },
+            { id: "email", label: "Email" },
+            { id: "apiKey", label: "API Key" },
+            { id: "apiSecret", label: "API Secret" }
+          ]
+        },
+        {
+          title: "Account Info",
+          fields: [
+            { id: "accountType", label: "Account Type (EN)" },
+            { id: "accountTypeAr", label: "Account Type (AR)" },
+            { id: "accountStatus", label: "Account Status (EN)" },
+            { id: "accountStatusAr", label: "Account Status (AR)" },
+            { id: "userRole", label: "User Role (EN)" },
+            { id: "userRoleAr", label: "User Role (AR)" }
+          ]
+        },
+        {
+          title: "Dates & Activity",
+          fields: [
+            { id: "registrationDate", label: "Registration Date" },
+            { id: "lastLoginDate", label: "Last Login Date" },
+            { id: "lastLoginTime", label: "Last Login Time" },
+            { id: "loginAttempts", label: "Login Attempts" }
+          ]
+        },
+        {
+          title: "Security & Verification",
+          fields: [
+            { id: "twoFactorEnabled", label: "2FA Enabled" },
+            { id: "emailVerified", label: "Email Verified" },
+            { id: "phoneVerified", label: "Phone Verified" },
+            { id: "sessionToken", label: "Session Token" },
+            { id: "refreshToken", label: "Refresh Token" }
+          ]
+        },
+        {
+          title: "Device & Location",
+          fields: [
+            { id: "deviceType", label: "Device Type" },
+            { id: "operatingSystem", label: "Operating System" },
+            { id: "browser", label: "Browser" },
+            { id: "accountCreatedIp", label: "Account Created IP" },
+            { id: "lastLoginIp", label: "Last Login IP" }
+          ]
+        },
+        {
+          title: "Preferences",
+          fields: [
+            { id: "preferredLanguage", label: "Preferred Language" },
+            { id: "timezone", label: "Timezone" },
+            { id: "profileCompletion", label: "Profile Completion %" },
+            { id: "notificationsEnabled", label: "Notifications Enabled" },
+            { id: "marketingOptIn", label: "Marketing Opt-In" }
+          ]
+        },
+        {
+          title: "Complete Data",
+          fields: [
+            { id: "userData", label: "Full User Data (JSON)" }
+          ]
+        }
+      ]
+    },
+    {
+      title: "Sizes",
+      subTabs: [
+        {
+          title: "Clothing",
+          fields: [
             { id: "clothingSize", label: "Clothing Size" },
             { id: "clothingSizeNumeric", label: "Clothing Size (Numeric)" },
             { id: "clothingSizeEU", label: "Clothing Size (EU)" },
@@ -3026,6 +3097,77 @@ function createDataGeneratorUI(containerId) {
         }
       ]
     },
+    {
+      title: "Users & Accounts",
+      subTabs: [
+        {
+          title: "Credentials",
+          fields: [
+            { id: "username", label: "Username" },
+            { id: "password", label: "Password" },
+            { id: "email", label: "Email" },
+            { id: "apiKey", label: "API Key" },
+            { id: "apiSecret", label: "API Secret" }
+          ]
+        },
+        {
+          title: "Account Info",
+          fields: [
+            { id: "accountType", label: "Account Type (EN)" },
+            { id: "accountTypeAr", label: "Account Type (AR)" },
+            { id: "accountStatus", label: "Account Status (EN)" },
+            { id: "accountStatusAr", label: "Account Status (AR)" },
+            { id: "userRole", label: "User Role (EN)" },
+            { id: "userRoleAr", label: "User Role (AR)" }
+          ]
+        },
+        {
+          title: "Dates & Activity",
+          fields: [
+            { id: "registrationDate", label: "Registration Date" },
+            { id: "lastLoginDate", label: "Last Login Date" },
+            { id: "lastLoginTime", label: "Last Login Time" },
+            { id: "loginAttempts", label: "Login Attempts" }
+          ]
+        },
+        {
+          title: "Security & Verification",
+          fields: [
+            { id: "twoFactorEnabled", label: "2FA Enabled" },
+            { id: "emailVerified", label: "Email Verified" },
+            { id: "phoneVerified", label: "Phone Verified" },
+            { id: "sessionToken", label: "Session Token" },
+            { id: "refreshToken", label: "Refresh Token" }
+          ]
+        },
+        {
+          title: "Device & Location",
+          fields: [
+            { id: "deviceType", label: "Device Type" },
+            { id: "operatingSystem", label: "Operating System" },
+            { id: "browser", label: "Browser" },
+            { id: "accountCreatedIp", label: "Account Created IP" },
+            { id: "lastLoginIp", label: "Last Login IP" }
+          ]
+        },
+        {
+          title: "Preferences",
+          fields: [
+            { id: "preferredLanguage", label: "Preferred Language" },
+            { id: "timezone", label: "Timezone" },
+            { id: "profileCompletion", label: "Profile Completion %" },
+            { id: "notificationsEnabled", label: "Notifications Enabled" },
+            { id: "marketingOptIn", label: "Marketing Opt-In" }
+          ]
+        },
+        {
+          title: "Complete Data",
+          fields: [
+            { id: "userData", label: "Full User Data (JSON)" }
+          ]
+        }
+      ]
+    }
   ];
 
   // Tab icons mapping
@@ -3100,6 +3242,7 @@ function createDataGeneratorUI(containerId) {
     'Currencies': '💰',
     'Sizes': '📏',
     'Companies': '🏢',
+    'Users & Accounts': '👥',
     'Other': '📋'
   };
 
