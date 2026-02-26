@@ -2925,6 +2925,58 @@ function createDataGeneratorUI(containerId) {
       ]
     },
     {
+      title: "Companies",
+      subTabs: [
+        {
+          title: "Basic Info",
+          fields: [
+            { id: "companyName", label: "Company Name (EN)" },
+            { id: "companyNameAr", label: "Company Name (AR)" },
+            { id: "industry", label: "Industry (EN)" },
+            { id: "industryAr", label: "Industry (AR)" },
+            { id: "companySize", label: "Company Size (EN)" },
+            { id: "companySizeAr", label: "Company Size (AR)" }
+          ]
+        },
+        {
+          title: "Contact & Location",
+          fields: [
+            { id: "companyAddress", label: "Address (US)" },
+            { id: "companyAddressSaudi", label: "Address (Saudi)" },
+            { id: "companyPhone", label: "Phone (US)" },
+            { id: "companyPhoneSaudi", label: "Phone (Saudi)" },
+            { id: "companyEmail", label: "Email" },
+            { id: "companyWebsite", label: "Website" }
+          ]
+        },
+        {
+          title: "Business Details",
+          fields: [
+            { id: "companyRegistration", label: "Registration Number" },
+            { id: "taxId", label: "Tax ID" },
+            { id: "companyFoundedYear", label: "Founded Year" },
+            { id: "numberOfEmployees", label: "Number of Employees" },
+            { id: "annualRevenue", label: "Annual Revenue" }
+          ]
+        },
+        {
+          title: "Leadership",
+          fields: [
+            { id: "ceo", label: "CEO (EN)" },
+            { id: "ceoAr", label: "CEO (AR)" },
+            { id: "companyDescription", label: "Description (EN)" },
+            { id: "companyDescriptionAr", label: "Description (AR)" }
+          ]
+        },
+        {
+          title: "Complete Data",
+          fields: [
+            { id: "companyData", label: "Full Company Data (JSON)" }
+          ]
+        }
+      ]
+    },
+    {
       title: "Sizes",
       subTabs: [
         {
@@ -3047,6 +3099,7 @@ function createDataGeneratorUI(containerId) {
     'Colors': '🎨',
     'Currencies': '💰',
     'Sizes': '📏',
+    'Companies': '🏢',
     'Other': '📋'
   };
 
