@@ -882,6 +882,239 @@ const categoriesWithSubTabs = [
         ]
       }
     ]
+  },
+  { 
+    title: 'Numbers', 
+    subTabs: [
+      {
+        title: 'Basic Numbers',
+        fields: [
+          { id: 'integer', label: 'Integer' },
+          { id: 'positiveInteger', label: 'Positive Integer' },
+          { id: 'negativeInteger', label: 'Negative Integer' },
+          { id: 'decimal', label: 'Decimal / Float' },
+          { id: 'positiveDecimal', label: 'Positive Decimal' },
+          { id: 'negativeDecimal', label: 'Negative Decimal' },
+          { id: 'percentage', label: 'Percentage' },
+          { id: 'fraction', label: 'Fraction' },
+          { id: 'evenNumber', label: 'Even Number' },
+          { id: 'oddNumber', label: 'Odd Number' },
+          { id: 'primeNumber', label: 'Prime Number' },
+          { id: 'wholeNumber', label: 'Whole Number' },
+          { id: 'naturalNumber', label: 'Natural Number' },
+          { id: 'realNumber', label: 'Real Number' }
+        ]
+      },
+      {
+        title: 'Number Systems',
+        fields: [
+          { id: 'binaryNumber', label: 'Binary Number' },
+          { id: 'octalNumber', label: 'Octal Number' },
+          { id: 'hexadecimalNumber', label: 'Hexadecimal Number' },
+          { id: 'scientificNotation', label: 'Scientific Notation' },
+          { id: 'romanNumeral', label: 'Roman Numeral' }
+        ]
+      },
+      {
+        title: 'Complex Numbers',
+        fields: [
+          { id: 'complexNumber', label: 'Complex Number' },
+          { id: 'imaginaryNumber', label: 'Imaginary Number' },
+          { id: 'rationalNumber', label: 'Rational Number' },
+          { id: 'irrationalNumber', label: 'Irrational Number' },
+          { id: 'absoluteValue', label: 'Absolute Value' }
+        ]
+      },
+      {
+        title: 'Special Numbers',
+        fields: [
+          { id: 'squareNumber', label: 'Square Number' },
+          { id: 'cubeNumber', label: 'Cube Number' },
+          { id: 'fibonacciNumber', label: 'Fibonacci Number' },
+          { id: 'factorial', label: 'Factorial' },
+          { id: 'powerOf2', label: 'Power of 2' },
+          { id: 'powerOf10', label: 'Power of 10' },
+          { id: 'zero', label: 'Zero' },
+          { id: 'one', label: 'One' },
+          { id: 'infinity', label: 'Infinity' },
+          { id: 'pi', label: 'Pi (π)' },
+          { id: 'eulerNumber', label: "Euler's Number (e)" },
+          { id: 'goldenRatio', label: 'Golden Ratio (φ)' }
+        ]
+      },
+      {
+        title: 'Ranges & Digits',
+        fields: [
+          { id: 'randomRange1to100', label: 'Range 1-100' },
+          { id: 'randomRange1to1000', label: 'Range 1-1000' },
+          { id: 'randomRange0to1', label: 'Range 0-1' },
+          { id: 'digit', label: 'Single Digit (0-9)' },
+          { id: 'twoDigits', label: 'Two Digits (10-99)' },
+          { id: 'threeDigits', label: 'Three Digits (100-999)' },
+          { id: 'fourDigits', label: 'Four Digits (1000-9999)' },
+          { id: 'fiveDigits', label: 'Five Digits' },
+          { id: 'sixDigits', label: 'Six Digits' }
+        ]
+      },
+      {
+        title: 'ID Numbers',
+        fields: [
+          { id: 'sequenceNumber', label: 'Sequence Number' },
+          { id: 'serialNumber', label: 'Serial Number' },
+          { id: 'referenceNumber', label: 'Reference Number' },
+          { id: 'orderNumber', label: 'Order Number' },
+          { id: 'invoiceNumber', label: 'Invoice Number' },
+          { id: 'ticketNumber', label: 'Ticket Number' },
+          { id: 'confirmationNumber', label: 'Confirmation Number' },
+          { id: 'trackingNumber', label: 'Tracking Number' },
+          { id: 'barcodeNumber', label: 'Barcode (EAN-13)' },
+          { id: 'isbnNumber', label: 'ISBN Number' },
+          { id: 'versionNumber', label: 'Version Number' },
+          { id: 'portNumber', label: 'Port Number' }
+        ]
+      },
+      {
+        title: 'Coordinates & Location',
+        fields: [
+          { id: 'latitude', label: 'Latitude' },
+          { id: 'longitude', label: 'Longitude' },
+          { id: 'altitude', label: 'Altitude (meters)' }
+        ]
+      },
+      {
+        title: 'Temperature',
+        fields: [
+          { id: 'temperatureCelsius', label: 'Temperature (°C)' },
+          { id: 'temperatureFahrenheit', label: 'Temperature (°F)' },
+          { id: 'temperatureKelvin', label: 'Temperature (K)' }
+        ]
+      },
+      {
+        title: 'Weight & Mass',
+        fields: [
+          { id: 'weightKg', label: 'Weight (kg)' },
+          { id: 'weightLbs', label: 'Weight (lbs)' }
+        ]
+      },
+      {
+        title: 'Height & Length',
+        fields: [
+          { id: 'heightCm', label: 'Height (cm)' },
+          { id: 'heightFeet', label: 'Height (feet/inches)' },
+          { id: 'distanceKm', label: 'Distance (km)' },
+          { id: 'distanceMiles', label: 'Distance (miles)' }
+        ]
+      },
+      {
+        title: 'Speed & Velocity',
+        fields: [
+          { id: 'speedKmh', label: 'Speed (km/h)' },
+          { id: 'speedMph', label: 'Speed (mph)' }
+        ]
+      },
+      {
+        title: 'Area & Volume',
+        fields: [
+          { id: 'areaSqMeters', label: 'Area (m²)' },
+          { id: 'areaSqFeet', label: 'Area (ft²)' },
+          { id: 'volumeLiters', label: 'Volume (liters)' },
+          { id: 'volumeGallons', label: 'Volume (gallons)' }
+        ]
+      },
+      {
+        title: 'Angles',
+        fields: [
+          { id: 'angleDegrees', label: 'Angle (degrees)' },
+          { id: 'angleRadians', label: 'Angle (radians)' }
+        ]
+      },
+      {
+        title: 'Ratings & Scores',
+        fields: [
+          { id: 'probability', label: 'Probability (0-1)' },
+          { id: 'score', label: 'Score (0-100)' },
+          { id: 'rating1to5', label: 'Rating (1-5)' },
+          { id: 'rating1to10', label: 'Rating (1-10)' },
+          { id: 'quantity', label: 'Quantity' },
+          { id: 'count', label: 'Count' },
+          { id: 'index', label: 'Index' },
+          { id: 'rank', label: 'Rank' },
+          { id: 'level', label: 'Level' }
+        ]
+      },
+      {
+        title: 'Time Values',
+        fields: [
+          { id: 'age', label: 'Age' },
+          { id: 'year', label: 'Year' },
+          { id: 'month', label: 'Month (1-12)' },
+          { id: 'day', label: 'Day (1-31)' },
+          { id: 'hour', label: 'Hour (0-23)' },
+          { id: 'minute', label: 'Minute (0-59)' },
+          { id: 'second', label: 'Second (0-59)' },
+          { id: 'millisecond', label: 'Millisecond (0-999)' },
+          { id: 'unixTimestamp', label: 'Unix Timestamp' },
+          { id: 'timestampMs', label: 'Timestamp (ms)' }
+        ]
+      },
+      {
+        title: 'Computer & Tech',
+        fields: [
+          { id: 'randomSeed', label: 'Random Seed' },
+          { id: 'hashCode', label: 'Hash Code' },
+          { id: 'memorySizeBytes', label: 'Memory Size (bytes)' },
+          { id: 'memorySizeKB', label: 'Memory Size (KB)' },
+          { id: 'memorySizeMB', label: 'Memory Size (MB)' },
+          { id: 'memorySizeGB', label: 'Memory Size (GB)' },
+          { id: 'fileSizeBytes', label: 'File Size (bytes)' },
+          { id: 'bandwidthMbps', label: 'Bandwidth (Mbps)' }
+        ]
+      },
+      {
+        title: 'Physics & Engineering',
+        fields: [
+          { id: 'frequencyHz', label: 'Frequency (Hz)' },
+          { id: 'voltageV', label: 'Voltage (V)' },
+          { id: 'currentA', label: 'Current (A)' },
+          { id: 'powerW', label: 'Power (W)' },
+          { id: 'energyKWh', label: 'Energy (kWh)' },
+          { id: 'pressurePa', label: 'Pressure (Pa)' },
+          { id: 'humidityPercent', label: 'Humidity (%)' },
+          { id: 'phLevel', label: 'pH Level' }
+        ]
+      },
+      {
+        title: 'Decimal Precision',
+        fields: [
+          { id: 'decimal2Places', label: 'Decimal (2 places)' },
+          { id: 'decimal4Places', label: 'Decimal (4 places)' },
+          { id: 'decimal6Places', label: 'Decimal (6 places)' }
+        ]
+      },
+      {
+        title: 'Large & Small',
+        fields: [
+          { id: 'largeNumberMillion', label: 'Large Number (Million)' },
+          { id: 'largeNumberBillion', label: 'Large Number (Billion)' },
+          { id: 'smallNumber', label: 'Small Number (0.001-0.999)' },
+          { id: 'tinyNumber', label: 'Tiny Number (Scientific)' },
+          { id: 'hugeNumber', label: 'Huge Number (Scientific)' }
+        ]
+      },
+      {
+        title: 'Mathematical Functions',
+        fields: [
+          { id: 'squareRoot', label: 'Square Root' },
+          { id: 'cubeRoot', label: 'Cube Root' },
+          { id: 'logarithm', label: 'Logarithm (base 10)' },
+          { id: 'naturalLogarithm', label: 'Natural Logarithm (ln)' },
+          { id: 'exponential', label: 'Exponential (e^x)' },
+          { id: 'sine', label: 'Sine' },
+          { id: 'cosine', label: 'Cosine' },
+          { id: 'tangent', label: 'Tangent' }
+        ]
+      }
+    ]
   }
 ];
 

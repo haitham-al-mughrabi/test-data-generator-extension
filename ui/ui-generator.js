@@ -592,6 +592,11 @@ function createDataGeneratorUI(containerId) {
     .dg-json-field-path { font-size: 10px; font-weight: 900; color: #334155; margin-bottom: 6px; word-break: break-all; }
     .dg-json-field-input { width: 100%; border: 1px solid rgba(91, 124, 250, 0.2); padding: 8px 10px; font-size: 12px; font-family: "SFMono-Regular", "Menlo", "Monaco", "Courier New", monospace; color: #111827; background: #f8fbff; }
     .dg-json-field-input:focus { outline: none; border-color: #5b7cfa; background: #ffffff; }
+    .dg-json-value-controls { display: flex; align-items: center; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+    .dg-json-type-select { border: 1px solid rgba(91, 124, 250, 0.3); padding: 6px 8px; font-size: 11px; background: white; color: #1f2937; font-weight: 700; min-width: 130px; }
+    .dg-json-mini-btn { border: 1px solid rgba(91, 124, 250, 0.35); background: #eff3ff; color: #2f4da3; font-size: 10px; font-weight: 800; padding: 6px 8px; cursor: pointer; }
+    .dg-json-mini-btn:hover { background: #dfe8ff; }
+    .dg-json-mini-btn.hidden { display: none; }
     .dg-json-generator-row { display: none; gap: 8px; padding: 10px; border-top: 1px solid rgba(91, 124, 250, 0.15); background: #f6f8ff; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.3fr) auto; align-items: center; }
     .dg-json-field-card.active .dg-json-generator-row { display: flex; }
     .dg-json-field-card.active .dg-json-generator-row.multi { display: grid; }
@@ -608,6 +613,207 @@ function createDataGeneratorUI(containerId) {
     .dg-app.dg-fullpage .dg-json-editor-pane { flex: 1.1; }
     .dg-app.dg-fullpage .dg-json-fields-pane { flex: 1.2; }
     .dg-app.dg-fullpage #jsonTemplateInput { font-size: 13px; }
+    .dg-header {
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.25);
+    }
+    .dg-header h1 {
+      font-size: 22px;
+      letter-spacing: -0.6px;
+    }
+    .dg-header-actions .dg-btn {
+      box-shadow: 0 8px 20px rgba(12, 17, 29, 0.14);
+      border-radius: 12px;
+    }
+    .dg-body {
+      gap: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.35) 0%, rgba(246,248,253,0.95) 100%);
+    }
+    .dg-tabs-panel {
+      box-shadow: inset -1px 0 0 rgba(15, 23, 42, 0.05);
+    }
+    .dg-content {
+      padding: 10px 0 56px;
+    }
+    .dg-field-section {
+      border-radius: 12px;
+      margin: 10px 10px 0;
+      border-color: rgba(91, 124, 250, 0.12);
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
+    }
+    .dg-section-title {
+      margin-bottom: 12px;
+    }
+    .dg-checkbox {
+      border-radius: 12px;
+    }
+    .dg-right-sidebar {
+      background: linear-gradient(180deg, #fafdff 0%, #eff4fd 100%);
+    }
+    .dg-panel-section {
+      border-radius: 12px;
+      margin: 10px 10px 0;
+      overflow: hidden;
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.08);
+    }
+    .dg-panel-header {
+      padding: 13px 15px;
+    }
+    .dg-json-view {
+      padding: 10px;
+      gap: 10px;
+      background: linear-gradient(180deg, #f8fbff 0%, #eef3fb 100%);
+    }
+    .dg-json-pane {
+      border: 1px solid rgba(91, 124, 250, 0.12);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 12px 24px rgba(15, 23, 42, 0.1);
+    }
+    .dg-json-pane + .dg-json-pane {
+      border-left: 1px solid rgba(91, 124, 250, 0.12);
+    }
+    .dg-json-pane-header {
+      padding: 13px 15px;
+    }
+    .dg-json-editor-wrap {
+      padding: 14px;
+      gap: 12px;
+    }
+    .dg-json-editor-surface {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 6px 16px rgba(15, 23, 42, 0.06);
+    }
+    .dg-json-line-numbers {
+      background: linear-gradient(180deg, #edf2ff 0%, #e8eeff 100%);
+    }
+    #jsonTemplateInput {
+      background-color: #fcfdff;
+    }
+    .dg-json-actions .dg-btn {
+      border-radius: 10px;
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.1);
+    }
+    .dg-json-field-card {
+      border-radius: 12px;
+      box-shadow: 0 6px 14px rgba(15, 23, 42, 0.05);
+      margin-bottom: 10px;
+    }
+    .dg-json-field-main {
+      padding: 12px;
+    }
+    .dg-json-field-path {
+      font-size: 11px;
+      color: #22314f;
+    }
+    .dg-json-field-input {
+      border-radius: 10px;
+      background: #f9fbff;
+      border-color: rgba(91, 124, 250, 0.24);
+    }
+    .dg-json-value-controls {
+      margin-top: 10px;
+    }
+    .dg-json-type-select,
+    .dg-json-generator-select {
+      border-radius: 10px;
+      background: #ffffff;
+    }
+    .dg-json-mini-btn {
+      border-radius: 10px;
+    }
+    .dg-json-generator-row {
+      background: linear-gradient(180deg, #f4f7ff 0%, #edf2ff 100%);
+      padding: 11px;
+    }
+    .dg-json-empty {
+      border-radius: 12px;
+      padding: 20px;
+      background: linear-gradient(180deg, #f7faff 0%, #eef4ff 100%);
+    }
+    .dg-btn {
+      border-radius: 12px;
+      border: 1px solid transparent;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease, border-color 0.16s ease, color 0.16s ease;
+      box-shadow: 0 8px 18px rgba(12, 17, 29, 0.08);
+    }
+    .dg-btn:active {
+      transform: translateY(1px) scale(0.99);
+      box-shadow: 0 4px 10px rgba(12, 17, 29, 0.1);
+    }
+    .dg-btn:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(91, 124, 250, 0.25), 0 10px 20px rgba(12, 17, 29, 0.12);
+    }
+    .dg-btn-primary {
+      background: linear-gradient(135deg, #4168f6 0%, #2377f7 45%, #06a6d8 100%);
+      border-color: rgba(35, 119, 247, 0.4);
+      color: #ffffff;
+      text-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+    }
+    .dg-btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 24px rgba(35, 119, 247, 0.35);
+      filter: saturate(1.06);
+    }
+    .dg-btn-secondary {
+      background: linear-gradient(180deg, #ffffff 0%, #f2f6ff 100%);
+      color: #243b76;
+      border-color: rgba(91, 124, 250, 0.25);
+    }
+    .dg-btn-secondary:hover {
+      transform: translateY(-1px);
+      background: linear-gradient(180deg, #ffffff 0%, #eaf0ff 100%);
+      border-color: rgba(91, 124, 250, 0.45);
+      box-shadow: 0 12px 24px rgba(64, 84, 178, 0.2);
+    }
+    .dg-header-actions .dg-btn {
+      border-radius: 14px;
+      padding: 10px 15px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.14) 100%);
+      border-color: rgba(255,255,255,0.35);
+      color: #ffffff;
+      box-shadow: 0 10px 22px rgba(8, 12, 28, 0.22);
+    }
+    .dg-header-actions .dg-btn:hover {
+      background: linear-gradient(180deg, rgba(255,255,255,0.36) 0%, rgba(255,255,255,0.2) 100%);
+      border-color: rgba(255,255,255,0.7);
+      transform: translateY(-1px);
+    }
+    .dg-top-controls .dg-btn {
+      border-radius: 10px;
+      border-width: 1px;
+      box-shadow: 0 8px 16px rgba(10, 18, 45, 0.14);
+    }
+    .dg-top-controls .dg-btn.unselect {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      border-color: rgba(255, 255, 255, 0.5);
+      color: #fff5f5;
+    }
+    .dg-top-controls .dg-btn.select-all {
+      background: linear-gradient(135deg, #16a34a 0%, #22c55e 100%);
+      border-color: rgba(255, 255, 255, 0.5);
+      color: #f0fff4;
+    }
+    .dg-json-mini-btn {
+      border-radius: 10px;
+      background: linear-gradient(180deg, #ffffff 0%, #eaf0ff 100%);
+      border-color: rgba(91, 124, 250, 0.32);
+      color: #2b4aa8;
+      box-shadow: 0 6px 14px rgba(12, 17, 29, 0.08);
+    }
+    .dg-json-mini-btn:hover {
+      background: linear-gradient(180deg, #ffffff 0%, #dde8ff 100%);
+      border-color: rgba(91, 124, 250, 0.5);
+      transform: translateY(-1px);
+    }
+    .dg-mini-btn {
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(35, 119, 247, 0.24);
+    }
   `;
   document.head.appendChild(style);
 
@@ -2977,72 +3183,61 @@ function createDataGeneratorUI(containerId) {
       ]
     },
     {
-      title: "Sizes",
+      title: "Numbers",
       subTabs: [
         {
-          title: "Clothing",
+          title: "Basic Numbers",
           fields: [
-            { id: "username", label: "Username" },
-            { id: "password", label: "Password" },
-            { id: "email", label: "Email" },
-            { id: "apiKey", label: "API Key" },
-            { id: "apiSecret", label: "API Secret" }
+            { id: "number", label: "Number" },
+            { id: "integer", label: "Integer" },
+            { id: "positiveInteger", label: "Positive Integer" },
+            { id: "negativeInteger", label: "Negative Integer" },
+            { id: "decimal", label: "Decimal" },
+            { id: "percentage", label: "Percentage" },
+            { id: "randomNumbers", label: "Random Numbers" }
           ]
         },
         {
-          title: "Account Info",
+          title: "Number Types",
           fields: [
-            { id: "accountType", label: "Account Type (EN)" },
-            { id: "accountTypeAr", label: "Account Type (AR)" },
-            { id: "accountStatus", label: "Account Status (EN)" },
-            { id: "accountStatusAr", label: "Account Status (AR)" },
-            { id: "userRole", label: "User Role (EN)" },
-            { id: "userRoleAr", label: "User Role (AR)" }
+            { id: "evenNumber", label: "Even Number" },
+            { id: "oddNumber", label: "Odd Number" },
+            { id: "primeNumber", label: "Prime Number" },
+            { id: "wholeNumber", label: "Whole Number" },
+            { id: "naturalNumber", label: "Natural Number" },
+            { id: "realNumber", label: "Real Number" }
           ]
         },
         {
-          title: "Dates & Activity",
+          title: "Systems & Formats",
           fields: [
-            { id: "registrationDate", label: "Registration Date" },
-            { id: "lastLoginDate", label: "Last Login Date" },
-            { id: "lastLoginTime", label: "Last Login Time" },
-            { id: "loginAttempts", label: "Login Attempts" }
+            { id: "binaryNumber", label: "Binary Number" },
+            { id: "octalNumber", label: "Octal Number" },
+            { id: "hexadecimalNumber", label: "Hexadecimal Number" },
+            { id: "scientificNotation", label: "Scientific Notation" },
+            { id: "romanNumeral", label: "Roman Numeral" }
           ]
         },
         {
-          title: "Security & Verification",
+          title: "Ranges & Digits",
           fields: [
-            { id: "twoFactorEnabled", label: "2FA Enabled" },
-            { id: "emailVerified", label: "Email Verified" },
-            { id: "phoneVerified", label: "Phone Verified" },
-            { id: "sessionToken", label: "Session Token" },
-            { id: "refreshToken", label: "Refresh Token" }
+            { id: "randomRange1to100", label: "Range 1-100" },
+            { id: "randomRange1to1000", label: "Range 1-1000" },
+            { id: "digit", label: "Single Digit" },
+            { id: "twoDigits", label: "Two Digits" },
+            { id: "threeDigits", label: "Three Digits" },
+            { id: "fourDigits", label: "Four Digits" }
           ]
         },
         {
-          title: "Device & Location",
+          title: "Identifiers",
           fields: [
-            { id: "deviceType", label: "Device Type" },
-            { id: "operatingSystem", label: "Operating System" },
-            { id: "browser", label: "Browser" },
-            { id: "accountCreatedIp", label: "Account Created IP" },
-            { id: "lastLoginIp", label: "Last Login IP" }
-          ]
-        },
-        {
-          title: "Preferences",
-          fields: [
-            { id: "preferredLanguage", label: "Preferred Language" },
-            { id: "timezone", label: "Timezone" },
-            { id: "profileCompletion", label: "Profile Completion %" },
-            { id: "notificationsEnabled", label: "Notifications Enabled" },
-            { id: "marketingOptIn", label: "Marketing Opt-In" }
-          ]
-        },
-        {
-          title: "Complete Data",
-          fields: [
-            { id: "userData", label: "Full User Data (JSON)" }
+            { id: "sequenceNumber", label: "Sequence Number" },
+            { id: "serialNumber", label: "Serial Number" },
+            { id: "referenceNumber", label: "Reference Number" },
+            { id: "invoiceNumber", label: "Invoice Number" },
+            { id: "trackingNumber", label: "Tracking Number" },
+            { id: "barcodeNumber", label: "Barcode Number" }
           ]
         }
       ]
@@ -3240,6 +3435,7 @@ function createDataGeneratorUI(containerId) {
     'IoT & Smart Home': '🔌',
     'Colors': '🎨',
     'Currencies': '💰',
+    'Numbers': '🔢',
     'Sizes': '📏',
     'Companies': '🏢',
     'Users & Accounts': '👥',
@@ -3257,12 +3453,14 @@ function createDataGeneratorUI(containerId) {
     'Banking', 'Insurance', 'Telecom', 'Energy', 'Logistics',
     'Food', 'Entertainment', 'Media', 'Sports', 'Fashion',
     'Construction', 'Manufacturing', 'Agriculture', 'Legal', 'Science',
-    'Documents', 'Weather', 'Crypto', 'IoT', 'Other'
+    'Documents', 'Weather', 'Crypto', 'IoT', 'Companies',
+    'Users & Accounts', 'Numbers', 'Sizes', 'Other'
   ];
 
   const sortedCategories = [...categories].sort((a, b) => {
     const indexA = categoryOrder.indexOf(a.title);
     const indexB = categoryOrder.indexOf(b.title);
+    if (indexA === -1 && indexB === -1) return a.title.localeCompare(b.title);
     if (indexA === -1) return 1;
     if (indexB === -1) return -1;
     return indexA - indexB;
@@ -4544,6 +4742,7 @@ function createDataGeneratorUI(containerId) {
   let jsonLineMap = {};
   let activeJsonLine = 0;
   let activeJsonFieldIndex = null;
+  let activeJsonFieldPath = "";
 
   const maximizeViewBtn = document.getElementById("maximizeViewBtn");
   const jsonFillerToggleBtn = document.getElementById("jsonFillerToggleBtn");
@@ -4694,33 +4893,58 @@ function createDataGeneratorUI(containerId) {
     return typeof value;
   }
 
+  function mapValueTypeToEditorType(valueType) {
+    if (valueType === "array") return "list";
+    if (valueType === "object") return "dict";
+    if (valueType === "boolean") return "bool";
+    if (valueType === "number") return "number";
+    return "string";
+  }
+
   function formatValueForInput(value) {
     if (value === null) return "null";
     if (typeof value === "object") return JSON.stringify(value);
     return String(value ?? "");
   }
 
-  function coerceInputValue(rawValue, originalType) {
-    if (originalType === "number") {
-      const parsed = Number(rawValue);
-      return Number.isNaN(parsed) ? rawValue : parsed;
+  function parseBoolValue(rawValue) {
+    const normalized = String(rawValue ?? "").trim().toLowerCase();
+    if (["true", "1", "yes", "y", "on"].includes(normalized)) return true;
+    if (["false", "0", "no", "n", "off"].includes(normalized)) return false;
+    return Boolean(normalized);
+  }
+
+  function coerceInputValue(rawValue, editorType, fallbackValue) {
+    const text = String(rawValue ?? "").trim();
+    if (editorType === "string") return String(rawValue ?? "");
+    if (editorType === "number") {
+      const parsed = Number(text);
+      if (Number.isNaN(parsed)) throw new Error("Invalid number");
+      return parsed;
     }
-    if (originalType === "boolean") {
-      if (rawValue === "true") return true;
-      if (rawValue === "false") return false;
-      return rawValue;
+    if (editorType === "long") {
+      const parsed = parseInt(text, 10);
+      if (Number.isNaN(parsed)) throw new Error("Invalid integer");
+      return parsed;
     }
-    if (originalType === "null") {
-      return rawValue === "null" ? null : rawValue;
+    if (editorType === "bool") {
+      return parseBoolValue(text);
     }
-    if (originalType === "array" || originalType === "object") {
-      try {
-        return JSON.parse(rawValue);
-      } catch (error) {
-        return rawValue;
+    if (editorType === "list") {
+      if (!text) return [];
+      const parsed = JSON.parse(text);
+      if (!Array.isArray(parsed)) throw new Error("List must be a JSON array");
+      return parsed;
+    }
+    if (editorType === "dict") {
+      if (!text) return {};
+      const parsed = JSON.parse(text);
+      if (parsed === null || Array.isArray(parsed) || typeof parsed !== "object") {
+        throw new Error("Dict must be a JSON object");
       }
+      return parsed;
     }
-    return rawValue;
+    return fallbackValue;
   }
 
   function getPathTokens(path) {
@@ -4912,6 +5136,42 @@ function createDataGeneratorUI(containerId) {
     return [{ path, value }];
   }
 
+  function syncJsonFieldsStateFromTemplate() {
+    if (jsonTemplateData === null || typeof jsonTemplateData === "undefined") {
+      jsonFieldsState = [];
+      return;
+    }
+
+    const previousState = new Map(
+      jsonFieldsState.map((item) => [
+        item.path,
+        {
+          generator: item.generator || "",
+          generatorTab: item.generatorTab || "",
+          generatorSection: item.generatorSection || "",
+          editorType:
+            item.editorType || mapValueTypeToEditorType(getValueType(item.value)),
+        },
+      ]),
+    );
+
+    jsonFieldsState = flattenJsonFields(jsonTemplateData)
+      .filter((item) => item.path)
+      .map((item) => {
+        const prev = previousState.get(item.path) || {};
+        const valueType = getValueType(item.value);
+        return {
+          path: item.path,
+          value: item.value,
+          valueType,
+          editorType: prev.editorType || mapValueTypeToEditorType(valueType),
+          generator: prev.generator || "",
+          generatorTab: prev.generatorTab || "",
+          generatorSection: prev.generatorSection || "",
+        };
+      });
+  }
+
   function renderJsonFields() {
     const generatorCatalog = buildGeneratorCatalog();
     if (!jsonFieldsState.length) {
@@ -4921,6 +5181,17 @@ function createDataGeneratorUI(containerId) {
     }
 
     jsonFieldsState.forEach((field) => {
+      const allowedEditorTypes = new Set([
+        "string",
+        "number",
+        "long",
+        "bool",
+        "list",
+        "dict",
+      ]);
+      if (!allowedEditorTypes.has(field.editorType)) {
+        field.editorType = mapValueTypeToEditorType(getValueType(field.value));
+      }
       if (!field.generatorTab || !field.generatorSection) {
         const location = field.generator
           ? findGeneratorLocation(generatorCatalog, field.generator)
@@ -4993,6 +5264,18 @@ function createDataGeneratorUI(containerId) {
             <div class="dg-json-field-main" data-json-field-main="${index}">
               <div class="dg-json-field-path">${escapeHtmlText(field.path)}</div>
               <input class="dg-json-field-input" data-json-field-input="${index}" value="${escapeAttributeValue(formatValueForInput(field.value))}">
+              <div class="dg-json-value-controls">
+                <select class="dg-json-type-select" data-json-value-type="${index}">
+                  <option value="string" ${field.editorType === "string" ? "selected" : ""}>string</option>
+                  <option value="number" ${field.editorType === "number" ? "selected" : ""}>number</option>
+                  <option value="long" ${field.editorType === "long" ? "selected" : ""}>long</option>
+                  <option value="bool" ${field.editorType === "bool" ? "selected" : ""}>bool</option>
+                  <option value="list" ${field.editorType === "list" ? "selected" : ""}>list</option>
+                  <option value="dict" ${field.editorType === "dict" ? "selected" : ""}>dict</option>
+                </select>
+                <button type="button" class="dg-json-mini-btn ${field.editorType === "list" ? "" : "hidden"}" data-json-add-item="${index}">+ item</button>
+                <button type="button" class="dg-json-mini-btn ${field.editorType === "dict" ? "" : "hidden"}" data-json-add-key="${index}">+ key</button>
+              </div>
             </div>
             <div class="dg-json-generator-row multi">
               <select class="dg-json-generator-select" data-json-generator-tab="${index}">
@@ -5011,6 +5294,14 @@ function createDataGeneratorUI(containerId) {
       )
       .join("");
 
+    if (activeJsonFieldPath) {
+      const byPathIndex = jsonFieldsState.findIndex(
+        (item) => item.path === activeJsonFieldPath,
+      );
+      if (byPathIndex !== -1) {
+        activeJsonFieldIndex = byPathIndex;
+      }
+    }
     if (activeJsonFieldIndex !== null && jsonFieldsState[activeJsonFieldIndex]) {
       const activeCard = jsonFieldsContainer.querySelector(
         `[data-json-field-card="${activeJsonFieldIndex}"]`,
@@ -5024,6 +5315,7 @@ function createDataGeneratorUI(containerId) {
       row.addEventListener("click", () => {
         const idx = row.getAttribute("data-json-field-main");
         activeJsonFieldIndex = Number(idx);
+        activeJsonFieldPath = (jsonFieldsState[activeJsonFieldIndex] || {}).path || "";
         jsonFieldsContainer
           .querySelectorAll(".dg-json-field-card")
           .forEach((card) => card.classList.remove("active"));
@@ -5043,20 +5335,143 @@ function createDataGeneratorUI(containerId) {
       input.addEventListener("input", () => {
         const field = jsonFieldsState[index];
         if (!field || !jsonTemplateData) return;
-        const coercedValue = coerceInputValue(input.value, field.valueType);
-        field.value = coercedValue;
-        setValueByPath(jsonTemplateData, field.path, coercedValue);
-        refreshJsonEditorFromData();
-        scrollJsonToField(field.path);
+        activeJsonFieldIndex = index;
+        activeJsonFieldPath = field.path;
+        try {
+          const coercedValue = coerceInputValue(
+            input.value,
+            field.editorType,
+            field.value,
+          );
+          field.value = coercedValue;
+          field.valueType = getValueType(coercedValue);
+          setValueByPath(jsonTemplateData, field.path, coercedValue);
+          const requiresStructureRefresh =
+            field.editorType === "list" ||
+            field.editorType === "dict" ||
+            (coercedValue !== null && typeof coercedValue === "object");
+          if (requiresStructureRefresh) {
+            syncJsonFieldsStateFromTemplate();
+            renderJsonFields();
+          }
+          refreshJsonEditorFromData();
+          scrollJsonToField(activeJsonFieldPath);
+          jsonTemplateStatus.textContent = `Updated ${field.path} as ${field.editorType}.`;
+          jsonTemplateStatus.classList.remove("error");
+        } catch (error) {
+          jsonTemplateStatus.textContent = error.message || `Invalid ${field.editorType} value.`;
+          jsonTemplateStatus.classList.add("error");
+        }
       });
 
       input.addEventListener("focus", () => {
         activeJsonFieldIndex = index;
+        activeJsonFieldPath = (jsonFieldsState[index] || {}).path || "";
         if (jsonFieldsState[index]) {
           scrollJsonToField(jsonFieldsState[index].path);
         }
       });
     });
+
+    jsonFieldsContainer
+      .querySelectorAll("[data-json-value-type]")
+      .forEach((select) => {
+        select.addEventListener("change", () => {
+          const index = Number(select.getAttribute("data-json-value-type"));
+          const field = jsonFieldsState[index];
+          if (!field || !jsonTemplateData) return;
+          const nextType = select.value;
+          field.editorType = nextType;
+          activeJsonFieldIndex = index;
+          activeJsonFieldPath = field.path;
+
+          let convertedValue = field.value;
+          try {
+            const currentInput = jsonFieldsContainer.querySelector(
+              `[data-json-field-input="${index}"]`,
+            );
+            const rawValue = currentInput
+              ? currentInput.value
+              : formatValueForInput(field.value);
+            convertedValue = coerceInputValue(rawValue, nextType, field.value);
+          } catch (error) {
+            if (nextType === "list") convertedValue = [];
+            else if (nextType === "dict") convertedValue = {};
+            else if (nextType === "bool") convertedValue = false;
+            else if (nextType === "number" || nextType === "long") convertedValue = 0;
+            else convertedValue = "";
+          }
+
+          setValueByPath(jsonTemplateData, field.path, convertedValue);
+          syncJsonFieldsStateFromTemplate();
+          const refreshedField = jsonFieldsState.find(
+            (item) => item.path === activeJsonFieldPath,
+          );
+          if (refreshedField) {
+            refreshedField.editorType = nextType;
+          }
+          renderJsonFields();
+          refreshJsonEditorFromData();
+          scrollJsonToField(activeJsonFieldPath);
+          jsonTemplateStatus.textContent = `Changed ${field.path} type to ${nextType}.`;
+          jsonTemplateStatus.classList.remove("error");
+        });
+      });
+
+    jsonFieldsContainer
+      .querySelectorAll("[data-json-add-item]")
+      .forEach((button) => {
+        button.addEventListener("click", () => {
+          const index = Number(button.getAttribute("data-json-add-item"));
+          const field = jsonFieldsState[index];
+          if (!field || !jsonTemplateData) return;
+          activeJsonFieldIndex = index;
+          activeJsonFieldPath = field.path;
+          const value = Array.isArray(field.value) ? [...field.value] : [];
+          value.push("");
+          setValueByPath(jsonTemplateData, field.path, value);
+          syncJsonFieldsStateFromTemplate();
+          renderJsonFields();
+          refreshJsonEditorFromData();
+          const newItemPath = `${field.path}[${value.length - 1}]`;
+          scrollJsonToField(newItemPath);
+          jsonTemplateStatus.textContent = `Added item to ${field.path}.`;
+          jsonTemplateStatus.classList.remove("error");
+        });
+      });
+
+    jsonFieldsContainer
+      .querySelectorAll("[data-json-add-key]")
+      .forEach((button) => {
+        button.addEventListener("click", () => {
+          const index = Number(button.getAttribute("data-json-add-key"));
+          const field = jsonFieldsState[index];
+          if (!field || !jsonTemplateData) return;
+          const key = prompt("Enter key name for nested object:");
+          if (!key) return;
+          activeJsonFieldIndex = index;
+          activeJsonFieldPath = field.path;
+          const value =
+            field.value && typeof field.value === "object" && !Array.isArray(field.value)
+              ? { ...field.value }
+              : {};
+          if (Object.prototype.hasOwnProperty.call(value, key)) {
+            jsonTemplateStatus.textContent = `Key "${key}" already exists in ${field.path}.`;
+            jsonTemplateStatus.classList.add("error");
+            return;
+          }
+          value[key] = "";
+          setValueByPath(jsonTemplateData, field.path, value);
+          syncJsonFieldsStateFromTemplate();
+          renderJsonFields();
+          refreshJsonEditorFromData();
+          const newKeyPath = `${field.path}.${key}`;
+          activeJsonFieldPath = newKeyPath;
+          scrollJsonToField(newKeyPath);
+          jsonTemplateStatus.textContent = `Added key ${key} to ${field.path}.`;
+          jsonTemplateStatus.classList.remove("error");
+        });
+      });
 
     jsonFieldsContainer
       .querySelectorAll("[data-json-generator-tab]")
@@ -5065,6 +5480,7 @@ function createDataGeneratorUI(containerId) {
           const index = Number(select.getAttribute("data-json-generator-tab"));
           const field = jsonFieldsState[index];
           if (!field) return;
+          activeJsonFieldPath = field.path;
           field.generatorTab = select.value;
           const sections = getSectionsForTab(generatorCatalog, field.generatorTab);
           field.generatorSection = (sections[0] && sections[0].title) || "";
@@ -5081,6 +5497,7 @@ function createDataGeneratorUI(containerId) {
           const index = Number(select.getAttribute("data-json-generator-section"));
           const field = jsonFieldsState[index];
           if (!field) return;
+          activeJsonFieldPath = field.path;
           field.generatorSection = select.value;
           const generators = getGeneratorsForSelection(
             generatorCatalog,
@@ -5101,6 +5518,7 @@ function createDataGeneratorUI(containerId) {
         if (!jsonFieldsState[index]) return;
         jsonFieldsState[index].generator = select.value;
         activeJsonFieldIndex = index;
+        activeJsonFieldPath = jsonFieldsState[index].path;
       });
     });
 
@@ -5109,16 +5527,25 @@ function createDataGeneratorUI(containerId) {
         const index = Number(button.getAttribute("data-json-fill"));
         const field = jsonFieldsState[index];
         if (!field || !field.generator) return;
+        activeJsonFieldIndex = index;
+        activeJsonFieldPath = field.path;
         const generatorFn = window.generators?.[field.generator];
         if (typeof generatorFn !== "function" || !jsonTemplateData) return;
         try {
           const generatedValue = generatorFn();
           field.value = generatedValue;
+          field.valueType = getValueType(generatedValue);
           setValueByPath(jsonTemplateData, field.path, generatedValue);
-          const input = jsonFieldsContainer.querySelector(
-            `[data-json-field-input="${index}"]`,
+          syncJsonFieldsStateFromTemplate();
+          const refreshedField = jsonFieldsState.find(
+            (item) => item.path === activeJsonFieldPath,
           );
-          if (input) input.value = formatValueForInput(generatedValue);
+          if (refreshedField) {
+            refreshedField.editorType = mapValueTypeToEditorType(
+              getValueType(generatedValue),
+            );
+          }
+          renderJsonFields();
           refreshJsonEditorFromData();
           scrollJsonToField(field.path);
           jsonTemplateStatus.textContent = `Generated value for ${field.path}`;
@@ -5146,27 +5573,9 @@ function createDataGeneratorUI(containerId) {
         return;
       }
       jsonTemplateData = parsed;
-      const currentSelections = new Map(
-        jsonFieldsState.map((item) => [
-          item.path,
-          {
-            generator: item.generator || "",
-            generatorTab: item.generatorTab || "",
-            generatorSection: item.generatorSection || "",
-          },
-        ]),
-      );
-      jsonFieldsState = flattenJsonFields(parsed)
-        .filter((item) => item.path)
-        .map((item) => ({
-          path: item.path,
-          value: item.value,
-          valueType: getValueType(item.value),
-          generator: (currentSelections.get(item.path) || {}).generator || "",
-          generatorTab: (currentSelections.get(item.path) || {}).generatorTab || "",
-          generatorSection:
-            (currentSelections.get(item.path) || {}).generatorSection || "",
-        }));
+      syncJsonFieldsStateFromTemplate();
+      activeJsonFieldIndex = null;
+      activeJsonFieldPath = "";
       renderJsonFields();
       jsonTemplateStatus.textContent = `Parsed ${jsonFieldsState.length} field${jsonFieldsState.length === 1 ? "" : "s"}.`;
       jsonTemplateStatus.classList.remove("error");
@@ -5286,14 +5695,12 @@ function createDataGeneratorUI(containerId) {
           const generatedValue = generatorFn();
           field.value = generatedValue;
           setValueByPath(jsonTemplateData, field.path, generatedValue);
-          const input = jsonFieldsContainer.querySelector(
-            `[data-json-field-input="${index}"]`,
-          );
-          if (input) input.value = formatValueForInput(generatedValue);
         } catch (error) {
           // Skip failed generator and continue others.
         }
       });
+      syncJsonFieldsStateFromTemplate();
+      renderJsonFields();
       refreshJsonEditorFromData();
       jsonTemplateStatus.textContent = "Applied selected generators.";
       jsonTemplateStatus.classList.remove("error");

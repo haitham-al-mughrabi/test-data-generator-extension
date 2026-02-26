@@ -91,6 +91,7 @@
         "generators/cryptocurrency-generators.js",
         "generators/iot-smarthome-generators.js",
         "generators/missing-generators.js",
+        "generators/numbers-generators.js",
         "ui/ui-generator.js",
         "injected.js",
         "context-menu.js"
